@@ -7,7 +7,6 @@ import Home from "./components/Home";
 import SearchBar from "./components/SearchBar";
 import Basket from "./components/Basket";
 import Requests from "./components/Requests";
-import ContactUs from "./components/ContactUs";
 import SingleCard from "./components/SingleCard";
 import Context from "./components/Context";
 
@@ -35,9 +34,6 @@ function App() {
     <BrowserRouter>
       <Context.Provider value={value}>
         <div className="App-header">
-          <header>
-            Come and taste our amazing Wines from all around the world!
-          </header>
           <Homepage />
           {/* <SearchBar /> */}
           <NavBar />
@@ -49,7 +45,6 @@ function App() {
               element={<Basket basketList={basketList} />}
             />
             <Route path="/requests" element={<Requests />} />
-            <Route path="/contact" element={<ContactUs />} />
           </Routes>
         </div>
       </Context.Provider>

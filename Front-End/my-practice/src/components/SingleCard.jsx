@@ -6,7 +6,7 @@ import ButtonToBasket from "./ButtonToBasket";
 
 const SingleCard = () => {
   const value = useContext(Context);
-
+  const [quantity, setQuantity] = useState(false);
   const [eachCard, setEachCard] = useState({});
 
   const { type, id } = useParams();
@@ -17,32 +17,47 @@ const SingleCard = () => {
       .then((topicData) => topicData.json())
       .then((data) => {
         console.log(data);
-        console.log(setEachCard(data));
+        // console.log(setEachCard(data));
         setEachCard(data);
         console.log(eachCard);
       });
-  }, []);
+  }, [quantity]);
 
   return (
-    <div className="App">
-      {eachCard?(<h1>Add your favorite wines to the basket </h1>
-      {/* <h1>{eachCard}</h1> */}
-      <p>{JSON.stringify(eachCard)}</p>
-      {/* <h1>Wine: {eachCard.wine.slice(0, -4)}</h1> */}
-      <h2>Winery: {eachCard.winery}</h2>
-      <p>Year: {eachCard.wine}</p>
-      <p>Wine Rating: {eachCard?.rating.reviews}</p>
-      <h2>Wine votes: {eachCard?.rating.reviews}</h2>
-      <h2>Location: {eachCard.location}</h2>
-      <img
-        src={eachCard.image}
-        alt="different wines"
-        width="100"
-        height="400"
-      />
+    <div>
+      {/* //put ternary operator ->  eachCard ? <p>......<p> : <p>Page is Loading</p> */}
+      {/* {eachCard.wine ?  */}
+      <h4 className="Header">Add your favorite wines to the basket </h4>
+
+      <div className="SingleCard">
+        {/* <p>{JSON.stringify(eachCard)}</p> */}
+        <p>Wine: {eachCard.wine?.slice(0, -4)}</p>
+        <p>Winery: {eachCard?.winery}</p>
+        <p>Year: {eachCard?.wine}</p>
+        <p>Wine Rating: {eachCard.rating?.average}</p>
+        <p>Wine votes: {eachCard.rating?.reviews}</p>
+        <p>Location: {eachCard?.location}</p>
+
+        <img
+          src={eachCard.image}
+          alt="different wines"
+          width="80"
+          height="300"
+        />
+      </div>
       <br></br>
-      <ButtonToBasket eachCard={eachCard} />) : (<h1>is loading..</h1>)}
-      
+      <ButtonToBasket
+        eachCard={eachCard}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
+      {quantity ? (
+        <p className="SingleCardMsgBasket">
+          This Wine has been added to the basket
+        </p>
+      ) : null}
+
+      {/* : <p>Page is Loading ...</p> */}
     </div>
   );
 };
