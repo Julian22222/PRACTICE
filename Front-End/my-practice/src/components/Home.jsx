@@ -73,8 +73,6 @@ const Home = () => {
                     image={item.image}
                     id={item.id}
                   />
-                  <button>Like</button>
-                  <button>Dislike</button>
                 </li>
               </button>
             </Link>
