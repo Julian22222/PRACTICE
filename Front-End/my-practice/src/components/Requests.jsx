@@ -4,14 +4,14 @@ import RequestList from "./RequestList";
 const Requests = () => {
   const [allComments, setAllComments] = useState([
     {
-      name: "John Travolta",
-      contact: "07891234567",
+      user: "John Travolta",
+      region: "Manchester",
       comments:
         "A beautifully complex English sparkling from the 2010 vintage, featuring a yeasty nose of bruised apple, orange zest and honey-roasted hazelnuts. Savoury brioche and lemon curd on the palate with more bruised yellow fruits and nuts, followed by a long, butter roasted nuts on the finish. 10.5g/l of residual sugar...",
     },
     {
-      name: "Amy Winehouse",
-      contact: "078998876543",
+      user: "Amy Winehouse",
+      region: "Leeds",
       comments:
         "A salivating, food-friendly Prosecco features salted citrus on the nose. Crunchy green fruits and a touch of ripe red apple peel on the palate. The 14.5g/l of sugar is refreshed by a solid line of acidity (5.8g/l), leading to a clean finish. ",
     },
@@ -20,8 +20,8 @@ const Requests = () => {
   const [msg, setMsg] = useState(false);
 
   const [custForm, setCustForm] = useState({
-    name: "",
-    contact: "",
+    user: "",
+    region: "",
     comments: "",
   });
 
@@ -32,8 +32,8 @@ const Requests = () => {
     setAllComments([...allComments, custForm]);
     // console.log(allComments);
     setCustForm({
-      name: "",
-      contact: "",
+      user: "",
+      region: "",
       comments: "",
       // request: "",
     });
@@ -64,24 +64,24 @@ add onBlur={onBlur} in the form */}
 
         <form className="SubmissionForm" onSubmit={handleSubmit}>
           <label>
-            Name:<br></br>
+            User name:<br></br>
             <input
               type="text"
-              name="name"
+              name="user"
               // pattern="([A-Z])[ \w\s.]{1,} "
-              value={custForm.name}
-              placeholder="Insert your name"
+              value={custForm.user}
+              placeholder="Insert your user name"
               onChange={handleChange}
             ></input>
           </label>
           <label>
-            Contact details:<br></br>
+            Region / City :<br></br>
             <input
               type="text"
-              name="contact"
+              name="region"
               // pattern="([A-Z])[ \w+.]{,1} "
-              value={custForm.contact}
-              placeholder="Insert your tel.nr."
+              value={custForm.region}
+              placeholder="Insert your city / region"
               onChange={handleChange}
             ></input>
           </label>

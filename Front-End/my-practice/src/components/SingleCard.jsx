@@ -26,17 +26,32 @@ const SingleCard = () => {
   return (
     <div>
       {/* //put ternary operator ->  eachCard ? <p>......<p> : <p>Page is Loading</p> */}
+      {/* <p>Wine: {eachCard.wine?.slice(0, -4)}</p> */}
       {/* {eachCard.wine ?  */}
       <h4 className="Header">Add your favorite wines to the basket </h4>
 
       <div className="SingleCard">
+        {eachCard.wine ? (
+          <div>
+            {/* <p>{JSON.stringify(eachCard)}</p> */}
+            <p>Wine: {eachCard.wine?.slice(0, -4)}</p>
+            <p>Winery: {eachCard.winery}</p>
+            <p>Year: {eachCard.wine}</p>
+            <p>Wine Rating: {eachCard.rating.average}</p>
+            <p>Wine votes: {eachCard.rating.reviews}</p>
+            <p>Location: {eachCard.location}</p>
+          </div>
+        ) : (
+          <p>Page is loading...</p>
+        )}
+
         {/* <p>{JSON.stringify(eachCard)}</p> */}
-        <p>Wine: {eachCard.wine?.slice(0, -4)}</p>
+        {/* <p>Wine: {eachCard.wine?.slice(0, -4)}</p>
         <p>Winery: {eachCard?.winery}</p>
         <p>Year: {eachCard?.wine}</p>
         <p>Wine Rating: {eachCard.rating?.average}</p>
         <p>Wine votes: {eachCard.rating?.reviews}</p>
-        <p>Location: {eachCard?.location}</p>
+        <p>Location: {eachCard?.location}</p> */}
 
         <img
           src={eachCard.image}

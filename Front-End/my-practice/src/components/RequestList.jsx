@@ -9,10 +9,10 @@ const RequestList = ({ allComments }) => {
       <ul>
         {allComments.map((el) => {
           return (
-            <li key={(el, el.name)}>
+            <li key={(el, el.user)}>
               <RequestCard
-                fullName={el.name}
-                contact={el.contact}
+                user_name={el.user}
+                regionDetails={el.region}
                 comments={el.comments}
               />
             </li>
