@@ -9,7 +9,7 @@ const URL = "mongodb://localhost:27017/moviebox";
 // const URL =
 //   "mongodb+srv://julikgolovenj:Julik123@cluster0.rmfxbzb.mongodb.net/moviebox?retryWrites=true&w=majority";
 // localhost :27017from mongodb compass / moviebox -our Database
-
+//
 const app = express();
 
 app.use(express.json());
