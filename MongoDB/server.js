@@ -5,9 +5,9 @@ const movieRoutes = require("./routes/movie-routes");
 
 const PORT = 3000;
 // this URL we use without hosting
-const URL = "mongodb://localhost:27017/moviebox";
-// const URL =
-//   "mongodb+srv://julikgolovenj:Julik123@cluster0.rmfxbzb.mongodb.net/moviebox?retryWrites=true&w=majority";
+// const URL = "mongodb://localhost:27017/moviebox";
+const URL =
+  "https://api.render.com/deploy/srv-cfn5n8arrk0eqlufngng?key=v6nGnMfimgc";
 // localhost :27017from mongodb compass / moviebox -our Database
 //
 const app = express();
