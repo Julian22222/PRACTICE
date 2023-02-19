@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 const Movie = require("./models/movie");
 const movieRoutes = require("./routes/movie-routes");
 
-const PORT = 3000;
+const PORT = 3005;
 // this URL we use without hosting
-// const URL = "mongodb://localhost:27017/moviebox";
-const URL =
-  "https://api.render.com/deploy/srv-cfn5n8arrk0eqlufngng?key=v6nGnMfimgc";
 // localhost :27017from mongodb compass / moviebox -our Database
-//
+// const URL = "mongodb://localhost:27017/moviebox";
+
+const URL =
+  "mongodb+srv://julikgolovenj:julik3322@cluster0.rmfxbzb.mongodb.net/?retryWrites=true&w=majority";
+
 const app = express();
 
 app.use(express.json());

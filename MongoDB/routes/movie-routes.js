@@ -10,6 +10,10 @@ const {
   updateMovie,
 } = require("../controllers/movie-controller");
 
+router.get("/", (req, res) => {
+  console.log("Yoo");
+});
+
 router.get("/movies", getMovies);
 // db - hold the data from Database in successesful connection to Database
 router.get("/movies/:id", getMovie);

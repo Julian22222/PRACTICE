@@ -7,6 +7,7 @@ const handleError = (res, error) => {
 };
 
 const getMovies = (req, res) => {
+  // console.log("Hello");
   // Movie is a model -imported from movie
   Movie.find()
     .sort({ title: 1 })
