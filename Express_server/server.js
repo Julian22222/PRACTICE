@@ -1,12 +1,12 @@
-const express = require("express")
+const express = require("express");
 const app = express();
 
-app.get('/',(req,res)=>{
-    res.send('my Home Page ..........')
-})
+app.get("/", (req, res) => {
+  res.send("my Home Page ..........");
+});
 
-app.get('/users', (req,res)=>{
-    res.send('All users')
-})
-
-app.listen(3000)
+app.get("/users", (req, res) => {
+  res.send("All users");
+});
+//
+app.listen(3000);
