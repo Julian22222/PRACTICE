@@ -9,7 +9,7 @@ const PORT = 3005;
 // const URL = "mongodb://localhost:27017/moviebox";
 
 const URL =
-  "mongodb+srv://julikgolovenj:julik3322@cluster0.rmfxbzb.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://julikgolovenj:julik3322@cluster0.rmfxbzb.mongodb.net/moviebox?retryWrites=true&w=majority";
 
 const app = express();
 
