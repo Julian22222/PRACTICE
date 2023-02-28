@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Movie = require("./models/movie");
 const movieRoutes = require("./routes/movie-routes");
 
-const PORT = 3000;
+const PORT = 3005;
 // this URL we use without hosting
 // localhost :27017from mongodb compass / moviebox -our Database
 // const URL = "mongodb://localhost:27017/moviebox";
