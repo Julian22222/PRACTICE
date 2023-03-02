@@ -21,6 +21,15 @@ app.get("/books", async (req, res) => {
   }
 });
 
+app.get("/auth", async (req, res) => {
+  try {
+    const auth = await pool.query("SELECT * FROM authors_data");
+    res.json(auth.rows);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Server is listening on PORT ${PORT}`);
 });
