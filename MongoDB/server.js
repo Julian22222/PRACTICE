@@ -2,14 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Movie = require("./models/movie");
 const movieRoutes = require("./routes/movie-routes");
+require("dotenv").config();
 
-const PORT = 3005;
+const PORT = process.env.PORT;
 // this URL we use without hosting
 // localhost :27017from mongodb compass / moviebox -our Database
 // const URL = "mongodb://localhost:27017/moviebox";
 
-const URL =
-  "mongodb+srv://julikgolovenj:julik3322@cluster0.rmfxbzb.mongodb.net/moviebox?retryWrites=true&w=majority";
+const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.PASSWORD}@cluster0.rmfxbzb.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`;
 
 const app = express();
 
