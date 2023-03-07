@@ -11,7 +11,14 @@ const {
 } = require("../controllers/movie-controller");
 
 router.get("/", (req, res) => {
-  console.log("Yoo");
+  // console.log("Yoo");
+  res.send({
+    getAllMovies: "https://movies-ypff.onrender.com/movies",
+    getMovieById: "https://movies-ypff.onrender.com/movies/:id",
+    deleteMovieById: "https://movies-ypff.onrender.com/movies/:id",
+    postMovie: "https://movies-ypff.onrender.com",
+    updateMovieById: "https://movies-ypff.onrender.com//movies/:id",
+  });
 });
 
 router.get("/movies", getMovies);
