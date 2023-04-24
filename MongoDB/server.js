@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const PORT = process.env.PORT;
 // this URL we use without hosting
-// localhost :27017from mongodb compass / moviebox -our Database
+// localhost :27017 - from mongodb compass / moviebox -our Database
 // const URL = "mongodb://localhost:27017/moviebox";
 
 const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.PASSWORD}@cluster0.rmfxbzb.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`;
@@ -28,3 +28,5 @@ mongoose
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Server is listening on port ${PORT}`);
 });
+
+module.exports = app;

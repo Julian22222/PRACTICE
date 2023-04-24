@@ -9,7 +9,7 @@ const ListItem = ({ task, getData }) => {
   const deleteItem = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9090/todos/${task.todo_id}`,
+        `${process.env.REACT_APP_SERVERURL}/todos/${task.todo_id}`,
         {
           method: "DELETE",
         }
@@ -28,7 +28,7 @@ const ListItem = ({ task, getData }) => {
       <div className="info-container">
         <TickIcon />
         <p className="task-title">{task.title}</p>
-        <ProgressBar />
+        <ProgressBar progress={task.progress} />
       </div>
 
       <div className="button-container">
@@ -47,6 +47,7 @@ const ListItem = ({ task, getData }) => {
           task={task}
         />
       ) : null}
+      {/* {showModal && <Modal/>} <--- the same ,if showModal is true show <Modal/> */}
     </li>
   );
 };

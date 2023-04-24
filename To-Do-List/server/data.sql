@@ -21,4 +21,4 @@ INSERT INTO todos
 (user_email, title, progress, date)
 VALUES('julian@test.com', 'First todo', 10, 'Thu March 2 2023 19:15:35 GMT+0400 (Gulf Standard Time)');
 
-SELECT * FROM todos;
+SELECT * FROM users;

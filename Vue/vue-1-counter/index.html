@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- mount(#app) -connects vue data method with our project in index.html -->
+    <div class="container pt-5" id="app">
+      -->
+      <div class="card center">
+        <!-- {{ counter }} <- is taking varaiable from app.js -->
+        <h1>Counter: {{ counter }}</h1>
+        <div>
+          <!-- v-on:click="function"  is the same as addEventListener , it is listening for a click and runs the functions after the click -->
+          <button class="btn primary" v-on:click="counter++">Increment</button>
+          <!-- @click="counter++" is the same as- v-on:click="counter++" -->
+          <button class="btn danger" v-on:click="counter= counter -1">
+            Decrement
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- vue library connection to our project -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- /// -->
+    <!-- connect our app.js file to the project -->
+    <script src="app.js"></script>
+  </body>
+</html>

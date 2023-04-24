@@ -1,12 +1,16 @@
 import { useState } from "react";
+// import { useCookies } from "react-cookie";
 
 const Modal = ({ mode, setShowModal, getData, task }) => {
+  // const [cookies, setCookie, removeCookie] = useCookies(null);
+
   // const mode = "create";
   // if mode equals edit then it is true otherwise it's false
   const editMode = mode === "edit" ? true : false;
 
   const [data, setData] = useState({
     user_email: editMode ? task.user_email : "julian@test.com",
+    // user_email: editMode ? task.user_email : cookies.Email,
     title: editMode ? task.title : null,
     progress: editMode ? task.progress : 50,
     date: editMode ? task.date : new Date(),
@@ -15,14 +19,14 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
   const postData = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:9090/todos", {
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      console.log(response.status);
+      // console.log(response.status);
       if (response.status === 200) {
-        console.log("Worked");
+        // console.log("Worked");
         setShowModal(false);
         getData();
       }
@@ -35,7 +39,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:9090/todos/${task.todo_id}`,
+        `${process.env.REACT_APP_SERVERURL}/todos/${task.todo_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -59,7 +63,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
       ...data,
       [name]: value,
     }));
-    console.log(data);
+    // console.log(data);
   };
 
   return (
