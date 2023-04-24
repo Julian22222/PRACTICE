@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const Movie = require("./models/movie");
 const movieRoutes = require("./routes/movie-routes");
 require("dotenv").config();
@@ -12,6 +13,8 @@ const PORT = process.env.PORT;
 const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.PASSWORD}@cluster0.rmfxbzb.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority`;
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(movieRoutes);
