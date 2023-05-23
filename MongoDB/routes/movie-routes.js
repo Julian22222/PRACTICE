@@ -10,6 +10,13 @@ const {
   updateMovie,
 } = require("../controllers/movie-controller");
 
+const {
+  getUsers,
+  addUser,
+  updateUser,
+  deleteUser,
+} = require("../controllers/user-controller");
+
 router.get("/", (req, res) => {
   // console.log("Yoo");
   res.send({
@@ -27,5 +34,10 @@ router.get("/movies/:id", getMovie);
 router.delete("/movies/:id", deleteMovie);
 router.post("/movies", addMovie);
 router.patch("/movies/:id", updateMovie);
+
+router.get("/users", getUsers);
+router.post("/users", addUser);
+router.patch("/users/:id", updateUser);
+router.delete("/users/:id", deleteUser);
 
 module.exports = router;
