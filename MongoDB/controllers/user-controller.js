@@ -21,7 +21,8 @@ const getUsers = (req, res) => {
 const addUser = (req, res) => {
   const user = new User(req.body);
 
-  User.save()
+  user
+    .save()
     .then((result) => {
       res.status(201).json(result);
     })
