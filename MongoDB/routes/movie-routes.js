@@ -23,8 +23,13 @@ router.get("/", (req, res) => {
     getAllMovies: "https://movies-ypff.onrender.com/movies",
     getMovieById: "https://movies-ypff.onrender.com/movies/:id",
     deleteMovieById: "https://movies-ypff.onrender.com/movies/:id",
-    postMovie: "https://movies-ypff.onrender.com",
+    postMovie: "https://movies-ypff.onrender.com/movies",
     updateMovieById: "https://movies-ypff.onrender.com//movies/:id",
+    ////////
+    getAllUsers: "https://movies-ypff.onrender.com/users",
+    postUser: "https://movies-ypff.onrender.com/users",
+    updateUserById: "https://movies-ypff.onrender.com//users/:id",
+    deleteUserById: "https://movies-ypff.onrender.com/users/:id",
   });
 });
 
