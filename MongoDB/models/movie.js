@@ -26,6 +26,10 @@ const movieSchema = new Schema({
       text: String,
     },
   ],
+  votes: {
+    type: Number,
+    required: false,
+  },
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
