@@ -12,6 +12,7 @@ const {
 
 const {
   getUsers,
+  getSingleUser,
   addUser,
   updateUser,
   deleteUser,
@@ -27,6 +28,7 @@ router.get("/", (req, res) => {
     updateMovieById: "https://movies-ypff.onrender.com//movies/:id",
     ////////
     getAllUsers: "https://movies-ypff.onrender.com/users",
+    getUserById: "https://movies-ypff.onrender.com/users/:id",
     postUser: "https://movies-ypff.onrender.com/users",
     updateUserById: "https://movies-ypff.onrender.com//users/:id",
     deleteUserById: "https://movies-ypff.onrender.com/users/:id",
@@ -41,6 +43,7 @@ router.post("/movies", addMovie);
 router.patch("/movies/:id", updateMovie);
 
 router.get("/users", getUsers);
+router.get("/users/:id", getSingleUser);
 router.post("/users", addUser);
 router.patch("/users/:id", updateUser);
 router.delete("/users/:id", deleteUser);

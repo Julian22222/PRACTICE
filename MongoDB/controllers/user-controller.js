@@ -18,6 +18,16 @@ const getUsers = (req, res) => {
     });
 };
 
+const getSingleUser = (req, res) => {
+  User.findById(req.params.id)
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      handleError(res, err);
+    });
+};
+
 const addUser = (req, res) => {
   const user = new User(req.body);
 
@@ -54,4 +64,4 @@ const deleteUser = (req, res) => {
     });
 };
 
-module.exports = { getUsers, addUser, updateUser, deleteUser };
+module.exports = { getUsers, getSingleUser, addUser, updateUser, deleteUser };
