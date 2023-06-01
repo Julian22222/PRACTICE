@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/bin/Debug/net7.0/LessonTOP4-INCREMENT
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/bin/Debug/net7.0/LessonTOP4-INCREMENT.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/bin/Debug/net7.0/LessonTOP4-INCREMENT.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/bin/Debug/net7.0/LessonTOP4-INCREMENT.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/bin/Debug/net7.0/LessonTOP4-INCREMENT.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/refint/LessonTOP4-INCREMENT.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/LessonTOP4-INCREMENT.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP4_INCREMENT/obj/Debug/net7.0/ref/LessonTOP4-INCREMENT.dll
