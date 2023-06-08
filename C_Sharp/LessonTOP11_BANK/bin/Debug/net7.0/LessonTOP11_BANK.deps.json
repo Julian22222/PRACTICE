@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP11_BANK/1.0.0": {
+        "runtime": {
+          "LessonTOP11_BANK.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP11_BANK/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

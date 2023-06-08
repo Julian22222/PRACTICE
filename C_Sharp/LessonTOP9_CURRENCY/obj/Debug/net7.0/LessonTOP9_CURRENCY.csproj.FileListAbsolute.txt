@@ -1,0 +1,5 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP9_CURRENCY/obj/Debug/net7.0/LessonTOP9_CURRENCY.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP9_CURRENCY/obj/Debug/net7.0/LessonTOP9_CURRENCY.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP9_CURRENCY/obj/Debug/net7.0/LessonTOP9_CURRENCY.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP9_CURRENCY/obj/Debug/net7.0/LessonTOP9_CURRENCY.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP9_CURRENCY/obj/Debug/net7.0/LessonTOP9_CURRENCY.csproj.CoreCompileInputs.cache

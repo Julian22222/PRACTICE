@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/bin/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/bin/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/bin/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/bin/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/bin/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/refint/LessonTOP19_TWO-DIMENSIONAL_ARRAY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/LessonTOP19_TWO-DIMENSIONAL_ARRAY.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP19_TWO-DIMENSIONAL_ARRAY/obj/Debug/net7.0/ref/LessonTOP19_TWO-DIMENSIONAL_ARRAY.dll

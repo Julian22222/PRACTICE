@@ -6,6 +6,8 @@
 using System;
 
 namespace Lesson1
+// name of the folder Lesson1
+
 {
     class Program
     {

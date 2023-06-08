@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP19_TWO-DIMENSIONAL_ARRAY/1.0.0": {
+        "runtime": {
+          "LessonTOP19_TWO-DIMENSIONAL_ARRAY.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP19_TWO-DIMENSIONAL_ARRAY/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/bin/Debug/net7.0/LessonTOP22_FUNCTION
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/bin/Debug/net7.0/LessonTOP22_FUNCTION.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/bin/Debug/net7.0/LessonTOP22_FUNCTION.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/bin/Debug/net7.0/LessonTOP22_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/bin/Debug/net7.0/LessonTOP22_FUNCTION.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/refint/LessonTOP22_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/LessonTOP22_FUNCTION.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP22_FUNCTION/obj/Debug/net7.0/ref/LessonTOP22_FUNCTION.dll
