@@ -10,7 +10,7 @@ const pool = new Pool({
   host: process.env.HOST,
   port: process.env.DBPORT,
   // database - name of database in postgreSQL database
-  database: "todo_app",
+  database: process.env.PGDATABASE,
 });
 
 module.exports = pool;
