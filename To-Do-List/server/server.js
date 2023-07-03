@@ -8,7 +8,7 @@ const pool = require("./db");
 // const bcrypt = require("bcrypt");
 // to hash the password
 
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 // to get the authentication token to allow to sign up to the app
 
 // if process.env.PORT doesn't exist we will use Port 9090
