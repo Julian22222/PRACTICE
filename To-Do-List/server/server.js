@@ -5,7 +5,7 @@ const pool = require("./db");
 // { v4: uuidv4 } - make a uniq id
 // const { v4: uuidv4 } = require("uuid");
 
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 // to hash the password
 
 const jwt = require("jsonwebtoken");
@@ -19,6 +19,10 @@ const PORT = process.env.PORT || 9090;
 
 app.use(cors());
 app.use(express.json());
+
+// app.get("/", (req, res) => {
+//   res.send("hello");
+// });
 
 app.get("/todos/:userEmail", async (req, res) => {
   //   const userEmail = "julian@test.com";
@@ -39,8 +43,7 @@ app.get("/todos/:userEmail", async (req, res) => {
 // create a new todo
 app.post("/todos", async (req, res) => {
   const { user_email, title, progress, date } = req.body;
-  //   uuidv4() make new uniq id,
-  //   uuidv4();
+
   console.log(user_email, title, progress, date);
   try {
     const newToDo = await pool.query(
@@ -105,19 +108,11 @@ app.get("/users", async (req, res) => {
 // app.post("/signup", async (req, res) => {
 //   const { email, password } = req.body;
 
-//   // when we are signup we will generate a password with 10 salts
-//   const salt = bcrypt.genSaltSync(10);
-//   const hashedPassword = bcrypt.hashSync(password, salt);
-
 //   try {
 //     const signUp = await pool.query(
 //       `INSERT INTO users (email,hashed_password) VALUES($1, $2)`,
 //       [email, hashedPassword]
 //     );
-
-//     // onece we sign up it generate the token from json web token package
-//     // token will expires in 1 hour
-//     const token = jwt.sign({ email }, "secret", { expiresIn: "1hr" });
 
 //     res.json({ email, token });
 //   } catch (err) {
