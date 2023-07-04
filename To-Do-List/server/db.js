@@ -8,8 +8,8 @@ const pool = new Pool({
   user: process.env.USERNAME,
   password: process.env.PASSWORD,
   host: process.env.HOST,
-  // port: process.env.DBPORT,
-  port: process.env.DATABASE_URL,
+  port: process.env.DBPORT,
+  // port: process.env.DATABASE_URL,
   // database - name of database in postgreSQL database
   database: process.env.PGDATABASE,
 });
