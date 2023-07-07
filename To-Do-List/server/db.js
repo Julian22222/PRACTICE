@@ -10,6 +10,7 @@ const pool = new Pool({
   host: process.env.HOST,
   port: process.env.DBPORT,
   // port: process.env.DATABASE_URL,
+
   // database - name of database in postgreSQL database
   database: process.env.PGDATABASE,
 });

@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/todos/:userEmail", async (req, res) => {
-  //   const userEmail = "julian@test.com";
+  // const userEmail = "julian@test.com";
 
   const { userEmail } = req.params;
 
