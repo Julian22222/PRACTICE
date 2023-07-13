@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/bin/Debug/net7.0/LessonTOP34_OOP_IS-A
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/bin/Debug/net7.0/LessonTOP34_OOP_IS-A.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/bin/Debug/net7.0/LessonTOP34_OOP_IS-A.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/bin/Debug/net7.0/LessonTOP34_OOP_IS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/bin/Debug/net7.0/LessonTOP34_OOP_IS-A.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/refint/LessonTOP34_OOP_IS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/LessonTOP34_OOP_IS-A.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP34_OOP_IS-A/obj/Debug/net7.0/ref/LessonTOP34_OOP_IS-A.dll

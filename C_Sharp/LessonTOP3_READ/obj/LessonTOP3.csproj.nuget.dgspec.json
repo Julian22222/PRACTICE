@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3/LessonTOP3.csproj": {}
+    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3/LessonTOP3.csproj": {
+    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3/LessonTOP3.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
         "projectName": "LessonTOP3",
-        "projectPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3/LessonTOP3.csproj",
+        "projectPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3/obj/",
+        "outputPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP3_READ/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.108/RuntimeIdentifierGraph.json"
         }
       }
     }
