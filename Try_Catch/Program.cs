@@ -32,6 +32,17 @@ namespace Try_Catch
             // string can't be a -> int data type, 
             //in this case we show msg - You have entered wrong input
 
+            // to handle other errors -> you simply add another catch block after 
+            // try{.....
+            // }catch(error){ ..... when find this error , do this...
+            // }catch(FormatException){ ..... when find this error , do this...
+            // }catch(DivideByZeroException){..... when find this error , do this...}4
+
+            // also you can add -- finally block - which will anyway run after try blcok or catch block
+            // try{....
+            // }catch(){....
+            // }finally{ .....}
+
             System.Console.WriteLine("You have entered wrong input");
         }
 
