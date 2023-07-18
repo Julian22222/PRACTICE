@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/bin/Debug/net7.0/Try_Catch
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/bin/Debug/net7.0/Try_Catch.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/bin/Debug/net7.0/Try_Catch.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/bin/Debug/net7.0/Try_Catch.dll
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/bin/Debug/net7.0/Try_Catch.pdb
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.dll
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/refint/Try_Catch.dll
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.pdb
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/Try_Catch.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/Try_Catch/obj/Debug/net7.0/ref/Try_Catch.dll

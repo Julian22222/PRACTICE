@@ -13,7 +13,7 @@ CREATE TABLE todos(
 );
 
 CREATE TABLE users(
-    user_email SERIAL PRIMARY KEY,
+    email SERIAL PRIMARY KEY,
     hashed_password VARCHAR(255)
 );
 

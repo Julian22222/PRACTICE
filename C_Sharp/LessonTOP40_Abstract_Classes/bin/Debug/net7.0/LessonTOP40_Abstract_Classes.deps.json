@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP40_Abstract_Classes/1.0.0": {
+        "runtime": {
+          "LessonTOP40_Abstract_Classes.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP40_Abstract_Classes/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
