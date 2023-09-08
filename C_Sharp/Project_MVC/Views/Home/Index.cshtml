@@ -1,0 +1,236 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Text;
+@using System.Threading.Tasks;
+
+@* //Clients class connection, can use Contact class in here *@
+@* @using Project_MVC.Models;  *@
+
+@using Project_MVC.Controllers;
+@* import function *@
+
+@using Project_MVC.Models;  
+@* //import newclass *@
+
+
+
+@model List<Clients>   //to receive a List from HomeController
+
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to my page created by ASP.Net</h1>
+    <p>Here you can see my projects uszing C#.</p>
+    @* <p></p>
+    <p></p>
+
+    <p></p> *@
+   
+</div>
+
+
+
+@* <div> *@
+@* HTML helpers *@
+@* @Html.Label(expression:"Name",labelText: "Insert your name: ")<br/>
+@Html.TextBox(expression:"Name")
+@Html.TextArea(expression:"text", null, rows:5, columns:50,new { @class = "form-control" })<br/><br/>
+</div> *@
+
+
+
+<div>
+@* we need to choose correct controller where exists method PostFormMethodToDatabase ,which will post all our data from form to the database *@
+@* <form action ="./Index"> *@
+@* <form  asp-controller="Contacts" asp-action="Index" method="post"> 
+<div asp-validation-summary="All" style="font-size:23px; font-family:Impact">
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" placeholder="insert your name"/> *@
+        @* asp-for="Name *@
+    @* </div>
+
+    <div>
+        <label>Age</label>
+        <input type="text" name="Age" placeholder="insert your age"/> *@
+        @* asp-for="Age" the same as name="Age"*@
+    @* </div>
+
+     <div>
+        <label>Description</label>
+        <textarea type="text" name="Description" placeholder="insert your description"></textarea> *@
+        @* asp-for="Age" the same as name="Age"*@
+    @* </div>
+
+    </div>
+<div>
+        <button type="submit">Send</button>
+    </div>
+</form> *@
+</div>
+
+
+
+<p>
+@{
+    int num1 = 3;
+    int num2 =1;
+    int result = num1 +num2;
+}
+
+@result
+</p>
+
+<p>The sum of 5 and 7 is <i>@(5 + 7)</i></P>
+
+
+
+
+@* <p>@Model.Clients.clients.Count</p> *@
+<div>
+    <ul>
+        @foreach (var client in Model){
+        <li>
+            <span>@client.Name - @client.LastName - @client.Age </span>
+        </li>
+            }
+
+            
+    </ul>
+
+</div>
+
+@* Your view is being rendered before your layout *@
+@{
+
+    string test = "";
+
+   string myFunction (){
+          @* alert("success") *@
+         return test = "HEY";
+       @* return "my function is called"; *@
+       @* Console.WriteLine("Hi!") *@
+       @* System.Diagnostics.Debug.WriteLine("HEY") *@
+       @* System.Diagnostics.Trace.WriteLine("AuthorClass is created.", "AUTHORCLASS TRACE") *@
+       @* Debug.Write("HELLO"); *@
+       @* Page.Trace.Write ("Something here"); *@
+     
+    
+    }
+
+    @* string Button_click(){
+return "HELLO";
+    } *@
+
+   
+
+    @* function onclick() {
+        location.href = '@Url.Action("HandleClick","Button")';
+    } *@
+}
+
+@* <a class="btn btn-primary" href="@Url.Action("HandleClick","Button")">Click</a> *@
+
+@* <button onclick="Button_click" value="Submit">Click</button> *@
+
+<button type="button" name="clickMe" value="7" onclick="@myFunction">Click me</button>
+
+
+<input type="button" value="Click here to debug log" onclick="location.href='@Url.Action("ClickTest", "Home")'" />
+
+
+
+ <p>The time is @DateTime.Now</p>
+ <br/>
+
+@* @Html.EJ().Button("Login").Text("Log in").Type(ButtonType.Button).ClientSideEvents(e=>e.Click("onclick")) *@
+
+@* @using(Html.BeginForm("HandleClick","Button")){
+    
+<button type="button" name="clickMe" value="7" onClick='@myFunction()'>Click me</button> *@
+@* <button type="button" name="clickMe" value="7" >Click me</button> *@
+@* } *@
+
+@* @using(Html.Action("HandleClick", "Button")){
+    <button type="button" name="clickMe" value="7" >Click me</button>
+} *@
+
+@{
+    var greeting = "Welcome to my site!";
+    var weekDay = DateTime.Now.DayOfWeek;
+    var greetingMessage = greeting + "today is " + weekDay;
+}
+<p>@greetingMessage</p>
+
+
+
+
+@* @{
+
+bool IsPost = true;
+
+} 
+
+if (@IsPost) { 
+string companyname = Request["CompanyName"]; 
+string contactname = Request["ContactName"]; 
+<p>You entered: <br />
+Company Name: @companyname <br />
+Contact Name: @contactname </p>
+}
+else
+{
+<form method="post" action="">
+Company Name:<br />
+<input type="text" name="CompanyName" value="" /><br />
+Contact Name:<br />
+<input type="text" name="ContactName" value="" /><br /><br />
+<input type="submit" value="Submit" class="submit" />
+</form>
+} *@
+<br/>
+
+<img width="150" src="https://i.redd.it/the-penguins-are-the-elite-task-force-and-the-perfect-four-v0-ozypgzg8muh91.jpg?width=3840&format=pjpg&auto=webp&s=e2c9e029308f1ed2aaab44bd8b61e1f4f8ee4369" alt="Sample" />
+
+
+
+@{
+   bool testLine = false;
+}
+
+
+@if (testLine)
+{
+<p>It is true
+</p>
+}else{
+   <p> It is False</p>
+}
+
+<br/>
+
+@{
+   var myValue = "Some Value";
+ }
+ <input asp-for="@myValue" />
+
+
+@* @{
+    Newclass newclass = new Newclass{
+        IsActive = true,
+    }
+}
+
+
+
+<label class="form-check-label">
+   <input class="form-check-input" asp-for="IsActive" /> 
+   @Html.DisplayNameFor(model => model.IsActive)
+</label>  *@
+
+
+<footer>  My project in C Sharp, Copyright @DateTime.Now.Year</footer>

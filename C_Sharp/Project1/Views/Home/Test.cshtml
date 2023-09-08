@@ -1,0 +1,50 @@
+﻿@* import Fighter, User class *@
+@using Project1.Views.Home  
+
+@* @model User *@
+
+@model string[]
+
+@{
+    ViewData["Title"] = "Test";
+
+  
+  string text = "Hello!!!";
+
+  List<string> names = new List <string>(){
+    "Mick","Peter","Bob"
+  };
+
+  User user = new User {
+    Name="Alex",
+    Age=3,
+    Email="test@mail.com",
+    Balance=3000
+    };
+
+
+
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<div>
+@foreach(var num in Model){
+
+<p>@num</p>
+
+
+}
+<p>@text</p>
+<p>@names[1]</p>
+<p>@user.Name - @user.Email - @user.Balance</p>
+<p>Length of the name:  @user.Name.Length </p>
+
+@* <p>@Model.Lastname</p> *@
+
+
+</div>
+

@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/bin/Debug/net7.0/Lesson6_enum
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/bin/Debug/net7.0/Lesson6_enum.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/bin/Debug/net7.0/Lesson6_enum.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/bin/Debug/net7.0/Lesson6_enum.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/bin/Debug/net7.0/Lesson6_enum.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/refint/Lesson6_enum.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/Lesson6_enum.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson6_enum/obj/Debug/net7.0/ref/Lesson6_enum.dll
