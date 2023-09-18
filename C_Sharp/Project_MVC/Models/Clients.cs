@@ -22,6 +22,9 @@ namespace Project_MVC.Models
         public string Email {get;set;}
         public string Message {get;set;}
 
+        public string ExperienceLevel { get; set; }
+        
+
         public Clients(string name,string lastname, int age, string email, string message){
             Name = name;
             LastName = lastname;

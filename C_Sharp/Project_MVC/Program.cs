@@ -12,10 +12,16 @@ var builder = WebApplication.CreateBuilder(args);     // createBuilder -creating
 // Add services to the container.
 // Services - method to connet all different services for our app, after dot
 // in here we adding services with name-> AddControllersWithViews
-builder.Services.AddControllersWithViews();
+//AddRazorRuntimeCompilation -update server automatically
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<MyappDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("MyappDbConnectionString"))); //inject DB context into our app
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+
+
+// builder.Services.AddDbContext<MyappDbContext>(options =>
+// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+
 
 // Configuration -> services that allow to acces to the data that we mentioned in appsettings.json 
 
@@ -47,3 +53,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();  //run an app, after all have been added to request pipeline
+
+
+
+
+// In appSettings.json -->
+
+//   "ConnectionStrings": {
+//     // "MyappDbConnectionString": "Server=localhost\\master;Database=myDb;Trusted_Connection=true;TrustServerCertificate=Yes"
+//     "DefaultConnection": "Server=(LocalDb)\\MSSQLLocalDB;Database=BookListMVC;Trusted_Connection=True;MultipleActiveResultSets=True"
+//   },

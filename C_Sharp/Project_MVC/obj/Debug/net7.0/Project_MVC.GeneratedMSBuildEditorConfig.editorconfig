@@ -12,7 +12,7 @@ build_property.RootNamespace = Project_MVC
 build_property.ProjectDir = /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC
 build_property._RazorSourceGeneratorDebug = 
 
@@ -42,6 +42,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Home/Vending.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9WZW5kaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Jokes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSm9rZXMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Jokes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSm9rZXMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Jokes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSm9rZXMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Jokes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSm9rZXMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Jokes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSm9rZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/Views/Shared/Error.cshtml]

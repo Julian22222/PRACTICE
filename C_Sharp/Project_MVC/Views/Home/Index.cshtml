@@ -10,8 +10,10 @@
 @using Project_MVC.Controllers;
 @* import function *@
 
-@using Project_MVC.Models;  
-@* //import newclass *@
+
+@using Project_MVC.Models 
+ 
+@* //import Newclass *@
 
 
 
@@ -163,11 +165,48 @@ return "HELLO";
     var greeting = "Welcome to my site!";
     var weekDay = DateTime.Now.DayOfWeek;
     var greetingMessage = greeting + "today is " + weekDay;
+
+    var txt = "";
+if(DateTime.Now.Hour > 12)
+  {txt = "Good Evening";}
+else
+  {txt = "Good Morning";}
 }
 <p>@greetingMessage</p>
+<p>@DateTime.Now.Day</p>
+<p>@DateTime.Now.Hour</p>
+<p>@DateTime.Now.Minute</p>
+<p>@DateTime.Now.Second</p>
+
+<p>The message is @txt</p>
+<br/>
 
 
+@{
+var i = 0;
+while (i < 5)
+    {
+    i += 1;
+    <p>Line @i</p>
+    }
+}
 
+<br/>
+
+@{var price=20;}
+
+@if (price>=30)
+  {
+  <p>The price is high.</p>
+  }
+else if (price>20 && price<30)
+  {
+  <p>The price is OK.</p>
+  }
+else
+  {
+  <p>The price is low.</p>
+  } 
 
 @* @{
 
@@ -219,18 +258,14 @@ Contact Name:<br />
  <input asp-for="@myValue" />
 
 
-@* @{
-    Newclass newclass = new Newclass{
-        IsActive = true,
-    }
-}
 
-
-
+@* 
 <label class="form-check-label">
    <input class="form-check-input" asp-for="IsActive" /> 
    @Html.DisplayNameFor(model => model.IsActive)
 </label>  *@
+
+
 
 
 <footer>  My project in C Sharp, Copyright @DateTime.Now.Year</footer>

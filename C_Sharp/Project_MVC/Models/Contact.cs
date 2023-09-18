@@ -1,5 +1,5 @@
 using System.Security.AccessControl;
-using System.ComponentModel.DataAnnotations;   //connect [Display(Name="Nickname")] block 
+using System.ComponentModel.DataAnnotations;   //connect [Display(Name="Nickname")] block , to use Requred block and Display block-> []
 
 namespace Project_MVC.Models
 {
