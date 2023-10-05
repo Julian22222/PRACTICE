@@ -19,19 +19,6 @@ function App() {
   // list of tasks that are shown
   const [tasks, setTasks] = useState(null);
 
-  // const loginExists = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users`);
-
-  //     const json = await response.json();
-  //     console.log(json.rows);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // console.log(loginExists());
-
   const getData = async () => {
     try {
       const response = await fetch(
