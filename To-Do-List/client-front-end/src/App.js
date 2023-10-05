@@ -3,33 +3,34 @@ import ListHeader from "./components/ListHeader";
 import ListItem from "./components/ListItem";
 import Auth from "./components/Auth";
 import { useEffect, useState } from "react";
-// import { useCookies } from "react-cookie";
 
 function App() {
-  // const [cookies, setCookie, removeCookie] = useCookies(null);
-  // const userEmail = cookies.Email;
-  // const authToken = cookies.AuthToken;
+  // show ligin/register form if =true, eslse show todo list
+  // it will dicktate will we see Auth component or not
+  const [showAuth, setShowAuth] = useState(true);
 
-  const userEmail = "julian@test.com";
+  // remember the LogedIn email for user, when you Log In
+  const [activeUser, setActiveUser] = useState(null);
+
+  // const userEmail = "julian@test.com";
+
+  const userEmail = activeUser;
 
   // list of tasks that are shown
   const [tasks, setTasks] = useState(null);
 
-  // it will dicktate will we see Auth component or not
-  // const authToken = false;
+  // const loginExists = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users`);
 
-  const loginExists = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users`);
+  //     const json = await response.json();
+  //     console.log(json.rows);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-      const json = await response.json();
-      console.log(json.rows);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  console.log(loginExists());
+  // console.log(loginExists());
 
   const getData = async () => {
     try {
@@ -44,10 +45,8 @@ function App() {
   };
 
   useEffect(() => {
-    // if (authToken) {
     getData();
-    // }
-  }, []);
+  }, [activeUser]);
 
   // console.log(tasks);
 
@@ -59,23 +58,28 @@ function App() {
 
   return (
     <div className="app">
-      {/* if no authToken exists we will show Auth component */}
-      {/* {!authToken && <Auth />} */}
-      {/* if authTokken is true we will see everithin in here */}
-
       {/* Login - Sign Up form  */}
-      {/* <Auth /> */}
+      {showAuth ? (
+        <Auth setShowAuth={setShowAuth} setActiveUser={setActiveUser} />
+      ) : (
+        <div>
+          {/* //////////////////////////////////////////////////////////////////////////////// */}
+          <ListHeader
+            listName={" 🏝  To do list"}
+            getData={getData}
+            activeUser={activeUser}
+            setActiveUser={setActiveUser}
+            setShowAuth={setShowAuth}
+          />
+          <p className="user-email">Welcome back {userEmail}</p>
+          {sortedTasks?.map((task) => (
+            <ListItem key={task.id} task={task} getData={getData} />
+          ))}
+          {/* ///////////////////////////////////////////////////////////////////////////////////// */}
 
-      {/* //////////////////////////////////////////////////////////////////////////////////// */}
-      {/* //////////////////////////////////////////////////////////////////////////////// */}
-      <ListHeader listName={" 🏝  To do list"} getData={getData} />
-      <p className="user-email">Welcome back {userEmail}</p>
-      {sortedTasks?.map((task) => (
-        <ListItem key={task.id} task={task} getData={getData} />
-      ))}
-      {/* ///////////////////////////////////////////////////////////////////////////////////// */}
-      {/* /////////////////////////////////////////////////////////////////////////////////// */}
-      <p className="copyright">Your Daily Diary</p>
+          <p className="copyright">Your Daily Diary</p>
+        </div>
+      )}
     </div>
   );
 }

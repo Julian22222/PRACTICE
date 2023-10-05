@@ -1,7 +1,7 @@
 // import { useCookies } from "react-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Auth = () => {
+const Auth = ({ setShowAuth, setActiveUser }) => {
   // const [cookies, setCookie, removeCookie] = useCookies(null);
 
   // if you loged In - isLogin is true
@@ -12,43 +12,104 @@ const Auth = () => {
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
+  // all users data list
+  const [allUsersList, setAllUsersList] = useState([]);
+
   // console.log(email, password, confirmPassword);
 
+  //if password and confirm password doesn't mach
   const [error, setError] = useState(null);
+
+  // if email exists in the database it will show error
+  {
+    /* if registration successful show msg */
+  }
+  const [emailErrorRegistration, setEmailErrorRegistration] = useState(null);
 
   const viewLogin = (status) => {
     setError(null);
     setIsLogin(status);
   };
 
-  const handleSubmit = async (e, endpoint) => {
-    e.preventDefault();
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVERURL}/users`)
+      .then((allUsers) => allUsers.json())
+      .then((data) => {
+        setAllUsersList(data);
+        console.log(allUsersList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [allUsersList]);
 
-    // if we are on a Sign up page not on login page and password not
+  /////////////////////////////////////////////////////////Sign UP
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    // console.log(email);
+    // console.log(password);
+
+    // if we are on a Sign up page and password not
     // equal to confirm password we set an error in useState with msg
     if (!isLogIn && password !== confirmPassword) {
       setError("Make sure passwords match!");
-      return;
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
     }
 
-    if (endpoint === "signup") {
-      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    // if the entered email not contains in the users List than add it to the database
+    if (
+      !allUsersList.find((el) => {
+        return el.u_email === email;
+      })
+    ) {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVERURL}/users`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          }
+        );
 
-      const data = await response.json();
-      console.log(data);
-      // if (data.detail) {
-      //   setError(data.detail);
-      // } else {
-      //   setCookie("Email", data.email);
-      //   setCookie("AuthToken", data.token);
+        const data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
 
-      //   window.location.reload();
-      // }
+      setEmailErrorRegistration("Registration is successful, Please Log In.");
+
+      setTimeout(() => {
+        setEmailErrorRegistration(null);
+      }, 3000);
+    } else {
+      setEmailErrorRegistration(
+        "Entered email already exists in the database ,please enter different email"
+      );
+
+      setTimeout(() => {
+        setEmailErrorRegistration(null);
+      }, 3000);
     }
+  };
+
+  /////////////////////////////////////////////////////////Log In
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const findExistUser = allUsersList.find((el) => {
+      return el.u_email === email;
+    });
+
+    setActiveUser(findExistUser.u_email);
+
+    setShowAuth(false);
+    // console.log(showAuth);
   };
 
   return (
@@ -60,11 +121,14 @@ const Auth = () => {
             type="email"
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
+
           <input
             type="password"
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
 
           {/* if isLogin is not true show input confirm password */}
@@ -75,14 +139,40 @@ const Auth = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           )}
-          <input
-            type="submit"
-            className="create"
-            onClick={(e) => handleSubmit(e, isLogIn ? "login" : "signup")}
-          />
+          <div className="submit-btn-container">
+            {/* ///////////////////////////////// */}
+            {/* if Login =true -> btn LogIn ,esle SignUp */}
+            {isLogIn ? (
+              <div>
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  onClick={(e) => handleSubmit(e)}
+                >
+                  Log In
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  onClick={handleSignUp}
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
 
-          {/* if error does exist then show error */}
-          {error && <p>{error}</p>}
+          {/* if password not equal to confirmed password show error */}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          {/* if the same email exists in database -> show msg */}
+          {/* if registration successful show msg */}
+          {emailErrorRegistration ? (
+            <p style={{ color: "red" }}>{emailErrorRegistration}</p>
+          ) : null}
         </form>
 
         <div className="auth-options">

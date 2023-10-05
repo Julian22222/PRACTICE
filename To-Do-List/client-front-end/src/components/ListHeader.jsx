@@ -2,19 +2,21 @@
 import { useState } from "react";
 import Modal from "./Modal";
 
-const ListHeader = ({ listName, getData }) => {
-  // const [cookies, setCookies, removeCookies] = useCookies(null);
-
+const ListHeader = ({
+  listName,
+  getData,
+  activeUser,
+  setActiveUser,
+  setShowAuth,
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   const signOut = () => {
-    console.log("signout");
+    // console.log("signout");
 
-    // removeCookies("Email");
-    // removeCookies("AuthToken");
+    setShowAuth(true);
 
-    // refreshes the page
-    // window.location.reload();
+    setActiveUser(null);
   };
 
   return (
@@ -29,7 +31,12 @@ const ListHeader = ({ listName, getData }) => {
         </button>
       </div>
       {showModal ? (
-        <Modal mode={"create"} setShowModal={setShowModal} getData={getData} />
+        <Modal
+          mode={"create"}
+          setShowModal={setShowModal}
+          getData={getData}
+          activeUser={activeUser}
+        />
       ) : null}
       {/* the same - is showModal is true ->show Modal component */}
       {/* {showModal && <Modal mode={"create"} setShowModal={setShowModal} /> } */}
