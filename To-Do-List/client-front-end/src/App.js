@@ -49,7 +49,7 @@ function App() {
       {showAuth ? (
         <Auth setShowAuth={setShowAuth} setActiveUser={setActiveUser} />
       ) : (
-        <div>
+        <div className="list-container-full">
           {/* //////////////////////////////////////////////////////////////////////////////// */}
           <ListHeader
             listName={" 🏝  To do list"}
