@@ -1,9 +1,6 @@
-// import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 
 const Auth = ({ setShowAuth, setActiveUser }) => {
-  // const [cookies, setCookie, removeCookie] = useCookies(null);
-
   // if you loged In - isLogin is true
   const [isLogIn, setIsLogin] = useState(true);
 
@@ -180,21 +177,23 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
             onClick={() => viewLogin(false)}
             //
             // if we are not on login the background will be white otherwise style -dark background
-            style={{
-              backgroundColour: !isLogIn
-                ? "rgb(255,255,255)"
-                : "rgb(188,188,188)",
-            }}
+            // style={{
+            //   backgroundColour: !isLogIn
+            //     ? "rgb(255,255,255)"
+            //     : "rgb(188,188,188)",
+            // }}
+            className="submit-btn-bottom-line"
           >
             Sign Up
           </button>
           <button
             onClick={() => viewLogin(true)}
-            style={{
-              backgroundColour: isLogIn
-                ? "rgb(255,255,255)"
-                : "rgb(188,188,188)",
-            }}
+            // style={{
+            //   backgroundColour: isLogIn
+            //     ? "rgb(255,255,255)"
+            //     : "rgb(188,188,188)",
+            // }}
+            className="submit-btn-bottom-line"
           >
             Login
           </button>

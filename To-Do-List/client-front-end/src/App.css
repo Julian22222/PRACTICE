@@ -273,3 +273,21 @@ input {
     animation: App-logo-spin infinite 20s linear;
   }
 } */
+
+.submit-btn:hover {
+  background-color: rgb(177, 180, 196);
+}
+
+.submit-btn:active {
+  background-color: rgb(108, 115, 148);
+  color: rgb(255, 255, 255);
+}
+
+.submit-btn-bottom-line:hover {
+  background-color: rgb(177, 180, 196);
+}
+
+.submit-btn-bottom-line:active {
+  background-color: rgb(108, 115, 148);
+  color: rgb(255, 255, 255);
+}
