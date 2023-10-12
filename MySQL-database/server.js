@@ -7,23 +7,28 @@ const cors = require("cors");
 const pool = require("./db");
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //to be able to send json body in POST and PUT methods to database
 
 const PORT = 9080;
 
 ///////////////////////////////////////////////////////////////////////GET
 
 app.get("/", async (req, res, next) => {
-  await pool.query((err) => {
-    pool.query("SELECT * FROM cars", (err, result, fields) => {
-      if (err) {
-        res.send(err);
-      }
-      if (result) {
-        res.send(result);
-      }
+  try {
+    await pool.query((err) => {
+      pool.query("SELECT * FROM cars", (err, result, fields) => {
+        // result -is our query (data from database), err - any error while connecting to our database
+        if (err) {
+          res.send(err);
+        }
+        if (result) {
+          res.send(result);
+        }
+      });
     });
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
 ////////////////////////////////////////////////////////////////////////////GET ID
@@ -40,10 +45,12 @@ app.get("/:carId", async (req, res, next) => {
         // "SELECT * FROM cars WHERE car_id = $1",
         // [carId],
         (err, result, fields) => {
+          // result -is our query, err - if can't connect to our database
           if (err) {
             res.send(err);
           }
 
+          //   if carId doesn't exist in database -> the result.length === 0
           if (result.length === 0) {
             res.send("Wrong card Id has been inserted.");
           }
@@ -60,26 +67,34 @@ app.get("/:carId", async (req, res, next) => {
 });
 ////////////////////////////////////////////////////////////////POST
 app.post("/", async (req, res, next) => {
-  await pool.query((err) => {
-    pool.query(
-      `INSERT INTO cars(brand,seats, year, fuel) VALUES
+  // error handling, when posting but brand or /and seats field is empty
+  if (req.body.brand === undefined) {
+    res.send("Wrong Brand Input");
+  } else if (req.body.seats === undefined) {
+    res.send("Wrong Seats Input");
+  } else {
+    // if all field correctly ,send a req to database
+    await pool.query((err) => {
+      pool.query(
+        `INSERT INTO cars(brand,seats, year, fuel) VALUES
         ('${req.body.brand}','${req.body.seats}','${req.body.year}','${req.body.fuel}')
         `,
-      (err, result, fields) => {
-        if (err) {
-          res.send(err);
-        }
+        (err, result, fields) => {
+          if (err) {
+            res.send(err);
+          }
 
-        if (result) {
-          res.send("Data Inserted Successfully");
-        }
+          if (result) {
+            res.send("Data Inserted Successfully");
+          }
 
-        if (fields) {
-          console.log(fields);
+          if (fields) {
+            console.log(fields);
+          }
         }
-      }
-    );
-  });
+      );
+    });
+  }
 });
 ////////////////////////////////////////////////////////////////////////UPDATE
 app.put("/:carId", async (req, res, next) => {
@@ -175,6 +190,17 @@ app.delete("/:carId", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  console.log(err.name);
+  console.log(err.code);
+
+  res.status(500).json({
+    message: "Something went wrong",
+  });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////
