@@ -27,11 +27,6 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to my page created by ASP.Net</h1>
     <p>Here you can see my projects uszing C#.</p>
-    @* <p></p>
-    <p></p>
-
-    <p></p> *@
-   
 </div>
 
 
@@ -76,7 +71,7 @@
 </div>
 
 
-
+<h1>Sum of 2 num</h1>
 <p>
 @{
     int num1 = 3;
@@ -89,22 +84,17 @@
 
 <p>The sum of 5 and 7 is <i>@(5 + 7)</i></P>
 
+@{
+    int a = 10;
+    int b = 20;
+    int c = a + b;
+}
+<p>@c</p>
 
+<hr/>
+<br/>
+<br/>
 
-
-@* <p>@Model.Clients.clients.Count</p> *@
-<div>
-    <ul>
-        @foreach (var client in Model){
-        <li>
-            <span>@client.Name - @client.LastName - @client.Age </span>
-        </li>
-            }
-
-            
-    </ul>
-
-</div>
 
 @* Your view is being rendered before your layout *@
 @{
@@ -112,54 +102,43 @@
     string test = "";
 
    string myFunction (){
-          @* alert("success") *@
          return test = "HEY";
-       @* return "my function is called"; *@
-       @* Console.WriteLine("Hi!") *@
-       @* System.Diagnostics.Debug.WriteLine("HEY") *@
-       @* System.Diagnostics.Trace.WriteLine("AuthorClass is created.", "AUTHORCLASS TRACE") *@
-       @* Debug.Write("HELLO"); *@
-       @* Page.Trace.Write ("Something here"); *@
-     
-    
     }
-
-    @* string Button_click(){
-return "HELLO";
-    } *@
-
-   
-
-    @* function onclick() {
-        location.href = '@Url.Action("HandleClick","Button")';
-    } *@
 }
 
-@* <a class="btn btn-primary" href="@Url.Action("HandleClick","Button")">Click</a> *@
+<input type="button" value="Click me" class="btn btn-danger" />
+<br/>
+<br/>
 
-@* <button onclick="Button_click" value="Submit">Click</button> *@
+
+
+@* jquery code *@
+@* <script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+  $(document).ready(function (){
+    alert("Page loaded");
+})  
+</script> *@
+
+
+
+
 
 <button type="button" name="clickMe" value="7" onclick="@myFunction">Click me</button>
+<p>@test</p>
 
+<input type="button" value="Link to another page in your app" onclick="location.href='@Url.Action("Game", "Home")'" />
 
-<input type="button" value="Click here to debug log" onclick="location.href='@Url.Action("ClickTest", "Home")'" />
-
-
+<hr/>
+<br/>
+<h2>Day Time code and logic</h2>
 
  <p>The time is @DateTime.Now</p>
+ <p>@DateTime.Now.ToString("dd-M-yy")</p>
+
  <br/>
 
-@* @Html.EJ().Button("Login").Text("Log in").Type(ButtonType.Button).ClientSideEvents(e=>e.Click("onclick")) *@
-
-@* @using(Html.BeginForm("HandleClick","Button")){
-    
-<button type="button" name="clickMe" value="7" onClick='@myFunction()'>Click me</button> *@
-@* <button type="button" name="clickMe" value="7" >Click me</button> *@
-@* } *@
-
-@* @using(Html.Action("HandleClick", "Button")){
-    <button type="button" name="clickMe" value="7" >Click me</button>
-} *@
 
 @{
     var greeting = "Welcome to my site!";
@@ -180,8 +159,36 @@ else
 
 <p>The message is @txt</p>
 <br/>
+<hr/>
+<br/>
 
 
+<h2>For loop</h2>
+
+@* Loops:
+For
+ForEach
+and others *@
+@* <p>@Model.Clients.clients.Count</p> *@
+<div>
+    <ul>
+        @foreach (var client in Model){
+        <li>
+            <span>@client.Name - @client.LastName - @client.Age </span>
+        </li>
+            }
+
+            
+    </ul>
+
+</div>
+
+
+@for (int j = 0; j < 5; j++){
+<p>This is a For loop with index - @j</p>
+}
+
+<hr/>
 @{
 var i = 0;
 while (i < 5)
@@ -192,6 +199,32 @@ while (i < 5)
 }
 
 <br/>
+<br/>
+
+
+<h4>ForEach Loop</h4>
+@{
+    var list = new List<int>(){1,2,3,4,5};
+}
+
+@foreach(var item in list){
+    <h5>@item</h5>
+}
+
+<br/>
+<hr/>
+<br/>
+
+<h2>how to use Emails and @@tags </h2>
+
+<h5>my email is - julik@test.com</h5>
+<h5>My twiter nick name is - @@Julik</h5>
+
+
+<br/>
+<hr/>
+
+<h2>logic examples</h2>
 
 @{var price=20;}
 
@@ -207,6 +240,11 @@ else
   {
   <p>The price is low.</p>
   } 
+
+
+
+
+
 
 @* @{
 
@@ -232,23 +270,94 @@ Contact Name:<br />
 </form>
 } *@
 <br/>
+<hr/>
+
+<br/>
+<h2>How to import pictures from the web and from wwwroot folder</h2>
 
 <img width="150" src="https://i.redd.it/the-penguins-are-the-elite-task-force-and-the-perfect-four-v0-ozypgzg8muh91.jpg?width=3840&format=pjpg&auto=webp&s=e2c9e029308f1ed2aaab44bd8b61e1f4f8ee4369" alt="Sample" />
 
 
+@* <img src="~/images/@item.flName" width="100" height="100" /> *@
+<img src="@Url.Content("~/images/Breaking_Bad.webp")" alt="logo" width="500" height="250"/>
+
+<img src="~/images/Breaking_Bad.webp" alt="logo2" class="logo" width="500" height="250"/>
+
+
+<hr/>
+<br/>
+
+<h2>If Condition</h2>
+@* Conditional statement  -
+if
+else
+else if
+Ternary operator
+Switch
+and others *@
 
 @{
    bool testLine = false;
+
+   int z = 10;
+
+   int y = 0;
 }
+
 
 
 @if (testLine)
 {
-<p>It is true
-</p>
+<p>It is true</p>
 }else{
-   <p> It is False</p>
+<p> It is False</p>
 }
+
+@if(z > 5){
+    z+=4;
+    <p>Hello from if block and value of z = @z</p>
+}else if(z == 11){
+    z++;
+    <p>Hello from elseIF block and value of z = @z</p>
+}else{
+    <p>Hello from else block</p>
+}
+
+<br/>
+<h3>Ternary Operator </h3>
+
+<p>Ternary - @(z==10 ? y=10 : y=5)</p>
+<p>Value of y - @y</p>
+<p>Value of z = @z</p>
+<br/>
+<br/>
+
+
+
+<h3>Switch </h3>
+@{
+int m = 4;
+}
+
+@switch(m){
+    case 1:
+<p>I am 1</p>
+    break;
+    case 2:
+    <p>I am 2</p>
+    break;
+    case 3:
+    <p>I am 3</p>
+    break;
+    case 4:
+    <p>I am 4</p>
+    break;
+    default:
+    <p>I am default case</p>
+    break;
+}
+
+
 
 <br/>
 
@@ -256,6 +365,9 @@ Contact Name:<br />
    var myValue = "Some Value";
  }
  <input asp-for="@myValue" />
+
+<br/>
+
 
 
 

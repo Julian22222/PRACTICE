@@ -1,10 +1,10 @@
-using System.IO;
-using System.Security.AccessControl;
+// using System.IO;
+// using System.Security.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+// using System.ComponentModel.DataAnnotations;
 
 
 namespace Project_MVC.Models
@@ -15,9 +15,15 @@ namespace Project_MVC.Models
         public int Id { get; set; }
 
         // [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public string Author { get; set; }
+
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public string Language { get; set; }
+
+        public int TotalPages { get; set; }
 
        
 
@@ -27,10 +33,10 @@ namespace Project_MVC.Models
 
 
         // constructor
-        public Book()
-        {
+        // public Book()
+        // {
             
-        }
+        // }
         // prop + tab  --> quick btns for get,set
         //ctor + tab --> constructor
 

@@ -1,0 +1,123 @@
+@* import Fighter class *@
+@using Project_MVC.Models 
+
+@{
+    ViewData["Title"] = "Books store";
+
+   
+}
+
+   @* <form>  
+   
+    <button name="button" value="Hello"  asp-action="addNumber"> Button </button>
+
+    </form> 
+
+    <p> @ViewData["ViewDataName"]</p> *@
+
+<section class="jumbotron text-center">
+    <div class="container">
+<h1>Welcome to Bookstore</h1>
+
+@* if environment variable = Development ->it will show everithing inside environment tag *@
+@* environment variables located in-> Proporties -> launchSettings.json *@
+<environment names="Development">
+    <h3>Development..</h3>
+</environment>
+
+<environment names="Production">
+    <h3>Production</h3>
+</environment>
+
+
+
+<p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti accusamus repudiandae aliquam suscipit ullam? Inventore, blanditiis sit. Autem iusto optio suscipit quasi ipsa architecto perferendis repudiandae, quam recusandae excepturi odit.</p>
+<p>
+    <a href="#" class="btn btn-primary my-2">Search books</a>
+</p>
+    </div>
+</section>
+
+<div class="py-5 bg-light">
+    <div class="container">
+        <h3 class="h3">Top books</h3>
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    @* <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="" /> *@
+                     <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo">
+<div class="card-body">
+    <p class="card-text">
+        This section will be used to display the short description of the book
+    </p>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+            <a href="#" class="btn btn-sm btn-outline-secondary">View details</a>
+
+        </div>
+        <small class="text-muted">Author name</small>
+    </div>
+
+</div>
+                </div>
+
+            </div>
+
+
+
+
+<div class="col-md-4">
+<div class="card mb-4 shadow-sm">
+@* <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www/w3.org/2000" /> *@
+ <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo">
+<div class="card-body">
+<p class="card-text">
+        This section will be used to display the short description of the book
+</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                <a href="#" class="btn btn-sm btn-outline-secondary">View details</a>
+            </div>
+            <small class="text-muted">Author name</small>
+        </div>
+
+</div>
+                </div>
+
+            </div>
+
+
+
+
+                <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    @* <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="" /> *@
+                     <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo">
+<div class="card-body">
+    <p class="card-text">
+        This section will be used to display the short description of the book
+    </p>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+            <a href="#" class="btn btn-sm btn-outline-secondary">View details</a>
+
+        </div>
+        <small class="text-muted">Author name</small>
+    </div>
+
+</div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+
+</div>
+

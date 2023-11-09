@@ -603,7 +603,9 @@
             "related": ".xml"
           }
         },
-        "frameworkReferences": ["Microsoft.AspNetCore.App"],
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ],
         "build": {
           "buildTransitive/net7.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.targets": {}
         }
@@ -6729,6 +6731,7 @@
     "net7.0": [
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 7.0.10",
       "Microsoft.EntityFrameworkCore >= 7.0.10",
+      "Microsoft.EntityFrameworkCore.Design >= 7.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools.DotNet >= 2.0.3",
@@ -6748,8 +6751,12 @@
       "packagesPath": "/home/codenitro/.nuget/packages/",
       "outputPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/obj/",
       "projectStyle": "PackageReference",
-      "configFilePaths": ["/home/codenitro/.nuget/NuGet/NuGet.Config"],
-      "originalTargetFrameworks": ["net7.0"],
+      "configFilePaths": [
+        "/home/codenitro/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -6760,7 +6767,9 @@
         }
       },
       "warningProperties": {
-        "warnAsError": ["NU1605"]
+        "warnAsError": [
+          "NU1605"
+        ]
       }
     },
     "frameworks": {
@@ -6772,6 +6781,12 @@
             "version": "[7.0.10, )"
           },
           "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[7.0.10, )"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[7.0.10, )"
           },
@@ -6817,7 +6832,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -6828,7 +6843,9 @@
       "warningLevel": 1,
       "message": "Package 'Nugety 1.0.1.141' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "Nugety",
-      "targetGraphs": ["net7.0"]
+      "targetGraphs": [
+        "net7.0"
+      ]
     },
     {
       "code": "NU1701",
@@ -6836,7 +6853,9 @@
       "warningLevel": 1,
       "message": "Package 'Nugety.AspNetCore 1.0.1.141' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "Nugety.AspNetCore",
-      "targetGraphs": ["net7.0"]
+      "targetGraphs": [
+        "net7.0"
+      ]
     }
   ]
 }

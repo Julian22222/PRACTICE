@@ -13,6 +13,26 @@
       "PackagePath": "staticwebassets/favicon.ico"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/images/Breaking_Bad.webp",
+      "PackagePath": "staticwebassets/images/Breaking_Bad.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/images/Cat.png",
+      "PackagePath": "staticwebassets/images/Cat.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/images/book1.jpg",
+      "PackagePath": "staticwebassets/images/book1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/images/book2.jpg",
+      "PackagePath": "staticwebassets/images/book2.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/images/book3.jpeg",
+      "PackagePath": "staticwebassets/images/book3.jpeg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC/wwwroot/js/site.js",
       "PackagePath": "staticwebassets/js/site.js"
     },

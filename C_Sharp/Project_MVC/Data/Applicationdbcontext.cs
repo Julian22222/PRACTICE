@@ -1,36 +1,36 @@
-using System.Security.AccessControl;
-using System;
-using System.Collections.Generic;
-using System.Text;
-// using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+// using System.Security.AccessControl;
+// using System;
+// using System.Collections.Generic;
+// using System.Text;
+// // using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+// using Microsoft.EntityFrameworkCore;
 
-using Project_MVC.Models.Domain; 
+// using Project_MVC.Models.Domain; 
 
 
-namespace Project_MVC.Data
-{
-    // public class ApplicationDbContext : IdentityDbContext
-     public class ApplicationDbContext : DbContext
-    {
+// namespace Project_MVC.Data
+// {
+//     // public class ApplicationDbContext : IdentityDbContext
+//      public class ApplicationDbContext : DbContext
+//     {
      
-    public DbSet<Icon> IconsTable { get; set; }
-    public DbSet<Tag> TagsTable { get; set; }
+//     public DbSet<Icon> IconsTable { get; set; }
+//     public DbSet<Tag> TagsTable { get; set; }
 
 
-public ApplicationDbContext(){
+// public ApplicationDbContext(){
     
-}
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
+// }
+//         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+//         {
 
-        }
+//         }
 //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //     {
 // optionsBuilder.UseSqlite("Filename=./confbarrel.db");
 //     }
-    }
-}
+//     }
+// }
 
 
 

@@ -3,7 +3,16 @@
 @* @using Project1.Controllers; //return changeName function ???? *@
 
 @{
-    ViewData["Title"] = "Vending";
+    ViewData["Title"] = "Vending";  //Showing this title on the top of the Web brouser
+
+@* Layout = null; *@
+
+
+dynamic data = ViewBag.Data;
+
+var bookInfo = ViewData["book"] as Book;  //we give data type as Book (ViewData using Model)
+
+    ViewData["ViewDataName"] = 0;
 
     var products = new List<Product>(){
          new Product(1, "Bread", "https://cdn11.bigcommerce.com/s-slzx5y75ra/images/stencil/1280x1280/products/19754/1993/largecutloaf300__20984.1675695458.jpg?c=1", 0.95),
@@ -30,10 +39,14 @@
          return @money-productPrice;
         };
 
-        string changeName(){
-           return name = "Felex";
+        void changeName(){
+           name = "Felex";
         }
+
+      
         
+
+
 }
 <h1>This is Vending machine</h1>
 
@@ -69,12 +82,68 @@
 
     <div class="pocket-container">
     <h3 class="product-pocket">Money left in your pocket: £ @money</h3>
-    <button class="reset-btn">Reset</button>
+    <button class="reset-btn" onClick="Reset">Reset</button>
     </div>
     <h3>Products in your basket: </h3>
 
-    <button onclick="@changeName()">Change Name</button>
-    <p>@name</p>
+
+<form>
+  <button name="button" value="Suka"  asp-action="changeName">Change Name</button>
+</form>
+    <div>
+        @* show result from method click *@
+        @TempData["changeN"]
+    </div>
+
+<br/>
+<p>@ViewData["Title"]</p>
+<br/>
+
+<br/>
+<p>@ViewData["ViewDataName"]</p>
+<br/>
+
+ <form>  
+        @* asp-action="click"  --> call method click *@
+        @* value="first" --> pass "first" to the click method *@
+    <button name="button" value="Hello"  asp-action="add"> Increment +1 </button>
+    @* <button name="button" value="second"  asp-action="click">Second</button> *@
+    </form> 
 
 
+      <form>  
+        @* asp-action="click"  --> call method click *@
+        @* value="first" --> pass "first" to the click method *@
+    <button name="button" value="first"  asp-action="click">First</button>
+    <button name="button" value="second"  asp-action="click">Second</button>
+    </form>  
+    <div>
+        @* show result from method click *@
+        @TempData["buttonval"]
+    </div>
+
+<br/>
+<h3>Data from viewBag</h3>
+<p>@ViewBag.Number</p>
+<p>@ViewBag.Name</p>
+<p>@data.Id</p>
+<p>@data.Name</p>
+
+<br/>
+<h3>Data from Book Model -ViewBag</h3>
+<p>@ViewBag.Type.Id</p>
+<p>@ViewBag.Type.Title</p>
+<p>@ViewBag.Type.Author</p>
 @* <p> @Test.changeName()</p> *@
+
+<br/>
+<h3>ViewData</h3>
+<p>@ViewData["Property1"]</p>
+<br/>
+<h3>Data from Book Model -ViewData</h3>
+<p>@bookInfo.Id</p>
+<p>@bookInfo.Author</p>
+
+<br/>
+<h3>ViewData Attribute</h3>
+<p>@ViewData["CustomProperty"]</p> 

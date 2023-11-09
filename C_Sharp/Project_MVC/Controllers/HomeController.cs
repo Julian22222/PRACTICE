@@ -1,8 +1,12 @@
-﻿// using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.ComponentModel;
+using System.Security.AccessControl;
+using System.Net.Cache;
+// using System.Runtime.InteropServices.WindowsRuntime;
 using System.Reflection.Emit;
 using System.Reflection;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using System.Dynamic; //use dynamic ViewBag proporties
+using Microsoft.AspNetCore.Mvc;  //allow to use Routes 
 using Project_MVC.Models;   //connection of error
 using Project_MVC.Models; //User class connection
 using Project_MVC.Controllers;   //clients list connection
@@ -46,12 +50,7 @@ public class HomeController : Controller
     }
 
 
-  public ActionResult ClickTest()
-        {
-            ViewBag.Message = "ClickTest.";
-            Debug.WriteLine("Damn...");
-            return View();
-        }
+
 
    // [HttpPost]
     //   public async Task<IActionResult> PostFormMethodToDatabase( string name, string age, string description)
@@ -70,13 +69,16 @@ public class HomeController : Controller
     // }
 
 
-
-  public IActionResult Game()
+//Method
+  public IActionResult BookStoreTest()
     {
         return View();
     }
 
 
+
+
+//Method
      // will show another page from Views -> Home -> Privacy (everithing we put there)
     public IActionResult Test()
     {
@@ -121,6 +123,8 @@ public class HomeController : Controller
     }
 
 
+
+
   public IActionResult Calculator()
     {
 
@@ -130,35 +134,119 @@ var myName = Configuration.GetSection("Admin:Name");
         return View(myName);
     }
 
+
+///Sample of this route - /Books/?BookId=101
+[Route("/Books")]
+public IActionResult Book(){
+    if(!Request.Query.ContainsKey("BookId")){
+        return BadRequest("Book Id is not provided.");
+    } 
+    return Content("This is a book","text/plain");
+}
+
+
+///Sample of this route - /Check/?CheckId=104
+[Route("/Check")]
+public IActionResult Check(){
+    if(!Request.Query.ContainsKey("CheckId")){
+        return BadRequest("Check Id is not provided.");
+    }
+    return Content("This is a check","text/plain");
+}
+
+
+
+
+[ViewData]
+public string CustomProperty { get; set; }  //needs for ViewData Attribute
+
      public IActionResult Vending()
     {
 
+ViewBag.Number = 123;
+ViewBag.Name ="My name is Julian";
+
+
+
+dynamic data = new ExpandoObject();
+data.Id = 1;
+data.Name = "Julian";
+
+ViewBag.Data = data;
+
+
+ViewBag.Type = new Book(){Id= 5, Title = "This is Name", Author = "This is Author"};
+
+
+ViewData["Property1"] = "This is a ViewData";
+
+ViewData["book"] = new Book(){Author = "Jack", Id = 4 };  //using Model 
+
+CustomProperty = "Custom Value";  //ViewData Attribute variable
 
         return View();
+        // return Content("Book Id is Not provided");
+        // return new BadRequestResult();
+        // return BadRequest();
+        // return NotFound();
+        // return File("/Sample.pdf","application/pdf");
     }
 
-    //  public void myFunction (){
-    //       @* alert("success") *@
-    //    @* return "my function is called"; *@
-    //    Console.WriteLine("Hi!")
-    //    @* System.Diagnostics.Debug.WriteLine("HEY") *@
-    //    @* System.Diagnostics.Trace.WriteLine("AuthorClass is created.", "AUTHORCLASS TRACE") *@
-    //    @* Debug.Write("HELLO"); *@
-    //    Page.Trace.Write ("Something here");
-    // }
 
-//      public string changeName(){
+     public IActionResult click(string button)
+    {
+        if(button == "first"){
+            // assign what do you want to show 
+          TempData["buttonval"]="First Button Clicked";
+          ViewData["Title"] = "First Button Clicked - Title";
+        }else{
+            TempData["buttonval"]="Second Button Clicked";
+        }
 
-//         string name = "";
+// return the same page 
+return RedirectToAction("Vending");
+    }
 
-// return name = "Kerillllllllllll";
-//      }
+    public IActionResult add(string button)
+    {
+      
+          @ViewData["ViewDataName"] = button;
+     
+// return the same page 
+return RedirectToAction("Vending");
+    }
+
+   public IActionResult addNumber(string button)
+    {
+      string Name = "hello";
+          @ViewData["ViewDataName"] = Name;
+          if(button == "Hello"){
+           Name+="!";
+          }
+
+     
+// return the same page 
+return View("Game");
+    }
+
+    
 
 
-    // [HttpPost]
-    // public double addProduct(double productPrice,float money){
-    //      return money-productPrice;
-    //     }
+
+
+ public IActionResult changeName(string button)
+ 
+    {
+        if(button == "Suka"){
+            @TempData["changeN"] = "Suka";
+        }
+        
+
+        // return the same page 
+return RedirectToAction("Vending");
+    }
+
+
 
 
 // tracking if you use unexisting page -will call Error() 
