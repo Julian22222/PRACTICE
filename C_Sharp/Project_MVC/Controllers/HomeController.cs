@@ -7,8 +7,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Dynamic; //use dynamic ViewBag proporties
 using Microsoft.AspNetCore.Mvc;  //allow to use Routes 
-using Project_MVC.Models;   //connection of error
-using Project_MVC.Models; //User class connection
+using Project_MVC.Models;   //connection of error, User class connection
 using Project_MVC.Controllers;   //clients list connection
 
 namespace Project_MVC.Controllers;

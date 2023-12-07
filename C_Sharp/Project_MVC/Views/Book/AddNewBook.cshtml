@@ -10,6 +10,9 @@
     <h3 class="display-4">Add new book</h3>
 
     <form method="post" asp-controller="Book" asp-action="AddNewBook">
+        @*we don't need to use --> asp-action="" and asp-controller="" if we have Controller with the same name as action method - AddNewBook
+        if the action method is different then we use -> asp-action="name of action method to call"  and asp-controller="controller name where we have an action method"
+         *@
 
         @* common input -->
     <input type="text"/> *@

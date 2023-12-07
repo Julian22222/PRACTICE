@@ -34,8 +34,9 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 // builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
 
+//we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
-builder.Services.AddDbContext<BookStoreContext>();
+builder.Services.AddDbContext<BookStoreContext>(); //we tell to our application that we use BookStoreContext class
 
 // builder.Services.AddDbContext<MyappDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app

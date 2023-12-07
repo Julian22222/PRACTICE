@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+// all this link - is nameofspace
+using Microsoft.AspNetCore.Mvc;   //need to -> inherit from Controller 
+// using Microsoft.AspNetCore.Mvc;  //allow to use Routes 
 using Project_MVC.Repository;  //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC.Models;  //Book class import connection
 
@@ -62,11 +64,13 @@ public List<Book> SearchBook(string title, string authorName){
 
 
 // form Method to add new book
+//Form Page, with areas to field 
 public IActionResult AddNewBook(){
     return View();
 }
 
-
+//btn --> add book when you press it it will call this AddNewBook method (the name of the method can be anyname)
+//it receives Book model(data type) with name -> book
 [HttpPost]
 public IActionResult AddNewBook(Book book){
     return View();
