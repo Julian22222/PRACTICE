@@ -5,7 +5,7 @@
 namespace Project_MVC_BookShop.Migrations
 {
     /// <inheritdoc />
-    public partial class name : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -11,8 +11,8 @@ using Project_MVC_BookShop.Data;
 namespace Project_MVC_BookShop.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    [Migration("20231111095214_name")]
-    partial class name
+    [Migration("20231211210754_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,21 +33,18 @@ namespace Project_MVC_BookShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalPages")

@@ -26,6 +26,9 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 //AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+// you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
+//  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
+
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
 
 
@@ -35,10 +38,12 @@ builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with de
 // builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
 
+//we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
-builder.Services.AddDbContext<BookStoreContext>();
+builder.Services.AddDbContext<BookStoreContext>(); //we tell to our application that we use BookStoreContext class (Also, this needs for dependency injection)
 
 
+// Configuration -> services that allow to acces to the data that we mentioned in appsettings.json 
 
 var app = builder.Build();  //creating our web app
 

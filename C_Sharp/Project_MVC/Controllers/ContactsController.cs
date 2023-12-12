@@ -1,11 +1,11 @@
 using System.Reflection.Emit;
 using System.Reflection;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;    //need to -> inherit from Controller , allow to use Routes 
 // using Project1.Models;
 // using Project1.Views.Home; //User class connection
-using Project_MVC.Models;  //Contact class connection
-using Project_MVC.Models;   //Clients class
+using Project_MVC.Models;     //Contact class connection
+using Project_MVC.Models;      //Clients class
 
 namespace Project_MVC.Controllers
 {

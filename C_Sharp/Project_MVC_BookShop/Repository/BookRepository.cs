@@ -1,8 +1,8 @@
-using System;
+using System;   //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;   //Can you Task with async await 
-using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, and other asyn methods
+using System.Threading.Tasks;   //Can you Task with async await , and to use Task
+using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 using Project_MVC_BookShop.Models;  //Book class import connection
 using Project_MVC_BookShop.Controllers;   //BookControllers methods connection
 using Project_MVC_BookShop.Data;  //import BookstoreContext database and Books class from Data folder
@@ -34,21 +34,24 @@ namespace Project_MVC_BookShop.Repository
         _context = context;
     }
 
-    // new method to add new book  from field form to data base
-    // always use data type -> Task with async methods 
-    public async Task<int> AddNewBook(Book model){
+// new method to add new book  from field form to data base
+// always use data type -> Task with async methods 
+// model coming from BookController [HttpPost] method
+public async Task<int> AddNewBook(Book model){
 
 
 // new varible
 var newBook = new Books(){
-// assign all proporties from received model to our proporties in the table
+// assign all proporties from received model(data from form) to our proporties in the table
 // id -will be assign to it automatically to newBook object
     Title = model.Title,
     Author = model.Author,
     Description = model.Description,
     // Category = model.Category,
-    // Language = model.Language,
-    TotalPages = model.TotalPages
+    Language = model.Language,
+
+    // if model.TotalPages>HasValue(contains some value) return it value, otherwise return 0
+    TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0
 };
 
 // we add newBook to our database -> _context -> in Books table
@@ -65,16 +68,22 @@ return newBook.Id;
          // always use type -> Task with async methods 
         public async Task<List<Book>> GetAllBooks(){
 
-            // creating new variable with List data type
+            // creating new variable with List<Book> data type, 
+            //we will assign all data from database to this list (convert the data)
             var books = new List<Book>();
             
-            // getting all the books from our database -> Books table
+            // getting all the books from our database -> Books table, 
+            //to get all books --> ToList() or ToListAsync()
             var allbooks = await _context.Books.ToListAsync();
+            //(return typy of allbooks is - List<Books> (List of Books)) but return data type of our method(GetAllBooks) is List of Book --> List<Book>
+            //Therefore we need to convert it manually, (without using any mapping- other option to convert data)  
+            // We convert it manually --> List<Books> (that we receive from database) into List<Book>
 
             // if there is any value in the data(in the Books table) then we do this code
             if(allbooks?.Any() == true){
                 foreach (var book in allbooks){
                     books.Add(new Book(){
+                        //assign each property of this book model to our proporties(Id,Title,Author,Category etc.)
                         Id = book.Id,
                         Title = book.Title,
                         Author = book.Author,
@@ -97,6 +106,8 @@ return newBook.Id;
 
 // if book not null -> do this code
         if(book != null){
+
+            // Converting the data manually--> List<Books>(from database) into List<Book>
             var bookDetails = new Book(){
                         Id = book.Id,
                         Title = book.Title,

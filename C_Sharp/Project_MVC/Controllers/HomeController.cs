@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Security.AccessControl;
 using System.Net.Cache;
-// using System.Runtime.InteropServices.WindowsRuntime;
 using System.Reflection.Emit;
 using System.Reflection;
 using System.Diagnostics;
-using System.Dynamic; //use dynamic ViewBag proporties
-using Microsoft.AspNetCore.Mvc;  //allow to use Routes 
-using Project_MVC.Models;   //connection of error, User class connection
-using Project_MVC.Controllers;   //clients list connection
+using System.Dynamic;             //use dynamic ViewBag proporties
+using Microsoft.AspNetCore.Mvc;   //need to -> inherit from Controller , allow to use Routes 
+using Project_MVC.Models;         //connection of error, User class connection
+using Project_MVC.Controllers;    //clients list connection
 
 namespace Project_MVC.Controllers;
 
@@ -48,24 +47,6 @@ public class HomeController : Controller
         return View(clients);
     }
 
-
-
-
-   // [HttpPost]
-    //   public async Task<IActionResult> PostFormMethodToDatabase( string name, string age, string description)
-    // {
-
-    //     var product = new Product(){
-
-    //         Name = name,
-    //         Age = age,
-    //         Description = description,
-    //     };
-
-    //     await _productRepository.Insert(product);
-
-    //     return View();
-    // }
 
 
 //Method
