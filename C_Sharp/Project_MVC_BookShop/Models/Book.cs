@@ -4,7 +4,7 @@ using System;   //using the System library in your project.Which gives you some 
 using System.Collections.Generic;
 using System.Linq;  //querying any type of data source
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;   //to use validations attributes
+using System.ComponentModel.DataAnnotations;   //to use server side validations attributes
 
 
 namespace Project_MVC_BookShop.Models
@@ -12,7 +12,7 @@ namespace Project_MVC_BookShop.Models
     public class Book
     {
 
-        // [DataType(DataType.Date)]
+        // [DataType(DataType.Date)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others)
         // [Display(Name ="Date")]
         // public string MyField{get;set;}
 
@@ -20,7 +20,8 @@ namespace Project_MVC_BookShop.Models
         // [Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
         public int Id { get; set; }
 
-        [StringLength(100,MinimumLength =5)]  //max length= 100, and min length =5
+        // this is server side validation attributes
+        [StringLength(100,MinimumLength =2)]  //max length= 100, and min length =5
         [Required(ErrorMessage = "Please enter the title of you book")] //mandatory field to field, custom msg if the field is not valid
         public string Title { get; set; }
 

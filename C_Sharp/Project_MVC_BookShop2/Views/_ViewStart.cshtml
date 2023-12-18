@@ -1,0 +1,12 @@
+﻿@* main template of Layout *@
+@* to dont write the same code in each View file we -> we put this code here, 
+it is apply to all View files *@
+@* this file is common for all Views *@
+@* This file runs before View will be rendered in the browser, the code in this file will be applied to all Views *@
+@* if Layout is different for any of the View.cshtml files 
+-you can write it down in that file (on the top)-> @{Layout = "Different Layout"}*@
+
+
+@{
+    Layout = "_Layout";
+}

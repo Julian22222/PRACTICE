@@ -45,10 +45,12 @@
 
          <div class="form-group">
             <label asp-for="Language"></label>
-            @* dropdown -> select *@
-            <select asp-for="Language" class="form-control" required>
+            @* dropdown -> using select and option tag *@
+            @* required - use for client side validation (UI)*@
+            <select asp-for="Language" class="form-control" required> 
                 <option value="">Please choose book language</option>
-                <option >English</option>
+                @* (value="") will return a null, other option return their values *@
+                <option value="English" >English (Global language)</option>
                  <option>Spanish</option>
                   <option>Franch</option>
                    <option>Dutch</option>
@@ -56,9 +58,19 @@
              <span asp-validation-for="Language" class="text-danger"></span> 
         </div>
 
+
+        <div class="form-group">
+            <label asp-for="Category" class="control-lebel"></label>
+            <select asp-for="Category" class="form-control" asp-items="new SelectList(ViewBag.Category)">
+                <option value="">Please choose category</option>
+            </select>
+             <span asp-validation-for="Category" class="text-danger"></span> 
+        </div>
+
+
         <div class="form-group">
             @* asp-for="Title"  input element for Title property for our Book Model  *@
-            <label asp-for="Title"></label>
+            <label asp-for="Title" class="control-lebel"></label>
             <input asp-for="Title" class="form-control"/>
 
             @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
@@ -66,20 +78,20 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="Author"></label>
+            <label asp-for="Author" class="control-lebel"></label>
             <input asp-for="Author" class="form-control"/>
              <span asp-validation-for="Author" class="text-danger"></span> 
         </div>
 
         <div class="form-group">
-            <label asp-for="Description"></label>
+            <label asp-for="Description" class="control-lebel"></label>
             <textarea asp-for="Description" class="form-control"></textarea>
               <span asp-validation-for="Description" class="text-danger"></span> 
         </div>
 
 
         <div class="form-group">
-            <label asp-for="TotalPages"></label>
+            <label asp-for="TotalPages" class="control-lebel"></label>
             <input asp-for="TotalPages" class="form-control" />
              <span asp-validation-for="TotalPages" class="text-danger"></span> 
         </div>

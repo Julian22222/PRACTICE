@@ -26,6 +26,13 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 //AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+//Uncomment this code to disable Client side validation(only in Development mode), add it to the existing chain
+//  .AddViewOptions(option =>{
+//     option.HtmlHelperOptions.ClientValidationEnabled = false;
+// });
+
+
+
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 

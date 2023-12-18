@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a 
 
 namespace Project_MVC_BookShop.Data
 {
+
+    // this class allow to interact with database
+
     // inherit this class from DbContext class
     public class BookStoreContext : DbContext
     {
@@ -19,9 +22,13 @@ namespace Project_MVC_BookShop.Data
         }
         
 
+        // this creates Books table in the database
         // name of your table will be -Books
         //<Books> -> data type(from Data folder), will create columns from Book class proporties
         public DbSet<Books> Books {get; set; }
+
+
+
 
 
 // DbContext connection with database, there is 2 ways

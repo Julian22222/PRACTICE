@@ -65,9 +65,14 @@ public List<Book> SearchBook(string title, string authorName){
 // form Method to add new book, GET method
 public IActionResult AddNewBook(bool isSuccess = false, int bookId = 0){
 
-// passing English language as default to our form
+// passing English language as default to our form  -->in return View(model)
 var model = new Book(){
     Language = "English"
+};
+
+
+ViewBag.Category = new List<string>(){
+"programming","animals", "technology", "sports"
 };
 
     // by default we passing isSuccess = false to the View page - AddNewBook
@@ -95,6 +100,10 @@ public async Task<IActionResult> AddNewBook(Book book){
     // if form is not ValidateAntiForgeryTokenAttribute = return false, and call this code
     // ViewBag.IsSuccess = false;
     // ViewBag.BookId = 0;
+
+    ViewBag.Category = new List<string>(){
+"programming","animals", "technology", "sports"
+};
 
 // add some custom error messages to your model -> validation-summary
 ModelState.AddModelError("","This is my 1st custom error message from BookController");

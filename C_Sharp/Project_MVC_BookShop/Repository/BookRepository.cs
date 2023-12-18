@@ -33,6 +33,8 @@ namespace Project_MVC_BookShop.Repository
     public BookRepository(BookStoreContext context){
         _context = context;
     }
+// using _context -> we have access to all data from database
+
 
 // new method to add new book  from field form to data base
 // always use data type -> Task with async methods 
@@ -47,7 +49,7 @@ var newBook = new Books(){
     Title = model.Title,
     Author = model.Author,
     Description = model.Description,
-    // Category = model.Category,
+    Category = model.Category,
     Language = model.Language,
 
     // if model.TotalPages>HasValue(contains some value) return it value, otherwise return 0
