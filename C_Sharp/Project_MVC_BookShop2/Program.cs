@@ -37,7 +37,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
-
+builder.Services.AddScoped<LanguageRepository, LanguageRepository>();  //to work with dependency injections
 
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)

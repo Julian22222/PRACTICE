@@ -47,13 +47,8 @@
             <label asp-for="LanguageId"></label>
             @* dropdown -> using select and option tag *@
             @* required - use for client side validation (UI)*@
-            <select asp-for="LanguageId" class="form-control" required> 
+            <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language" required> 
                 <option value="">Please choose book language</option>
-                @* (value="") will return a null, other option return their values *@
-                <option value="English" >English (Global language)</option>
-                 <option>Spanish</option>
-                  <option>Franch</option>
-                   <option>Dutch</option>
             </select>
              <span asp-validation-for="LanguageId" class="text-danger"></span> 
         </div>

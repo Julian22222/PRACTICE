@@ -43,7 +43,7 @@ How to connect your project to SQl Server Database.
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
 3. After creating Data folder with all needed files and content we can create -MIGRATIONS FOLDER
-4. To create Migrations folder --> dotnet ef migrations add <<AnyNameOfMigrations>> -->/creating database with tables, Class proporties converts to table columns.
+4. To create Migrations folder --> dotnet ef migrations add <<AnyNameOfMigrations>> -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
 5. dotnet ef database update -->/to make changes to our database
 6. All migrations commands --> dotnet ef migrations
 

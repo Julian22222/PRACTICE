@@ -6,6 +6,7 @@ using System.Threading.Tasks;              //creating new threads for computatio
 using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to inherit Controller
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop2.Models;        //Book class import connection
+using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList
 
 // using System.Web.Mvc; 
 
@@ -18,14 +19,16 @@ namespace Project_MVC_BookShop2.Controllers
 // define type of this variable, data type - BookRepository. (template)
 // _bookRepository -> variable name
 private readonly BookRepository _bookRepository = null;
+private readonly LanguageRepository _languageRepository = null;
 
 // ctor + tab -to make constructor
         // this is constructor
-public BookController(BookRepository bookRepository){
+public BookController(BookRepository bookRepository, LanguageRepository languageRepository){
 // here we are assigning BookRepository class with all its methods to -> _bookRepository
 // can acess to BookRepository class methods , after creating an object from BookRepository class -> _bookRepository
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
 _bookRepository = bookRepository;
+_languageRepository = languageRepository;
 }
 
 
@@ -63,13 +66,16 @@ public List<Book> SearchBook(string title, string authorName){
 
 
 // form Method to add new book, GET method
-public IActionResult AddNewBook(bool isSuccess = false, int bookId = 0){
+public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 
 // passing English language as default to our form  -->in return View(model)
 var model = new Book(){
     LanguageId = 1
 };
 
+// here we get all languages from database , Language Table
+// and passing the data in ViewBag
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");
 
 ViewBag.Category = new List<string>(){
 "programming","animals", "technology", "sports"
@@ -108,6 +114,8 @@ public async Task<IActionResult> AddNewBook(Book book){
 // add some custom error messages to your model -> validation-summary
 ModelState.AddModelError("","This is my 1st custom error message from BookController");
 ModelState.AddModelError("","This is my 2nd custom error message from BookController");
+
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");
 
    return View();
 }
