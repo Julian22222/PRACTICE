@@ -1,5 +1,6 @@
 using System;   //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;   //Can you Task with async await , and to use Task
 using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
@@ -91,7 +92,8 @@ return newBook.Id;
                         Author = book.Author,
                         Category = book.Category,
                         Description = book.Description,
-                        LanguageId = book.LanguageId,
+                        LanguageId = book.LanguageId,  //showing a number 
+                        Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
                         TotalPages = book.TotalPages
                     });
                 }
@@ -101,28 +103,29 @@ return newBook.Id;
 
 
   // method GetBookById return Book, Book - data type
-        public async Task<Book> GetBookById(int id){
+        public async Task<Book> GetBookById(int id)
+        {
 
-        var book = await _context.Books2.FindAsync(id);
-// return DataSource().Where(x=> x.Id ==id).FirstOrDefaultAsync();
-
-// if book not null -> do this code
-        if(book != null){
-
-            // Converting the data manually--> List<Books>(from database) into List<Book>
-            var bookDetails = new Book(){
+        return await _context.Books2.Where(x=>x.Id ==id).Select(book => new Book(){
                         Id = book.Id,
                         Title = book.Title,
                         Author = book.Author,
                         Category = book.Category,
                         Description = book.Description,
                         LanguageId = book.LanguageId,
+                        Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
                         TotalPages = book.TotalPages
-            };
-            return bookDetails;
+            }).FirstOrDefaultAsync();
+// return DataSource().Where(x=> x.Id ==id).FirstOrDefaultAsync();
+
+
+
+            // Converting the data manually--> List<Books>(from database) into List<Book>
+            
+
+          
         }
-        return null;
-        }
+      
 
 
           // method SearchBook return List -data type(Book)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;              //creating new threads for computatio
 using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to inherit Controller
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop2.Models;        //Book class import connection
-using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList
+using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup
 
 // using System.Web.Mvc; 
 
@@ -115,7 +115,7 @@ public async Task<IActionResult> AddNewBook(Book book){
 ModelState.AddModelError("","This is my 1st custom error message from BookController");
 ModelState.AddModelError("","This is my 2nd custom error message from BookController");
 
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 
    return View();
 }

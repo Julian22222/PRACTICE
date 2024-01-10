@@ -1,7 +1,7 @@
 using System;    //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 using System.Collections.Generic;  //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
 using System.Linq;
-using System.Threading.Tasks;  //Can you Task with async await , and to use Task
+using System.Threading.Tasks;  //to use Task with async await , and to use Task
 
 using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
 ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
@@ -28,7 +28,7 @@ namespace Project_MVC_BookShop2.Data
         public DbSet<Books> Books2 {get; set; }
 
 
-         // this creates Language table in the database, this table is needed for dropdown options in Form
+         // this creates Language table in the database, this table is needed for dropdown language options in Form
         // name of your table will be -Language
         //<Language> -> data type(from Data folder), will create columns from Language class proporties
         public DbSet<Language> Language {get;set;}

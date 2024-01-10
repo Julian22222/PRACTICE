@@ -37,7 +37,7 @@ namespace Project_MVC_BookShop2.Repository
 
 
     public async Task<List<LanguageModel>> GetLanguages(){
-       return await _context.Language.Select(x=> new LanguageModel(){
+       return await _context.Language.Select(x=> new LanguageModel(){ //converting _context.Language -> to LanguageModel data type
             Id = x.Id,
             Description = x.Description,
             Name = x.Name

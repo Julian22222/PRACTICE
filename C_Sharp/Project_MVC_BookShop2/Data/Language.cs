@@ -8,7 +8,9 @@ namespace Project_MVC_BookShop2.Data
     public class Language
     {
         
-        public int Id { get; set; }
+// proporties-> colums in Language Table
+
+        public int Id { get; set; } //Primary key
 
         public string Name { get; set; }
 

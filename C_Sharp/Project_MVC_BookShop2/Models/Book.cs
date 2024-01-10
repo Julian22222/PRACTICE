@@ -31,12 +31,17 @@ namespace Project_MVC_BookShop2.Models
 
 
         public string Description { get; set; }
-        public string? Category { get; set; }
-        public int? LanguageId { get; set; }
+        public string Category { get; set; }
+        public int LanguageId { get; set; }  //store Id of our language
+
+        public string Language { get; set; }
 
         
         [Required(ErrorMessage = "Please enter the total pages")] //mandatory field to field, custom msg if the field is not valid
         [Display(Name ="Total pages of book")]  //to update the text,(TotalPages will be update on Total pages of book)
+
+
+ // when you put -> ? -> this field is  - not Required
         public int? TotalPages { get; set; }
 
        
