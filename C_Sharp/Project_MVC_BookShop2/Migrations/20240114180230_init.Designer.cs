@@ -11,7 +11,7 @@ using Project_MVC_BookShop2.Data;
 namespace ProjectMVCBookShop2.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    [Migration("20231220204722_init")]
+    [Migration("20240114180230_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -37,6 +37,10 @@ namespace ProjectMVCBookShop2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

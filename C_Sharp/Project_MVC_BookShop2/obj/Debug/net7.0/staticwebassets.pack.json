@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets/Project_MVC_BookShop2.bundle.scp.css"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/1cb11b67-716e-4dc4-9dbd-1c465e80d6f0_istockphoto-949118068-170667a.jpg",
+      "PackagePath": "staticwebassets/books/cover/1cb11b67-716e-4dc4-9dbd-1c465e80d6f0_istockphoto-949118068-170667a.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/79a0a6da-2bc1-44c4-837a-e8946f1a21c8_Untitled.jpeg",
+      "PackagePath": "staticwebassets/books/cover/79a0a6da-2bc1-44c4-837a-e8946f1a21c8_Untitled.jpeg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/b0d445d1-2722-4a80-8a3b-d11078c070bf_Untitled.jpeg",
+      "PackagePath": "staticwebassets/books/cover/b0d445d1-2722-4a80-8a3b-d11078c070bf_Untitled.jpeg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

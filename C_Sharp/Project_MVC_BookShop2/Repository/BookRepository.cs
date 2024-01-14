@@ -54,7 +54,10 @@ var newBook = new Books(){
     LanguageId = model.LanguageId,
 
     // if model.TotalPages>HasValue(contains some value) return it value, otherwise return 0
-    TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0
+    TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
+    
+    //full path to uploaded img folder -->(wwwroot/books/cover)
+    CoverImageUrl = model.CoverImageUrl
 };
 
 // we add newBook to our database -> _context -> in Books table
@@ -93,8 +96,9 @@ return newBook.Id;
                         Category = book.Category,
                         Description = book.Description,
                         LanguageId = book.LanguageId,  //showing a number 
-                        Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
-                        TotalPages = book.TotalPages
+                        // Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
+                        TotalPages = book.TotalPages,
+                        CoverImageUrl = book.CoverImageUrl  //full path to uploaded img folder -->(wwwroot/books/cover)
                     });
                 }
             }
@@ -114,7 +118,8 @@ return newBook.Id;
                         Description = book.Description,
                         LanguageId = book.LanguageId,
                         Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
-                        TotalPages = book.TotalPages
+                        TotalPages = book.TotalPages,
+                        CoverImageUrl = book.CoverImageUrl  //full path to uploaded img folder -->(wwwroot/books/cover)
             }).FirstOrDefaultAsync();
 // return DataSource().Where(x=> x.Id ==id).FirstOrDefaultAsync();
 

@@ -75,9 +75,13 @@
     @* jquery connection, to use jquery library, (this method is -how you can access the library from your own application)*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 
-    @* usibg these two jquery links -makes client side validation, not hiting server side validation *@
+    @* usibg these two jquery links -makes client side validation(client side validation will work automatically taking all validations from server side validation), not hiting server side validation, the order of libraries is important *@
     <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @* jquery.unobtrusive-ajax library connection, link from -(https://cdnjs.com/libraries/jquery-ajax-unobtrusive) (this method is -how you can access the library using CDN network) *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
+
+
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

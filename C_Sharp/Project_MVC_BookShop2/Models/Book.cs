@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;  //querying any type of data source
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;   //to use server side validations attributes
+using Microsoft.AspNetCore.Http;    //to use IFormFile (special data type to hold information about uploaded files)
 
 
 namespace Project_MVC_BookShop2.Models
@@ -34,7 +35,7 @@ namespace Project_MVC_BookShop2.Models
         public string Category { get; set; }
         public int LanguageId { get; set; }  //store Id of our language
 
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         
         [Required(ErrorMessage = "Please enter the total pages")] //mandatory field to field, custom msg if the field is not valid
@@ -43,6 +44,16 @@ namespace Project_MVC_BookShop2.Models
 
  // when you put -> ? -> this field is  - not Required
         public int? TotalPages { get; set; }
+
+
+
+        // IFormFile - is special data type, this property will hold all the details about uploaded files / img (file Name)
+        [Display(Name ="Choose the cover photo of your book")]
+        [Required]
+        public IFormFile CoverPhoto { get; set; }
+
+        // uploaded image full path
+        public string? CoverImageUrl {get; set;}
 
        
 

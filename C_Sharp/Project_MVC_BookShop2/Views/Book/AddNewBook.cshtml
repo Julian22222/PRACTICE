@@ -11,7 +11,7 @@
     <hr/>
 @if(ViewBag.IsSuccess == true){
 
-@* bootstrap alert icon *@
+@* bootstrap alert icon, when form is submitted successfully *@
     <div class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>Congratulations</strong> You have added new book successfully. <br/>
   Click <a asp-controller="Book" asp-action="GetBook" asp-route-id="@ViewBag.BookId">here</a> to view the details
@@ -20,9 +20,21 @@
 }
 
 
+@* Bootstrap loding spinners, in form tag we put -> data-ajax-loading="#myLoader" *@
+@* style="display:none" --> not showing this code all the time, showing loading animation only when uploading new book *@
+<div class="d-flex justify-content-center" >
+  <div class="spinner-border" role="status" id="myLoader" style="display:none" >  
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
 
 
-    <form method="post" asp-controller="Book" asp-action="AddNewBook">
+
+@* to use ajax form*@
+    @* <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook"> *@
+
+ <form method="post" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
+@* enctype="multipart/form-data"   <- If you are dealing with the file(uploading files in View) in your form then you use this attribute in form tag*@
 
         @* common input -->
     <input type="text"/> *@
@@ -90,6 +102,22 @@
             <input asp-for="TotalPages" class="form-control" />
              <span asp-validation-for="TotalPages" class="text-danger"></span> 
         </div>
+
+
+        <div class="form-group">
+            @* asp-for="Title"  input element for Title property for our Book Model  *@
+            <label asp-for="CoverPhoto" class="control-lebel"></label>
+
+         @* from bootstrap  *@
+        <div class="custom-file">
+        <input asp-for="CoverPhoto" class="form-control" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+            <span asp-validation-for="CoverPhoto" class="text-danger"></span> 
+        </div>
+
         
         <br/>
 
@@ -101,3 +129,19 @@
         
 </form>
 </div>
+
+@section scripts {
+    <script>
+        function myComplete(data){
+            alert("I am from complete");
+        }
+
+        function mySuccess(data){
+            alert("I am from Success");
+        }
+
+        function myFailure(data){
+            alert("I am from Failure");
+        }
+    </script>
+}

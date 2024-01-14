@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop2.Models;        //Book class import connection
 using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.IO;
+
 
 // using System.Web.Mvc; 
 
@@ -21,14 +25,17 @@ namespace Project_MVC_BookShop2.Controllers
 private readonly BookRepository _bookRepository = null;
 private readonly LanguageRepository _languageRepository = null;
 
+private readonly IWebHostEnvironment _webHostEnvironment;  ///dependency injection for server path to store uploaded photos on the server, contains all details about this environment
+
 // ctor + tab -to make constructor
         // this is constructor
-public BookController(BookRepository bookRepository, LanguageRepository languageRepository){
+public BookController(BookRepository bookRepository, LanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment){
 // here we are assigning BookRepository class with all its methods to -> _bookRepository
 // can acess to BookRepository class methods , after creating an object from BookRepository class -> _bookRepository
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
-_bookRepository = bookRepository;
-_languageRepository = languageRepository;
+_bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class
+_languageRepository = languageRepository;    //dependency injection, to make object from languageRepository class
+_webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server
 }
 
 
@@ -95,6 +102,33 @@ public async Task<IActionResult> AddNewBook(Book book){
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
     {
+
+
+        // to save uploaded cover photo in the wwwroot/books/cover
+        if(book.CoverPhoto != null){
+
+            string folder ="books/cover/";  //path to folder where we store uploaded photos
+            // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,or this folder (path) is not available)
+
+            //add uploaded img file Name to the path --> book.CoverPhoto.FileName;
+            //also we need to avoid errors when upload images with the same name, make the img files name unique -> + Guid.NewGuid().ToString()
+            folder += Guid.NewGuid().ToString() + "_" + book.CoverPhoto.FileName;
+
+            // assign folder variable to CoverImageUrl property, / <--must be added in front of folder to display an image from database
+            book.CoverImageUrl = "/" + folder;
+
+            // we need server path to store these imgs in this application(we need to use IWebHostEnvironment dependency injection)
+            // Define the path for a server of the actual folder where we keep imgs, add the server path + folder (join server path and folder)
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <- _webHostEnvironment.WebRootPath  +  folder
+
+            // we need to save the copy of the full img path in wwwroot/books/cover,  
+            // new FileStream(serverFolder <- the server path)
+            await book.CoverPhoto.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+        }
+
+
+
           int id = await _bookRepository.AddNewBook(book);
 
     if(id > 0){

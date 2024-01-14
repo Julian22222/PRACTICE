@@ -25,6 +25,9 @@ namespace Project_MVC_BookShop2.Data
 
         public int TotalPages { get; set; }
 
+        // property for uploaded img full path
+        public string CoverImageUrl { get; set; }
+
 // first Language ->data type
 //second Language ->Name of property
         public Language Language { get; set; } //we create relationship between Books2 table and Language table

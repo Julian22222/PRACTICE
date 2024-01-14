@@ -1,10 +1,37 @@
-In this Project we get and save the data of dropDown to database.
--(Add New Book)-in NavBar , in Form we have dropdown options (Language and Category) are coming from database, (they not hardcoded in the View)
--We create new class for dropdown -->Language ,in Data folder
--Create relationship between two tables --> in Books class we put property \_-->public Language(data type) Language(Name)
-LanguageId (number of Language)
+Different namespaces:
 
-.................................................................................
+1. using System.Runtime.InteropServices.WindowsRuntime;
+
+2. using System; //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
+
+3. using System.Collections.Generic; //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
+
+4. using System.Linq; //querying any type of data source
+
+5. using System.Threading.Tasks; //creating new threads for computation, aslo when use async-await operations, and to use Task
+
+6. using Microsoft.AspNetCore.Mvc; //allow to use Routes , //importing to inherit Controller
+
+7. using Project_MVC_BookShop2.Repository; //BookRepository connection and methods - GetAllBooks and others
+
+8. using Project_MVC_BookShop2.Models; //Book class import connection
+
+9. using Microsoft.AspNetCore.Mvc.Rendering; //to use SelectList, SelectListItem, SelectListGroup
+
+10. using Microsoft.AspNetCore.Mvc; //allow to use Routes , //importing to inherit Controller
+
+11. using Microsoft.EntityFrameworkCore; //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
+    ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
+
+12. using Microsoft.AspNetCore.Http; //to use IFormFile (special data type to hold information about uploaded files)
+    ..............................................................................................................
+    In this Project we get and save the data of dropDown to database.
+    -(Add New Book)-in NavBar , in Form we have dropdown options (Language and Category) are coming from database, (they not hardcoded in the View)
+    -We create new class for dropdown -->Language ,in Data folder
+    -Create relationship between two tables --> in Books class we put property \_-->public Language(data type) Language(Name)
+    LanguageId (number of Language)
+
+..............................................................................................................
 
 how to install nuget packages(Entity Framework Core)
 In terminal we write:
@@ -19,8 +46,9 @@ PackageNames:
 5. Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation -->///update automaticaly ViewEngine
 6. Microsoft.EntityFrameworkCore.Design -->///this package needs to create migrations folder
 7. Microsoft.EntityFrameworkCore.Tools.DotNet
+8. jQuery.Ajax.Unobtrusive --> jQuery-ajax-unobtrusive library ( client side validation)
 
-...................................................................................................................................................................................................................................................................................
+..............................................................................................................
 Main Locations in different folder
 
 1. Data folder - we keep all data for database here.
@@ -37,14 +65,22 @@ Main Locations in different folder
 
 4. In View , when we fill Form (it is completing throug Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
 
-...................................................................................................................................................................................................................................................................................
+....................................................................................................................
 How to connect your project to SQl Server Database.
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
 3. After creating Data folder with all needed files and content we can create -MIGRATIONS FOLDER
 4. To create Migrations folder --> dotnet ef migrations add <<AnyNameOfMigrations>> -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
-5. dotnet ef database update -->/to make changes to our database
+5. To make changes to our database --> dotnet ef database update
 6. All migrations commands --> dotnet ef migrations
 
 7. dotnet ef migrations remove -->//to remove some proporties from table
+
+..............................................................................................................
+jquery, bootstrap, ajax libraries and their packages can be imported from already installed .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet)
+
+CDN - (stands for )-> Content Delivery Network
+benefit of using CDN - it loads the file based on your geography location, increase performance of application
+
+...............................................................................................................
