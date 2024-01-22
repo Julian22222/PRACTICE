@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets/books/cover/1cb11b67-716e-4dc4-9dbd-1c465e80d6f0_istockphoto-949118068-170667a.jpg"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/7175c637-e9d4-4a08-a27d-f792c33cd90b_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/cover/7175c637-e9d4-4a08-a27d-f792c33cd90b_books-4812032_960_720.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/79a0a6da-2bc1-44c4-837a-e8946f1a21c8_Untitled.jpeg",
       "PackagePath": "staticwebassets/books/cover/79a0a6da-2bc1-44c4-837a-e8946f1a21c8_Untitled.jpeg"
     },
@@ -17,12 +21,20 @@
       "PackagePath": "staticwebassets/books/cover/b0d445d1-2722-4a80-8a3b-d11078c070bf_Untitled.jpeg"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/4428e821-a9ec-408b-8406-358facdfc23c_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/4428e821-a9ec-408b-8406-358facdfc23c_1.pdf"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/340719-200.png",
+      "PackagePath": "staticwebassets/img/340719-200.png"
     },
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/Cat.png",

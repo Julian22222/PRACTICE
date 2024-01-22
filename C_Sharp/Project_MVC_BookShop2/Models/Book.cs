@@ -47,7 +47,7 @@ namespace Project_MVC_BookShop2.Models
 
 
 
-        // IFormFile - is special data type, this property will hold all the details about uploaded files / img (file Name)
+        // IFormFile - it is a special data type(it allow to create a property where we can upload the file), this property will hold all the details about uploaded files / img (file Name)
         [Display(Name ="Choose the cover photo of your book")]
         [Required]
         public IFormFile CoverPhoto { get; set; }
@@ -55,8 +55,16 @@ namespace Project_MVC_BookShop2.Models
         // uploaded image full path
         public string? CoverImageUrl {get; set;}
 
-       
 
+        
+       
+        // IFormFile - it is a special data type(it allow to create a property where we can upload the file), this property will hold all the details about uploaded files / img (file Name)
+        [Display(Name ="Upload your book in pdf format")]
+        [Required]
+        public IFormFile BookPdf { get; set; }
+
+        // uploaded image full path
+        public string? BookPdfUrl {get; set;}
        
 
 

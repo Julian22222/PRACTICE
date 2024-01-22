@@ -12,3 +12,8 @@
 @using Project_MVC_BookShop2
 @using Project_MVC_BookShop2.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@* To use View Component tag --> <vc:top-books></vc:top-books>  in Views/Home/Index *@
+@addTagHelper *, Project_MVC_BookShop2
+@addTagHelper *, Project_MVC_BookShop2.Components

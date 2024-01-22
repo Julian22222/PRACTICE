@@ -115,7 +115,20 @@
         </div>
 
             @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
-            <span asp-validation-for="CoverPhoto" class="text-danger"></span> 
+            <span asp-validation-for="BookPdf" class="text-danger"></span> 
+        </div>
+
+
+
+
+        <div class="form-group">
+        <label asp-for="BookPdf" class="control-lebel"></label>
+        <div class="custom-file">
+        <input asp-for="BookPdf" class="form-control" id="customFile">
+        @* <label class="form-control-label" for="customFile">Choose file</label> *@
+        </div>
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+        <span asp-validation-for="BookPdf" class="text-danger"></span> 
         </div>
 
         

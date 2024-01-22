@@ -15,30 +15,51 @@
 @foreach(var book in Model){  //looping through imported data model(IEnumerable<Book> <--data type for imported Model) from controller
 
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                @* one image for all books *@
-                 @* <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo"> *@
+           <partial name="_bookThumbnail" model="book"/>  
+           @* passing data to our partial View file --> model="book" *@
+           @* model attribute helps to pass the data *@
 
-                @* image will be diffrent from uploaded image *@
+
+
+@* #IF WE DONT USE PARTIAL VIEW , WE WRITE THIS CODE --> *@
+@* <div class="card mb-4 shadow-sm">
+
+                #this example for one image for all books -->
+                 <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo">
+
+
+
+                #this example --> image will be diffrent, photo from uploaded image
                  <img src="@book.CoverImageUrl" alt="image logo" class="img-thumbnail" />
                 <div class="card-body">
 
-                        @* accessing book title  *@
+
+                        #accessing book title-->
                         <h3 class="card-title">@book.Title</h3>
 
-                        @* accessing book Description  *@
+
+                        #accessing book Description-->
                         <p class="card-text">@book.Description</p>
+
+
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                              @* accessing book Id by clicking on each card  *@
-                            @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
-                             <a asp-controller="book" asp-action="getbook" asp-route-id="@book.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+
+
+                              #accessing book Id by clicking on each card -->
+                            <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a>   or other option to write-->
+                             <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
                         </div>
-                        @* accessing book Author  *@
+
+
+                        #accessing book Author -->
                         <small class="text-muted">@book.Author</small>
                     </div>
                  </div>
-                </div>
+                </div> *@
+
+
+
         </div>
 
 }

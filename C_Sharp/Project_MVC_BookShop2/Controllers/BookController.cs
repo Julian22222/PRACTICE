@@ -6,7 +6,7 @@ using System.Threading.Tasks;              //creating new threads for computatio
 using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to inherit Controller
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop2.Models;        //Book class import connection
-using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup
+using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup, use Html partial views
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;
@@ -26,6 +26,7 @@ private readonly BookRepository _bookRepository = null;
 private readonly LanguageRepository _languageRepository = null;
 
 private readonly IWebHostEnvironment _webHostEnvironment;  ///dependency injection for server path to store uploaded photos on the server, contains all details about this environment
+//helps to make part of path and to save the path in wwwroot/books/cover
 
 // ctor + tab -to make constructor
         // this is constructor
@@ -33,9 +34,9 @@ public BookController(BookRepository bookRepository, LanguageRepository language
 // here we are assigning BookRepository class with all its methods to -> _bookRepository
 // can acess to BookRepository class methods , after creating an object from BookRepository class -> _bookRepository
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
-_bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class
-_languageRepository = languageRepository;    //dependency injection, to make object from languageRepository class
-_webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server
+_bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<BookRepository, BookRepository>();
+_languageRepository = languageRepository;    //dependency injection, to make object from languageRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<LanguageRepository, LanguageRepository>();
+_webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server, (we don't write this variable in Program.cs to use it here)
 }
 
 
@@ -82,14 +83,14 @@ var model = new Book(){
 
 // here we get all languages from database , Language Table
 // and passing the data in ViewBag
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 
 ViewBag.Category = new List<string>(){
 "programming","animals", "technology", "sports"
 };
 
-    // by default we passing isSuccess = false to the View page - AddNewBook
-    // and create variable int bookId = 1 and by default we passing it to View page -AddNewBook
+    // by default we passing isSuccess = false to the View page --> AddNewBook
+    // and create variable int bookId = 0 and by default we passing it to View page -->AddNewBook
     ViewBag.IsSuccess = isSuccess;
     ViewBag.BookId = bookId;
     return View(model);
@@ -97,7 +98,7 @@ ViewBag.Category = new List<string>(){
 
 
   // always use data return type -> Task with async methods 
-[HttpPost] //this method works by clicking -add book (posting new book) , POST method
+[HttpPost] //this method works by clicking -->add book (posting new book) , POST method
 public async Task<IActionResult> AddNewBook(Book book){
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
@@ -127,6 +128,12 @@ public async Task<IActionResult> AddNewBook(Book book){
 
         }
 
+        if(book.BookPdf != null){
+        
+        string folder = "books/pdf/";
+        book.BookPdfUrl = await UploadFile(folder, book.BookPdf);  //invoke UploadeFile function (line 172), this function can be used for all uploaded files
+        }
+
 
 
           int id = await _bookRepository.AddNewBook(book);
@@ -141,17 +148,33 @@ public async Task<IActionResult> AddNewBook(Book book){
     // ViewBag.IsSuccess = false;
     // ViewBag.BookId = 0;
 
+
+
     ViewBag.Category = new List<string>(){
 "programming","animals", "technology", "sports"
 };
+
+
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+
+
 
 // add some custom error messages to your model -> validation-summary
 ModelState.AddModelError("","This is my 1st custom error message from BookController");
 ModelState.AddModelError("","This is my 2nd custom error message from BookController");
 
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 
    return View();
+}
+
+
+// function, can pass different variable as arguments in this function
+private async Task<string> UploadFile(string folderPath, IFormFile file){
+    folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+    await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+    return "/" + folderPath;
 }
 
 // ----------------------------------------------------------------------------------------
