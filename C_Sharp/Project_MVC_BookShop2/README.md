@@ -36,7 +36,7 @@ LanguageId (number of Language)
 
 How to install nuget packages(Entity Framework Core)
 In terminal we write:
-dotnet add package <<PackageName>>
+dotnet add package (PackageName)
 
 PackageNames:
 
@@ -76,7 +76,7 @@ How to connect your project to SQl Server Database.
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
 3. After creating Data folder with all needed files and content we can create -MIGRATIONS FOLDER
-4. To create Migrations folder --> dotnet ef migrations add <<AnyNameOfMigrations>> -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
+4. To create Migrations folder --> dotnet ef migrations add (AnyMigrationsName) -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
 5. To make changes to our database --> dotnet ef database update
 6. All migrations commands --> dotnet ef migrations
 
@@ -97,9 +97,15 @@ Example --> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bo
 Partial views - it is simple cshtml file that can be inserted anywhere in any View. It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code)
 
 How to use it-->
-partial view we put in --> Views/Shared/<NameOfPartialView>.cshtml (Example--> Views/Shared/header.cshtml )
+partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
 In the view where we want to insert that piece of code we put --> <partial name="header" />  
-also we can pass data to the partial view --> <partial name="header" model="book"/> or <partial name="header" model="new Book()"/>
+also we can pass data to the partial view -->
+
+<!-- <partial name="header" model="book"/>  -->
+
+or
+
+<!-- <partial name="header" model="new Book()"/> -->
 
 or you can use another option to render our partial view-->
 @Html.Partial("header", Model)
