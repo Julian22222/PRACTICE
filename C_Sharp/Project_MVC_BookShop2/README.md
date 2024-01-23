@@ -76,9 +76,9 @@ How to connect your project to SQl Server Database.
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
 3. After creating Data folder with all needed files and content we can create -MIGRATIONS FOLDER
-4. To create Migrations folder --> dotnet ef migrations add (AnyMigrationsName) -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
-5. To make changes to our database --> dotnet ef database update
-6. All migrations commands --> dotnet ef migrations
+4. To create Migrations folder, we write --> dotnet ef migrations add (AnyMigrationsName) -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
+5. To make changes to our database, we write --> dotnet ef database update
+6. All migrations commands, we write --> dotnet ef migrations
 
 7. dotnet ef migrations remove -->//to remove some proporties from table
 
@@ -98,14 +98,10 @@ Partial views - it is simple cshtml file that can be inserted anywhere in any Vi
 
 How to use it-->
 partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
-In the view where we want to insert that piece of code we put --> <partial name="header" />  
-also we can pass data to the partial view -->
-
-<!-- <partial name="header" model="book"/>  -->
-
+In the view where we want to insert that piece of code we put --> <,partial name="header" /> <--(remove coma)
+also we can pass data to the partial view --> <,partial name="header" model="book"/> <--(remove coma)
 or
-
-<!-- <partial name="header" model="new Book()"/> -->
+<,partial name="header" model="new Book()"/> <--(remove coma)
 
 or you can use another option to render our partial view-->
 @Html.Partial("header", Model)
@@ -122,7 +118,7 @@ There are 2 files in any ViewComponent:
 To use that code in our view file we put--> @await Component.InvokeAsync("TopBooks")
 Also, we can pass the data to the View Component --> @await Component.InvokeAsync("TopBooks",{data}) or @await Component.InvokeAsync("TopBooks", new{bookId=4, isSort=true})
 
-Also, we can use other method to render our view component on particular file by using tag helpers --> <vc: top-books></vc: top-books>
+Also, we can use other method to render our view component on particular file by using tag helpers --> <,vc: top-books></,vc: top-books> <--(remove coma)
 
 To use this option, you need to add -->
 @addTagHelper *, Project*MVC_BookShop2  
@@ -130,4 +126,4 @@ To use this option, you need to add -->
 in Views/\_ViewImports.cshtml file
 
 also we can pass all parametrs that are required in View component -->
-<vc: top-books book-id="2" is-sort="false"></vc: top-books>
+<,vc: top-books book-id="2" is-sort="false"></,vc: top-books> <--(remove coma)
