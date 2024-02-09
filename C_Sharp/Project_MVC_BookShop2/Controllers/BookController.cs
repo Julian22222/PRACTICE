@@ -62,6 +62,7 @@ public async Task<IActionResult> GetAllBooks(){
 //     return _bookRepository.GetBookById(id);
 // }
 
+//id is commiing from URL, client request
 public async Task<IActionResult> GetBook (int id){  //returning a View - that means it should be - IActionResult / or ViewResult
    var data = await _bookRepository.GetBookById(id);
 

@@ -41,20 +41,21 @@
 
 @* to render my View components *@
 @* 1st option how to render View component *@
-@* InvokeAsync <-- method in Componets/TopBooksViewComponent.cs *@
-@* Component.InvokeAsync("TopBooks"  <--we passing here the name of our component , ignoring ViewComponent part in TopBooksViewComponent) *@
-@* Component.InvokeAsync("TopBooks", new {bookId =4, isSort =true}) <-- also we can pass all parametrs that are required in View component *@
+@* InvokeAsync <-- method in Componets/TestBooksViewComponent.cs *@
+@* Component.InvokeAsync("TestBooks"  <--we passing here the name of our component , ignoring ViewComponent part in TestBooksViewComponent) *@
+@* Component.InvokeAsync("TestBooks", new {bookId =4, isSort =true}) <-- also we can pass all parametrs that are required in View component *@
 @await Component.InvokeAsync("TestBooks")
 
 
 @* 2nd option how to render View component, using tag helpers *@
 @* not passing any parametrs in this view component, use small letters in View component name *@
-@* <vc: top-books book-id="2" is-sort="false"></vc: top-books>  <--- also we can pass all parametrs that are required in View component  *@
+@* <vc: test-books book-id="2" is-sort="false"></vc: test-books>  <--- also we can pass all parametrs that are required in View component  *@
 @* To use this 2nd option, you need to add --> (@addTagHelper *, Project_MVC_BookShop2 , @addTagHelper *, Project_MVC_BookShop2.Components ) in Views/_ViewImports.cshtml *@
 <vc:test-books></vc:test-books>  
 
 
-@await Component.InvokeAsync("TopBooks")
+@* View Component -TopBooks *@
+@await Component.InvokeAsync("TopBooks") 
 
 
 

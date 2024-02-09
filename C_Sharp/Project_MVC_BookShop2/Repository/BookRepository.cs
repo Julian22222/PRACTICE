@@ -29,7 +29,7 @@ namespace Project_MVC_BookShop2.Repository
 
 
     // constructor, here we use dependency injection, application will resolve context automatically
-    // because we have written the code in our -Program.cs file -> (line 39) -> this line->
+    // because we have written the code in our -Program.cs file -> (line 50) -> this line->
     // builder.Services.AddDbContext<BookStoreContext>();
     public BookRepository(BookStoreContext context){
         _context = context;
@@ -104,6 +104,23 @@ return newBook.Id;
                 }
             }
     return books;
+        }
+
+
+        //method for TopBooks (View Component)
+        //we use this method in Components/ TopBooksViewComponent.cs
+        public async Task<List<Book>> GetTopBooksAsync(){
+            return await _context.Books2.Select(book => new Book(){
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Category = book.Category,
+                    Description = book.Description,
+                    LanguageId = book.LanguageId,  //showing a number 
+                    // Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
+                    TotalPages = book.TotalPages,
+                    CoverImageUrl = book.CoverImageUrl  //full path to uploaded img folder -->(wwwroot/books/cover)
+            }).Take(2).ToListAsync();  //Take(2) <--taking only 2 Books from the database Books2 table
         }
 
 

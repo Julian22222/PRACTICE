@@ -1,1 +1,12 @@
-<h>Hello</h>
+@model IEnumerable<Book>  //receive data (List of 2 books) from Components/TopBooksViewComponent.cs, that we passed in TopBooksViewComponent.cs,(here we assign a data type to imported Model).It can be any data type -IEnumerable (this is universal), List, Collection
+@* receiving <Book> model  from Components/TopBooksViewComponent.cs*@
+
+<h3>3 Books from database</h3>
+
+@foreach(var book in Model){
+    <div>
+
+        @* here we loop the IEnumerable(list of books that we received from TopBooksViewComponent.cs) and passing each book to Partial View *@
+        <partial name="_bookThumbnail" model="book" />  
+    </div>
+}

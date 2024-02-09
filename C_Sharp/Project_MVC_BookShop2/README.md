@@ -85,21 +85,23 @@ How to connect your project to SQl Server Database.
 ..............................................................................................................
 
 jquery, bootstrap, ajax libraries and their packages can be imported from already installed .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet)
-Example --> <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+Example --> <,script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"><,/script> <--(remove comas)
 
 CDN - (stands for )-> Content Delivery Network --> (get the libraries from internet)
 benefit of using CDN - it loads the file based on your geography location, increase performance of application
 With CDN you can get any library from internet.
-Example --> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+Example --> <,script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"><,/script> <--(remove comas)
 
 ...............................................................................................................
 
-Partial views - it is simple cshtml file that can be inserted anywhere in any View. It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code)
+Partial views - it is simple cshtml file that can be inserted anywhere in any View. It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).Helps to remove duplicate code from app.
 
 How to use it-->
 partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
-In the view where we want to insert that piece of code we put --> <,partial name="header" /> <--(remove coma)
-also we can pass data to the partial view --> <,partial name="header" model="book"/> <--(remove coma)
+In the view where we want to insert that piece of code we put --> <,partial name="header" /> <--(remove coma),
+Usually we should put underscore before partial view name.
+Partial View is a self closing tag.
+also we can pass data,(parameters) to the partial view --> <,partial name="header" model="book"/> <--(remove coma)
 or
 <,partial name="header" model="new Book()"/> <--(remove coma)
 
@@ -112,13 +114,16 @@ ViewComponent - is similar to partial views but much more powerful, don't use mo
 
 There are 2 files in any ViewComponent:
 
-1. server side file, (location of this file --> at the root of our app-> Components/TopBooksViewComponent.cs). TopBooks <-- can have any name, and is followed by ViewComponent sufix. In this file we creating a class and returning View().
+1. server side file, (location of this file --> at the root of our app-> Components/TopBooksViewComponent.cs). Components folder <-- can have any name. TopBooks <-- can have any name, and is followed by ViewComponent sufix. In this file we creating a class and returning View().
+   If we need to connect to database we can do it here --> create variable and through BookRepository get data from database. Then pass this data further --> to cshtml file in Default.cshtml
+
 2. cshtml file, (location of this file --> Views/Shared/Components/TopBooks/Default.cshtml). In Default.cshtml file we write any code that we want to render in our View.
 
 To use that code in our view file we put--> @await Component.InvokeAsync("TopBooks")
-Also, we can pass the data to the View Component --> @await Component.InvokeAsync("TopBooks",{data}) or @await Component.InvokeAsync("TopBooks", new{bookId=4, isSort=true})
+Also, we can pass the data, (parameters) to the View Component --> @await Component.InvokeAsync("TopBooks",{data}) or @await Component.InvokeAsync("TopBooks", new{bookId=4, isSort=true})
 
 Also, we can use other method to render our view component on particular file by using tag helpers --> <,vc: top-books></,vc: top-books> <--(remove coma)
+VC -->stands for ViewComponent
 
 To use this option, you need to add -->
 @addTagHelper *, Project*MVC_BookShop2  
@@ -127,3 +132,76 @@ in Views/\_ViewImports.cshtml file
 
 also we can pass all parametrs that are required in View component -->
 <,vc: top-books book-id="2" is-sort="false"></,vc: top-books> <--(remove coma)
+
+...............................................................................................................
+
+We can combine Partial View and View Component
+
+......................................................................
+
+How to pass data(parameters) in Partial View and View Components-->
+Examaple:
+
+@await Component.InvokeAsync("TopBooks", new{count=4 })
+
+or in partial view:
+
+<,vc: top-books count="4" ></,vc: top-books> <--(remove coma)
+
+then in TopBooksViewComponent.cs file we receive this data(parameters)-->
+
+public async Task<,IViewComponentResult> InvokeAsync(int count <--HERE WE HAVE 4){
+.......can use this count in here
+
+var books = await \_bookRepository.GetTopBooksAsync(count); <-- then we can pass count further to the Views/Shared/Components/TopBooks/Default.cshtml View file
+
+}
+
+then in Default.cshtml file-->
+@model IEnumerable<,Book> <--Here will be 4 books
+
+...................................................................................
+
+Routing
+
+-Is the process of mapping incoming http request (URL) to particular resource (resource is--> controller and action method)
+
+-We can define a unique URL(route) for each resource., All the routes should be unique
+
+When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT. DELETE
+
+To use routing we need to use 2 middlewares in main file -> Program.cs
+2 middlewares:
+
+1. UseRouting();
+2. MapControllerRoute();
+
+In old version of ASP.NET was: UseRouting(); and UseEndpoints();
+
+Types of Routing:
+-Conventional routing
+-Attribute routing(use in app, best and easiest way to use routing in ASP.NET)
+
+Middleware in Program.cs file explaination -->
+app.MapControllerRoute(
+name: "default",
+pattern: "{controller=Home}/{action=Index}/{id?}");
+
+pattern: "{controller=Home}/{action=Index}/{id?}" -->
+this a pattern or template how variables in curly brackets will be replaced by other values, but by default controller = Home and action = Index, then Id - is optional, if we pass id it will work if we not pass id it will work as well
+If we are not passing any value to controller part and in action part in URL it will take default values.
+
+pattern -> first is nameOfController, second goes actionMethod and Id
+
+pattern -> here we creating an order what values and in what order will be shown in URL
+
+Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
+-But we can change the Routing for URL in Program.cs file--> using this
+app.MapControllerRoute(
+name: "AboutUs",
+pattern: "about-us",
+defaults: new {controller ="Book" , action= "AboutUs"}
+)
+
+Typing in URL -> loacalhost:5167/about-us
+It will go to controller= Book and action = AboutUs and will show correct page, the same as you typed in URL -> Book/AboutUs

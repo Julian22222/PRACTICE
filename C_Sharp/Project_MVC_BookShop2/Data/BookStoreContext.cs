@@ -13,6 +13,7 @@ namespace Project_MVC_BookShop2.Data
 
     // inherit this class from DbContext class
     public class BookStoreContext : DbContext
+    // BookStoreContext <-- can have any name, and is followed by Context sufix.
     {
 
 // constructor

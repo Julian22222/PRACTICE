@@ -78,4 +78,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+//in this middleware already build in  --> pattern: "{controller=Home}/{action=Index}/{id?}");
+//can be used instead of this middleware--> app.MapControllerRoute( ......); 
+// app.MapDefaultControllerRoute();
+
 app.Run();  //run an app, after all have been added to request pipeline
