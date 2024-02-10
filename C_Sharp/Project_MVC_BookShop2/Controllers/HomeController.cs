@@ -18,6 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("about-us")]  //Attribute routing (best and easy way to make new Route to this resource)
+    public IActionResult AboutUs()
+    {
+        return View();
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

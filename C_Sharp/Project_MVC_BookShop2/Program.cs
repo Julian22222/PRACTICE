@@ -8,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 using Project_MVC_BookShop2.Repository;  //import BookRepository
+using Project_MVC_BookShop2.Models;
 
 using System.Collections.Immutable;
 // this file is an entry point of application
@@ -37,7 +38,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
-builder.Services.AddScoped<LanguageRepository, LanguageRepository>();  //to work with dependency injections
+builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
 
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)

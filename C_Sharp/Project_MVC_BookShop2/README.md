@@ -108,7 +108,7 @@ or
 or you can use another option to render our partial view-->
 @Html.Partial("header", Model)
 
-...............................................................................................................
+.................................................................................................................................................................
 
 ViewComponent - is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. It is not part of Http life cycle.
 
@@ -160,9 +160,9 @@ var books = await \_bookRepository.GetTopBooksAsync(count); <-- then we can pass
 then in Default.cshtml file-->
 @model IEnumerable<,Book> <--Here will be 4 books
 
-...................................................................................
+.........................................................................................................................................................................................
 
-Routing
+ROUTING
 
 -Is the process of mapping incoming http request (URL) to particular resource (resource is--> controller and action method)
 
@@ -170,6 +170,9 @@ Routing
 
 When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT. DELETE
 
+/
+/
+/
 To use routing we need to use 2 middlewares in main file -> Program.cs
 2 middlewares:
 
@@ -178,9 +181,13 @@ To use routing we need to use 2 middlewares in main file -> Program.cs
 
 In old version of ASP.NET was: UseRouting(); and UseEndpoints();
 
+/
+/
+/
 Types of Routing:
--Conventional routing
--Attribute routing(use in app, best and easiest way to use routing in ASP.NET)
+
+1. Conventional routing
+2. Attribute routing(use in app, best and easiest way to use routing in ASP.NET)
 
 Middleware in Program.cs file explaination -->
 app.MapControllerRoute(
@@ -195,13 +202,94 @@ pattern -> first is nameOfController, second goes actionMethod and Id
 
 pattern -> here we creating an order what values and in what order will be shown in URL
 
-Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
--But we can change the Routing for URL in Program.cs file--> using this
-app.MapControllerRoute(
-name: "AboutUs",
-pattern: "about-us",
-defaults: new {controller ="Book" , action= "AboutUs"}
-)
+1. This method is Conventional Routing
+   Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
+   -But we can change the Routing for URL in Program.cs file--> using this
+   app.MapControllerRoute(
+   name: "AboutUs",
+   pattern: "about-us",
+   defaults: new {controller ="Book" , action= "AboutUs"}
+   )
 
 Typing in URL -> loacalhost:5167/about-us
 It will go to controller= Book and action = AboutUs and will show correct page, the same as you typed in URL -> Book/AboutUs
+
+2. This method is Attribute Routing (we using it in controller), Easy way to make orchange routing
+
+[Route("about-us")] //Attribute routing (best and easy way to make new Route to this resource)
+public IActionResult AboutUs()
+{
+return View();
+}
+
+    inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
+
+/
+/
+To pass some parametrs in route we add --> /{ParametrName}:
+[Route("about-us/{id?}")]
+public IActionResult AboutUs( int id)
+{
+return View();
+}
+
+/
+/
+Route constraints (For example: [Route("about-us/{id?}") <-- id must be a number only not a string or other data type])
+
+1. in Routing constraints you can define the type of your parameters --> [Route("about-us/{id? : int}")]
+   id: int <-- id will definately must be am int ( data types: string,decimal,float and other)
+
+2. in Routing constraints you can define the Length --> [Route("about-us/{id : int : min(1)}")]
+   id : int : min(1) <-- id must be int, and min id is 1 (2 constraints together)
+
+3. in Routing constraints you can define Alpha --> [Route("about-us/{name : alpha})]
+   name : alpha <-- name has only alphabets (letters only)
+   name : alpha : minlength(5) <-- name has letters only and min length is 5
+
+4. in Routing constraints you can define Regex --> [Route("about-us/{name : regex( regexCodeHere)})]
+
+5. in Routing constraints you can define Required
+6. All constraints that are available in ASP.Net Core in
+   https://github.com/dotnet/aspnetcore/tree/main/src/Http/Routing/src/Constraints
+
+................................................................................................................................
+
+DEPENDENCY INJECTION
+
+We can use Dependency injection with iterfaces and without interfaces.
+-->see BookRepository (without interface)
+-->see LanguageRepository - ILanguageRepository (interface)
+
+-If we not useing Dependency incection we can have some problems between Controllers and Repositories(Services).
+When you make some changes in Repository data using controller or other files where this Repository was used the data can't be changed in all files (you neeed update all the files where you used this Repository ).
+
+-if we use the Repository(Service) in different controllers or files and we need to make some changes in Repository data from one of the files then it will be allowed to do that. and it will be changed in all the files.
+
+/
+/
+/
+
+-if we not using Dependency injection we put ->
+private readonly BookStoreContext \_context = new BookStoreContext();
+
+or
+
+private readonly BookStoreContext \_context = null; <--creating new variable, to work with some class
+
+//then in constructor
+public BookRepository(){
+\_context = new BookStoreContext(); //<- assigning database data to - \_context
+}
+
+(this new object can be created in constructor or in action method)
+
+/
+/
+
+Services lifetime:
+-Transient(AddTransient<>) <-- A new instance of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created
+
+-Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request.
+
+-Singleton (AddSingleton<>) <--Same instance for all entire application.

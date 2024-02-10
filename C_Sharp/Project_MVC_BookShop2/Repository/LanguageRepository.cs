@@ -11,7 +11,7 @@ namespace Project_MVC_BookShop2.Repository
 {
 
     // this is a Model(or Class), all logic is here to get the data from database or data source (Here we have data and methods(functions) )
-    public class LanguageRepository
+    public class LanguageRepository : ILanguageRepository  //inherit from ILanguageRepository (interface)
     {
 
 // creating new variable, (new instance) - now we work with database 
