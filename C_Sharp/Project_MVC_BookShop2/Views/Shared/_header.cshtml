@@ -1,4 +1,6 @@
 @* This is Partial view file *@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 
  <header>
             
@@ -36,6 +38,9 @@
                                  <li class="nav-item">
                                      <a class="nav-link text-dark" href="/about-us">About us</a>
                                  </li>
+                                  <li class="nav-item">
+                                     <a class="nav-link text-dark" href="/contact-us">Contact us</a>
+                                 </li>
 
                             </ul>
 
@@ -45,8 +50,18 @@
                         
                        
                     </div>
+                    
                
                 </nav>
+               
+                
+                @* testing bollean data type from appsettings.json, if DisplayNewBookAlert = true ---> show message *@
+              @if(_configuration.GetValue<bool>("DisplayNewBookAlert")){
+                
+                <div class="alert alert-info" role="alert">
+                This is our message
+               </div>
+                }
                
        
     </header>

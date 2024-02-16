@@ -2,12 +2,15 @@ using System;    //using the System library in your project.Which gives you some
 using System.Collections.Generic;  //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
 using System.Linq;
 using System.Threading.Tasks;  //to use Task with async await , and to use Task
-
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
 ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 
 namespace Project_MVC_BookShop2.Data
 {
+
+
+
 
     // this class allow to interact with database
 
@@ -16,10 +19,12 @@ namespace Project_MVC_BookShop2.Data
     // BookStoreContext <-- can have any name, and is followed by Context sufix.
     {
 
-// constructor
-        public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options)
-        {
+        private readonly IConfiguration _configuration;
 
+// constructor
+        public BookStoreContext(DbContextOptions<BookStoreContext> options, IConfiguration configuration) : base(options)
+        {
+_configuration = configuration;
         }
         
 
@@ -49,7 +54,15 @@ namespace Project_MVC_BookShop2.Data
 
             // if we use remote database we --> optionsBuilder.UseSqlServer("Server= api of your database here;Database=NameOfYourDatabase;TrustServerCertificate=true;User ID=sa(userName);Password=julik3322J!(Password for database)"  (this is for SQL Authentication)
 
-              optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
+            //working Connection string, not using data from appsettings.json 
+            //   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
+
+              //Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
+            //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings : DefaultConnection"]);
+
+            //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+
             base.OnConfiguring(optionsBuilder);
         }
 

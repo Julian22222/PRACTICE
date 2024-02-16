@@ -257,6 +257,8 @@ Route constraints (For example: [Route("about-us/{id?}") <-- id must be a number
 
 DEPENDENCY INJECTION
 
+Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
+
 We can use Dependency injection with iterfaces and without interfaces.
 -->see BookRepository (without interface)
 -->see LanguageRepository - ILanguageRepository (interface)
@@ -293,3 +295,104 @@ Services lifetime:
 -Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request.
 
 -Singleton (AddSingleton<>) <--Same instance for all entire application.
+
+.......................................................................
+
+Dependency injection in View (chtml)
+
+It is not mandotory to pass Repository class to controller (then we create an object from that Repository class in controller) and then pass this created object from Repository class to View.
+We can straight away pass only Interfacese from Repository class to View (create in View object from Repository class) and then use it in View
+--> see AboutUs View file. (Can't pass BookRepository class because it doesn't have own Interface) --> can pass only Interfaces!!!.
+
+...........................................................................................................................................................
+
+appsettings.json file
+
+How to get any data from appsettings.json in our application using configuration service
+
+We can have many appsettings.json files in our app
+
+/
+/
+Here we store:
+
+1. ConnectionString
+2. Server Link
+3. Application Name
+4. We NOT keeping here secret passwords or passcodes!!!
+
+appsettings.json file <-- not dependent to any environment, it is common to every environment
+
+appsettings.Development.json <-- if we will create this file, we will overwrite some settings for Development environment. It will be dependent only to Development environment.
+
+appsettings.Production.json <-- if we will create this file, we will overwrite some settings for Production environment. It will be dependent only to Production environment.
+
+-->see ContactUs.cshtml and HomeController
+
+/
+/
+IHostEnvironment.Production (User Secrets file) <-- we use for passwords
+
+/
+/
+
+/
+
+To read data from appsettings.json file we need to use IConfuguration service
+Use Dependenci Injection to register the IConfuguration services and to use the IConfuguration services
+
+IConfiguration is registred automaticaly by ASP.Net Core framework
+
+/ /
+/ /
+We can access to appsetiings in Controller,Repository or straigh away from View file
+
+1. If we want to access the appsettings.json file in Controller, Repository or any other file apart from View file:
+   To use In Controller --->
+
+using Microsoft.Extensions.Configuration; //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+
+private readonly IConfiguration configuration; <-- create variable for Cofiguration
+
+//controller
+public HomeController(IConfiguration \_configuration){  
+ configuration = \_configuration; <--assign \_configuration to configuration
+}
+
+configuration["KeyOfAppSettingsData "] <-- now we can read the data from appsettings.json file
+
+2. accessing appsetings.json in View file
+   @inject Microsoft.Extensions.Configuration.IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+<p>@_configuration["Name"]</p>
+
+<p>@_configuration["infoObj:key1"]</p>
+
+................................................................................................................................................................................................................
+
+Accessing appsettings.json using GetValue method
+Whith this approach we can define the data type that we accessing in appsettings.json --> it can be boolean, string and other (with previous options we always get string data type from appsettings.json file)
+--> see Contactus.cshtml and HomeController.cs
+
+1.  To use GetValue in Controller--> we use:
+    using Microsoft.Extensions.Configuration;
+    then create configuration variable and with controller use Dependency injection. then ->
+    var test = configuration.GetValue<bool>("DisplayNewBookAlert"); <-- we can indicate what data type we are receiving - <bool>
+
+2.  To use GetValue in View file --> we use:
+    these two lines below are needed to use GetValue in View file, ( to get data from appsettings.json)
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+Then we use-->
+
+<p>@(_configuration.GetValue<bool>("DisplayNewBookAlert"))</p>
+
+/........................................................................................................................................................
+
+Different options how to read ConnectionString from appsetttings.json --> see BookStoreContext.cs file
+
+...........................................................................................................................................................................................................
+
+Read configuration using GetSection method from appsettings.json
