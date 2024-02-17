@@ -43,11 +43,13 @@ dotnet add package (PackageName)
 
 PackageNames:
 
-```bash
-Microsoft.EntityFrameworkCore
-```
+1. ```bash
+   Microsoft.EntityFrameworkCore
+   ```
 
-1. Microsoft.EntityFrameworkCore -->///basic package
+```
+-->///basic package
+
 2. Microsoft.EntityFrameworkCore.Relational -->///to work with ralational database
 3. Microsoft.EntityFrameworkCore.SqlServer -->///to work with Sql server
 4. Microsoft.EntityFrameworkCore.Tools -->///to write queries to database
@@ -133,7 +135,7 @@ Also, we can use other method to render our view component on particular file by
 VC -->stands for ViewComponent
 
 To use this option, you need to add -->
-@addTagHelper *, Project*MVC_BookShop2  
+@addTagHelper *, Project*MVC_BookShop2
 @addTagHelper \*, Project_MVC_BookShop2.Components
 in Views/\_ViewImports.cshtml file
 
@@ -362,7 +364,7 @@ using Microsoft.Extensions.Configuration; //needs to use IConfiguration service,
 private readonly IConfiguration configuration; <-- create variable for Cofiguration
 
 //controller
-public HomeController(IConfiguration \_configuration){  
+public HomeController(IConfiguration \_configuration){
  configuration = \_configuration; <--assign \_configuration to configuration
 }
 
@@ -403,3 +405,4 @@ Different options how to read ConnectionString from appsetttings.json --> see Bo
 ...........................................................................................................................................................................................................
 
 Read configuration using GetSection method from appsettings.json
+```
