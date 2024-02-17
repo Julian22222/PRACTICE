@@ -403,6 +403,20 @@ configuration = \_configuration; <--assign \_configuration to configuration
 
 configuration["KeyOfAppSettingsData "] <-- now we can read the data from appsettings.json file
 
+```c#
+# in CONTROLLER ,
+## we assign _configuration to configuration
+
+public HomeController(IConfiguration _configuration){
+configuration = _configuration;
+}
+
+
+# now we can read the data from appsettings.json file
+configuration["KeyOfAppSettingsData"]
+
+```
+
 2. accessing appsetings.json in View file
    @inject Microsoft.Extensions.Configuration.IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 
@@ -443,7 +457,7 @@ Read configuration using GetSection method from appsettings.json
 
 ```
 
-```javascript
+```c#
 foob.bar.pluszz("word");
 
 # returns 'geese'
