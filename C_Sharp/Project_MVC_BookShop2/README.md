@@ -1,4 +1,14 @@
-Different namespaces:
+## Overview of this Project
+
+In this Project we get and save the data of dropDown to database.
+-(Add New Book)-in NavBar , in Form we have dropdown options (Language and Category) <-- they are coming from database, (they not hardcoded in the View)
+-We create new class for dropdown -->Language ,in Data folder
+-Create relationship between two tables --> in Books class we put property \_-->public Language(data type) Language(Name)
+LanguageId (number of Language)
+
+..............................................................................................................
+
+# Different namespaces:
 
 1. @using System.Runtime.InteropServices.WindowsRuntime;
 
@@ -26,19 +36,16 @@ Different namespaces:
 12. @using Microsoft.AspNetCore.Http; //to use IFormFile (special data type to hold information about uploaded files)
     ..............................................................................................................
 
-In this Project we get and save the data of dropDown to database.
--(Add New Book)-in NavBar , in Form we have dropdown options (Language and Category) <-- they are coming from database, (they not hardcoded in the View)
--We create new class for dropdown -->Language ,in Data folder
--Create relationship between two tables --> in Books class we put property \_-->public Language(data type) Language(Name)
-LanguageId (number of Language)
+# How to install nuget packages(Entity Framework Core)
 
-..............................................................................................................
-
-How to install nuget packages(Entity Framework Core)
 In terminal we write:
 dotnet add package (PackageName)
 
 PackageNames:
+
+```bash
+Microsoft.EntityFrameworkCore
+```
 
 1. Microsoft.EntityFrameworkCore -->///basic package
 2. Microsoft.EntityFrameworkCore.Relational -->///to work with ralational database
@@ -51,7 +58,7 @@ PackageNames:
 
 ..............................................................................................................
 
-Main Locations in different folder
+# Main Locations in different folder
 
 1. Data folder - we keep all data for database here.
 
