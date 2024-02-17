@@ -49,7 +49,7 @@ PackageNames:
    Microsoft.EntityFrameworkCore
    ```
 
--->///this is basic package
+   -->///this is basic package
 
 2. ```bash
    Microsoft.EntityFrameworkCore.Relational
@@ -67,19 +67,19 @@ PackageNames:
    Microsoft.EntityFrameworkCore.Tools
    ```
 
--->///package to write queries to database
+   -->///package to write queries to database
 
 5. ```bash
    Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
    ```
 
--->///package to update automaticaly ViewEngine
+   -->///package to update automaticaly ViewEngine
 
 6. ```bash
    Microsoft.EntityFrameworkCore.Design
    ```
 
--->///this package needs to create migrations folder
+   -->///this package needs to create migrations folder
 
 7. ```bash
    Microsoft.EntityFrameworkCore.Tools.DotNet
@@ -89,31 +89,40 @@ PackageNames:
    jQuery.Ajax.Unobtrusive
    ```
 
---> package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
+   --> package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
 
 ..............................................................................................................
 
 # Main Locations in different folder
 
-1. Data folder - we keep all data for database here.
+- Data folder - we keep all data for database here.
 
-2. Data / BookStoreContext - this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
-   BookStoreContext ////BookStore <--can be any name, this is a name of our database
-   BookStoreContext ////Context <--must be always in the end of name of our class
+- Data / BookStoreContext - this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
+  BookStoreContext ////BookStore <--can be any name, this is a name of our database
+  BookStoreContext ////Context <--must be always in the end of name of our class
 
-3. Repository - Class where we keep all logic.
-   Connecting with database through -> \_context.Books......
-   \_context <--database connection
-   .Books <--table name in our database
+- Repository - Class where we keep all logic.
+  Connecting with database through ->
+
+```c#
+_context.Books......
+
+# database connection->
+_context
+
+# table name in our database ->
+.Books
+
+```
 
 Repository is a place where you can get, post,edit,delete the data in database.
 We use Repository class methods in BookController
 
-4. In View , when we fill Form (it is completing throug Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
+- In View , when we fill Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
 
 ....................................................................................................................
 
-How to connect your project to SQl Server Database.
+# How to connect your project to SQl Server Database.
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
@@ -264,7 +273,7 @@ public IActionResult AboutUs()
 return View();
 }
 
-    inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
+inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
 
 /
 /
@@ -297,50 +306,53 @@ Route constraints (For example: [Route("about-us/{id?}") <-- id must be a number
 
 ................................................................................................................................
 
-DEPENDENCY INJECTION
+# DEPENDENCY INJECTION
 
-Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
+- Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
 
-We can use Dependency injection with iterfaces and without interfaces.
--->see BookRepository (without interface)
--->see LanguageRepository - ILanguageRepository (interface)
+- We can use Dependency injection with iterfaces and without interfaces.
+  -->see BookRepository (without interface)
+  -->see LanguageRepository - ILanguageRepository (interface)
 
--If we not useing Dependency incection we can have some problems between Controllers and Repositories(Services).
-When you make some changes in Repository data using controller or other files where this Repository was used the data can't be changed in all files (you neeed update all the files where you used this Repository ).
+- If we not useing Dependency incection we can have some problems between Controllers and Repositories(Services). When you make some changes in Repository data using controller or other files where this Repository was used the data can't be changed in all files (you neeed update all the files where you used this Repository ).
 
--if we use the Repository(Service) in different controllers or files and we need to make some changes in Repository data from one of the files then it will be allowed to do that. and it will be changed in all the files.
-
-/
-/
-/
+- But using Dependency Injections, if we use the Repository(Service) in different controllers or files and we need to make some changes in Repository data in one of the files then it will be allowed to do that. and it will be changed in all the files.
 
 -if we not using Dependency injection we put ->
-private readonly BookStoreContext \_context = new BookStoreContext();
+
+```c#
+# create variable and assign it straightaway with new class, (creating new object -_context, based from BookStoreContext class)
+
+private readonly BookStoreContext _context = new BookStoreContext();
 
 or
 
-private readonly BookStoreContext \_context = null; <--creating new variable, to work with some class
+#creating new variable, to work with some class(BookStoreContext class)
 
-//then in constructor
+private readonly BookStoreContext _context = null;
+
+
+#then In CONSTRUCTOR, we assigning database data to _context variable
+
 public BookRepository(){
-\_context = new BookStoreContext(); //<- assigning database data to - \_context
+_context = new BookStoreContext();
 }
 
-(this new object can be created in constructor or in action method)
+###(this new object can be created in constructor or in action method)
 
-/
-/
+```
 
 Services lifetime:
--Transient(AddTransient<>) <-- A new instance of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created
 
--Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request.
+- Transient(AddTransient<>) <-- A new instance of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created
 
--Singleton (AddSingleton<>) <--Same instance for all entire application.
+- Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request.
+
+- Singleton (AddSingleton<>) <--Same instance for all entire application. (When you change something you need to stop application, and rerun it againg to apply new changes)
 
 .......................................................................
 
-Dependency injection in View (chtml)
+### Dependency injection in View (chtml)
 
 It is not mandotory to pass Repository class to controller (then we create an object from that Repository class in controller) and then pass this created object from Repository class to View.
 We can straight away pass only Interfacese from Repository class to View (create in View object from Repository class) and then use it in View
@@ -348,72 +360,58 @@ We can straight away pass only Interfacese from Repository class to View (create
 
 ...........................................................................................................................................................
 
-appsettings.json file
+# How to read the data from different variables in appsettings.json file
 
-How to get any data from appsettings.json in our application using configuration service
+- Using configuration service allow us to get get any data from appsettings.json in our application
+- We can have many appsettings.json files in our app
 
-We can have many appsettings.json files in our app
+In appsettings.json we can keep :
 
-/
-/
-Here we store:
+- ConnectionString
+- Server Link
+- Application Name
+- We NOT keeping here secret passwords or passcodes!!! ( IHostEnvironment.Production (User Secrets file) <-- we use for passwords )
 
-1. ConnectionString
-2. Server Link
-3. Application Name
-4. We NOT keeping here secret passwords or passcodes!!!
+*
 
-appsettings.json file <-- not dependent to any environment, it is common to every environment
+* appsettings.json file <-- not dependent to any environment, it is common to every environment
 
-appsettings.Development.json <-- if we will create this file, we will overwrite some settings for Development environment. It will be dependent only to Development environment.
-
-appsettings.Production.json <-- if we will create this file, we will overwrite some settings for Production environment. It will be dependent only to Production environment.
-
--->see ContactUs.cshtml and HomeController
-
-/
-/
-IHostEnvironment.Production (User Secrets file) <-- we use for passwords
-
-/
-/
-
-/
+* appsettings.Development.json <-- if we will create this file, we will overwrite some settings for Development environment. It will be dependent only to Development environment.
+* appsettings.Production.json <-- if we will create this file, we will overwrite some settings for Production environment. It will be dependent only to Production environment.
 
 To read data from appsettings.json file we need to use IConfuguration service
-Use Dependenci Injection to register the IConfuguration services and to use the IConfuguration services
+Use Dependency Injection to register the IConfuguration services and to use the IConfuguration services
 
 IConfiguration is registred automaticaly by ASP.Net Core framework
 
 / /
-/ /
 We can access to appsetiings in Controller,Repository or straigh away from View file
+-->see ContactUs.cshtml and HomeController
 
 1. If we want to access the appsettings.json file in Controller, Repository or any other file apart from View file:
-   To use In Controller --->
 
-using Microsoft.Extensions.Configuration; //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+To use In Controller --->
 
-private readonly IConfiguration configuration; <-- create variable for Cofiguration
+```bash
+using Microsoft.Extensions.Configuration;
+```
 
-//controller
-public HomeController(IConfiguration \_configuration){
-configuration = \_configuration; <--assign \_configuration to configuration
-}
-
-configuration["KeyOfAppSettingsData "] <-- now we can read the data from appsettings.json file
+-->// using this namespace needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
 
 ```c#
 # in CONTROLLER ,
-## we assign _configuration to configuration
+## we create variable for Configuration
+## and assign _configuration to configuration
 
-public HomeController(IConfiguration _configuration){
-configuration = _configuration;
+private readonly IConfiguration _configuration;
+
+public HomeController(IConfiguration configuration){
+_configuration = configuration;
 }
 
 
-# now we can read the data from appsettings.json file
-configuration["KeyOfAppSettingsData"]
+# now we can read the data from appsettings.json file in Controller action method
+var result = _configuration["KeyOfAppSettingsData"];
 
 ```
 
