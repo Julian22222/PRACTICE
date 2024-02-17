@@ -49,8 +49,6 @@ PackageNames:
    Microsoft.EntityFrameworkCore
    ```
 
-````
-
 -->///this is basic package
 
 2. ```bash
@@ -445,23 +443,8 @@ Read configuration using GetSection method from appsettings.json
 
 ```
 
-```
+```javascript
+foob.bar.pluszz("word");
 
+# returns 'geese'
 ```
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
-
-```
-````
