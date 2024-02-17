@@ -49,37 +49,37 @@ PackageNames:
    Microsoft.EntityFrameworkCore
    ```
 
-   -->///this is basic package
+   -->/// this is basic package
 
 2. ```bash
    Microsoft.EntityFrameworkCore.Relational
    ```
 
-   -->///package to work with ralational database
+   -->/// package to work with ralational database
 
 3. ```bash
    Microsoft.EntityFrameworkCore.SqlServer
    ```
 
-   -->///package to work with Sql server
+   -->/// package to work with Sql server
 
 4. ```bash
    Microsoft.EntityFrameworkCore.Tools
    ```
 
-   -->///package to write queries to database
+   -->/// package to write queries to database
 
 5. ```bash
    Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
    ```
 
-   -->///package to update automaticaly ViewEngine
+   -->/// package to update automaticaly ViewEngine
 
 6. ```bash
    Microsoft.EntityFrameworkCore.Design
    ```
 
-   -->///this package needs to create migrations folder
+   -->/// this package needs to create migrations folder
 
 7. ```bash
    Microsoft.EntityFrameworkCore.Tools.DotNet
@@ -89,7 +89,7 @@ PackageNames:
    jQuery.Ajax.Unobtrusive
    ```
 
-   --> package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
+   -->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
 
 ..............................................................................................................
 
@@ -126,17 +126,51 @@ We use Repository class methods in BookController
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
-3. After creating Data folder with all needed files and content we can create -MIGRATIONS FOLDER
-4. To create Migrations folder, we write --> dotnet ef migrations add (AnyMigrationsName) -->/creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
-5. To make changes to our database, we write --> dotnet ef database update
-6. All migrations commands, we write --> dotnet ef migrations
+3. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
+4. To create Migrations folder, we write -->
 
-7. dotnet ef migrations remove -->//to remove some proporties from table
+```c#
+# creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
+
+dotnet ef migrations add (AnyMigrationsName)
+
+```
+
+5. To make changes to our database, we write -->
+
+```c#
+
+dotnet ef database update
+
+```
+
+6. All migrations commands, we write -->
+
+```c#
+
+dotnet ef migrations
+
+```
+
+7. To remove some proporties from table
+
+```c#
+
+dotnet ef migrations remove
+
+```
 
 ..............................................................................................................
 
-jquery, bootstrap, ajax libraries and their packages can be imported from already installed .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet)
-Example --> <,script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"><,/script> <--(remove comas)
+# how to use different Libraries
+
+jquery, bootstrap, ajax libraries and their packages can be imported from already installed(build up) .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet)
+
+```c#
+#Example
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+```
 
 CDN - (stands for )-> Content Delivery Network --> (get the libraries from internet)
 benefit of using CDN - it loads the file based on your geography location, increase performance of application
