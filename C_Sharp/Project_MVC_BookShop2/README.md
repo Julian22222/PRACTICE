@@ -47,16 +47,21 @@ PackageNames:
    Microsoft.EntityFrameworkCore
    ```
 
-```
--->///basic package
+   -->///this is basic package
 
-2. Microsoft.EntityFrameworkCore.Relational -->///to work with ralational database
-3. Microsoft.EntityFrameworkCore.SqlServer -->///to work with Sql server
-4. Microsoft.EntityFrameworkCore.Tools -->///to write queries to database
-5. Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation -->///update automaticaly ViewEngine
-6. Microsoft.EntityFrameworkCore.Design -->///this package needs to create migrations folder
-7. Microsoft.EntityFrameworkCore.Tools.DotNet
-8. jQuery.Ajax.Unobtrusive --> jQuery-ajax-unobtrusive library ( client side validation)
+2. ```bash
+      Microsoft.EntityFrameworkCore.Relational
+   ```
+
+   -->///to work with ralational database
+
+3. Microsoft.EntityFrameworkCore.Relational -->///to work with ralational database
+4. Microsoft.EntityFrameworkCore.SqlServer -->///to work with Sql server
+5. Microsoft.EntityFrameworkCore.Tools -->///to write queries to database
+6. Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation -->///update automaticaly ViewEngine
+7. Microsoft.EntityFrameworkCore.Design -->///this package needs to create migrations folder
+8. Microsoft.EntityFrameworkCore.Tools.DotNet
+9. jQuery.Ajax.Unobtrusive --> jQuery-ajax-unobtrusive library ( client side validation)
 
 ..............................................................................................................
 
@@ -365,7 +370,7 @@ private readonly IConfiguration configuration; <-- create variable for Cofigurat
 
 //controller
 public HomeController(IConfiguration \_configuration){
- configuration = \_configuration; <--assign \_configuration to configuration
+configuration = \_configuration; <--assign \_configuration to configuration
 }
 
 configuration["KeyOfAppSettingsData "] <-- now we can read the data from appsettings.json file
@@ -405,4 +410,11 @@ Different options how to read ConnectionString from appsetttings.json --> see Bo
 ...........................................................................................................................................................................................................
 
 Read configuration using GetSection method from appsettings.json
+
+```
+
+```
+
+```
+
 ```
