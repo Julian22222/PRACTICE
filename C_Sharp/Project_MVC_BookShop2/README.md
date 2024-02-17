@@ -130,7 +130,8 @@ We use Repository class methods in BookController
 4. To create Migrations folder, we write -->
 
 ```c#
-# creating database with tables, Class proporties converts to table columns. Also, can add new proporties to the table in database
+# creating database with tables, Class proporties converts to table columns.
+# Also, can add new proporties to the table in database
 
 dotnet ef migrations add (AnyMigrationsName)
 
@@ -162,130 +163,206 @@ dotnet ef migrations remove
 
 ..............................................................................................................
 
-# how to use different Libraries
+# How to use different Libraries (jQuery, Bootstrap, Ajax libraries)
 
-jquery, bootstrap, ajax libraries and their packages can be imported from already installed(build up) .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet)
+jquery, bootstrap, ajax libraries and their packages can be imported from already installed(build up) .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet --> using special links)
+
+Example:
 
 ```c#
-#Example
-
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 ```
 
-CDN - (stands for )-> Content Delivery Network --> (get the libraries from internet)
-benefit of using CDN - it loads the file based on your geography location, increase performance of application
-With CDN you can get any library from internet.
-Example --> <,script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"><,/script> <--(remove comas)
+- CDN - (stands for )-> Content Delivery Network --> (get the libraries from internet)
+  benefit of using CDN - it loads the file based on your geography location, increase performance of application
+  With CDN you can get any library from internet.
 
+Example:
+
+```C#
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+```
+
+(-->See \_Layout.cshtml file)
 ...............................................................................................................
 
-Partial views - it is simple cshtml file that can be inserted anywhere in any View. It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).Helps to remove duplicate code from app.
+# Partial views (Similar to React JS components)
+
+- it is simple cshtml file that can be inserted anywhere in any View.
+- It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).
+- Helps to remove duplicate code from app.
 
 How to use it-->
 partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
-In the view where we want to insert that piece of code we put --> <,partial name="header" /> <--(remove coma),
-Usually we should put underscore before partial view name.
-Partial View is a self closing tag.
-also we can pass data,(parameters) to the partial view --> <,partial name="header" model="book"/> <--(remove coma)
+In the view where we want to insert that piece of code we put -->
+(-->See \_Layout.cshtml file)
+
+```C#
+<partial name="header" />
+```
+
+- Usually we should put underscore before partial view name.
+- Partial View is a self closing tag.
+- Also we can pass data,(parameters) to the partial view -->
+
+```C#
+<partial name="partialViewName" model="book"/>
+```
+
 or
-<,partial name="header" model="new Book()"/> <--(remove coma)
+
+```C#
+<partial name="partialViewName" model="new Book()"/>
+```
 
 or you can use another option to render our partial view-->
-@Html.Partial("header", Model)
+
+```C#
+@Html.Partial("partialViewName", Model)
+```
 
 .................................................................................................................................................................
 
-ViewComponent - is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. It is not part of Http life cycle.
+# ViewComponent
+
+- is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. It is not part of Http life cycle.
 
 There are 2 files in any ViewComponent:
 
-1. server side file, (location of this file --> at the root of our app-> Components/TopBooksViewComponent.cs). Components folder <-- can have any name. TopBooks <-- can have any name, and is followed by ViewComponent sufix. In this file we creating a class and returning View().
-   If we need to connect to database we can do it here --> create variable and through BookRepository get data from database. Then pass this data further --> to cshtml file in Default.cshtml
+1. server side file, (location of this file --> at the root of our app-> Components/TopBooksViewComponent.cs).
 
-2. cshtml file, (location of this file --> Views/Shared/Components/TopBooks/Default.cshtml). In Default.cshtml file we write any code that we want to render in our View.
+- Components folder <-- can have any name.
+- TopBooks <-- can have any name, and is followed by ViewComponent sufix. In this file we creating a class and returning View().
+- If we need to connect to database we can do it here --> create variable and through BookRepository get data from database. Then pass this data further --> to cshtml file in Default.cshtml
 
-To use that code in our view file we put--> @await Component.InvokeAsync("TopBooks")
-Also, we can pass the data, (parameters) to the View Component --> @await Component.InvokeAsync("TopBooks",{data}) or @await Component.InvokeAsync("TopBooks", new{bookId=4, isSort=true})
+2. then in cshtml file, (location of this file --> Views/Shared/Components/TopBooks/Default.cshtml). In Default.cshtml file we write any code that we want to render in our View.
 
-Also, we can use other method to render our view component on particular file by using tag helpers --> <,vc: top-books></,vc: top-books> <--(remove coma)
+To use that code in our view file we put--> (See Views/Home/Index.cahtml)
+
+```C#
+@await Component.InvokeAsync("TopBooks")
+```
+
+Also, we can pass the data, (parameters) to the View Component -->
+
+```C
+@await Component.InvokeAsync("TopBooks",{data})
+```
+
+or
+
+```C#
+@await Component.InvokeAsync("TopBooks", new{bookId=4, isSort=true})
+```
+
+- Also, we can use other method to render our view component in particular file by using tag helpers -->
+
+```C#
+<vc: top-books></vc: top-books>
+```
+
 VC -->stands for ViewComponent
 
-To use this option, you need to add -->
+To use this option, you need to add --> in Views/\_ViewImports.cshtml file
+
+```C#
 @addTagHelper *, Project*MVC_BookShop2
-@addTagHelper \*, Project_MVC_BookShop2.Components
-in Views/\_ViewImports.cshtml file
+@addTagHelper *, Project_MVC_BookShop2.Components
+```
 
 also we can pass all parametrs that are required in View component -->
-<,vc: top-books book-id="2" is-sort="false"></,vc: top-books> <--(remove coma)
+
+```C#
+<vc: top-books book-id="2" is-sort="false"></vc: top-books>
+```
 
 ...............................................................................................................
 
-We can combine Partial View and View Component
+## We can combine Partial View and View Component
 
 ......................................................................
 
-How to pass data(parameters) in Partial View and View Components-->
-Examaple:
+# How to pass data(parameters) in Partial View and View Components
 
+Examaple: (we write this code in View file)
+
+```C#
 @await Component.InvokeAsync("TopBooks", new{count=4 })
+```
 
 or in partial view:
 
-<,vc: top-books count="4" ></,vc: top-books> <--(remove coma)
+```C#
+<vc: top-books count="4" ></vc: top-books>
+```
 
-then in TopBooksViewComponent.cs file we receive this data(parameters)-->
+- then in TopBooksViewComponent.cs file we receive this data(parameters)-->
 
-public async Task<,IViewComponentResult> InvokeAsync(int count <--HERE WE HAVE 4){
-.......can use this count in here
+```C#
 
-var books = await \_bookRepository.GetTopBooksAsync(count); <-- then we can pass count further to the Views/Shared/Components/TopBooks/Default.cshtml View file
+private readonly BookRepository _bookRepository;  //creating new variable, to work with BookRepository class
+
+#int count <-- here we will receive 4
+public async Task<,IViewComponentResult> InvokeAsync(int count){
+......can use this count in here
+
+# then we can pass count further to the Views/Shared/Components/TopBooks/Default.cshtml View file
+//interacting with our database here using GetTopBooksAsync method from BookRepository.cs
+var books = await _bookRepository.GetTopBooksAsync(count)
+
+return View(count)
 
 }
 
-then in Default.cshtml file-->
-@model IEnumerable<,Book> <--Here will be 4 books
+```
+
+- then in Default.cshtml file-->
+
+```C#
+#Here will be 4 books
+@model IEnumerable<Book>
+```
 
 .........................................................................................................................................................................................
 
-ROUTING
+# ROUTING
 
--Is the process of mapping incoming http request (URL) to particular resource (resource is--> controller and action method)
+- It Is the process of mapping incoming http request (URL) to particular resource (resource is--> controller and action method)
 
--We can define a unique URL(route) for each resource., All the routes should be unique
+- We can define a unique URL(route) for each resource., All the routes should be unique
 
-When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT. DELETE
+When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
 
-/
-/
-/
 To use routing we need to use 2 middlewares in main file -> Program.cs
 2 middlewares:
 
 1. UseRouting();
 2. MapControllerRoute();
 
-In old version of ASP.NET was: UseRouting(); and UseEndpoints();
+- In old version of ASP.NET was: UseRouting(); and UseEndpoints();
 
-/
-/
-/
-Types of Routing:
+### Types of Routing:
 
 1. Conventional routing
 2. Attribute routing(use in app, best and easiest way to use routing in ASP.NET)
 
 Middleware in Program.cs file explaination -->
+
+```C#
 app.MapControllerRoute(
 name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
+```
 
-pattern: "{controller=Home}/{action=Index}/{id?}" -->
-this a pattern or template how variables in curly brackets will be replaced by other values, but by default controller = Home and action = Index, then Id - is optional, if we pass id it will work if we not pass id it will work as well
-If we are not passing any value to controller part and in action part in URL it will take default values.
+- pattern: "{controller=Home}/{action=Index}/{id?}" -->
+  this a pattern or template how variables in curly brackets will be replaced by other values, but by default controller = Home and action = Index, then id - is optional, if we pass id it will work if we not passing id it will work as well
+- If we are not passing any value to controller part and in action part in URL it will take default values.
 
-pattern -> first is nameOfController, second goes actionMethod and Id
+- pattern of routing -> first is nameOfController, second goes actionMethod and Id
 
-pattern -> here we creating an order what values and in what order will be shown in URL
+- pattern -> here we creating an order what values and in what order will be shown in URL
+
+#### Types of Routing:
 
 1. This method is Conventional Routing
    Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
@@ -299,40 +376,62 @@ pattern -> here we creating an order what values and in what order will be shown
 Typing in URL -> loacalhost:5167/about-us
 It will go to controller= Book and action = AboutUs and will show correct page, the same as you typed in URL -> Book/AboutUs
 
-2. This method is Attribute Routing (we using it in controller), Easy way to make orchange routing
+2. This method is Attribute Routing (we using it in controller), Easy way to make or change routing
 
+```C
 [Route("about-us")] //Attribute routing (best and easy way to make new Route to this resource)
 public IActionResult AboutUs()
 {
 return View();
 }
+```
 
-inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
+Inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
 
-/
-/
 To pass some parametrs in route we add --> /{ParametrName}:
+
+```C#
 [Route("about-us/{id?}")]
 public IActionResult AboutUs( int id)
 {
 return View();
 }
+```
 
-/
-/
+# Route constraints
+
 Route constraints (For example: [Route("about-us/{id?}") <-- id must be a number only not a string or other data type])
 
-1. in Routing constraints you can define the type of your parameters --> [Route("about-us/{id? : int}")]
-   id: int <-- id will definately must be am int ( data types: string,decimal,float and other)
+1. in Routing constraints you can define the type of your parameters -->
 
-2. in Routing constraints you can define the Length --> [Route("about-us/{id : int : min(1)}")]
-   id : int : min(1) <-- id must be int, and min id is 1 (2 constraints together)
+```C
+[Route("about-us/{id? : int}")]
+```
 
-3. in Routing constraints you can define Alpha --> [Route("about-us/{name : alpha})]
-   name : alpha <-- name has only alphabets (letters only)
-   name : alpha : minlength(5) <-- name has letters only and min length is 5
+id: int <-- id will definately must be am int ( data types: string,decimal,float and other)
 
-4. in Routing constraints you can define Regex --> [Route("about-us/{name : regex( regexCodeHere)})]
+2. in Routing constraints you can define the Length -->
+
+```C#
+[Route("about-us/{id : int : min(1)}")]
+```
+
+id : int : min(1) <-- id must be int, and min id is 1 (2 constraints together)
+
+3. in Routing constraints you can define Alpha -->
+
+```C#
+[Route("about-us/{name : alpha}")]
+```
+
+name : alpha <-- name has only alphabets (letters only)
+name : alpha : minlength(5) <-- name has letters only and min length is 5
+
+4. in Routing constraints you can define Regex -->
+
+```C#
+[Route("about-us/{name : regex( regexCodeHere)}")]
+```
 
 5. in Routing constraints you can define Required
 6. All constraints that are available in ASP.Net Core in
@@ -406,8 +505,6 @@ In appsettings.json we can keep :
 - Application Name
 - We NOT keeping here secret passwords or passcodes!!! ( IHostEnvironment.Production (User Secrets file) <-- we use for passwords )
 
-*
-
 * appsettings.json file <-- not dependent to any environment, it is common to every environment
 
 * appsettings.Development.json <-- if we will create this file, we will overwrite some settings for Development environment. It will be dependent only to Development environment.
@@ -458,38 +555,51 @@ var result = _configuration["KeyOfAppSettingsData"];
 
 ................................................................................................................................................................................................................
 
-Accessing appsettings.json using GetValue method
+# Accessing appsettings.json using GetValue method
+
 Whith this approach we can define the data type that we accessing in appsettings.json --> it can be boolean, string and other (with previous options we always get string data type from appsettings.json file)
 --> see Contactus.cshtml and HomeController.cs
 
 1.  To use GetValue in Controller--> we use:
-    using Microsoft.Extensions.Configuration;
+
+```C#
+using Microsoft.Extensions.Configuration;
+```
+
     then create configuration variable and with controller use Dependency injection. then ->
-    var test = configuration.GetValue<bool>("DisplayNewBookAlert"); <-- we can indicate what data type we are receiving - <bool>
+
+```C#
+var test = configuration.GetValue<bool>("DisplayNewBookAlert");
+```
+
+<-- we can indicate what data type we are receiving - <bool> , in example above
 
 2.  To use GetValue in View file --> we use:
     these two lines below are needed to use GetValue in View file, ( to get data from appsettings.json)
 
+```C#
+
 @using Microsoft.Extensions.Configuration
-@inject IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+@inject IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+```
 
 Then we use-->
 
+```C#
 <p>@(_configuration.GetValue<bool>("DisplayNewBookAlert"))</p>
+```
 
 /........................................................................................................................................................
 
-Different options how to read ConnectionString from appsetttings.json --> see BookStoreContext.cs file
+### Different options how to read ConnectionString from appsetttings.json --> see BookStoreContext.cs file
 
 ...........................................................................................................................................................................................................
 
 Read configuration using GetSection method from appsettings.json
 
-```
-
-```
-
-```c#
+```C#
 foob.bar.pluszz("word");
 
 # returns 'geese'
