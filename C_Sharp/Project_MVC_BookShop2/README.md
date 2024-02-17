@@ -10,7 +10,9 @@ LanguageId (number of Language)
 
 # Different namespaces:
 
-1. @using System.Runtime.InteropServices.WindowsRuntime;
+1. ```bash
+   @using System.Runtime.InteropServices.WindowsRuntime;
+   ```
 
 2. @using System; //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 
@@ -47,7 +49,9 @@ PackageNames:
    Microsoft.EntityFrameworkCore
    ```
 
-   -->///this is basic package
+````
+
+-->///this is basic package
 
 2. ```bash
    Microsoft.EntityFrameworkCore.Relational
@@ -460,3 +464,4 @@ Read configuration using GetSection method from appsettings.json
 ```
 
 ```
+````
