@@ -36,6 +36,14 @@ LanguageId (number of Language)
     ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 
 12. @using Microsoft.AspNetCore.Http; //to use IFormFile (special data type to hold information about uploaded files)
+
+13. using Microsoft.Extensions.Configuration; //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+
+14. @using Microsoft.Extensions.Configuration
+    @inject IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+15. @inject Microsoft.Extensions.Configuration.IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
     ..............................................................................................................
 
 # How to install nuget packages(Entity Framework Core)
@@ -90,6 +98,11 @@ PackageNames:
    ```
 
    -->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
+
+9. ```bash
+   microsoft.aspnetcore.identity.entityframeworkcore
+   ```
+   -->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
 
 ..............................................................................................................
 
@@ -658,4 +671,33 @@ bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the pr
 //and then we use newBook - to access all properties of NewBookAlertObj from appsettings.json file
 <p>@newBook.DisplayNewBookAlert</p>
 
+```
+
+# Identity Core
+
+- It is a universal framework to provide security to any .NET app(can use Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
+- Common framework for all .NET app
+- It is NOT only limited to SignUp / SignIn but provide lots of feature that are requires for security management
+- this framework provides all required tables to work with Authentication and Authorisation automaticaly, we don't need to create any extra table by ourself, everething is created automaticaly
+
+Identity core features:
+
+- Common framework for all .NET app
+- All required tables are generate automaticaly
+- Register
+- Login
+- Change Password
+- Forgot Password
+- User validation
+- Password validation
+- Password hashing
+- Multi factor authentication (Ex - 2f authentication)
+- Lockout (Block user on "n" wrong attemts), we can block user after 'n' attemts of entering password
+- External Identity (Google,Facebook, Microsoft, Twiter etc.), LogIn with Google account
+- And much more
+
+We need to Install Identity core using this package -->
+
+```C#
+microsoft.aspnetcore.identity.entityframeworkcore
 ```
