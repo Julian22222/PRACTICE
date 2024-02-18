@@ -8,6 +8,11 @@
 
 @model bool
 
+@{
+    var newBook = new AlertConfig();
+    _configuration.Bind("NewBookAlertObj", newBook);
+}
+
 <h1>Contact us Page</h1>
 
 
@@ -32,3 +37,14 @@
 
 @* receiving data from HomeController *@
 <p>@Model</p>
+
+
+<br/>
+<hr/>
+
+<h2>Binding Configuration to objects using Bind method</h2>
+ @* if newBook.DisplayNewBookAlert == true, show --> message *@
+
+@if(newBook.DisplayNewBookAlert){
+    <p>@newBook.BookName</p>
+}

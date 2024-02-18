@@ -107,11 +107,9 @@ PackageNames:
 ```c#
 _context.Books......
 
-# database connection->
-_context
+_context  // <-- database connection
 
-# table name in our database ->
-.Books
+.Books // <--table name in our database
 
 ```
 
@@ -303,7 +301,7 @@ or in partial view:
 private readonly BookRepository _bookRepository;  //creating new variable, to work with BookRepository class
 
 #int count <-- here we will receive 4
-public async Task<,IViewComponentResult> InvokeAsync(int count){
+public async Task<IViewComponentResult> InvokeAsync(int count){
 ......can use this count in here
 
 # then we can pass count further to the Views/Shared/Components/TopBooks/Default.cshtml View file
@@ -453,25 +451,22 @@ name : alpha : minlength(5) <-- name has letters only and min length is 5
 
 -if we not using Dependency injection we put ->
 
-```c#
-# create variable and assign it straightaway with new class, (creating new object -_context, based from BookStoreContext class)
+```C#
 
-private readonly BookStoreContext _context = new BookStoreContext();
+private readonly BookStoreContext _context = new BookStoreContext(); //create variable and assign it straightaway with new class, (creating new object -_context, based from BookStoreContext class)
 
 or
 
-#creating new variable, to work with some class(BookStoreContext class)
-
-private readonly BookStoreContext _context = null;
+private readonly BookStoreContext _context = null;  //creating new variable, to work with some class(BookStoreContext class)
 
 
-#then In CONSTRUCTOR, we assigning database data to _context variable
 
-public BookRepository(){
+
+public BookRepository(){  //In CONSTRUCTOR, we assigning database data to _context variable
 _context = new BookStoreContext();
 }
 
-###(this new object can be created in constructor or in action method)
+//(this new object can be created in constructor or in action method)
 
 ```
 
@@ -529,20 +524,17 @@ using Microsoft.Extensions.Configuration;
 
 -->// using this namespace needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
 
-```c#
-# in CONTROLLER ,
-## we create variable for Configuration
-## and assign _configuration to configuration
+```C#
+# IN CONTROLLER ,
 
-private readonly IConfiguration _configuration;
+private readonly IConfiguration _configuration; //we create variable for Configuration
 
 public HomeController(IConfiguration configuration){
-_configuration = configuration;
+_configuration = configuration;  //and assign _configuration to configuration in constructor
 }
 
 
-# now we can read the data from appsettings.json file in Controller action method
-var result = _configuration["KeyOfAppSettingsData"];
+var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data from appsettings.json file in Controller action method
 
 ```
 
@@ -597,10 +589,73 @@ Then we use-->
 
 ...........................................................................................................................................................................................................
 
-Read configuration using GetSection method from appsettings.json
+# Read configuration using GetSection method from appsettings.json
+
+We use this when in appsettings.json file we have an object -->
 
 ```C#
-foob.bar.pluszz("word");
+"infoObj": {
+    "key1": "value 1",
+    "key2": "value 2",
+    "key3": {
+      "key 3 obj 1": "value 3 object"
+    },
+    "key4": "value 4"
+  }
+```
 
-# returns 'geese'
+and we need to use many values from this appsettings.json object
+
+```C#
+configuration.GetValue<string>("infoObj:key1"); //to receive -value 1
+configuration.GetValue<string>("infoObj:key2"); //to receive -value 3
+configuration.GetValue<string>("infoObj:key3"); //to receive -value 3 object
+configuration.GetValue<string>("infoObj:key4"); //to receive -value 4
+```
+
+- In example above we use - "infoObj" all the time
+  We don't want to write the same code (Do not repeat yourself), to get the values from appsettings.json-->
+  Then we use GetSection method
+
+```C#
+var newBook = configuration.GetSection("infoObj"); //passing the name of my key
+//all the keys of "infoObj" will be available in newBook
+
+//then we use new variable --> newBook
+newBook.getValue<string>("key1");  //we don't write -"infoObj" anymore, will receive -value 1, as a result
+
+```
+
+# Binding Configuration to objects using Bind method appsettings.json
+
+- this allow to bind all proporties of some object in appsettings.json file to a particular model class
+
+* allow appsettings.json object to bind a particular Model obect
+
+How to bind two objects: (--> See appsetings.json, HomeController and Model/AlertConfig.cs)
+
+1. We create new Model class, the property names and data type in new Model class must be the same as in appsettings.json object
+
+2. Then we can Bind objects In Controller action method-->
+
+```C#
+var newBookAlert = new AlertConfig(); //create new object using AlertConfig class model and assigning it to new variable -> newBookAlert
+configuration.Bind("NewBookAlertObj", newBookAlert);  //In Bind method we pass 2 parametrs - > first (key of object in appsettings.json), second (object of instance - just created new object -> it is a Model that we created to bind with appsettings.json object)
+
+
+bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the properties in appsetiings.json of NewBookAlertObj object using newBookAlert variable
+```
+
+3. Or we can Bind objects In View -->
+
+```C#
+//we put on the top of the file
+@{
+    var newBook = new AlertConfig();
+    _configuration.Bind("NewBookAlertObj", newBook);
+}
+
+//and then we use newBook - to access all properties of NewBookAlertObj from appsettings.json file
+<p>@newBook.DisplayNewBookAlert</p>
+
 ```
