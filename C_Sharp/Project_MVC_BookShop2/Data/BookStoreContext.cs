@@ -3,6 +3,7 @@ using System.Collections.Generic;  //allow users to create strongly typed collec
 using System.Linq;
 using System.Threading.Tasks;  //to use Task with async await , and to use Task
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;  // to inherit from IdentityDbContext
 using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
 ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 
@@ -14,8 +15,12 @@ namespace Project_MVC_BookShop2.Data
 
     // this class allow to interact with database
 
-    // inherit this class from DbContext class
-    public class BookStoreContext : DbContext
+    //we can inherit this class from DbContext class to work with database -->
+    // public class BookStoreContext : DbContext
+
+    //or we can inherit this class from IdentityDbContext class to work with Identity
+    //but IdentityDbContext class is inherited from DbContext class
+     public class BookStoreContext : IdentityDbContext  //will create all needed tables for users and security automatically in our database
     // BookStoreContext <-- can have any name, and is followed by Context sufix.
     {
 

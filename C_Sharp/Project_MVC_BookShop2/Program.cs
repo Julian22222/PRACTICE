@@ -15,7 +15,8 @@ using System.Collections.Immutable;
 // main file, without this file none will work
 
 using Project_MVC_BookShop2.Data;  //connect MyappDbContext ,from Data folder
-using Microsoft.EntityFrameworkCore;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
@@ -32,6 +33,13 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 //     option.HtmlHelperOptions.ClientValidationEnabled = false;
 // });
 
+
+builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();  //to work With Identity Core we need to configure Identity to work with database
+//AddIdentity <-- will get all the feature thta are available in Identity framework core
+//IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
+//identityRole <--is a table that already buildIn in Identity framework, to work with roles
+//to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
+//BookStoreContext <--our database name
 
 
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
@@ -73,6 +81,7 @@ app.UseRouting();   // routing connection, -> needs for endpoint connection
 
 app.UseAuthorization();   // authorization connection
 
+app.UseAuthentication();  //authentication connection, to use passwords ,LogIn,SignUp etc.
 
 // endpoints connection, all your pages registration from Controllers folder,
 app.MapControllerRoute(

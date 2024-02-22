@@ -31,7 +31,6 @@
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/ref/Project_MVC_BookShop2.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/dotnet-ef.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Newtonsoft.Json.dll
-/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/Project_MVC_BookShop2.csproj.CopyComplete
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/refs/Microsoft.AspNetCore.Antiforgery.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/refs/Microsoft.AspNetCore.Authentication.Abstractions.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/refs/Microsoft.AspNetCore.Authentication.Cookies.dll
@@ -404,3 +403,5 @@
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Mono.TextTemplating.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/System.CodeDom.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/Project_MVC_BookShop2.csproj.CopyComplete
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

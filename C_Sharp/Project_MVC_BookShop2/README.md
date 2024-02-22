@@ -1,10 +1,55 @@
 ## Overview of this Project
 
-In this Project we get and save the data of dropDown to database.
--(Add New Book)-in NavBar , in Form we have dropdown options (Language and Category) <-- they are coming from database, (they not hardcoded in the View)
+In this Project we have options where we get data from controller and get data from database for dropDown menu when we adding a book.
+
+-Add New Book --> in NavBar , we are filling the Form and we have dropdown options:
+
+- Language dropdown menu <-- is coming from database, (they not hardcoded in the View)
+- Category dropdown menu <-- is coming from Controller (BookController), -hardcoded options
+
 -We create new class for dropdown -->Language ,in Data folder
--Create relationship between two tables --> in Books class we put property \_-->public Language(data type) Language(Name)
+-Create relationship between two tables - Books table and language table --> (--> See Data/Language.cs file)
+
+in Books class we put property-->public Language(data type) Language(Name)
 LanguageId (number of Language)
+
+# Install new .Net version to work in certain project
+
+As example:
+
+- before starting a project with .NET 7.0 we need to install .NET 7.0 in terminal
+- If we want to start working on project which was created with NET 8.0 , we need to install .NET 8.0 and uninstal .NET 7.0 from the system
+
+1. ```C#
+      sudo apt remove 'dotnet*' 'aspnet*' 'netstandard*'
+   ```
+
+   -->//Uninstall all .NET package
+
+2. ```C#
+   sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+   ```
+
+-->///Remove the Microsoft repository
+
+3. ```C#
+   sudo apt install dotnet-sdk-7.0
+   ```
+
+-->///Install .NET (which should pull down the SDK and the runtime from the Ubuntu repository)
+
+- Also,you can install multiple versions of .Net SDK using dotnet binary packages
+- ```C#
+  dotnet --list-sdk
+  ```
+
+will show all installed .Net versions on your computer. And then you can switch between these versions.
+
+--> to install nuget packages with different version , not the latest version we put: (EXMAPLE)
+
+```C#
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
+```
 
 ..............................................................................................................
 
@@ -14,50 +59,108 @@ LanguageId (number of Language)
    @using System.Runtime.InteropServices.WindowsRuntime;
    ```
 
-2. @using System; //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
+2. ```bash
+      @using System;
+   ```
 
-3. @using System.Collections.Generic; //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
+   -->///using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 
-4. @using System.Linq; //querying any type of data source
+3. ```bash
+   @using System.Collections.Generic;
+   ```
 
-5. @using System.Threading.Tasks; //creating new threads for computation, aslo when use async-await operations, and to use Task
+   -->///allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
 
-6. @using Microsoft.AspNetCore.Mvc; //allow to use Routes , //importing to inherit Controller
+4. ```C#
+   @using System.Linq;
+   ```
 
-7. @using Project_MVC_BookShop2.Repository; //BookRepository connection and methods - GetAllBooks and others
+   -->///querying any type of data source
 
-8. @using Project_MVC_BookShop2.Models; //Book class import connection
+5. ```C#
+   @using System.Threading.Tasks;
+   ```
 
-9. @using Microsoft.AspNetCore.Mvc.Rendering; //to use SelectList, SelectListItem, SelectListGroup, use Html partial views
+   -->///creating new threads for computation, aslo when use async-await operations, and to use Task
 
-10. @using Microsoft.AspNetCore.Mvc; //allow to use Routes , //importing to inherit Controller
+6. ```C#
+   @using Microsoft.AspNetCore.Mvc;
+   ```
 
-11. @using Microsoft.EntityFrameworkCore; //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
-    ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
+   -->///allow to use Routes , //importing to inherit Controller
 
-12. @using Microsoft.AspNetCore.Http; //to use IFormFile (special data type to hold information about uploaded files)
+7. ```C#
+   @using Project_MVC_BookShop2.Repository;
+   ```
 
-13. using Microsoft.Extensions.Configuration; //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+   -->//BookRepository connection and methods - GetAllBooks and others
 
-14. @using Microsoft.Extensions.Configuration
-    @inject IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+8. ```C#
+   @using Project_MVC_BookShop2.Models;
+   ```
 
-15. @inject Microsoft.Extensions.Configuration.IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+   -->//Book class import connection
 
-    ..............................................................................................................
+9. ```C#
+   @using Microsoft.AspNetCore.Mvc.Rendering;
+   ```
+
+   -->///to use SelectList, SelectListItem, SelectListGroup, use Html partial views
+
+10. ```C#
+     @using Microsoft.AspNetCore.Mvc;
+    ```
+
+    -->//allow to use Routes , //importing to inherit Controller
+
+11. ```C#
+    @using Microsoft.EntityFrameworkCore;
+    ```
+
+--> Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
+--> allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
+
+12. ```C#
+    @using Microsoft.AspNetCore.Http;
+    ```
+
+-->to use IFormFile (special data type to hold information about uploaded files)
+
+13. ```C#
+     using Microsoft.Extensions.Configuration;
+    ```
+
+    -->//needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+
+14. ```C#
+    @using Microsoft.Extensions.Configuration //we use these 2 lines of code to access appsettings.json in View (import configuration, needs to use IConfiguration service)
+    @inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+    ```
+
+15. ```C#
+    @inject Microsoft.Extensions.Configuration.IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+    ```
+
+16. ```C#
+     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    ```
+
+    -->// to inherit from IdentityDbContext, in BookStoreContext.cs file
+
+..............................................................................................................
 
 # How to install nuget packages(Entity Framework Core)
 
 In terminal we write:
 dotnet add package (PackageName)
 
-PackageNames:
+### PackageNames:
 
 1. ```bash
    Microsoft.EntityFrameworkCore
    ```
 
-   -->/// this is basic package
+-->/// this is basic package
 
 2. ```bash
    Microsoft.EntityFrameworkCore.Relational
@@ -94,15 +197,22 @@ PackageNames:
    ```
 
 8. ```bash
+   Microsoft.aspnetcore.identity.entityframeworkcore
+   ```
+
+-->///this package needs to work with Identity core (LogIn,SignUp, Password etc.)
+
+9. ```bash
    jQuery.Ajax.Unobtrusive
    ```
 
-   -->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
+-->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
 
-9. ```bash
-   microsoft.aspnetcore.identity.entityframeworkcore
-   ```
-   -->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
+10. ```bash
+    Microsoft.aspnetcore.identity.entityframeworkcore
+    ```
+
+-->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
 
 ..............................................................................................................
 
@@ -130,6 +240,9 @@ Repository is a place where you can get, post,edit,delete the data in database.
 We use Repository class methods in BookController
 
 - In View , when we fill Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
+
+- Components foled --> we use for ViewComponent
+  Also we use Views/Shared foledr to display ViewComponent View
 
 ....................................................................................................................
 
@@ -344,7 +457,8 @@ return View(count)
 
 When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
 
-To use routing we need to use 2 middlewares in main file -> Program.cs
+### To use routing we need to use 2 middlewares in main file -> Program.cs
+
 2 middlewares:
 
 1. UseRouting();
@@ -357,7 +471,7 @@ To use routing we need to use 2 middlewares in main file -> Program.cs
 1. Conventional routing
 2. Attribute routing(use in app, best and easiest way to use routing in ASP.NET)
 
-Middleware in Program.cs file explaination -->
+### Middleware in Program.cs file explanation -->
 
 ```C#
 app.MapControllerRoute(
@@ -483,7 +597,7 @@ _context = new BookStoreContext();
 
 ```
 
-Services lifetime:
+### Services lifetime:
 
 - Transient(AddTransient<>) <-- A new instance of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created
 
@@ -491,7 +605,7 @@ Services lifetime:
 
 - Singleton (AddSingleton<>) <--Same instance for all entire application. (When you change something you need to stop application, and rerun it againg to apply new changes)
 
-.......................................................................
+...................................................................................................
 
 ### Dependency injection in View (chtml)
 
@@ -506,7 +620,7 @@ We can straight away pass only Interfacese from Repository class to View (create
 - Using configuration service allow us to get get any data from appsettings.json in our application
 - We can have many appsettings.json files in our app
 
-In appsettings.json we can keep :
+### In appsettings.json we can keep :
 
 - ConnectionString
 - Server Link
@@ -673,9 +787,9 @@ bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the pr
 
 ```
 
-# Identity Core
+# Identity Core ( responsible for LogIn, SignUp, Passwords, Registration, security in the app and other features)
 
-- It is a universal framework to provide security to any .NET app(can use Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
+- It is a universal framework to provide security to any .NET app(can be used Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
 - Common framework for all .NET app
 - It is NOT only limited to SignUp / SignIn but provide lots of feature that are requires for security management
 - this framework provides all required tables to work with Authentication and Authorisation automaticaly, we don't need to create any extra table by ourself, everething is created automaticaly
@@ -684,20 +798,83 @@ Identity core features:
 
 - Common framework for all .NET app
 - All required tables are generate automaticaly
-- Register
+- Register a user
 - Login
 - Change Password
 - Forgot Password
-- User validation
+- User validation (check is it valid user or not)
 - Password validation
 - Password hashing
-- Multi factor authentication (Ex - 2f authentication)
+- Multi factor authentication (Ex - 2f authentication) <--user will be locked out if he is entering wrong password
 - Lockout (Block user on "n" wrong attemts), we can block user after 'n' attemts of entering password
 - External Identity (Google,Facebook, Microsoft, Twiter etc.), LogIn with Google account
 - And much more
 
-We need to Install Identity core using this package -->
+To start working with Identity Core framework we need to install --> (and all other dependent packages will install automatically in our app)
 
 ```C#
-microsoft.aspnetcore.identity.entityframeworkcore
+Microsoft.aspnetcore.identity.entityframeworkcore
+```
+
+### To connect Identity core package we need:
+
+1. In Program.cs file , (line 84)-->
+
+```C#
+app.UseAuthentication();  //enable authentication connection using middleware, to use passwords ,LogIn,SignUp etc.
+```
+
+2. In Program.cs file , (line 37)-->
+
+```bash
+   builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //to work With Identity Core we need to configure Identity to work with database
+```
+
+- AddIdentity<IdentityUser,IdentityRole>()
+- IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
+- identityRole <--is a table that already buildIn in Identity framework, to work with roles
+- to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
+- BookStoreContext <--our database name
+
+3. In BookStoreContext.cs file we inherit from -->
+
+```bash
+public class BookStoreContext : IdentityDbContext  // <--will create all needed tables for users and security automatically in our database
+```
+
+4. Then we add migrations, (add changes to our database)-->
+
+```c#
+dotnet ef migrations add (AnyMigrationsName)
+```
+
+5. To make update our database, we write -->
+
+```c#
+dotnet ef database update
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```

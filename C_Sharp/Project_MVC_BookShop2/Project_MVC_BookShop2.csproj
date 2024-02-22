@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="jQuery.Ajax.Unobtrusive" Version="2.0.20710" />
+    <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0">
@@ -16,6 +17,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
   </ItemGroup>
 
