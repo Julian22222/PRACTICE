@@ -5,24 +5,64 @@ using System.Linq;    //querying any type of data source
 using System.Threading.Tasks;              //creating new threads for computation, aslo when use async-await operations, and to use Task
 using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to inherit Controller
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
-using Project_MVC_BookShop2.Models;        //Book class import connection
+using Project_MVC_BookShop2.Models;        //SignUpUserModel class import connection
 using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup, use Html partial views
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 namespace Project_MVC_BookShop2.Controllers;
 
+
 public class AccountController : Controller
 {
 
+private readonly AccountRepository _accountRepository;
 
-    [Route("signup")]
-    public IActionResult SignUp(){
+
+//controller
+public AccountController(AccountRepository accountRepository){
+
+_accountRepository = accountRepository;
+}
+
+
+    [Route("sign-up")]  //Attribute routing 
+    public IActionResult Signup(){
 
         return View();
     }
+
+
+    [Route("sign-up")]  //Attribute routing 
+    [HttpPost]
+    public async Task <IActionResult> Signup(SignUpUserModel userModel){
+
+     if(ModelState.IsValid){
+        
+        //logic when post SignUp form
+        var result = await _accountRepository.CreateUserAsync(userModel);
+
+        if(!result.Succeeded){ //if it is false- means User has not been created in database, the we do this code
+
+        //then we display all error messages
+        foreach( var errorMessage in result.Errors){ //result.Errors <--has all errors messages
+
+        ModelState.AddModelError("", errorMessage.Description);
+
+        }
+        return View(userModel);
+        }
+
+        ModelState.Clear();
+     }   
+     
+        return View();
+    }
     
-}
+} 
+
+
+

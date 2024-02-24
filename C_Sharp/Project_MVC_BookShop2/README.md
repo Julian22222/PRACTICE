@@ -7,11 +7,25 @@ In this Project we have options where we get data from controller and get data f
 - Language dropdown menu <-- is coming from database, (they not hardcoded in the View)
 - Category dropdown menu <-- is coming from Controller (BookController), -hardcoded options
 
--We create new class for dropdown -->Language ,in Data folder
--Create relationship between two tables - Books table and language table --> (--> See Data/Language.cs file)
+- We create new class for dropdown -->Language ,in Data folder
+- -We Create connection, relationship between two tables - Books table and language table in Data folder--> (--> See Data/Language.cs file)
 
 in Books class we put property-->public Language(data type) Language(Name)
 LanguageId (number of Language)
+
+- For each table in databse we create Class in Data folder
+
+- Each table has their own Repository file with the logic related to that table
+
+- Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
+
+1. ```bash
+   dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+   ```
+
+2. ```bash
+   dotnet ef database update  //to update database
+   ```
 
 # Install new .Net version to work in certain project
 
@@ -246,6 +260,101 @@ We use Repository class methods in BookController
 
 ....................................................................................................................
 
+# How data travel through the files
+
+### When we addidng some Data to the database using form (--> From AddnewBook.cshtml)
+
+1. Field data from the form go to controller, acion method --> (--> See BookController.cs)
+
+```C#
+[HttpPost] //this method works by clicking -->add book (posting new book) , POST method (this is Attribute routing)
+public async Task<IActionResult> AddNewBook(Book book){  //<--book is data from the form
+
+///code ...
+
+}
+```
+
+2. The we pass data from controller action method to Repository --> (--> See BookController.cs)
+
+```C#
+[HttpPost]
+public async Task<IActionResult> AddNewBook(Book book){
+
+///code ...
+
+int id = await _bookRepository.AddNewBook(book);  //<-- using Repository method we pass data from the form further down to the Repository
+
+}
+```
+
+3. In Repository we interact with database (-->See BookRepository.cs)
+
+```C#
+var newBook = new Books(){
+// assign all proporties from received model(data from form) to our proporties in the table
+// id -will be assign to it automatically to newBook object
+    Title = model.Title,
+    Author = model.Author,
+    Description = model.Description,
+    Category = model.Category,
+    LanguageId = model.LanguageId,
+
+    // if model.TotalPages>HasValue(contains some value) return it value, otherwise return 0
+    TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
+
+    //full path to uploaded img folder -->(wwwroot/books/cover)
+    CoverImageUrl = model.CoverImageUrl,
+    BookPdfUrl = model.BookPdfUrl
+};
+
+// we add newBook to our database -> _context -> in Books table
+await _context.Books2.AddAsync(newBook);
+
+// then we need save changes, otherwise application won't hit the database ( async method)
+await _context.SaveChangesAsync();
+
+return newBook.Id;
+    }
+```
+
+### When we passing id from URL tobthe database to find element (--> From BookController.cs)
+
+1. id comes from URL to controller, action method -->
+   (example) -> /book/getbook/1
+
+2. Then we passing id to Repository to interact with database
+
+```C#
+public async Task<IActionResult> GetBook (int id){  //returning a View - that means it should be - IActionResult / or ViewResult
+ var data = await _bookRepository.GetBookById(id);  //passing id to Repository
+
+  return View(data); //passing the data to the View
+}
+```
+
+3. In Repository we interact with database (-->See BookRepository.cs)
+
+```C#
+     public async Task<Book> GetBookById(int id)
+        {
+        return await _context.Books2.Where(x=>x.Id ==id).Select(book => new Book(){
+                        Id = book.Id,
+                        Title = book.Title,
+                        Author = book.Author,
+                        Category = book.Category,
+                        Description = book.Description,
+                        LanguageId = book.LanguageId,
+                        Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
+                        TotalPages = book.TotalPages,
+                        CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
+                        BookPdfUrl = book.BookPdfUrl
+            }).FirstOrDefaultAsync();
+        }
+```
+
+....................................................................................................................
+
 # How to connect your project to SQl Server Database.
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
@@ -253,17 +362,18 @@ We use Repository class methods in BookController
 3. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
 4. To create Migrations folder, we write -->
 
-```c#
+```C#
 # creating database with tables, Class proporties converts to table columns.
 # Also, can add new proporties to the table in database
+# use this command when add something in Classes in Data folder(Database)
 
-dotnet ef migrations add (AnyMigrationsName)
+dotnet ef migrations add (AnyMigrationsName)  //add changes and create databases with tables
 
 ```
 
-5. To make changes to our database, we write -->
+5. To make update to our database, we write -->
 
-```c#
+```C#
 
 dotnet ef database update
 
@@ -852,6 +962,10 @@ dotnet ef migrations add (AnyMigrationsName)
 
 ```c#
 dotnet ef database update
+
+```
+
+```
 
 ```
 
