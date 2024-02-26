@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;  // to inherit from Ide
 using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
 ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 
+using Project_MVC_BookShop2.Models;
+
 namespace Project_MVC_BookShop2.Data
 {
 
@@ -20,7 +22,9 @@ namespace Project_MVC_BookShop2.Data
 
     //or we can inherit this class from IdentityDbContext class to work with Identity
     //but IdentityDbContext class is inherited from DbContext class
-     public class BookStoreContext : IdentityDbContext  //will create all needed tables for users and security automatically in our database
+
+    //  public class BookStoreContext : IdentityDbContext  <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table
+     public class BookStoreContext : IdentityDbContext<ApplicationUser>  //will create all needed tables for users and security automatically in our database, use Class ApplicationUser with added properties
     // BookStoreContext <-- can have any name, and is followed by Context sufix.
     {
 

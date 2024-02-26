@@ -25,13 +25,12 @@ private readonly AccountRepository _accountRepository;
 //controller
 public AccountController(AccountRepository accountRepository){
 
-_accountRepository = accountRepository;
+_accountRepository = accountRepository;  //dependency injections, to work with Identity framework, (we can use this Depenedency injection because we wrote - line 50- in Program.cs)
 }
 
 
     [Route("sign-up")]  //Attribute routing 
     public IActionResult Signup(){
-
         return View();
     }
 
@@ -45,21 +44,60 @@ _accountRepository = accountRepository;
         //logic when post SignUp form
         var result = await _accountRepository.CreateUserAsync(userModel);
 
-        if(!result.Succeeded){ //if it is false- means User has not been created in database, the we do this code
+
+
+
+        if(!result.Succeeded){ //if it is false- means User has not been created in database, the we do this code( Here we check is the user was created in the database)
 
         //then we display all error messages
-        foreach( var errorMessage in result.Errors){ //result.Errors <--has all errors messages
+            foreach( var errorMessage in result.Errors){ //result.Errors <--has all errors messages
 
-        ModelState.AddModelError("", errorMessage.Description);
+                ModelState.AddModelError("", errorMessage.Description); //assign all error msges to ModelState
 
+            }
+        return View(userModel);  //if result is not successful we return a View (User wasn't created in the database)
         }
-        return View(userModel);
-        }
 
-        ModelState.Clear();
+
+
+
+        ModelState.Clear(); // clear the ModelState
      }   
      
+        return View();  //if result is successful return View
+    }
+
+
+
+
+
+
+     [Route("login")]  //Attribute routing 
+    public IActionResult Login(){
         return View();
+    }
+
+
+    [Route("login")]  //Attribute routing 
+    [HttpPost]
+    public async Task <IActionResult> Login(SignInModel signInModel){
+        if(ModelState.IsValid){
+
+        var result = await _accountRepository.PasswordSignInAsync(signInModel);
+
+
+        if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
+
+        return RedirectToAction("Home", "index");  //return Home/index View Page
+        }
+
+
+        ModelState.AddModelError("", "invalid credentials"); //if LogIn is not Seccessful, show this message
+
+        // ModelState.Clear(); // clear the ModelState
+
+        }
+        return View(signInModel);
     }
     
 } 

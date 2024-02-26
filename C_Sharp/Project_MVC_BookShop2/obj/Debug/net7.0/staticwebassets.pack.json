@@ -77,6 +77,10 @@
       "PackagePath": "staticwebassets/img/book3.jpeg"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/login.webp",
+      "PackagePath": "staticwebassets/img/login.webp"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/signup2.png",
       "PackagePath": "staticwebassets/img/signup2.png"
     },

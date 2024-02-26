@@ -28,13 +28,17 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 //AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+
+
 //Uncomment this code to disable Client side validation(only in Development mode), add it to the existing chain
 //  .AddViewOptions(option =>{
 //     option.HtmlHelperOptions.ClientValidationEnabled = false;
 // });
 
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();  //to work With Identity Core we need to configure Identity to work with database
+
+// builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();  //<--use this code if we add some properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
 //AddIdentity <-- will get all the feature thta are available in Identity framework core
 //IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
 //identityRole <--is a table that already buildIn in Identity framework, to work with roles
@@ -42,19 +46,40 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStor
 //BookStoreContext <--our database name
 
 
+
+// //Configure the password complexity (User Registration)
+// builder.Services.Configure<IdentityOptions>( options=>{
+// //here we configure all the settigs for Identity framework, 
+// //if we need to configure settings for pasword --> update settings for password
+// options.Password.RequiredLength = 5;
+// options.Password.RequiredUniqueChars = 1;
+// options.Password.RequireDigit = false;
+// options.Password.RequireLowercase = false;
+// options.Password.RequireNonAlphanumeric = false;
+// options.Password.RequireUppercase = false;
+// });
+
+
+
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
+
+
 
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
-builder.Services.AddScoped<AccountRepository, AccountRepository>();
+builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
 
 
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
+
+
 // builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+
+
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));

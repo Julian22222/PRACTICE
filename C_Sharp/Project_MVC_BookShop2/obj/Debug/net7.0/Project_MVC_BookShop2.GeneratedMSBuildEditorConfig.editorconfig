@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2
 build_property._RazorSourceGeneratorDebug = 
 
+[/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/Views/Account/Signup.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9TaWdudXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

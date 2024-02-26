@@ -14,7 +14,15 @@ namespace Project_MVC_BookShop2.Models
     public class SignUpUserModel
     {
 
+        // class for SignUP 
+
         //data anatations, display attributes
+
+        [Required(ErrorMessage ="Please enter your name")]
+        public string FirstName { get; set; }
+
+    
+        public string LastName { get; set; }
 
         [Required(ErrorMessage ="Please enter your email")]
         [Display( Name ="Email address" )]

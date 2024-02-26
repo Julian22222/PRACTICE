@@ -7,7 +7,7 @@ In this Project we have options where we get data from controller and get data f
 - Language dropdown menu <-- is coming from database, (they not hardcoded in the View)
 - Category dropdown menu <-- is coming from Controller (BookController), -hardcoded options
 
-- We create new class for dropdown -->Language ,in Data folder
+- We create new class for dropdown -->Language ,in Data folder and in Models folder
 - -We Create connection, relationship between two tables - Books table and language table in Data folder--> (--> See Data/Language.cs file)
 
 in Books class we put property-->public Language(data type) Language(Name)
@@ -24,8 +24,11 @@ LanguageId (number of Language)
    ```
 
 2. ```bash
-   dotnet ef database update  //to update database
+      dotnet ef database update  //to update database
    ```
+
+- Server side validation is written in Model class/ Model folder
+  ..............................................................................................................
 
 # Install new .Net version to work in certain project
 
@@ -54,12 +57,10 @@ As example:
 
 - Also,you can install multiple versions of .Net SDK using dotnet binary packages
 - ```C#
-  dotnet --list-sdk
+  dotnet --list-sdk //will show all installed .Net versions on your computer. And then you can switch between these versions.
   ```
 
-will show all installed .Net versions on your computer. And then you can switch between these versions.
-
---> to install nuget packages with different version , not the latest version we put: (EXMAPLE)
+### To install nuget packages with different version , not the latest version we put: (EXMAPLE)
 
 ```C#
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
@@ -255,8 +256,8 @@ We use Repository class methods in BookController
 
 - In View , when we fill Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
 
-- Components foled --> we use for ViewComponent
-  Also we use Views/Shared foledr to display ViewComponent View
+- Components folder --> we use for ViewComponent
+  Also we use Views/Shared folder to display ViewComponent View
 
 ....................................................................................................................
 
@@ -318,6 +319,26 @@ return newBook.Id;
     }
 ```
 
+##### Also, when we want to use form to send the data to database we write:
+
+1. in View -->
+
+```C#
+<form method="post" >
+
+...other html tags
+
+</form>
+
+```
+
+2. In Controller, action method -->
+
+```C#
+[HttpPost]  //<--above needed action method (attribute)
+public async Task<IActionResult> AddNewBook(Book book){...}
+```
+
 ### When we passing id from URL tobthe database to find element (--> From BookController.cs)
 
 1. id comes from URL to controller, action method -->
@@ -351,6 +372,28 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
                         BookPdfUrl = book.BookPdfUrl
             }).FirstOrDefaultAsync();
         }
+```
+
+....................................................................................................................
+
+# How to make a link reference from View file to certain action method in Controller
+
+1. use href
+
+```C#
+  <a class="nav-link text-dark" href="/book/GetAllBooks">All Books</a>
+
+  //book <--name of controller
+  //GetAllBooks <--action method
+```
+
+2. use tag helpers
+
+```C#
+
+<a class="btn btn-primary" asp-controller="Account" asp-action="Signup">Register</a>
+// asp-controller="Account"  <-- name of controller
+// asp-action="Signup"  <--action method
 ```
 
 ....................................................................................................................
@@ -418,6 +461,7 @@ Example:
 ```
 
 (-->See \_Layout.cshtml file)
+
 ...............................................................................................................
 
 # Partial views (Similar to React JS components)
@@ -550,7 +594,7 @@ return View(count)
 
 ```
 
-- then in Default.cshtml file-->
+- then in Default.cshtml file we can receive "count"-->
 
 ```C#
 #Here will be 4 books
@@ -820,7 +864,7 @@ Then we use-->
 <p>@(_configuration.GetValue<bool>("DisplayNewBookAlert"))</p>
 ```
 
-/........................................................................................................................................................
+........................................................................................................................................................
 
 ### Different options how to read ConnectionString from appsetttings.json --> see BookStoreContext.cs file
 
@@ -863,6 +907,8 @@ newBook.getValue<string>("key1");  //we don't write -"infoObj" anymore, will rec
 
 ```
 
+..............................................................................................................
+
 # Binding Configuration to objects using Bind method appsettings.json
 
 - this allow to bind all proporties of some object in appsettings.json file to a particular model class
@@ -897,6 +943,8 @@ bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the pr
 
 ```
 
+..............................................................................................................
+
 # Identity Core ( responsible for LogIn, SignUp, Passwords, Registration, security in the app and other features)
 
 - It is a universal framework to provide security to any .NET app(can be used Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
@@ -928,15 +976,15 @@ Microsoft.aspnetcore.identity.entityframeworkcore
 
 ### To connect Identity core package we need:
 
-1. In Program.cs file , (line 84)-->
+1. In Program.cs file , (line 111)-->
 
 ```C#
 app.UseAuthentication();  //enable authentication connection using middleware, to use passwords ,LogIn,SignUp etc.
 ```
 
-2. In Program.cs file , (line 37)-->
+2. In Program.cs file , (line 40)-->
 
-```bash
+```C#
    builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //to work With Identity Core we need to configure Identity to work with database
 ```
 
@@ -946,9 +994,15 @@ app.UseAuthentication();  //enable authentication connection using middleware, t
 - to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
 - BookStoreContext <--our database name
 
+Also, In Program.cs file (Line 71) -->
+
+```C#
+builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
+```
+
 3. In BookStoreContext.cs file we inherit from -->
 
-```bash
+```C#
 public class BookStoreContext : IdentityDbContext  // <--will create all needed tables for users and security automatically in our database
 ```
 
@@ -965,30 +1019,101 @@ dotnet ef database update
 
 ```
 
+6. Views/ Account/Signup.cshtml
+7. AccountRepository.cs
+8. AccountController.cs
+
+.........................................................................................................................
+
+# Add columns to AspNetUsers table (Add new properties to standard AspNetUsers table)
+
+- Using Identity framework creates AspNeUsers table,(table for User Registration) and this table has already build in properties, such as: Id, UserName, PhoneNumber, Email and others.
+- If we want to add some more other properties to this table such as: Name,LastName, dateOFBirth, and other we -->
+
+we can inherit IdentityUser class from other class and add custom properties in that new class:
+
+1. In Model folder we create a class which will inherit IdentityUser Class properies
+2. New created class --->(ApplicationUser.cs) we add new properties to AspNetUsers table (such as: Name, LastName,Dob etc.)
+3. Need to update, Change all the places where we used IdentityUser Class with ApplicationUser:
+
+   - In Program.cs -->line 40
+
+   ```C#
+    builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
+
+   //We change IdentityUser --> ApplicationUser
+   ```
+
+   - In BookStoreContext.cs --> line 27
+
+   ```C#
+   public class BookStoreContext : IdentityDbContext
+
+   //We change IdentityDbContext --> IdentityDbContext<ApplicationUser>
+   ```
+
+   -In AccountRepository.cs -->line 45 , line 24, line 35
+
+   ```C#
+   var user = new IdentityUser(){...}
+
+   //We change IdentityUser --> ApplicationUser
+
+
+   private readonly UserManager<IdentityUser> _userManager;
+   //We change IdentityUser --> ApplicationUser
+
+   public AccountRepository(UserManager<IdentityUser> userManager){
+   _userManager = userManager;
+
+   //We Change IdentityUser --> ApplicationUser
+   }
+   ```
+
+4. dotnet ef migrations add (NameOfMigration) <--add new properties to database
+5. dotnet ef database update <-- update AspNetUsers table, with new added properties to it
+6. assign new properties in AccountRepository -->
+
+```C#
+  public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel){
+
+        var user = new ApplicationUser(){
+            Email = userModel.Email,
+            UserName = userModel.Email,
+
+            //Add columns to AspNetUsers table
+            FirstName = userModel.FirstName,
+            LastName = userModel.LastName
+        };
 ```
 
-```
+....................................................................................................................
 
-```
+# Configure the password compexity in Identity Core (We identify what symbols password must contain in SignUp process)
 
-```
+- Example-> Password must have 5 symbols, 1 Capital letter, 1 special symbol etc.
 
-```
+- By default Identity framework is configuration these settings for us:
 
-```
+1. Password must be at least 6 characters
+2. Password must have at least 1 non alphanumeric character
+3. Password must have at least 1 lowercase ("a" - "z")
+4. Password must have at least 1 uppercase ("A" - "Z")
 
-```
+These Default Password settings can be changed. By following code:
 
-```
+- In Program.cs file -->line 50
 
-```
-
-```
-
-```
-
-```
-
-```
-
+```C#
+//Configure the password complexity (User Registration password configuration)
+builder.Services.Configure<IdentityOptions>( options=>{
+//here we configure all the settigs for Identity framework,
+//if we need to configure settings for pasword --> update settings for password
+options.Password.RequiredLength = 5;
+options.Password.RequiredUniqueChars = 1;
+options.Password.RequireDigit = false;
+options.Password.RequireLowercase = false;
+options.Password.RequireNonAlphanumeric = false;
+options.Password.RequireUppercase = false;
+});
 ```

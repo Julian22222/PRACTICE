@@ -34,8 +34,8 @@ public BookController(BookRepository bookRepository, ILanguageRepository languag
 // here we are assigning BookRepository class with all its methods to -> _bookRepository
 // can acess to BookRepository class methods , after creating an object from BookRepository class -> _bookRepository
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
-_bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<BookRepository, BookRepository>();
-_languageRepository = languageRepository;    //dependency injection using interface, to make object from languageRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
+_bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<BookRepository, BookRepository>(); (we can use this Depenedency injection because we wrote - line 48 in Program.cs)
+_languageRepository = languageRepository;    //dependency injection using interface, to make object from languageRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<ILanguageRepository, LanguageRepository>(); (we can use this Depenedency injection because we wrote  - line 49 in Program.cs)
 _webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server, (we don't write this variable in Program.cs to use it here)
 }
 
@@ -99,7 +99,7 @@ ViewBag.Category = new List<string>(){
 
 
   // always use data return type -> Task with async methods 
-[HttpPost] //this method works by clicking -->add book (posting new book) , POST method (this is Attribute routing)
+[HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
