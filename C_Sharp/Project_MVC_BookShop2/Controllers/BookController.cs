@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem,
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;  // to use [Authorize] Attribute, only loged In users can access this action method
 
 
 // using System.Web.Mvc; 
@@ -74,6 +75,7 @@ public List<Book> SearchBook(string title, string authorName){
 }
 
 
+[Authorize] 
 // form Method to add new book, GET method
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 

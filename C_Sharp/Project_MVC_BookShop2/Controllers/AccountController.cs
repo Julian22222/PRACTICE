@@ -55,7 +55,7 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
                 ModelState.AddModelError("", errorMessage.Description); //assign all error msges to ModelState
 
             }
-        return View(userModel);  //if result is not successful we return a View (User wasn't created in the database)
+        return View(userModel);  //if result is not successful we return a View and pasing - userModel (User wasn't created in the database)
         }
 
 
@@ -88,7 +88,7 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
 
         if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
 
-        return RedirectToAction("Home", "index");  //return Home/index View Page
+        return RedirectToAction("index", "Home");  //return Home/index View Page
         }
 
 
@@ -97,9 +97,15 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
         // ModelState.Clear(); // clear the ModelState
 
         }
-        return View(signInModel);
+        return View(signInModel);  ////if result is not successful we return a View and pasing - signInModel (User wasn't found in the database)
     }
-    
+
+
+    [Route("logout")] //URL--> /Account/Logout --> will logOut the user
+    public async Task<IActionResult> Logout(){
+        await _accountRepository.SignOutAsync();
+        return RedirectToAction("Index","Home");
+    }    
 } 
 
 

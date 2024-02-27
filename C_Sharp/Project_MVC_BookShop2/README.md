@@ -1117,3 +1117,85 @@ options.Password.RequireNonAlphanumeric = false;
 options.Password.RequireUppercase = false;
 });
 ```
+
+..........................................................................................................................................
+
+# LogIn & LogOut (-->See AccountController, Models/SignInModel. Models/SignUpUserModel.cs, AccountRepository, Views/Account/Login and Signup.cshtml)
+
+............................................................................................................................................
+
+# Authorize atribute (will allow to use certain action methods only for Loged in users)
+
+- For example if user not loged in he cannot excess --> Add new book page
+- We Implement some security, only loged in user allowed to add new book to database
+
+To create this functionality we must:
+
+1. in Program.cs we adding middleware-->
+
+```bash
+app.UseAuthorization();
+```
+
+2. We use Authorize atribute in Controller (in our case in BookController.cs --> line 78)
+
+- Only Loged In Users will be able to access this AddNewBook action method
+
+```C#
+[Authorize]  //we add Authorize Attribute to action methods wich you want be accessable only for Loged In User
+public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
+
+// passing English language as default to our form  -->in return View(model)
+var model = new Book(){
+    LanguageId = 1
+};
+
+// here we get all languages from database , Language Table
+// and passing the data in ViewBag
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+
+ViewBag.Category = new List<string>(){
+"programming","animals", "technology", "sports"
+};
+
+    // by default we passing isSuccess = false to the View page --> AddNewBook
+    // and create variable int bookId = 0 and by default we passing it to View page -->AddNewBook
+    ViewBag.IsSuccess = isSuccess;
+    ViewBag.BookId = bookId;
+    return View(model);
+}
+```
+
+- we can use Authorize Attribute in multiple places
+- we can use it in action method level
+- ```C#
+  [Authorize] Attribute is available in Microsoft.AspNetCore.Authorization
+  ```
+
+3. In case if you want to secure all action methods in Controller then we need to use --> [Authorize] Attribute in Controller level
+
+```C
+namespace Project_MVC_BookShop2.Controllers
+{
+   [Authorize]
+
+    public class BookController : Controller
+    {
+      //some code here
+    }
+}
+
+```
+
+- if you use [Authorize] Attribute in Controller level that means all action methods will be available only for Loged in users
+
+4. if user not loged In and pressed AddNewBok we can redirect user to certain page, (in our case -> login page):
+
+- In Program.cs file we write (--> line 65 )
+
+```C#
+builder.Services.ConfigureApplicationCookie(config =>{
+    config.LoginPath = "/login";
+});
+
+```

@@ -61,6 +61,13 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkS
 
 
 
+//we use [Authorize] Attribute in BookController--> if User is not logedIn and press AddnewBook it will redirect him to LogIn page
+builder.Services.ConfigureApplicationCookie(config =>{
+    config.LoginPath = "/login";
+});
+
+
+
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
