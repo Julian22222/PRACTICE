@@ -28,6 +28,7 @@ LanguageId (number of Language)
    ```
 
 - Server side validation is written in Model class/ Model folder
+
   ..............................................................................................................
 
 # Install new .Net version to work in certain project
@@ -68,11 +69,29 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 
 ..............................................................................................................
 
+# To Deploy ASP.Net web application in Azure
+
+1. go to --> [Azure](https://portal.azure.com/)
+
+2. install Azure App Service extension
+
+3. ```C
+   dotnet publish -c Release -o ./bin/Publish
+   ```
+
+4. Right click the bin\Publish folder and select Deploy to Web App...
+
+5. Once the deployment is finished, click Browse Website to validate the deployment
+
+..............................................................................................................
+
 # Different namespaces:
 
 1. ```bash
    @using System.Runtime.InteropServices.WindowsRuntime;
    ```
+
+````
 
 2. ```bash
       @using System;
@@ -233,13 +252,13 @@ dotnet add package (PackageName)
 
 # Main Locations in different folder
 
-- Data folder - we keep all data for database here.
+- Data folder --> we keep all data for database here.
 
-- Data / BookStoreContext - this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
+- Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class
 
-- Repository - Class where we keep all logic.
+- Repository --> Class where we keep all logic.
   Connecting with database through ->
 
 ```c#
@@ -259,7 +278,21 @@ We use Repository class methods in BookController
 - Components folder --> we use for ViewComponent
   Also we use Views/Shared folder to display ViewComponent View
 
-....................................................................................................................
+- Properties / launchSettings.json --> here we keep global settings of our app, here we have PORT, URL of our website (local ports). We have 2 PORTS -if one is engaged application will use second PORT.
+  we can change App Environment here:
+
+1. Development
+2. Production
+3. Staging
+
+- Shared / \_Layout.cshtml --> Here we put common code for all pages. (It is a template, basic layout - these elements will be shown on all pages.)
+  Aslo, here we have all meta tags, css links, bootstrap, js links connections.
+
+- wwwroot folder --> here we have CSS, JS, Img folders <--all extras that we want to show to our user. Also we have different frameworks - Bootstrap, jQuery, JS libraries
+
+- Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages
+
+- ....................................................................................................................
 
 # How data travel through the files
 
@@ -1199,3 +1232,4 @@ builder.Services.ConfigureApplicationCookie(config =>{
 });
 
 ```
+````
