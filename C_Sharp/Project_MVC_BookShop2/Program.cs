@@ -113,9 +113,9 @@ app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to
 
 app.UseRouting();   // routing connection, -> needs for endpoint connection
 
-app.UseAuthorization();   // authorization connection
+app.UseAuthentication();  //authentication connection, to use passwords ,LogIn,SignUp etc.(Authentication must be above Authorization!!!! to work correctly)
 
-app.UseAuthentication();  //authentication connection, to use passwords ,LogIn,SignUp etc.
+app.UseAuthorization();   // authorization connection
 
 // endpoints connection, all your pages registration from Controllers folder,
 app.MapControllerRoute(

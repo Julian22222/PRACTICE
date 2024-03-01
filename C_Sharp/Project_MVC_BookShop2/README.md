@@ -1164,9 +1164,13 @@ options.Password.RequireUppercase = false;
 
 To create this functionality we must:
 
-1. in Program.cs we adding middleware-->
+1. in Program.cs we adding middleware--> ()
 
 ```bash
+//app.UseAuthentication();  <-- must always be above Authorization to work correctly!!!
+//app.UseAuthorization();  <-- must always be below Authentication to work correctly!!!
+//ONLY IN THIS ORDER
+
 app.UseAuthorization();
 ```
 
@@ -1222,7 +1226,7 @@ namespace Project_MVC_BookShop2.Controllers
 
 - if you use [Authorize] Attribute in Controller level that means all action methods will be available only for Loged in users
 
-4. if user not loged In and pressed AddNewBok we can redirect user to certain page, (in our case -> login page):
+4. if user not loged In and pressed AddNewBok (but AddNewBook action method has Authorization attribute ) we can redirect user to certain page, (in our case -> login page):
 
 - In Program.cs file we write (--> line 65 )
 
@@ -1233,3 +1237,47 @@ builder.Services.ConfigureApplicationCookie(config =>{
 
 ```
 ````
+
+# Return Url
+
+When we use [Authorize] Attribute and not loged In user press Add New Book it will redirect him to Login page (see above -previous lesson).
+And if you want to return user to AddnewBook page after he Loged in we need:(remebers the url that user presed - but the access was denied for unauthorized users and after user login it return that page that user clicked before)
+
+- We write in controller (In AccountController.cs):
+
+```C
+      [Route("login")]  //Attribute routing
+      [HttpPost]
+      public async Task <IActionResult> Login(SignInModel signInModel, string returnUrl){
+        if(ModelState.IsValid){
+
+        var result = await _accountRepository.PasswordSignInAsync(signInModel);
+
+
+        if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
+
+
+         if(!string.IsNullOrEmpty(returnUrl)){ //returnUrl <--used to return user to correct
+            return LocalRedirect(returnUrl);
+        }
+
+
+        return RedirectToAction("index", "Home");  //return Home/index View Page
+        }
+
+
+        ModelState.AddModelError("", "invalid credentials"); //if LogIn is not Seccessful, show this message
+
+        // ModelState.Clear(); // clear the ModelState
+
+        }
+        return View(signInModel);  ////if result is not successful we return a View and pasing - signInModel (User wasn't found in the database)
+    }
+```
+
+- In Views/ Shared / \_LoginInfo.cshtml -->
+
+```C#
+<a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account"  asp-route-returnUrl="@Context.Request.Path">Login</a>
+
+```

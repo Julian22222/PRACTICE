@@ -24,7 +24,7 @@ else
 { 
 //if user not loged In show this code -->
     <li class="nav-item">
-    <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account">Login</a>
+    <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@Context.Request.Path">Login</a>
     <a class="btn btn-primary" asp-controller="Account" asp-action="Signup">Register</a>
 </li>
 

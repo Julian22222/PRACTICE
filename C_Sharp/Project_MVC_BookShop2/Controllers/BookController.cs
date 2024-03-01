@@ -75,7 +75,7 @@ public List<Book> SearchBook(string title, string authorName){
 }
 
 
-[Authorize] 
+[Authorize] //only logedIn user will be able to access this method
 // form Method to add new book, GET method
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 

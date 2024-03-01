@@ -80,13 +80,21 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
 
     [Route("login")]  //Attribute routing 
     [HttpPost]
-    public async Task <IActionResult> Login(SignInModel signInModel){
+    public async Task <IActionResult> Login(SignInModel signInModel, string returnUrl){  //string returnUrl <--used to return user to correct page after he LogedIn
         if(ModelState.IsValid){
 
         var result = await _accountRepository.PasswordSignInAsync(signInModel);
 
 
         if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
+
+
+        if(!string.IsNullOrEmpty(returnUrl)){ //returnUrl <--used to return user to correct 
+            return LocalRedirect(returnUrl);
+        }
+
+
+
 
         return RedirectToAction("index", "Home");  //return Home/index View Page
         }
