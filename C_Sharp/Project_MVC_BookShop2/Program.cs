@@ -101,6 +101,7 @@ var app = builder.Build();  //creating our web app
 // Configure the HTTP request pipeline.- is a middleware(using app,... to go to next task, to handle reqests and responses)
 // Configure - this method needs to connect all needed components to our app
 //this part about ->info errors, show correct msg to user, in development and in production
+
 if (!app.Environment.IsDevelopment())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
     app.UseExceptionHandler("/Home/Error");

@@ -9,15 +9,12 @@ using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a 
 
 using Project_MVC_BookShop2.Models;
 
-//// --> This file is to use with localhost Database
+//// --> This file is to use with Web SQL Database in Azure portal
 
 namespace Project_MVC_BookShop2.Data
 {
 
-
-
-
-    // this class allow to interact with database
+  // this class allow to interact with database
 
     //we can inherit this class from DbContext class to work with database -->
     // public class BookStoreContext : DbContext
@@ -26,20 +23,23 @@ namespace Project_MVC_BookShop2.Data
     //but IdentityDbContext class is inherited from DbContext class
 
     //  public class BookStoreContext : IdentityDbContext  <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table
-     public class BookStoreContext : IdentityDbContext<ApplicationUser>  //will create all needed tables for users and security automatically in our database, use Class ApplicationUser with added properties
-    // BookStoreContext <-- can have any name, and is followed by Context sufix.
-    {
+   
 
-        private readonly IConfiguration _configuration;
+public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //will create all needed tables for users and security automatically in our database, use Class ApplicationUser with added properties
+    // BookStoreContext <-- can have any name, and is followed by Context sufix.
+{
+    
+   private readonly IConfiguration _configuration;
 
 // constructor
-        public BookStoreContext(DbContextOptions<BookStoreContext> options, IConfiguration configuration) : base(options)
+        public MyBookStoreWebDbContext(DbContextOptions<BookStoreContext> options, IConfiguration configuration) : base(options)
         {
 _configuration = configuration;
         }
-        
 
-        // this creates Books table in the database
+
+
+  // this creates Books table in the database
         // name of your table will be -Books2
         //<Books> -> data type(from Data folder), will create columns from Book class proporties
         public DbSet<Books> Books2 {get; set; }
@@ -78,7 +78,6 @@ _configuration = configuration;
         }
 
 
+}
 
-
-    }
 }

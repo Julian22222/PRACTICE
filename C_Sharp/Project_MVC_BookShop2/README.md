@@ -72,14 +72,17 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 # To Deploy ASP.Net web application in Azure
 
 1. go to --> [Azure](https://portal.azure.com/)
+   Create App Services
 
-2. install Azure App Service extension
+2. install Azure App Service extension in VS code
 
-3. ```C
+3. in correct folder of our app write in terminal -->
+
+```C
    dotnet publish -c Release -o ./bin/Publish
-   ```
+```
 
-4. Right click the bin\Publish folder and select Deploy to Web App...
+4. In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
 
 5. Once the deployment is finished, click Browse Website to validate the deployment
 
@@ -90,8 +93,6 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 1. ```bash
    @using System.Runtime.InteropServices.WindowsRuntime;
    ```
-
-````
 
 2. ```bash
       @using System;
@@ -292,7 +293,7 @@ We use Repository class methods in BookController
 
 - Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages
 
-- ....................................................................................................................
+....................................................................................................................
 
 # How data travel through the files
 
@@ -349,7 +350,7 @@ await _context.Books2.AddAsync(newBook);
 await _context.SaveChangesAsync();
 
 return newBook.Id;
-    }
+}
 ```
 
 ##### Also, when we want to use form to send the data to database we write:
@@ -792,6 +793,8 @@ _context = new BookStoreContext();
 
 - Singleton (AddSingleton<>) <--Same instance for all entire application. (When you change something you need to stop application, and rerun it againg to apply new changes)
 
+```
+
 ...................................................................................................
 
 ### Dependency injection in View (chtml)
@@ -799,6 +802,8 @@ _context = new BookStoreContext();
 It is not mandotory to pass Repository class to controller (then we create an object from that Repository class in controller) and then pass this created object from Repository class to View.
 We can straight away pass only Interfacese from Repository class to View (create in View object from Repository class) and then use it in View
 --> see AboutUs View file. (Can't pass BookRepository class because it doesn't have own Interface) --> can pass only Interfaces!!!.
+
+```
 
 ...........................................................................................................................................................
 
@@ -858,6 +863,14 @@ var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data
 <p>@_configuration["Name"]</p>
 
 <p>@_configuration["infoObj:key1"]</p>
+````
+
+# User Secrets file (aslo can use Key vaults to keep secret files)
+
+To keep sensative data - User Id, Passwords, ConnectionString etc.
+
+1. Download extension i.e .NET Core User Secrets
+2. Then right click on (ProjetName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
 
 ................................................................................................................................................................................................................
 
@@ -1149,6 +1162,7 @@ options.Password.RequireLowercase = false;
 options.Password.RequireNonAlphanumeric = false;
 options.Password.RequireUppercase = false;
 });
+
 ```
 
 ..........................................................................................................................................
@@ -1211,7 +1225,7 @@ ViewBag.Category = new List<string>(){
 
 3. In case if you want to secure all action methods in Controller then we need to use --> [Authorize] Attribute in Controller level
 
-```C
+```C#
 namespace Project_MVC_BookShop2.Controllers
 {
    [Authorize]
@@ -1236,7 +1250,6 @@ builder.Services.ConfigureApplicationCookie(config =>{
 });
 
 ```
-````
 
 # Return Url
 
@@ -1245,7 +1258,7 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 
 - We write in controller (In AccountController.cs):
 
-```C
+```C#
       [Route("login")]  //Attribute routing
       [HttpPost]
       public async Task <IActionResult> Login(SignInModel signInModel, string returnUrl){
@@ -1279,5 +1292,37 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 
 ```C#
 <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account"  asp-route-returnUrl="@Context.Request.Path">Login</a>
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
 
 ```
