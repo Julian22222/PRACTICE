@@ -17,7 +17,12 @@ using System.Collections.Immutable;
 
 using Project_MVC_BookShop2.Data;  //connect MyappDbContext ,from Data folder
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
+using Microsoft.AspNetCore.Identity;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
+
+
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
@@ -89,10 +94,36 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 
 
 
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+
+if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code
+{
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+}
 
 
+if(builder.Environment.IsDevelopment()) //if Environment = Production --> do this code
+{
+
+var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");
+var keyVaultClientId = builder.Configuration.GetSection("KeyVault:ClientId");
+var keyVaultClientSecret = builder.Configuration.GetSection("KeyVault:ClientSecret");
+var keyVaultDirectoryID = builder.Configuration.GetSection("KeyVault:DirectoryID");
+
+
+//this allow us to authenticate us in Azure Key Vault
+var credential = new ClientSecretCredential(keyVaultDirectoryID.Value!.ToString(), keyVaultClientId.Value!.ToString(), keyVaultClientSecret.Value!.ToString());
+
+//adding Azure Key Vault, use all our values to access Azure Key Vault
+builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!.ToString(), keyVaultClientId.Value!.ToString(), keyVaultClientSecret.Value!.ToString(), new DefaultKeyVaultSecretManager());
+
+//the tool that go and create that connectionString with Azure Key Vault
+var client = new SecretClient(new Uri(keyVaultURL.Value!.ToString()), credential);
+
+
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString())); //inject DB context into our app
+}
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
@@ -108,12 +139,14 @@ var app = builder.Build();  //creating our web app
 // Configure - this method needs to connect all needed components to our app
 //this part about ->info errors, show correct msg to user, in development and in production
 
-if (!app.Environment.IsDevelopment())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
+if (!app.Environment.IsProduction())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
 
 
 

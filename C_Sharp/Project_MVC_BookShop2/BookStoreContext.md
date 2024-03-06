@@ -68,30 +68,35 @@ _configuration = configuration;
 // DbContext connection with database, there is 2 ways
 //first way - > we can configure all the detail over here, in this DbContext class (we write--> override onc + Tab)
 //second way -> we can define the same connection string in main file ->Program.cs, and remove all -protected override void OnConfiguring metod from here
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
 
 
 
-            // optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Integrated Security=True;");  <-- if you use Windows Authentication
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
 
-            //  optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Trusted_Connection=True;");
 
-            // if we use remote database we --> optionsBuilder.UseSqlServer("Server= api of your database here;Database=NameOfYourDatabase;TrustServerCertificate=true;User ID=sa(userName);Password=julik3322J!(Password for database)"  (this is for SQL Authentication)
 
-            //working Connection string, not using data from appsettings.json
-            //   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
+            ////// optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Integrated Security=True;");  <-- if you use Windows Authentication
 
-              //Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
-            //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
+           ///////  optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Trusted_Connection=True;");
+
+            /////// if we use remote database we --> optionsBuilder.UseSqlServer("Server= api of your database here;Database=NameOfYourDatabase;TrustServerCertificate=true;User ID=sa(userName);Password=julik3322J!(Password for database)"  (this is for SQL Authentication)
+
+            ////////working Connection string, not using data from appsettings.json
+           ////////   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
+
+              //////Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
+            /////   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
 
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
-            // optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            /////// optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
 
-              optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
 
-            base.OnConfiguring(optionsBuilder);
-        }
+
+        //       optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
+
+        //     base.OnConfiguring(optionsBuilder);
+        // }
 
 
 

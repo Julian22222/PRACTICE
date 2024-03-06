@@ -409,3 +409,12 @@
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/DotNetEnv.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Sprache.dll
 /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/dotenv.net.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Azure.Security.KeyVault.Secrets.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Azure.KeyVault.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Azure.KeyVault.WebKey.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Azure.Services.AppAuthentication.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Extensions.Configuration.AzureKeyVault.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Rest.ClientRuntime.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.Rest.ClientRuntime.Azure.dll
