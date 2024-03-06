@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_MVC_BookShop2.Data;
 
@@ -11,12 +10,10 @@ using Project_MVC_BookShop2.Data;
 
 namespace ProjectMVCBookShop2.Migrations
 {
-    [DbContext(typeof(BookStoreContext))]
-    [Migration("20240225170822_addedApplicationUser")]
-    partial class addedApplicationUser
+    [DbContext(typeof(MyBookStoreWebDbContext))]
+    partial class MyBookStoreWebDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

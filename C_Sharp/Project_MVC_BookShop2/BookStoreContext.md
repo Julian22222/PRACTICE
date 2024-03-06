@@ -1,3 +1,5 @@
+```C#
+
 using System.Collections.Immutable;
 using System;
 using System.IO;
@@ -44,10 +46,9 @@ namespace Project_MVC_BookShop2.Data
         {
 _configuration = configuration;
 
- DotNetEnv.Env.Load();
-var secret = configuration["CONNECTION:STRING"];
+
         }
-        
+
 
         // this creates Books table in the database
         // name of your table will be -Books2
@@ -78,7 +79,7 @@ var secret = configuration["CONNECTION:STRING"];
 
             // if we use remote database we --> optionsBuilder.UseSqlServer("Server= api of your database here;Database=NameOfYourDatabase;TrustServerCertificate=true;User ID=sa(userName);Password=julik3322J!(Password for database)"  (this is for SQL Authentication)
 
-            //working Connection string, not using data from appsettings.json 
+            //working Connection string, not using data from appsettings.json
             //   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
 
               //Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
@@ -94,6 +95,4 @@ var secret = configuration["CONNECTION:STRING"];
 
 
 
-
-    }
-}
+```

@@ -15,7 +15,7 @@ namespace Project_MVC_BookShop2.Repository
     {
 
 // creating new variable, (new instance) - now we work with database 
-    private readonly BookStoreContext _context = null;
+    private readonly MyBookStoreWebDbContext _context = null;
     // or we could put(2nd option) -->
     //  private readonly BookStoreContext _context = new BookStoreContext();  //<- assigning database data to - _context
 
@@ -30,7 +30,7 @@ namespace Project_MVC_BookShop2.Repository
     // constructor, here we use dependency injection, application will resolve context automatically
     // because we have written the code in our -Program.cs file -> (line 39) -> this line->
     // builder.Services.AddDbContext<BookStoreContext>();
-    public LanguageRepository(BookStoreContext context){
+    public LanguageRepository(MyBookStoreWebDbContext context){
         _context = context;
     }
 // using _context -> we have access to all data from database

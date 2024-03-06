@@ -2,6 +2,23 @@
 
 In this Project we have options where we get data from controller and get data from database for dropDown menu when we adding a book.
 
+- in our App can be only 1 Context file therefore:
+- To work with local database --> we create a BookStoreContext.cs file --> in Data/ BookStoreContext.cs (Copy all content in BookStoreContext.cs from BookStoreContext.md)
+- To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext -in Data/MyBookStoreWebDbContext.cs
+- to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
+  Also,
+
+````C#
+Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
+
+1. ```bash
+   dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+````
+
+2. ```bash
+      dotnet ef database update  //to update database
+   ```
+
 -Add New Book --> in NavBar , we are filling the Form and we have dropdown options:
 
 - Language dropdown menu <-- is coming from database, (they not hardcoded in the View)

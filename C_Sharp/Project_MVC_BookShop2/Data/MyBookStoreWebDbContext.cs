@@ -32,7 +32,7 @@ public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //wil
    private readonly IConfiguration _configuration;
 
 // constructor
-        public MyBookStoreWebDbContext(DbContextOptions<BookStoreContext> options, IConfiguration configuration) : base(options)
+        public MyBookStoreWebDbContext(DbContextOptions<MyBookStoreWebDbContext> options, IConfiguration configuration) : base(options)
         {
 _configuration = configuration;
         }
@@ -72,7 +72,9 @@ _configuration = configuration;
             //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings : DefaultConnection"]);
 
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+        //     optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+
+        optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:WebConnection"]);
 
             base.OnConfiguring(optionsBuilder);
         }
