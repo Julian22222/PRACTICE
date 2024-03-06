@@ -865,12 +865,45 @@ var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data
 <p>@_configuration["infoObj:key1"]</p>
 ````
 
-# User Secrets file (aslo can use Key vaults to keep secret files)
+- appsettings.json is used when you want to provide default values that can apply to all environments.
+- appsettings.{environment}.json can provide non-secret default values for each environment.
+- User secrets is used for local dev to provide secret values and let the dev change other values (maybe tinker with log settings, for example) without having to change any of the source controlled files.
+- Environment variables are used to provide secrets when deploying the app
+
+#### The order in which configurations are loaded is significant, because they are being combined into one dictionary. If there are duplicate keys then the last value loaded will be the one used. In the case of the default host, the load order is:
+
+1. appsettings.json
+2. appsettings.{Environment}.json
+3. secrets.json (if in Development environment specifically)
+4. Environment variables
+5. Command line arguments
+
+# User Secrets file (used only for my local setting secrets, works only on my machine, not for a web for eveyone) <-- uncreapted file
 
 To keep sensative data - User Id, Passwords, ConnectionString etc.
 
 1. Download extension i.e .NET Core User Secrets
 2. Then right click on (ProjetName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
+
+#### secret.json (file contains)
+
+```C#
+//We dont write as usual obects in secret.json file
+"ConnectionStrings": {
+   "DefaultConnection": "Server=.;Database=BookStore;TrustServerCert..........",
+   "WebConnection": "Server=tcp:mybookstoredb.database.windows ...."
+
+
+
+   //Insed of example above it should be written the following
+   //We should write -->
+ "ConnectionStrings:DefaultConnection": "Server=.;Database=BookStore;Tru...".
+  "ConnectionStrings:WebConnection": "Server=tcp:mybookstoredb.d..."
+
+}
+```
+
+### Azure Key Vault (we use it in Web to keep secrets files)
 
 ................................................................................................................................................................................................................
 

@@ -1,3 +1,10 @@
+using System.Collections.Immutable;
+using System;
+using System.IO;
+using dotenv.net;
+using Microsoft.Extensions.Hosting;
+
+using System.Security.AccessControl;
 using System;    //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 using System.Collections.Generic;  //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
 using System.Linq;
@@ -36,6 +43,9 @@ namespace Project_MVC_BookShop2.Data
         public BookStoreContext(DbContextOptions<BookStoreContext> options, IConfiguration configuration) : base(options)
         {
 _configuration = configuration;
+
+ DotNetEnv.Env.Load();
+var secret = configuration["CONNECTION:STRING"];
         }
         
 
@@ -59,6 +69,9 @@ _configuration = configuration;
 //second way -> we can define the same connection string in main file ->Program.cs, and remove all -protected override void OnConfiguring metod from here
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
+
+
             // optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Integrated Security=True;");  <-- if you use Windows Authentication
 
             //  optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Trusted_Connection=True;");
@@ -69,10 +82,12 @@ _configuration = configuration;
             //   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
 
               //Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
-            //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings : DefaultConnection"]);
+            //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
 
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            // optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+
+              optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
 
             base.OnConfiguring(optionsBuilder);
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 using Project_MVC_BookShop2.Repository;  //import BookRepository
 using Project_MVC_BookShop2.Models;
@@ -20,6 +21,7 @@ using Microsoft.AspNetCore.Identity;  ////import installed nuget package (if you
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
+
 
 // Add services to the container.
 // Add services to the container.
@@ -36,6 +38,11 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 // });
 
 
+builder.Configuration.AddEnvironmentVariables();  //connect DotNetEnv
+    DotNetEnv.Env.Load();
+
+builder.Configuration.AddUserSecrets<Program>();  //connect User secrets for local settings, works only on my machine, not for a web for eveyone
+
 
 // builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();  //<--use this code if we add some properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
@@ -44,7 +51,6 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkS
 //identityRole <--is a table that already buildIn in Identity framework, to work with roles
 //to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
 //BookStoreContext <--our database name
-
 
 
 // //Configure the password complexity (User Registration)
@@ -108,6 +114,8 @@ if (!app.Environment.IsDevelopment())  //if our environment = development do  --
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
 
 app.UseHttpsRedirection();  //redirection from http ->to https
 app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to work fith files in wwwroot(css, photos, pictures)

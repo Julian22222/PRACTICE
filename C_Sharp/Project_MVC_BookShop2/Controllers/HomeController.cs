@@ -53,6 +53,9 @@ public class HomeController : Controller
 
         bool isDisplay = newBookAlert.DisplayNewBookAlert;  //now we can acces all the properties of appsetiings.json --> NewBookAlertObj object using newBookAlert
 
+    
+
+
         return View(test);
     }
 
