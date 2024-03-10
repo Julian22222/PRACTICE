@@ -23,9 +23,21 @@ using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
 
 
-
 // builder allow to create our app by small parts
-var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
+// var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
+
+
+//the same thing as --> // var builder = WebApplication.CreateBuilder(args); 
+// in this sample we can assign an environment variable
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    EnvironmentName = Environments.Production
+});   
+
+
+//to use IConfiguration in Programm.cs and have access to secrets and appsettings.json data
+var provider = builder.Services.BuildServiceProvider();
+var configuration = provider.GetRequiredService<IConfiguration>();
 
 
 // Add services to the container.
@@ -43,10 +55,8 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 // });
 
 
-builder.Configuration.AddEnvironmentVariables();  //connect DotNetEnv
-    DotNetEnv.Env.Load();
 
-builder.Configuration.AddUserSecrets<Program>();  //connect User secrets for local settings, works only on my machine, not for a web for eveyone
+// builder.Configuration.AddUserSecrets<Program>();  //connect User secrets for local settings, works only on my machine, not for a web for eveyone
 
 
 // builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
@@ -78,7 +88,6 @@ builder.Services.ConfigureApplicationCookie(config =>{
 });
 
 
-
 // you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
@@ -94,15 +103,15 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 
 
 
-
 if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code
 {
+
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //inject DB context into our app
+options.UseSqlServer(configuration["ConnectionStrings:WebConnection"])); //inject DB context into our app
 }
 
 
-if(builder.Environment.IsDevelopment()) //if Environment = Production --> do this code
+if(builder.Environment.IsProduction()) //if Environment = Production --> do this code
 {
 
 var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");
@@ -139,7 +148,7 @@ var app = builder.Build();  //creating our web app
 // Configure - this method needs to connect all needed components to our app
 //this part about ->info errors, show correct msg to user, in development and in production
 
-if (!app.Environment.IsProduction())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
+if (!app.Environment.IsDevelopment())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.

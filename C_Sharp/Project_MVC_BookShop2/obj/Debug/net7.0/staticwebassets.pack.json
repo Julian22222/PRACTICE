@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets/books/cover/b0d445d1-2722-4a80-8a3b-d11078c070bf_Untitled.jpeg"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/c921ccd6-fdba-4f04-b409-2614686cdd6a_book1.jpg",
+      "PackagePath": "staticwebassets/books/cover/c921ccd6-fdba-4f04-b409-2614686cdd6a_book1.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/fe67b86c-9ae7-4ea3-8e95-4336e0275df2_old-book-with-key-ethiriel-photography.jpg",
       "PackagePath": "staticwebassets/books/cover/fe67b86c-9ae7-4ea3-8e95-4336e0275df2_old-book-with-key-ethiriel-photography.jpg"
     },
@@ -47,6 +51,10 @@
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/a2197cce-1421-40a1-9fe5-bc1c0fc99c25_2.pdf",
       "PackagePath": "staticwebassets/books/pdf/a2197cce-1421-40a1-9fe5-bc1c0fc99c25_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/cf3eb1e8-b5c3-4dae-9027-4fccd018e343_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/cf3eb1e8-b5c3-4dae-9027-4fccd018e343_1.pdf"
     },
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/css/site.css",

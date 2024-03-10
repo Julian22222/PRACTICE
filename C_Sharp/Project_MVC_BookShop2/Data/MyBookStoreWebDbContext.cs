@@ -57,8 +57,13 @@ _configuration = configuration;
 // DbContext connection with database, there is 2 ways
 //first way - > we can configure all the detail over here, in this DbContext class (we write--> override onc + Tab)
 //second way -> we can define the same connection string in main file ->Program.cs, and remove all -protected override void OnConfiguring metod from here
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+       
+       
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+
+
+
             // optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Integrated Security=True;");  <-- if you use Windows Authentication
 
             //  optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Trusted_Connection=True;");
@@ -74,10 +79,13 @@ _configuration = configuration;
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
         //     optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
 
-        optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:WebConnection"]);
 
-            base.OnConfiguring(optionsBuilder);
-        }
+
+        ///here we use Manager Secrets from --> secrets.json file
+        // optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:WebConnection"]);
+
+        //     base.OnConfiguring(optionsBuilder);
+        // }
 
 
 }
