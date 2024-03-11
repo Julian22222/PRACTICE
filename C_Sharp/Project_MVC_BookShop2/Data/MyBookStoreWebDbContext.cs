@@ -63,7 +63,7 @@ _configuration = configuration;
         // {
 
 
-
+///////////////////////////////// different options to connect to our database
             // optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Integrated Security=True;");  <-- if you use Windows Authentication
 
             //  optionsBuilder.UseSqlServer("Server=.;Database=BookStore;Trusted_Connection=True;");
@@ -78,10 +78,10 @@ _configuration = configuration;
 
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)
         //     optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+/////////////////////////////////////////
 
 
-
-        ///here we use Manager Secrets from --> secrets.json file
+        ///here we use Manager Secrets from --> secrets.json file (to connect to database)
         // optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:WebConnection"]);
 
         //     base.OnConfiguring(optionsBuilder);

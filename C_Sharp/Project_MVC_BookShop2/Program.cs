@@ -24,15 +24,15 @@ using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if y
 
 
 // builder allow to create our app by small parts
-// var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
+var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
 
 
 //the same thing as --> // var builder = WebApplication.CreateBuilder(args); 
 // in this sample we can assign an environment variable
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-{
-    EnvironmentName = Environments.Production
-});   
+// var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+// {
+//     EnvironmentName = Environments.Production
+// });   
 
 
 //to use IConfiguration in Programm.cs and have access to secrets and appsettings.json data
@@ -103,16 +103,16 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 
 
 
-if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code
-{
+// if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code
+// {
 
-builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
-options.UseSqlServer(configuration["ConnectionStrings:WebConnection"])); //inject DB context into our app
-}
+// // builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+// // options.UseSqlServer(configuration["ConnectionStrings:WebConnection"])); //inject DB context into our app
+// }
 
 
-if(builder.Environment.IsProduction()) //if Environment = Production --> do this code
-{
+// if(builder.Environment.IsProduction()) //if Environment = Production --> do this code
+// {
 
 var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");
 var keyVaultClientId = builder.Configuration.GetSection("KeyVault:ClientId");
@@ -132,7 +132,7 @@ var client = new SecretClient(new Uri(keyVaultURL.Value!.ToString()), credential
 
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
 options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString())); //inject DB context into our app
-}
+// }
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
@@ -159,7 +159,7 @@ if (!app.Environment.IsDevelopment())  //if our environment = development do  --
 
 
 
-app.UseHttpsRedirection();  //redirection from http ->to https
+// app.UseHttpsRedirection();  //redirection from http ->to https
 app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to work fith files in wwwroot(css, photos, pictures)
 
 app.UseRouting();   // routing connection, -> needs for endpoint connection
