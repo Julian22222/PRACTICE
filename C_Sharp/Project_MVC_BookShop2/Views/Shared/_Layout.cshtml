@@ -6,7 +6,6 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Project_MVC_BookShop2.styles.css" asp-append-version="true" />
 </head>
 <body>
    
@@ -33,14 +32,25 @@
     @* jquery connection, to use jquery library, (this method is -how you can access the library from your own application)*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 
-    @* usibg these two jquery links -makes client side validation(client side validation will work automatically taking all validations from server side validation), not hiting server side validation, the order of libraries is important *@
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script>
+    @* connection with cdn -->  https://cdnjs.com/libraries*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    @* usibg these two jquery links (from local libraries)-makes client side validation(client side validation will work automatically taking all validations from server side validation), not hiting server side validation, the order of libraries is important *@
+    @* <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
+    @* <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script> *@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+
+
     @* jquery.unobtrusive-ajax library connection, link from -(https://cdnjs.com/libraries/jquery-ajax-unobtrusive) (this method is -how you can access the library using CDN network) *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     @* cdn link for all bootstrap packages *@
+
+
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
