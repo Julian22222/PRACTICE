@@ -49,14 +49,14 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
 
-//Uncomment this code to disable Client side validation(only in Development mode), add it to the existing chain
+///////////////Uncomment this code to disable Client side validation(only in Development mode), add it to the existing chain
 //  .AddViewOptions(option =>{
 //     option.HtmlHelperOptions.ClientValidationEnabled = false;
 // });
 
 
 
-// builder.Configuration.AddUserSecrets<Program>();  //connect User secrets for local settings, works only on my machine, not for a web for eveyone
+// builder.Configuration.AddUserSecrets<Program>();  ///////connect User secrets for local settings, works only on my machine, not for a web for eveyone
 
 
 // builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
@@ -68,10 +68,10 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkS
 //BookStoreContext <--our database name
 
 
-// //Configure the password complexity (User Registration)
+//////////// //Configure the password complexity (User Registration)
 // builder.Services.Configure<IdentityOptions>( options=>{
-// //here we configure all the settigs for Identity framework, 
-// //if we need to configure settings for pasword --> update settings for password
+// ////////here we configure all the settigs for Identity framework, 
+// //////////if we need to configure settings for pasword --> update settings for password
 // options.Password.RequiredLength = 5;
 // options.Password.RequiredUniqueChars = 1;
 // options.Password.RequireDigit = false;
@@ -96,10 +96,6 @@ builder.Services.ConfigureApplicationCookie(config =>{
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
-
-
-// you can add Nuget Packages -> dotnet add package << PackageName >>  /Example-> dotnet add package System.Text.Json
-//  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
 
 

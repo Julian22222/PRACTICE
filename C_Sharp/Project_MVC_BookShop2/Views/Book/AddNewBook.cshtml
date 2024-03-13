@@ -33,7 +33,7 @@
 @* to use ajax form*@
     @* <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook"> *@
 
- <form method="post" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
+ <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
 @* enctype="multipart/form-data"   <- If you are dealing with the file(uploading files in View) in your form then you use this attribute in form tag*@
 @* asp-controller="Book" asp-action="AddNewBook"  <-- we don't need to write this part, if in Controller (-->See BookController.cs) the View page-(form page) name has the same name as [HttpPost] method- (when we send the data) -->
 AddNewBook <--is the same name for View page and [HttpPost] method

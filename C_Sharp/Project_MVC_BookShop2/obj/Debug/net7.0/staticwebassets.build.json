@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xzbOZdKXEcOMyX1GVjpdzc9rKMLNpD2yfaYtwiyNu1U=",
+  "Hash": "8NN8vVO7NSkUkgh9iWjHN1LrCcye6XuhUobGYIflugI=",
   "Source": "Project_MVC_BookShop2",
   "BasePath": "_content/Project_MVC_BookShop2",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/books/cover/79a0a6da-2bc1-44c4-837a-e8946f1a21c8_Untitled.jpeg"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/8cd6c995-32eb-4560-9dee-78bf88ed9836_cms.wLzIgVS5GMA2d8j_hStQ-collection_cover.jpeg",
+      "SourceId": "Project_MVC_BookShop2",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/",
+      "BasePath": "_content/Project_MVC_BookShop2",
+      "RelativePath": "books/cover/8cd6c995-32eb-4560-9dee-78bf88ed9836_cms.wLzIgVS5GMA2d8j_hStQ-collection_cover.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/books/cover/8cd6c995-32eb-4560-9dee-78bf88ed9836_cms.wLzIgVS5GMA2d8j_hStQ-collection_cover.jpeg"
     },
     {
       "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/8ce89a0b-257d-4563-a361-60168cac45af_cms.wLzIgVS5GMA2d8j_hStQ-collection_cover.jpeg",
@@ -236,6 +253,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/books/pdf/7dbffc6e-8ec1-4cc2-b960-8cf36d5fc624_3.pdf"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/8ed06fd1-5b73-406b-91cd-f4ea04606c4a_2.pdf",
+      "SourceId": "Project_MVC_BookShop2",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/",
+      "BasePath": "_content/Project_MVC_BookShop2",
+      "RelativePath": "books/pdf/8ed06fd1-5b73-406b-91cd-f4ea04606c4a_2.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/books/pdf/8ed06fd1-5b73-406b-91cd-f4ea04606c4a_2.pdf"
     },
     {
       "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/a2197cce-1421-40a1-9fe5-bc1c0fc99c25_2.pdf",

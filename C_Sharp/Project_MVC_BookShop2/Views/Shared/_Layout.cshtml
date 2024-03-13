@@ -29,17 +29,17 @@
        
     </footer>
 
-     <script src="~/lib/jguery-validation/dist/jguery.validate.min.js"></script>
 
     @* <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script> *@
     @* jquery connection, to use jquery library, (this method is -how you can access the library from your own application)*@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 
     @* connection with cdn -->  https://cdnjs.com/libraries*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
     @* usibg these two jquery links (from local libraries)-makes client side validation(client side validation will work automatically taking all validations from server side validation), not hiting server side validation, the order of libraries is important *@
+     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
@@ -70,6 +70,15 @@
     
     @await RenderSectionAsync("Scripts", required: false)
     @* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
+
+
+
+@*/// libraries will be applied only on certain environment *@
+@* <environment include="Development">
+    <script src=""></script>
+</environment> *@
+
+
 
 
 @* bootstrap connection, to use carousel from -https://getbootstrap.com/docs/5.3/components/carousel/ , (this method is -how you can access the library using CDN network)*@
