@@ -36,8 +36,8 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 
 
 //to use IConfiguration in Programm.cs and have access to secrets and appsettings.json data
-var provider = builder.Services.BuildServiceProvider();
-var configuration = provider.GetRequiredService<IConfiguration>();
+// var provider = builder.Services.BuildServiceProvider();
+// var configuration = provider.GetRequiredService<IConfiguration>();
 
 
 // Add services to the container.
