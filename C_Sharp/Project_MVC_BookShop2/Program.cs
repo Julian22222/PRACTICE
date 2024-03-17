@@ -18,14 +18,13 @@ using System.Collections.Immutable;
 using Project_MVC_BookShop2.Data;  //connect MyappDbContext ,from Data folder
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Azure.Identity;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Azure.Identity;   //connects Key Vault
+using Microsoft.Extensions.Configuration.AzureKeyVault;   //connects Key Vault
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
 
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
-
 
 //the same thing as --> // var builder = WebApplication.CreateBuilder(args); 
 // in this sample we can assign an environment variable
@@ -34,10 +33,6 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 //     EnvironmentName = Environments.Production
 // });   
 
-
-//to use IConfiguration in Programm.cs and have access to secrets and appsettings.json data
-// var provider = builder.Services.BuildServiceProvider();
-// var configuration = provider.GetRequiredService<IConfiguration>();
 
 
 // Add services to the container.
@@ -99,24 +94,27 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 
 
 
-// if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code
-// {
-
-// // builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
-// // options.UseSqlServer(configuration["ConnectionStrings:WebConnection"])); //inject DB context into our app
-// }
 
 
-// if(builder.Environment.IsProduction()) //if Environment = Production --> do this code
-// {
+//we need to use IConfiguration in Programm.cs to have access to secrets and appsettings.json data , we use--> builder.Configuration
+if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code (it will show local dabase )
+{
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //HERE WE GETTING DATA FROM LOCAL DATABSE
+}
 
-var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");
-var keyVaultClientId = builder.Configuration.GetSection("KeyVault:ClientId");
-var keyVaultClientSecret = builder.Configuration.GetSection("KeyVault:ClientSecret");
-var keyVaultDirectoryID = builder.Configuration.GetSection("KeyVault:DirectoryID");
 
 
-//this allow us to authenticate us in Azure Key Vault
+
+
+if(builder.Environment.IsProduction()) //if Environment = Production --> do this code, getting data from SQL server Azure Portal, using Key Vault
+{
+var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");             //getting info from appsettings.json
+var keyVaultClientId = builder.Configuration.GetSection("KeyVault:ClientId");           //getting info from appsettings.json
+var keyVaultClientSecret = builder.Configuration.GetSection("KeyVault:ClientSecret");  //getting info from appsettings.json
+var keyVaultDirectoryID = builder.Configuration.GetSection("KeyVault:DirectoryID");    //getting info from appsettings.json
+
+//this allow us to authenticate us in Azure ID, to prove that we are who we are, to access to resources that we want in Azure Portal   
 var credential = new ClientSecretCredential(keyVaultDirectoryID.Value!.ToString(), keyVaultClientId.Value!.ToString(), keyVaultClientSecret.Value!.ToString());
 
 //adding Azure Key Vault, use all our values to access Azure Key Vault
@@ -128,7 +126,13 @@ var client = new SecretClient(new Uri(keyVaultURL.Value!.ToString()), credential
 
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
 options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString())); //inject DB context into our app
-// }
+//ProdConnection <-- is the name thet we created in Key Vault in Azure Portal to keep our Secrets in secret (our connection string to database) 
+}
+
+
+
+
+
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
@@ -144,7 +148,7 @@ var app = builder.Build();  //creating our web app
 // Configure - this method needs to connect all needed components to our app
 //this part about ->info errors, show correct msg to user, in development and in production
 
-if (!app.Environment.IsDevelopment())  //if our environment = development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
+if (!app.Environment.IsDevelopment())  //if our environment = not development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -152,7 +156,7 @@ if (!app.Environment.IsDevelopment())  //if our environment = development do  --
 }
 
 
-
+// app.Environment.EnvironmentName  <--will gives us Environment variable value
 
 
 // app.UseHttpsRedirection();  //redirection from http ->to https
@@ -173,5 +177,21 @@ app.MapControllerRoute(
 //in this middleware already build in  --> pattern: "{controller=Home}/{action=Index}/{id?}");
 //can be used instead of this middleware--> app.MapControllerRoute( ......); 
 // app.MapDefaultControllerRoute();
+
+
+
+// // this will return a msg on URL -> / in this example we don't use Controllers and Models
+// app.UseEndpoints(endpoints =>
+// {
+// endpoints.MapGet("/", async context =>
+// {
+//     await context.Response.WriteAsync("Hello world!");
+// });
+// });
+
+// // or
+// app.Use(async(context, next)=>{
+// await context.Response.WriteAsync("Hello from middleware");
+// });
 
 app.Run();  //run an app, after all have been added to request pipeline

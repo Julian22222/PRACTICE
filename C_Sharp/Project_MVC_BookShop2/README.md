@@ -1,25 +1,25 @@
 ## Overview of this Project
 
-In this Project we have options where we get data from controller and get data from database for dropDown menu when we adding a book.
+In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(In AddNewBook View)
 
 - in our App can be only 1 Context file therefore:
-- To work with local database --> we create a BookStoreContext.cs file --> in Data/ BookStoreContext.cs (Copy all content in BookStoreContext.cs from BookStoreContext.md)
-- To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext -in Data/MyBookStoreWebDbContext.cs
+- To work with local database --> we create a BookStoreContext.cs file (this is database name) --> in Data/ BookStoreContext.cs (Copy all content from README-BookStoreContext.md to BookStoreContext.cs)
+- To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext (this is database name) -in Data/MyBookStoreWebDbContext.cs
 - to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
-  Also,
 
-````C#
+Also,
+
 Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
 
 1. ```bash
    dotnet ef migrations add (AnyMigrationsName) //to add changes to database
-````
-
-2. ```bash
-      dotnet ef database update  //to update database
    ```
 
--Add New Book --> in NavBar , we are filling the Form and we have dropdown options:
+2. ```bash
+     dotnet ef database update  //to update database
+   ```
+
+- Add New Book --> in NavBar , we are filling the Form and we have dropdown options:
 
 - Language dropdown menu <-- is coming from database, (they not hardcoded in the View)
 - Category dropdown menu <-- is coming from Controller (BookController), -hardcoded options
@@ -83,25 +83,6 @@ As example:
 ```C#
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 ```
-
-..............................................................................................................
-
-# To Deploy ASP.Net web application in Azure
-
-1. go to --> [Azure](https://portal.azure.com/)
-   Create App Services
-
-2. install Azure App Service extension in VS code
-
-3. in correct folder of our app write in terminal -->
-
-```C
-   dotnet publish -c Release -o ./bin/Publish
-```
-
-4. In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
-
-5. Once the deployment is finished, click Browse Website to validate the deployment
 
 ..............................................................................................................
 
@@ -302,6 +283,18 @@ We use Repository class methods in BookController
 1. Development
 2. Production
 3. Staging
+4. Testing
+
+- launchSettings.json file:
+  · Is only used on the local development machine.(doesn't work on production server, when deploying )
+  · Is not deployed.
+  · Contains profile settings.
+
+  The environment for local machine development can be set in the Properties\launchSettings.json file of the project. Environment values set in launchSettings.json override values set in the system environment.
+
+  (to apply Environment)The app's environment can't be changed while the app is running.We need to stop the app, then change Environment in Proporties/ launchSettings.json and run the app again
+
+  If you don't use - 'IIS Express' (Windows only) server then you use Kestrel server
 
 - Shared / \_Layout.cshtml --> Here we put common code for all pages. (It is a template, basic layout - these elements will be shown on all pages.)
   Aslo, here we have all meta tags, css links, bootstrap, js links connections.
@@ -449,7 +442,7 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 ....................................................................................................................
 
-# How to connect your project to SQl Server Database.
+# How to connect your project to SQl Server Database.(used for local database and Azure SQL database)
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
@@ -899,7 +892,7 @@ var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data
 
 To keep sensative data - User Id, Passwords, ConnectionString etc.
 
-1. Download extension i.e .NET Core User Secrets
+1. Download nuget package -> Microsoft.Extensions.Configuration.UserSecrets
 2. Then right click on (ProjetName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
 
 #### secret.json (file contains)
