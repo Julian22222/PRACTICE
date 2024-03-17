@@ -2,7 +2,7 @@
 
 # To Deploy ASP.Net web application in Azure (preparing and creating all resources to deploy)
 
-1. go to --> [Azure](https://portal.azure.com/)
+1. go to --> [Azure Portal](https://portal.azure.com/)
    Create App Services
 
 2. install Azure App Service extension in VS code
@@ -21,7 +21,7 @@
 
 ### To deploy project to App services in AZURE PORTAL:
 
-1. bin\Publish folder and select Deploy to Web App
+1. bin\Publish folder and select Deploy to Web App -->
    [Click HERE](https://stackoverflow.com/questions/73800499/how-to-update-changes-to-azure-app-service-after-its-deployed-from-cli)
 
 2. Or we can go to AZURE PORTL -> App Service --> Deployment center (on he right side) <-- Deploy from GitHub
@@ -35,7 +35,7 @@
 
 ....................................................................................................................
 
-# Azure Services to use to deploy your App. [Click Here](https://www.youtube.com/watch?v=EKqXAMLsnKQ&list=PLR-Buy35u4SH0lmQhmlpf2gnX5TxCjUNH&index=13)
+# Azure Services to use to deploy your App.--> [Click Here](https://www.youtube.com/watch?v=EKqXAMLsnKQ&list=PLR-Buy35u4SH0lmQhmlpf2gnX5TxCjUNH&index=13)
 
 1. Subscriptions (Azure subscription)
 
@@ -51,7 +51,7 @@
 
 4. SQL databases
 5. SQL server
-6. Key Vault [Click Here](https://www.youtube.com/watch?v=ZXfuxisC0IA&t=1s)
+6. Key Vault [How to use Key Vault for your secrets](https://www.youtube.com/watch?v=ZXfuxisC0IA&t=1s)
 
 - Creates KeyVaultURL <--copy - paste it to - to use in appsettings.json and in Program.cs for Our secrets /// (Vault URL <- in Key Vault)
 - Located in Azure cloud, this is Azure service where we can store Secrets
@@ -72,7 +72,7 @@
 
 ....................................................................................................................
 
-# Clinet side Validation
+# Client side Validation
 
 - Without Client side validation we always hit(connect to) our Back-End Server, to get the response (to check that all the data is correctly filled). When we click post button - all the time request comes to the server even when fields are filled incorrectly. Then Validation is taking place on the server and send a response back to the client. in each request we hit the server to validate the data.
 - With Client side validation we can validate (check that all the data is correctly filled) all the data without connecting to our server, without sending a request to the server.
