@@ -43,7 +43,7 @@
 
 2. Resource group
 
-- works as a bag where we put all used, needed services for our app in 1 Resource group. (App Services, SQL databases,SQL server,Key Vault), Subscriptions <-- all of them must be in the same Resource group for particular applicatiopn
+- works as a bag where we put all used, needed services for our app in 1 Resource group. (App Services, SQL databases,SQL server,Key Vault, Log Analytics workspace, App Service Plan) <-- all of them must be in the same Resource group for particular applicatiopn
 
 3. App Services
 

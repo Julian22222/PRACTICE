@@ -36,9 +36,9 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 
 
 // Add services to the container.
-// Add services to the container.
 // Services - method to connet all different services for our app, after dot
 // in here we adding services with name-> AddControllersWithViews, to make application aware that we going to use MVC patern ( Model, View, Controller)
+//In Web API , we only need Models and Controllers, in this case use -> builder.Services.AddControllers(); (to check all the templates , we put in terminal --> dotnet new list)
 //AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -54,13 +54,14 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 // builder.Configuration.AddUserSecrets<Program>();  ///////connect User secrets for local settings, works only on my machine, not for a web for eveyone
 
 
-// builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<MyBookStoreWebDbContext>();  //<--use this code if we add some properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
+// builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App (it has already build in properties), it has standard AspNetUsers table. if we don't want to add any extra properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<MyBookStoreWebDbContext>();  //<--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App. Use this code if you are planning to ADD some properties to AspNetUsers table, ( we use Class ApplicationUser with added properties) to work With Identity Core we need to configure Identity to work with database
 //AddIdentity <-- will get all the feature thta are available in Identity framework core
 //IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
 //identityRole <--is a table that already buildIn in Identity framework, to work with roles
 //to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
 //BookStoreContext <--our database name
+//MyBookStoreWebDbContext <-- our database name
 
 
 //////////// //Configure the password complexity (User Registration)
@@ -94,7 +95,10 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 
 
 
+//we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
+// builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
 
+// Configuration -> services that allow to acces to the data that we mentioned in appsettings.json or to access our Secrets
 
 //we need to use IConfiguration in Programm.cs to have access to secrets and appsettings.json data , we use--> builder.Configuration
 if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code (it will show local dabase )
@@ -131,15 +135,9 @@ options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()))
 
 
 
-
-
-
-//we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
-// builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class (Also, this needs for dependency injection)
 
 
-// Configuration -> services that allow to acces to the data that we mentioned in appsettings.json 
 
 var app = builder.Build();  //creating our web app
 
@@ -174,12 +172,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-//in this middleware already build in  --> pattern: "{controller=Home}/{action=Index}/{id?}");
+//in this middleware ( --> app.MapDefaultControllerRoute()) already build in  --> pattern: "{controller=Home}/{action=Index}/{id?}");
 //can be used instead of this middleware--> app.MapControllerRoute( ......); 
 // app.MapDefaultControllerRoute();
 
 
-
+//use this instead -->app.MapControllerRoute( ..)
 // // this will return a msg on URL -> / in this example we don't use Controllers and Models
 // app.UseEndpoints(endpoints =>
 // {

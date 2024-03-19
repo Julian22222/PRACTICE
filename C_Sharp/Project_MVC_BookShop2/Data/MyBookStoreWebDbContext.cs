@@ -17,19 +17,20 @@ namespace Project_MVC_BookShop2.Data
   // this class allow to interact with database
 
     //we can inherit this class from DbContext class to work with database -->
+    //We inherit from DbContext if we not lanning to use UserNames, Passwords, LogIn,SignUp functions in our App
     // public class BookStoreContext : DbContext
 
     //or we can inherit this class from IdentityDbContext class to work with Identity
     //but IdentityDbContext class is inherited from DbContext class
 
-    //  public class BookStoreContext : IdentityDbContext  <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table
+    //  public class BookStoreContext : IdentityDbContext  <--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App (it has already build in properties), it has standard AspNetUsers table., if we don't add any properties to AspNetUsers table
    
 
-public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //will create all needed tables for users and security automatically in our database, use Class ApplicationUser with added properties
+public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //<-- use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in your App and planning to ADD some extra properties to AspNetUsers table, will create all needed tables for users and security automatically in our database, we use Class ApplicationUser with added properties
     // BookStoreContext <-- can have any name, and is followed by Context sufix.
 {
     
-   private readonly IConfiguration _configuration;
+   private readonly IConfiguration _configuration;   //<--using IConfiguration we can have access to appsettings.json and secrets
 
 // constructor
         public MyBookStoreWebDbContext(DbContextOptions<MyBookStoreWebDbContext> options, IConfiguration configuration) : base(options)

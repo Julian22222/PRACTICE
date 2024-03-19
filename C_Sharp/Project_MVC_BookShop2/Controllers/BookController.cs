@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;  // to use [Authorize] Attribute, only
 
 namespace Project_MVC_BookShop2.Controllers
 {
-    public class BookController : Controller
+    public class BookController : Controller  //inherit this class from Controller class
     {
 
 // define type of this variable, data type - BookRepository. (template)
