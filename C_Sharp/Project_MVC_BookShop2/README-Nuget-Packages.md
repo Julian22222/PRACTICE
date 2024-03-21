@@ -5,6 +5,12 @@ All needed packages to start working with your App
 In terminal we write:
 dotnet add package (PackageName)
 
+### To install nuget packages with different version , not the latest version we put: (EXMAPLE)
+
+```C#
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
+```
+
 ### PackageNames:
 
 1. ```bash

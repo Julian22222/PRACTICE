@@ -45,6 +45,10 @@ public class HomeController : Controller
     [Route("about-us")]  //Attribute routing (best and easy way to make new Route to this resource)
     public IActionResult AboutUs()
     {
+
+        var obj = new {Id =2, Name = "Hello!!!"}; //<--creating a variable with 2 properties
+        //return View("ContactUs",obj) <-- returning ContactUs View from this action method and passing obj to the View
+
         return View();
     }
 

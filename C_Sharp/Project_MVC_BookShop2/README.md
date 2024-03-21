@@ -249,7 +249,7 @@ We use Repository class methods in BookController
 
 ### When we addidng some Data to the database using form (--> From AddnewBook.cshtml)
 
-1. Field data from the form go to controller, acion method --> (--> See BookController.cs)
+1. Filled data from the form go to controller, acion method --> (--> See BookController.cs)
 
 ```C#
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (this is Attribute routing)
@@ -260,7 +260,7 @@ public async Task<IActionResult> AddNewBook(Book book){  //<--book is data from 
 }
 ```
 
-2. The we pass data from controller action method to Repository --> (--> See BookController.cs)
+2. Then we pass data from controller action method to Repository --> (--> See BookController.cs)
 
 ```C#
 [HttpPost]
@@ -438,6 +438,8 @@ Example:
   benefit of using CDN - it loads the file based on your geography location, increase performance of application
   With CDN you can get any library from internet.
 
+[Click Hhere to view all CDN libraries](https://cdnjs.com/libraries)
+
 Example:
 
 ```C#
@@ -593,7 +595,7 @@ return View(count)
 
 - We can define a unique URL(route) for each resource., All the routes should be unique
 
-When client type in Browser URL and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
+When client type something in Browser (URL) and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
 
 ### To use routing we need to use 2 middlewares in main file -> Program.cs
 
@@ -630,11 +632,14 @@ pattern: "{controller=Home}/{action=Index}/{id?}");
 1. This method is Conventional Routing
    Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
    -But we can change the Routing for URL in Program.cs file--> using this
+
+   ```C#
    app.MapControllerRoute(
    name: "AboutUs",
    pattern: "about-us",
    defaults: new {controller ="Book" , action= "AboutUs"}
    )
+   ```
 
 Typing in URL -> loacalhost:5167/about-us
 It will go to controller= Book and action = AboutUs and will show correct page, the same as you typed in URL -> Book/AboutUs
