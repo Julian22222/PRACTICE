@@ -88,7 +88,7 @@ builder.Services.ConfigureApplicationCookie(config =>{
 //  all Nuget Packages you can find in SOLUTION EXPLORER (LEFT MAIN BAR in the bottom , under dependencies)
 
 
-
+//Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
 builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
@@ -134,7 +134,7 @@ options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()))
 }
 
 
-
+//Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class (Also, this needs for dependency injection)
 
 
@@ -158,7 +158,7 @@ if (!app.Environment.IsDevelopment())  //if our environment = not development do
 
 
 // app.UseHttpsRedirection();  //redirection from http ->to https
-app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to work fith files in wwwroot(css, photos, pictures)
+app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to work with files in wwwroot(css, photos, pictures in wwwroot folder)
 
 app.UseRouting();   // routing connection, -> needs for endpoint connection
 

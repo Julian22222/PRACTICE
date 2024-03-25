@@ -29,8 +29,9 @@ namespace Project_MVC_BookShop2.Repository
 
 
     // constructor, here we use dependency injection, application will resolve context automatically
-    // because we have written the code in our -Program.cs file -> (line 50) -> this line->
-    // builder.Services.AddDbContext<BookStoreContext>();
+    // because we have written the code in our -Program.cs file -> (line 138) -> this line->
+    // builder.Services.AddDbContext<BookStoreContext>(); 
+    //or builder.Services.AddDbContext<MyBookStoreWebDbContext>();
     public BookRepository(MyBookStoreWebDbContext context){
         _context = context;
     }

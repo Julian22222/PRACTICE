@@ -236,10 +236,11 @@ We use Repository class methods in BookController
 
   If you don't use - 'IIS Express' (Windows only) server then you use Kestrel server
 
-- Shared / \_Layout.cshtml --> Here we put common code for all pages. (It is a template, basic layout - these elements will be shown on all pages.)
+- Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.)
   Aslo, here we have all meta tags, css links, bootstrap, js links connections.
+  -Generaly if you are creating any View that is common to our app we start the name of the file with underscore
 
-- wwwroot folder --> here we have CSS, JS, Img folders <--all extras that we want to show to our user. Also we have different frameworks - Bootstrap, jQuery, JS libraries
+- wwwroot folder --> it is contetnt root foleder or folder for static files, here we have CSS, JS, Img folders <--all extras that we want to show to our user. Also we have different frameworks - Bootstrap, jQuery, JS libraries. To work with static files we write --> middleware -> app.UseStaticFiles(); (line 161) in Program.cs file
 
 - Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages
 
@@ -447,6 +448,8 @@ Example:
 ```
 
 (-->See \_Layout.cshtml file)
+
+Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 ...............................................................................................................
 
@@ -813,12 +816,14 @@ var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data
 ```
 
 2. accessing appsetings.json in View file
-   @inject Microsoft.Extensions.Configuration.IConfiguration \_configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+```C#
+   @inject Microsoft.Extensions.Configuration.IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 
 <p>@_configuration["Name"]</p>
 
 <p>@_configuration["infoObj:key1"]</p>
-````
+```
 
 - appsettings.json is used when you want to provide default values that can apply to all environments.
 - appsettings.{environment}.json can provide non-secret default values for each environment.
@@ -857,6 +862,8 @@ To keep sensative data - User Id, Passwords, ConnectionString etc.
 
 }
 ```
+
+To have accessto User Secrets in our code --> we use IConfiguration
 
 ### Azure Key Vault (we use it in Web to keep secrets files)
 
@@ -923,7 +930,7 @@ and we need to use many values from this appsettings.json object
 
 ```C#
 configuration.GetValue<string>("infoObj:key1"); //to receive -value 1
-configuration.GetValue<string>("infoObj:key2"); //to receive -value 3
+configuration.GetValue<string>("infoObj:key2"); //to receive -value 2
 configuration.GetValue<string>("infoObj:key3"); //to receive -value 3 object
 configuration.GetValue<string>("infoObj:key4"); //to receive -value 4
 ```
@@ -985,6 +992,7 @@ bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the pr
 - Common framework for all .NET app
 - It is NOT only limited to SignUp / SignIn but provide lots of feature that are requires for security management
 - this framework provides all required tables to work with Authentication and Authorisation automaticaly, we don't need to create any extra table by ourself, everething is created automaticaly
+- Identity nuget package instal AspNetUsers table with some already build in properties. If we want to add some more properties to AspNetUsers table (such as FirstName,LastName, etc.) we need to create new Model (in our case --> ApplicationUser.cs). All properties from AspNetUser table are used and filled when the user is register in our website
 
 Identity core features:
 
@@ -1010,13 +1018,13 @@ Microsoft.aspnetcore.identity.entityframeworkcore
 
 ### To connect Identity core package we need:
 
-1. In Program.cs file , (line 111)-->
+1. In Program.cs file , (line 165)-->
 
 ```C#
 app.UseAuthentication();  //enable authentication connection using middleware, to use passwords ,LogIn,SignUp etc.
 ```
 
-2. In Program.cs file , (line 40)-->
+2. In Program.cs file , (line 58)-->
 
 ```C#
    builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //to work With Identity Core we need to configure Identity to work with database
@@ -1028,7 +1036,7 @@ app.UseAuthentication();  //enable authentication connection using middleware, t
 - to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
 - BookStoreContext <--our database name
 
-Also, In Program.cs file (Line 71) -->
+Also, In Program.cs file (Line 94) -->
 
 ```C#
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
@@ -1062,9 +1070,12 @@ dotnet ef database update
 # Add columns to AspNetUsers table (Add new properties to standard AspNetUsers table)
 
 - Using Identity framework creates AspNeUsers table,(table for User Registration) and this table has already build in properties, such as: Id, UserName, PhoneNumber, Email and others.
-- If we want to add some more other properties to this table such as: Name,LastName, dateOFBirth, and other we -->
+- If we want to add some more other properties to this table such as: Name,LastName, dateOFBirth, and other -->
 
-we can inherit IdentityUser class from other class and add custom properties in that new class:
+In Model folder we create a class (--> ApplicationUser.cs) and inherit from IdentityUser class.
+Here in this Model class (-->in our case it is ApplicationUser.cs ) we can add extra properties to AspNetUsers table (table for user data when doing registration)
+
+in this class we add custom properties in that new class:
 
 1. In Model folder we create a class which will inherit IdentityUser Class properies
 2. New created class --->(ApplicationUser.cs) we add new properties to AspNetUsers table (such as: Name, LastName,Dob etc.)

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -16,6 +16,7 @@
     <div class="container">
         <main role="main" class="pb-3">
               @* all content from other View pages goes here *@
+              @* This Render method provides space for other View files, We can have only 1 RenderBody() method inside 1 layout file *@
             @RenderBody()
         </main>
     </div>
@@ -23,7 +24,7 @@
     <footer class="border-top footer text-muted text-center">
         <div class="container">
             @* @DataTime.UtcNow - globaly showing time, local time *@
-            2023 - ASP.Net Project, Copyright &copy; ASP.NET @DateTime.Now.Year  
+            Copyright &copy; ASP.NET @DateTime.Now.Year  
             @* @DataTime.UtcNow *@
         </div>
        
@@ -58,19 +59,21 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+
+
+
     @* RenderSectionAsync("Scripts") we use in _Layout file
     JS code or jquery file or code are always placed in the bottom of the View page
     but you code is at the top. So your code will not work. We need to use  -> @RenderSectionAsync and @Section
     (the code can be read in the body because it is placed in the bottom.)
     Therefore we use -> @RenderSectionAsync (in _Layout file) and @Section( with the same name in Home/Index View, or any other Views) 
-
     This allow to read JS library code or jquery code before the programm will get to the bottom (in our case -in Home/Index.cshtml)*@
-
 @* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
-    
-    @await RenderSectionAsync("Scripts", required: false)
-    @* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
-
+    @* Also, to use this code we need to register jquery -->  <script src="~/lib/jquery/dist/jquery.js"></script> *@
+    @await RenderSectionAsync("Scripts", required: false) 
+@* required: false) <-- make the section in different View files optional, you don't need to have -->@section directive in each View file*@
+@* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
+@* Section and RenderSection can be used with any code if you need to send your code from View file to _Layout file *@
 
 
 @*/// libraries will be applied only on certain environment *@

@@ -29,7 +29,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
    Microsoft.EntityFrameworkCore.SqlServer
    ```
 
-   -->/// package to work with Sql server
+   -->/// package to work with Sql server. use in Program.cs or in Data/MyBookStoreWebDbContext.cs files
 
 4. ```bash
    Microsoft.EntityFrameworkCore.Tools
@@ -41,7 +41,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
    Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
    ```
 
-   -->/// package to update automaticaly ViewEngine
+   -->/// package to update automaticaly ViewEngine, Razor ViewEngine will compile amd render C# and HTML to HTML in any change in your code, we use this package in Program.cs, RuntimeCompilation should work only in Development Environment
 
 6. ```bash
    Microsoft.EntityFrameworkCore.Design
@@ -70,3 +70,17 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
     ```
 
 -->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
+
+11. ````bash
+            Microsoft.Extensions.Configuration.UserSecrets
+        ```
+        -->///package to use User Secrets file, to keep sensative data - User Id, Passwords, ConnectionString etc.
+
+    ````
+
+12. ````bash
+    Microsoft.aspnetcore.identity.entityframeworkcore
+        ```
+    -->///To start working with Identity Core framework we need to install this package  --> and all other dependent packages will install automatically in our app
+    -->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
+    ````

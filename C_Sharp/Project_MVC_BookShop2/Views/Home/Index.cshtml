@@ -5,7 +5,8 @@
 @{
     ViewData["Title"] = "Books store";
 
-   
+   @* Layout = null;  //<--this View wont use common Layout for all the pages from Views/Shared/_Layout.cshtml*@
+   @* Layout = "_Layout"; <--can use any Layout name here, buy default it takes _Layout file*@
 }
 
 <section class="jumbotron text-center">
@@ -90,15 +91,15 @@
 
 
 
-@* @section - we use in View file with the name -Scripts,
+@* @section directive - we use in View file with the name -Scripts,
 Scripts -can be any name that is the same with (created name(unique name) from RenderSectionAsync("Scripts")) , in _Layot.cshtml *@
 
 @* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
-
+@* You can create @section at any place in the View file. You not required that you have to create the @section derective in the bottom of your View *@
 
 @section Scripts{
 
-@* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code *@
+@* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
    <script>
     $(document).ready(function (){
         alert("document is ready, Click Ok");

@@ -5,7 +5,9 @@
 
 @* Book model class import connection , to use Book Model in --> @model IEnumerable<Book>  *@
 @using Project_MVC_BookShop2.Models
-@model IEnumerable<Book>  //import data from controller, that we pass in controller,(here we assign a data type to imported Model data from controller).It can be any data type -IEnumerable (this is universal), List, Collection
+@model IEnumerable<Book>  // using @model directive we import data from controller, that we pass in controller,(here we assign a data type to imported Model data from controller).
+@* It can be any data type -IEnumerable (this is universal), List, Collection *@
+@* <Book> <-- is a type of our model *@
 
 
 <div class="container">
