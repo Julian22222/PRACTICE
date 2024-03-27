@@ -119,3 +119,13 @@ var list = new List<int>(){1,2,3,4,5};
     <h1> @item </h1>
 }
 ```
+
+# Other / mini file and normal file version of libraries
+
+- In wwwroot / lib we have normal version and mini file version of files
+  Example: bootstrap-grid.css(normal, non mini file version) and bootstrap-grid.min.css (mini file verison)
+- If we use mini file version in the app --> then we won't be able to debug our application in the browser, because an entire code is less than in normal version.
+- If we use normal or non mini file version in the app --> the size of the file is larger than mini file version, then it can give a performance issues in the production environment
+- Both files have thair avantages and disadvantages, that means we should render these file based on the environment.
+- In Development environment we should render ( we should use) --> normal or non mini file version, in case we want to debug our app.
+- In Non Development environment (Staging, Production,testing environment) we should use mini file version , to increase the performance of our app.

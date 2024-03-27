@@ -180,6 +180,13 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 
     -->// to inherit from IdentityDbContext, in BookStoreContext.cs file
 
+17.
+
+```C#
+using System.Dynamic;
+```
+
+--->// to work with ViewBag ,passing an obect data type to View
 ..............................................................................................................
 
 # How to install nuget packages(Entity Framework Core)
@@ -242,9 +249,109 @@ We use Repository class methods in BookController
 
 - wwwroot folder --> it is contetnt root foleder or folder for static files, here we have CSS, JS, Img folders <--all extras that we want to show to our user. Also we have different frameworks - Bootstrap, jQuery, JS libraries. To work with static files we write --> middleware -> app.UseStaticFiles(); (line 161) in Program.cs file
 
-- Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages
+- Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages. Also, we can add namespaces here and all View files will have access to this namespaces, therefore we don't need to write them in each View file (example --> @using Project_MVC_BookShop2.Models )
+
+- Views /\_ViewStart.cshtml -->if you are planning to create common View inside our application usually we use underscore before the View name. this is a common file. To dont write the same code in each View file we -> we put this code here -->template for all View files.
 
 ....................................................................................................................
+
+# ViewBag (--> See BookController and AddNewBook.cshtml)
+
+- ViewBag is used to pass any data from action method to View and we can display this data on View
+- This type of data binding is known as loosely binding. If you passing the data by using Viewbag and we using that data in the View (data binding with the View)<--it is loosly binding
+- Strongly binding is in controller when we pass the data with --> return View(data); to View. Located in controller action method
+- We can pass any type of data in ViewBag
+- ViewBag use dynamic property (because Razor renders any data type automatically when we use ViewBag, ether it is int or string or anything else)
+
+- First we need to create a new property in ViewBag and then assign some data to it:
+
+```bash
+ViewBag.PropertyName = Data; //<--Data can be any type of data
+```
+
+- Since ViewBag is a server side code hence to use it on view, we need to use razor syntax i.e. @
+
+```bash
+@Viewbag.PropertyName //<--to use ViewBag in View file, use the same Property name as we assign the property in action method
+```
+
+- ViewBag.Num = 123; <-- ViewBag can have any data type and have any property name
+- Viewbag.MyString = "Hello it is my string";
+- We can use many ViewBags in action method but property name must be different
+- Viewbag works on dynamic type but it not give any compile time error(when some property name is wrong or if there is some error)
+- The scope of ViewBag is to current action method to view
+
+### To use anonymous data (Data object in ViewBag)
+
+1. In the Controller file we write on the top of the file-->
+
+```bash
+using System.Dynamic;
+```
+
+2. in action method we write -->
+
+```C#
+dynamic data = new ExpandoObject();
+data.Id = 1;  //<--assigning data
+data.Name = "Jack"; //<--assigning data
+
+ViewBag.Data = data; //<--assigning data to Viewbag property
+
+// or ViewBag.Type = new Book(){Id =5; Author = "This is Author", Title= "IT"}; <--Here we can use Book Model as an object
+```
+
+2. In View we write C# code on the top of the file
+
+```C#
+@{
+dynamic data = ViewBag.Data
+}
+```
+
+3. Then we can fetch all the properties in the HTML tag in View file by
+
+```C#
+@data.Id  //<--will give us 1
+@data.Name  //<--will give us Jack
+```
+
+..............................................................................................................
+
+# ViewData
+
+- is used to pass any data type from action method to view and we can display this data on view (the same as Viewbag)
+- work in key -value principle (not dynamic principal as Viewbag)
+- This type of data binding is known as loosely binding
+- ViewData use ViewDataDictionary type
+- we create a new key in ViewData and then assign some data to it --> viewData["Title"] = 123;
+- use razor syntax in View --> @ViewData["Title"]
+- ViewData is usually used for a Title of different page in the browser , The title showed and related to current page (Also we put code in the \_Layout.cshtml file (line 7))
+
+### Use ViewData with object data type
+
+1. In Controller we write
+
+```C#
+ViewData[|book] = new Book(){Author = "Rob", Id = 2};
+```
+
+2. in View we write on the top of the file
+
+```C#
+@{
+   var bookInfo = ViewData[|book] as Book; //<--assign what type is the data type, (Book data type), we don't need it in Viewbag because it works in dynamic principle
+}
+```
+
+3. In View file in Html tags we write
+
+```C#
+<h2>@bokInfo.Id</h2> //<--wil give 2
+<p>@bookInfo.Author</p> //<--will give Rob
+```
+
+.......................................................................................................................
 
 # How data travel through the files
 

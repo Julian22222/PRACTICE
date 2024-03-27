@@ -32,7 +32,7 @@ public class HomeController : Controller
     {
         _logger = logger;
          configuration = _configuration;  //now using configuration --> we can read the appsetings data
-        _env = env;  //<-- ependency injection to check the Environment Variable 
+        _env = env;  //<-- dependency injection to check the Environment Variable 
     }
 
     public IActionResult Index()

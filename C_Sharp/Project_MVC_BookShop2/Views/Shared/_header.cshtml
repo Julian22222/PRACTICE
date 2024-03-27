@@ -8,7 +8,8 @@
                     <div class="container">
 
                         <a class="navbar-brand" href="/">
-                        <img src="~/img/Cat.png" width="60" height="60" asp-append-version="true" />
+                        <img src="~/img/Cat.png" width="60" height="60" asp-append-version="true" /> 
+                            @* asp-append-version="true" <--(tag helper) will help to clear the cache in browser , and if we change the picture it will change on browser as well. Browser will not take old picture from cache memory*@
                         BookShop
                         </a>
                         @* button section for the phone -placing your content of navbar automatically on the phene, to make your app responsive*@
