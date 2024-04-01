@@ -17,13 +17,13 @@ namespace Project_MVC_BookShop2.Data
   // this class allow to interact with database
 
     //we can inherit this class from DbContext class to work with database -->
-    //We inherit from DbContext if we not lanning to use UserNames, Passwords, LogIn,SignUp functions in our App
+    //We inherit from DbContext if we not planning to use UserNames, Passwords, LogIn,SignUp,Security functions in our App
     // public class BookStoreContext : DbContext
 
     //or we can inherit this class from IdentityDbContext class to work with Identity
-    //but IdentityDbContext class is inherited from DbContext class
+    //IdentityDbContext class is inherited from DbContext class under the hood
 
-    //  public class BookStoreContext : IdentityDbContext  <--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App (it has already build in properties), it has standard AspNetUsers table., if we don't add any properties to AspNetUsers table
+    //  public class BookStoreContext : IdentityDbContext  <--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App (it has already build in properties), it has standard AspNetUsers table, use this approach if we don't add any extra properties to AspNetUsers table
    
 
 public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //<-- use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in your App and planning to ADD some extra properties to AspNetUsers table, will create all needed tables for users and security automatically in our database, we use Class ApplicationUser with added properties
@@ -35,7 +35,7 @@ public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>  //<--
 // constructor
         public MyBookStoreWebDbContext(DbContextOptions<MyBookStoreWebDbContext> options, IConfiguration configuration) : base(options)
         {
-_configuration = configuration;
+_configuration = configuration;  //<--needs to connects to appsettings.json and secret files
         }
 
 
@@ -74,7 +74,7 @@ _configuration = configuration;
             //working Connection string, not using data from appsettings.json 
             //   optionsBuilder.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!");
 
-              //Reading Connection String from appsettings.json file as always , (we create create variable fo Configuration and in constructor assign variables)
+              //Reading Connection String from appsettings.json file as always , (we create variable fo Configuration and in constructor assign variables)
             //   optionsBuilder.UseSqlServer(_configuration["ConnectionStrings : DefaultConnection"]);
 
             //Reading Connection String from appsettings.json file, when you using EntityFrameworkCore we can write--> (2nd option)

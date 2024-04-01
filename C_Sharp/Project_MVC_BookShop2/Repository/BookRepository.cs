@@ -62,7 +62,7 @@ var newBook = new Books(){
     BookPdfUrl = model.BookPdfUrl
 };
 
-// we add newBook to our database -> _context -> in Books table
+// we add newBook to our database -> _context -> in Books2 table
 await _context.Books2.AddAsync(newBook);
 
 // then we need save changes, otherwise application won't hit the database ( async method)
@@ -128,6 +128,8 @@ return newBook.Id;
   // method GetBookById return Book, Book - data type
         public async Task<Book> GetBookById(int id)
         {
+
+            // var book = await _context.Books2.FindAsync(id);  <--another way how to find correct book by Id
 
         return await _context.Books2.Where(x=>x.Id ==id).Select(book => new Book(){
                         Id = book.Id,

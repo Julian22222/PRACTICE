@@ -86,109 +86,6 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 
 ..............................................................................................................
 
-# Different namespaces:
-
-1. ```bash
-   @using System.Runtime.InteropServices.WindowsRuntime;
-   ```
-
-2. ```bash
-      @using System;
-   ```
-
-   -->///using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
-
-3. ```bash
-   @using System.Collections.Generic;
-   ```
-
-   -->///allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
-
-4. ```C#
-   @using System.Linq;
-   ```
-
-   -->///querying any type of data source
-
-5. ```C#
-   @using System.Threading.Tasks;
-   ```
-
-   -->///creating new threads for computation, aslo when use async-await operations, and to use Task
-
-6. ```C#
-   @using Microsoft.AspNetCore.Mvc;
-   ```
-
-   -->///allow to use Routes , //importing to inherit Controller
-
-7. ```C#
-   @using Project_MVC_BookShop2.Repository;
-   ```
-
-   -->//BookRepository connection and methods - GetAllBooks and others
-
-8. ```C#
-   @using Project_MVC_BookShop2.Models;
-   ```
-
-   -->//Book class import connection
-
-9. ```C#
-   @using Microsoft.AspNetCore.Mvc.Rendering;
-   ```
-
-   -->///to use SelectList, SelectListItem, SelectListGroup, use Html partial views
-
-10. ```C#
-     @using Microsoft.AspNetCore.Mvc;
-    ```
-
-    -->//allow to use Routes , //importing to inherit Controller
-
-11. ```C#
-    @using Microsoft.EntityFrameworkCore;
-    ```
-
---> Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
---> allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
-
-12. ```C#
-    @using Microsoft.AspNetCore.Http;
-    ```
-
--->to use IFormFile (special data type to hold information about uploaded files)
-
-13. ```C#
-     using Microsoft.Extensions.Configuration;
-    ```
-
-    -->//needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
-
-14. ```C#
-    @using Microsoft.Extensions.Configuration //we use these 2 lines of code to access appsettings.json in View (import configuration, needs to use IConfiguration service)
-    @inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
-    ```
-
-15. ```C#
-    @inject Microsoft.Extensions.Configuration.IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
-    ```
-
-16. ```C#
-     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    ```
-
-    -->// to inherit from IdentityDbContext, in BookStoreContext.cs file
-
-17.
-
-```C#
-using System.Dynamic;
-```
-
---->// to work with ViewBag ,passing an obect data type to View
-..............................................................................................................
-
 # How to install nuget packages(Entity Framework Core)
 
 In terminal we write:
@@ -558,7 +455,18 @@ Example:
 
 Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
-...............................................................................................................
+- To use Bootstrap libarary, in \_Layout.cshtml file in the head part we put -->
+
+```C#
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+  or CDN link of main bootstrap link
+```
+
+(CDN bootstrap css link)[https://getbootstrap.com/docs/5.3/getting-started/introduction/#cdn-links]
+
+- Then in View files we can use Bootstrap css  
+  ...............................................................................................................
 
 # Partial views (Similar to React JS components)
 

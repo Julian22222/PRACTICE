@@ -16,8 +16,8 @@ using System.Collections.Immutable;
 // main file, without this file none will work
 
 using Project_MVC_BookShop2.Data;  //connect MyappDbContext ,from Data folder
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;  //to work with database
+using Microsoft.AspNetCore.Identity;  // LigIn, SignUp, Security 
 using Azure.Identity;   //connects Key Vault
 using Microsoft.Extensions.Configuration.AzureKeyVault;   //connects Key Vault
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
@@ -98,8 +98,9 @@ builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work w
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
 
-// Configuration -> services that allow to acces to the data that we mentioned in appsettings.json or to access our Secrets
 
+
+// Configuration -> services that allow to acces to the data that we mentioned in appsettings.json or to access our Secrets
 //we need to use IConfiguration in Programm.cs to have access to secrets and appsettings.json data , we use--> builder.Configuration
 if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code (it will show local dabase )
 {
@@ -134,8 +135,9 @@ options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()))
 }
 
 
+//Don't need this part, , in Development and Production this part was already used
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
-builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class (Also, this needs for dependency injection)
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class as DB connection (Also, this line needs to make dependency injection in different classes)
 
 
 

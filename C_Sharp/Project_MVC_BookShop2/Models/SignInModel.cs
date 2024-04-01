@@ -23,7 +23,7 @@ namespace Project_MVC_BookShop2.Models
         public string Email { get; set; }
         
         [Required]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others,some attributes are not working in MVC)
         public string Password { get; set; }
 
         [Display(Name = "Remember me")]

@@ -1,4 +1,4 @@
-@model Book   //receiving Book Model that we passed in Controller, assign data type- Book
+@model Book   //to use Book Model in our Form, assign data type- Book
 
 
 @{ //in this brackets we can use C# code
@@ -49,12 +49,12 @@ public async Task<IActionResult> AddNewBook(Book book){....}
         @* common input -->
     <input type="text"/> *@
 
-@* validation-summary showing all error messages on the top of the form  *@
+@* validation-summary showing all error messages on the top of the form ( custom and server side validation msges) *@
 @* works only in div tag *@
 @* use only one value from 3 options *@
-<div asp-validation-summary="All" class="text-danger"></div>
-@* <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<div asp-validation-summary="None" class="text-danger"></div> *@
+<div asp-validation-summary="All" class="text-danger"></div> 
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div>  <-- Will show only custom msges that we created in BookController, line 169,170
+<div asp-validation-summary="None" class="text-danger"></div>  <-- will not show any errors on the top of the file *@
 
 
         @* <div class="form-group">
@@ -69,10 +69,13 @@ public async Task<IActionResult> AddNewBook(Book book){....}
             <label asp-for="LanguageId"></label>
             @* dropdown -> using select and option tag *@
             @* required - use for client side validation (UI)*@
+            @* <option> English </option> <-- will give the value for it automatically*@
+            @* <option selected> Dutch </option>  <-- selected make This Dutch language selected by default when you open AddnewBook View *@
             <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language" required> 
                 <option value="">Please choose book language</option>
             </select>
-             <span asp-validation-for="LanguageId" class="text-danger"></span> 
+             @* use only span tag and asp-validation-for --> to show an eeror msg for LanguageId Input if it is wrong *@
+             <span asp-validation-for="LanguageId" class="text-danger"></span>  
         </div>
 
 

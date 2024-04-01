@@ -4,7 +4,7 @@ using System;   //using the System library in your project.Which gives you some 
 using System.Collections.Generic;
 using System.Linq;  //querying any type of data source
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;   //to use server side validations attributes
+using System.ComponentModel.DataAnnotations;   //to use server side validations attributes (or Model validation)
 using Microsoft.AspNetCore.Http;    //to use IFormFile (special data type to hold information about uploaded files)
 
 
@@ -13,7 +13,7 @@ namespace Project_MVC_BookShop2.Models
     public class Book
     {
 
-        // [DataType(DataType.Date)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others)
+        // [DataType(DataType.Date)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others, some attributes are not working in MVC)
         // [Display(Name ="Date")]
         // public string MyField{get;set;}
 
@@ -21,8 +21,10 @@ namespace Project_MVC_BookShop2.Models
         // [Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
         public int Id { get; set; }
 
-        // this is server side validation attributes
+        // this is server side validation attributes(or model validation)
         [StringLength(100,MinimumLength =2)]  //max length= 100, and min length =5
+        //[StringLength(100)]  <-- max length is 100 , minimum is 0
+        //[StringLength(100, ErrorMessage ="Please put no more than 100 characters")] <--Costom erroe message specific for this atribute
         [Required(ErrorMessage = "Please enter the title of you book")] //mandatory field to field, custom msg if the field is not valid
         public string Title { get; set; }
 

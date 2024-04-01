@@ -27,7 +27,8 @@ private readonly BookRepository _bookRepository = null;
 private readonly ILanguageRepository _languageRepository = null;
 
 private readonly IWebHostEnvironment _webHostEnvironment;  ///dependency injection for server path to store uploaded photos on the server, contains all details about this environment
-//helps to make part of path and to save the path in wwwroot/books/cover
+//helps to make part of path and to save the path in wwwroot/books/cover 
+//Also used to identify environment
 
 // ctor + tab -to make constructor
         // this is constructor
@@ -37,7 +38,7 @@ public BookController(BookRepository bookRepository, ILanguageRepository languag
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
 _bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<BookRepository, BookRepository>(); (we can use this Depenedency injection because we wrote - line 48 in Program.cs)
 _languageRepository = languageRepository;    //dependency injection using interface, to make object from languageRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<ILanguageRepository, LanguageRepository>(); (we can use this Depenedency injection because we wrote  - line 49 in Program.cs)
-_webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server, (we don't write this variable in Program.cs to use it here)
+_webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server, (we don't write this variable in Program.cs to use it here) , Also used to identify environment ---> if(_webHostEnvironment.IsDevelopment){} <-- if it envionment Development do some code
 }
 
 
@@ -102,7 +103,7 @@ ViewBag.Category = new List<string>(){
 
   // always use data return type -> Task with async methods 
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
-public async Task<IActionResult> AddNewBook(Book book){
+public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
     {
@@ -143,6 +144,8 @@ public async Task<IActionResult> AddNewBook(Book book){
 
     if(id > 0){
     // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
+    // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
+    //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
     return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});
 }
     }
@@ -163,7 +166,7 @@ ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id"
 
 
 // add some custom error messages to your model -> validation-summary
-ModelState.AddModelError("","This is my 1st custom error message from BookController");
+ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key, second is an error msg, if we dont have any key then keep it blank
 ModelState.AddModelError("","This is my 2nd custom error message from BookController");
 
 
