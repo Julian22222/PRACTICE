@@ -22,6 +22,7 @@
 
 @* Bootstrap loding spinners, in form tag we put -> data-ajax-loading="#myLoader" *@
 @* style="display:none" --> not showing this code all the time, showing loading animation only when uploading new book *@
+@* instead of id="myLoader"  we can use class <-- class="myLoader" , then we will use --> data-ajax-loading=".myLoader" in form tag*@
 <div class="d-flex justify-content-center" >
   <div class="spinner-border" role="status" id="myLoader" style="display:none" >  
     <span class="sr-only">Loading...</span>
@@ -32,9 +33,11 @@
 
 @* to use ajax form*@
     @* <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook"> *@
-
+@* data-ajax="true"  <-- our form will work with ajax, if in _Layout.cshtml we imported  all needed libraries*@
+@* ata-ajax-complete="myComplete" data-ajax-success="mySuccess"   <-- 3 different functions, the function logic is in the bottom of the file *@
+@* data-ajax-loading="#myLoader" <-- use id="myLoader" in bootstrap piece of code, line 23-29, show loading picture when uploading*@
  <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
-@* enctype="multipart/form-data"   <- If you are dealing with the file(uploading files in View) in your form then you use this attribute in form tag*@
+@* enctype="multipart/form-data"   <- If you are dealing with the file(if we planning to uploading files in View) in your form then you use this attribute in Form tag*@
 @* asp-controller="Book" asp-action="AddNewBook"  <-- we don't need to write this part, if in Controller (-->See BookController.cs) the View page-(form page) name has the same name as [HttpPost] method- (when we send the data) -->
 AddNewBook <--is the same name for View page and [HttpPost] method
 
@@ -121,11 +124,12 @@ public async Task<IActionResult> AddNewBook(Book book){....}
             @* asp-for="Title"  input element for Title property for our Book Model  *@
             <label asp-for="CoverPhoto" class="control-lebel"></label>
 
-         @* from bootstrap  *@
+         @* code block from bootstrap , (4 lines) *@
         <div class="custom-file">
-        <input asp-for="CoverPhoto" class="form-control" id="customFile">
+        <input asp-for="CoverPhoto" class="form-control" id="customFile">  
         <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
+
 
             @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
             <span asp-validation-for="BookPdf" class="text-danger"></span> 
@@ -158,15 +162,20 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 
 @section scripts {
     <script>
-        function myComplete(data){
+        function myComplete(data){ //<--name of the function is myComplete, to receive the data from your function we can pass some attributes--> (data) 
+        //this code wil execute , doesn't metter if the request is successful or fail.
             alert("I am from complete");
         }
 
-        function mySuccess(data){
+        function mySuccess(data){  //<--name of the function is mySuccess
+
+        //this code wil execute if the request is successful
             alert("I am from Success");
         }
 
-        function myFailure(data){
+        function myFailure(data){  //<--name of the function is myFailure
+
+        //this code wil execute if the request was failed
             alert("I am from Failure");
         }
     </script>

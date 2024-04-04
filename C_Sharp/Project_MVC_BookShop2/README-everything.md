@@ -237,6 +237,7 @@ crossorigin="anonymous"></script>
 
 # Server side (Model) Validation (--> See Models/ Book.cs and AddNewBook.cshtml)
 
+- Located in Model folder, using attributes
 - ModelState.IsValid <-- return bool (true or false if Form is filled correctly or not, line 108 in BookController.cs)
 
 # Validation summary (--> See AddNewBook.cshtml, line 55)
@@ -256,3 +257,39 @@ crossorigin="anonymous"></script>
 - indicate what type of data you must enter in Input filed (--> See Models / SignInModel.cs )
 - inputing datatype can be passwod, email, calendar etc
 - See Models/ Book.cs file (line 16, 17, 18)
+
+# Client side validation
+
+- needs to don't hit the server with each request, (when the form filled incorrectly), --> validation taking place on the server(in server side validation)
+- needs to prevent possibility of changing data in database by sending some strange requests by user to the server
+- to work with client side validations we need some libraries: (the order of libraries is importnt)
+
+1. jquery.js
+2. jquery.validate.js
+3. jquery.validate.unobtrusive.js
+
+- If we use these 3 libraries in our app we enable client side validation automatically from server side validation.
+
+- To use these libraries we import them in `C# _Layout.cshtml ` in the bottom of the file
+- to use these libraries in our app --> we can use build in libraries from wwwroot/lib/ or we can use CDN
+- to disable client-ide validation (if you want to debug your code) --> (--> See Program.cs file, line 47)
+
+# Ajax Form
+
+- If you want to use AJAX form in our app then we need some libraries: (get them from build in libraries or from CDN)
+
+1. jquery.js
+2. jquery.unobtrusive-ajax.js
+
+- To use these libraries we import them in `C# _Layout.cshtml ` in the bottom of the file
+- In AddNewBook.cshtml file --> in Form tag we put --> <form method="post" data-ajax="true" > <--This allow to work with ajax in our form
+- Also, you can use different ajax functions using --> data-ajax attributes -->
+
+```C#
+<form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess">
+```
+
+- ```C#
+    data-ajax-loading="#myLoader"
+  ```
+  <-- use id="myLoader" in bootstrap piece of code, line 23-29 in AddnewBook.cshtml file, show loading picture when uploading

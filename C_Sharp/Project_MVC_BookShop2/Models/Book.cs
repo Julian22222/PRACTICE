@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;  //querying any type of data source
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;   //to use server side validations attributes (or Model validation)
-using Microsoft.AspNetCore.Http;    //to use IFormFile (special data type to hold information about uploaded files)
+using Microsoft.AspNetCore.Http;    //to use IFormFile (special data type to hold information about uploaded files), allow to upload any file to our app, used in Model class
 
 
 namespace Project_MVC_BookShop2.Models

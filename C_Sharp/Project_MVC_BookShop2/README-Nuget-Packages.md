@@ -86,16 +86,23 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
     -->///To start working with Identity Core framework we need to install this package  --> and all other dependent packages will install automatically in our app
     -->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
     ````
+13. ```bash
+    Microsoft.AspNetCore.Authorization
+    ```
 
+````
+
+-->//to use [Authorize] Attribute in Controllers, when only logedIn users can access certain pages (BookController line 79)
 ..............................................................................................................
 
 # Different namespaces:
 
-1. ```bash
-   @using System.Runtime.InteropServices.WindowsRuntime;
-   ```
+1. ```C#
+@using System.Runtime.InteropServices.WindowsRuntime;
+```
+````
 
-2. ```bash
+2. ```C#
       @using System;
    ```
 
@@ -160,7 +167,7 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
     @using Microsoft.AspNetCore.Http;
     ```
 
--->to use IFormFile (special data type to hold information about uploaded files)
+-->to use IFormFile (special data type to hold information about uploaded files), allow to upload any file to our app, used in Model class (--> See Book Model in Models/Book.cs file)
 
 13. ```C#
      using Microsoft.Extensions.Configuration;

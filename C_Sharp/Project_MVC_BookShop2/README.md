@@ -96,7 +96,7 @@ dotnet add package (PackageName)
 # Main Locations in different folder
 
 - Data folder --> we keep all data for database here.
-
+- Data/ Model classes --> no point to use optional proporties, because it is converted from Model Class (As example: public string? Language { get; set; })
 - Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class
@@ -230,14 +230,14 @@ dynamic data = ViewBag.Data
 1. In Controller we write
 
 ```C#
-ViewData[|book] = new Book(){Author = "Rob", Id = 2};
+ViewData["book"] = new Book(){Author = "Rob", Id = 2};
 ```
 
 2. in View we write on the top of the file
 
 ```C#
 @{
-   var bookInfo = ViewData[|book] as Book; //<--assign what type is the data type, (Book data type), we don't need it in Viewbag because it works in dynamic principle
+   var bookInfo = ViewData["book"] as Book; //<--assign what type is the data type, (Book data type), we don't need it in Viewbag because it works in dynamic principle
 }
 ```
 
@@ -433,7 +433,7 @@ dotnet ef migrations remove
 
 jquery, bootstrap, ajax libraries and their packages can be imported from already installed(build up) .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet --> using special links)
 
-Example:
+Example of local (build in bootstrap):
 
 ```c#
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -443,9 +443,9 @@ Example:
   benefit of using CDN - it loads the file based on your geography location, increase performance of application
   With CDN you can get any library from internet.
 
-[Click Hhere to view all CDN libraries](https://cdnjs.com/libraries)
+[Click here to view all CDN libraries](https://cdnjs.com/libraries)
 
-Example:
+Example of CDN:
 
 ```C#
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
@@ -473,6 +473,7 @@ Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-st
 - it is simple cshtml file that can be inserted anywhere in any View.
 - It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).
 - Helps to remove duplicate code from app.
+- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
 
 How to use it-->
 partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
@@ -508,6 +509,8 @@ or you can use another option to render our partial view-->
 # ViewComponent
 
 - is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. It is not part of Http life cycle.
+
+- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
 
 There are 2 files in any ViewComponent:
 
@@ -1162,7 +1165,7 @@ in this class we add custom properties in that new class:
 
 These Default Password settings can be changed. By following code:
 
-- In Program.cs file -->line 50
+- In Program.cs file -->line 67
 
 ```C#
 //Configure the password complexity (User Registration password configuration)
@@ -1199,15 +1202,14 @@ To create this functionality we must:
 //app.UseAuthorization();  <-- must always be below Authentication to work correctly!!!
 //ONLY IN THIS ORDER
 
-app.UseAuthorization();
 ```
 
-2. We use Authorize atribute in Controller (in our case in BookController.cs --> line 78)
+2. We use Authorize atribute in Controller (in our case in BookController.cs --> line 79)
 
 - Only Loged In Users will be able to access this AddNewBook action method
 
 ```C#
-[Authorize]  //we add Authorize Attribute to action methods wich you want be accessable only for Loged In User
+[Authorize]  //we add Authorize Attribute to action methods which you want be accessable only for Loged In User
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 
 // passing English language as default to our form  -->in return View(model)
@@ -1256,7 +1258,7 @@ namespace Project_MVC_BookShop2.Controllers
 
 4. if user not loged In and pressed AddNewBok (but AddNewBook action method has Authorization attribute ) we can redirect user to certain page, (in our case -> login page):
 
-- In Program.cs file we write (--> line 65 )
+- In Program.cs file we write (--> line 81 )
 
 ```C#
 builder.Services.ConfigureApplicationCookie(config =>{

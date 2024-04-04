@@ -60,6 +60,8 @@ var newBook = new Books(){
     //full path to uploaded img folder -->(wwwroot/books/cover)
     CoverImageUrl = model.CoverImageUrl,
     BookPdfUrl = model.BookPdfUrl
+
+    // UpdatedOn = DateTime.UtcNow  <-- will put the local time and date of the user
 };
 
 // we add newBook to our database -> _context -> in Books2 table

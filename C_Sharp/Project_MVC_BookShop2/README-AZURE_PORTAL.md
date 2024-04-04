@@ -7,7 +7,7 @@
 
 2. install Azure App Service extension in VS code
 
-3. in correct folder of our app write in terminal -->
+3. To deploy new app or deploy new changes, go to correct folder of our app write in terminal-->
 
 ```C
    dotnet publish -c Release -o ./bin/Publish

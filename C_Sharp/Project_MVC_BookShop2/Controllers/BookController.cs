@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to
 using Project_MVC_BookShop2.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop2.Models;        //Book class import connection
 using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem, SelectListGroup, use Html partial views
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;  // to use IWebHostEnvironment
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.IO;
+using System.IO;  // to use Path.Combine function
 using Microsoft.AspNetCore.Authorization;  // to use [Authorize] Attribute, only loged In users can access this action method
 
 
@@ -82,7 +82,7 @@ public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId =
 
 // passing English language as default to our form  -->in return View(model)
 var model = new Book(){
-    LanguageId = 1
+    LanguageId = 1  //need to pass an Id of the language, because we used SelectList --> new SelectList(await _languageRepository.GetLanguages(), "Id","Name")
 };
 
 // here we get all languages from database , Language Table
@@ -105,6 +105,9 @@ ViewBag.Category = new List<string>(){
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
 
+    Console.WriteLine(book);
+
+
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
     {
 
@@ -113,7 +116,9 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
         if(book.CoverPhoto != null){
 
             string folder ="books/cover/";  //path to folder where we store uploaded photos
-            // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,or this folder (path) is not available)
+            // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,
+            //or this folder (path) is not available because we need a server actual path to store images in this app  --> 
+            //therefore we need to use this parametr --> IWebHostEnvironment webHostEnvironment (it contains all details about environment), in contructor we create it and then assign to _webHostEnvironment)
 
             //add uploaded img file Name to the path --> book.CoverPhoto.FileName;
             //also we need to avoid errors when upload images with the same name, make the img files name unique -> + Guid.NewGuid().ToString()
@@ -124,7 +129,8 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
             // we need server path to store these imgs in this application(we need to use IWebHostEnvironment dependency injection)
             // Define the path for a server of the actual folder where we keep imgs, add the server path + folder (join server path and folder)
-            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <- _webHostEnvironment.WebRootPath  +  folder
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <-- this function combine 2 variables --> _webHostEnvironment.WebRootPath  +  folder. 
+            //This serverFolder variable will allow server to save the file using our path to correct folder
 
             // we need to save the copy of the full img path in wwwroot/books/cover,  
             // new FileStream(serverFolder <- the server path)
@@ -160,7 +166,7 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 "programming","animals", "technology", "sports"
 };
 
-
+// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
 ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 
 
