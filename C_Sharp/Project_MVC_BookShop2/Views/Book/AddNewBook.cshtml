@@ -1,4 +1,4 @@
-@model Book   //to use Book Model in our Form, assign data type- Book
+@model Book   //to use Book Model in our Form --> in asp-for="LanguageId", asp-validation-for="Author"  and other properties from Book Model , assign data type- Book, 
 
 
 @{ //in this brackets we can use C# code
@@ -132,7 +132,7 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 
 
             @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
-            <span asp-validation-for="BookPdf" class="text-danger"></span> 
+            <span asp-validation-for="CoverPhoto" class="text-danger"></span> 
         </div>
 
 

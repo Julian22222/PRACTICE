@@ -58,7 +58,7 @@ var newBook = new Books(){
     TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
     
     //full path to uploaded img folder -->(wwwroot/books/cover)
-    CoverImageUrl = model.CoverImageUrl,
+    CoverImageUrl = model.CoverImageUrl,  //<-- we could pass data using parametre / ViewBag and assign to  CoverImageUrl, or with new property as we done it here in this example
     BookPdfUrl = model.BookPdfUrl
 
     // UpdatedOn = DateTime.UtcNow  <-- will put the local time and date of the user

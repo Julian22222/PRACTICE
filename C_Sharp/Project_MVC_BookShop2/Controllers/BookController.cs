@@ -118,21 +118,23 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
             string folder ="books/cover/";  //path to folder where we store uploaded photos
             // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,
             //or this folder (path) is not available because we need a server actual path to store images in this app  --> 
-            //therefore we need to use this parametr --> IWebHostEnvironment webHostEnvironment (it contains all details about environment), in contructor we create it and then assign to _webHostEnvironment)
+            //therefore we need to use this parametr --> IWebHostEnvironment webHostEnvironment (it contains all details about environment), in contructor we create it and then assign to _webHostEnvironment) and then use it in lne 133
 
             //add uploaded img file Name to the path --> book.CoverPhoto.FileName;
             //also we need to avoid errors when upload images with the same name, make the img files name unique -> + Guid.NewGuid().ToString()
             folder += Guid.NewGuid().ToString() + "_" + book.CoverPhoto.FileName;
 
             // assign folder variable to CoverImageUrl property, / <--must be added in front of folder to display an image from database
-            book.CoverImageUrl = "/" + folder;
+            book.CoverImageUrl = "/" + folder;  //<-saving CoverPhoto path to the variable(we don't use serverFolder variable, to save path in database we use only path from wwwtoot folder and we don't need full path using environment variable --> _webHostEnvironment), 
+            //We use --> "/" picture to be visible in UI
 
-            // we need server path to store these imgs in this application(we need to use IWebHostEnvironment dependency injection)
+            // we need server path to store(Save) these imges in this application using Global access WEB (When app is deployed),(we need to use IWebHostEnvironment dependency injection)
             // Define the path for a server of the actual folder where we keep imgs, add the server path + folder (join server path and folder)
             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <-- this function combine 2 variables --> _webHostEnvironment.WebRootPath  +  folder. 
             //This serverFolder variable will allow server to save the file using our path to correct folder
 
-            // we need to save the copy of the full img path in wwwroot/books/cover,  
+            //this line needs to save Image to wwwroot/books/cover, in our Application
+            // we save image (this is uploaded image -->book.CoverPhoto) and make a copy of the full img path in wwwroot/books/cover,
             // new FileStream(serverFolder <- the server path)
             await book.CoverPhoto.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
@@ -181,6 +183,8 @@ ModelState.AddModelError("","This is my 2nd custom error message from BookContro
 
 
 // function, can pass different variable as arguments in this function
+//This function receive 2 parametrs --> folder path (where to save file) and file with all info about that uploaded file
+//this function return the URL of particular image
 private async Task<string> UploadFile(string folderPath, IFormFile file){
     folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);

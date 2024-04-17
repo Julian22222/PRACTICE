@@ -25,7 +25,7 @@ namespace Project_MVC_BookShop2.Data
 
         public int TotalPages { get; set; }
 
-        // property to store uploaded img file  - full path
+        // property to store uploaded img file  - path, from wwwroot folder ,(Not full path -->not serverFolder from BookController)
         public string CoverImageUrl { get; set; }
         
 
