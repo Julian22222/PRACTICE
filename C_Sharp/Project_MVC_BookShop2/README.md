@@ -474,9 +474,10 @@ Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-st
 - It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).
 - Helps to remove duplicate code from app.
 - If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
+- In one application we can use as many partial views as we want, there is no limit of partial views
 
 How to use it-->
-partial view we put in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
+partial view is a common code therefore we put it in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
 In the view where we want to insert that piece of code we put -->
 (-->See \_Layout.cshtml file)
 
@@ -508,7 +509,7 @@ or you can use another option to render our partial view-->
 
 # ViewComponent
 
-- is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. It is not part of Http life cycle.
+- is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. ViewComponent is a special feature that is used to render some data(view +data) on a view file without actually being the part of HTTP life cycle. It is not part of Http life cycle.
 
 - If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
 
@@ -530,7 +531,7 @@ To use that code in our view file we put--> (See Views/Home/Index.cahtml)
 
 Also, we can pass the data, (parameters) to the View Component -->
 
-```C
+```C#
 @await Component.InvokeAsync("TopBooks",{data})
 ```
 
@@ -614,7 +615,9 @@ return View(count)
 
 - It Is the process of mapping incoming http request (URL) to particular resource (resource is--> controller and action method)
 
-- We can define a unique URL(route) for each resource., All the routes should be unique
+- We can define a unique URL(route) for each resource., All the routes should be unique with combination of URL + Http method
+
+- We can define multiple routes for one resource, We can't define dame route for multiple resources
 
 When client type something in Browser (URL) and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
 
@@ -657,8 +660,8 @@ pattern: "{controller=Home}/{action=Index}/{id?}");
    ```C#
    app.MapControllerRoute(
    name: "AboutUs",
-   pattern: "about-us",
-   defaults: new {controller ="Book" , action= "AboutUs"}
+   pattern: "about-us",  //<--new route
+   defaults: new {controller ="Home" , action= "AboutUs"}
    )
    ```
 
@@ -675,13 +678,45 @@ return View();
 }
 ```
 
-Inserting in URL --> localhost:5167/about-us will gives us View page AboutUs
+Don't need to write in URL --> localhost:5167/home/aboutus
+Inserting in URL --> localhost:5167/about-us <-- will gives us View page AboutUs
 
 To pass some parametrs in route we add --> /{ParametrName}:
 
 ```C#
-[Route("about-us/{id?}")]
-public IActionResult AboutUs( int id)
+[Route("about-us/{id?}")]  //<--if we use curly brackets then this variable can be different, to pass some parameters in Attribute routing
+public IActionResult AboutUs( int id) //<--here in id we will get id from URL that client typed
+{
+return View();
+}
+```
+
+# Different writings in Routing
+
+```C#
+[Route("about-us")]
+[HttpGet] //<--method, this action method will handle nly Get request
+public IActionResult AboutUs()
+{
+return View();
+}
+```
+
+or (the same)
+
+```C#
+[Route("about-us")][HttpGet] //<--method, this action method will handle nly Get request
+public IActionResult AboutUs()
+{
+return View();
+}
+```
+
+or (the same)
+
+```C#
+[HttpGet("about-us")] //<--method, this action method will handle nly Get request
+public IActionResult AboutUs()
 {
 return View();
 }
@@ -689,7 +724,7 @@ return View();
 
 # Route constraints
 
-Route constraints (For example: [Route("about-us/{id?}") <-- id must be a number only not a string or other data type])
+Route constraints, allow us to specify the data type of parametr (For example: [Route("about-us/{id?}") <-- id must be a number only not a string or other data type])
 
 1. in Routing constraints you can define the type of your parameters -->
 
@@ -724,21 +759,25 @@ name : alpha : minlength(5) <-- name has letters only and min length is 5
 
 5. in Routing constraints you can define Required
 6. All constraints that are available in ASP.Net Core in
-   https://github.com/dotnet/aspnetcore/tree/main/src/Http/Routing/src/Constraints
+   [Click](https://github.com/dotnet/aspnetcore/tree/main/src/Http/Routing/src/Constraints)
 
+name : bool
 ................................................................................................................................
 
 # DEPENDENCY INJECTION
 
 - Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
+- after registration our services (Repository classes and Context clas) then we can use them enywhere in our application (--> services registration --> See Proram.cs line 92-94)
 
 - We can use Dependency injection with iterfaces and without interfaces.
   -->see BookRepository (without interface)
-  -->see LanguageRepository - ILanguageRepository (interface)
+  -->see LanguageRepository - ILanguageRepository and BookController.cs (interface)
 
 - If we not useing Dependency incection we can have some problems between Controllers and Repositories(Services). When you make some changes in Repository data using controller or other files where this Repository was used the data can't be changed in all files (you neeed update all the files where you used this Repository ).
 
 - But using Dependency Injections, if we use the Repository(Service) in different controllers or files and we need to make some changes in Repository data in one of the files then it will be allowed to do that. and it will be changed in all the files.
+
+- Asp.Net Core provides the build-in support for Dependency Injection(DI)
 
 -if we not using Dependency injection we put ->
 
@@ -769,23 +808,21 @@ _context = new BookStoreContext();
 
 - Singleton (AddSingleton<>) <--Same instance for all entire application. (When you change something you need to stop application, and rerun it againg to apply new changes)
 
-```
-
 ...................................................................................................
 
 ### Dependency injection in View (chtml)
 
-It is not mandotory to pass Repository class to controller (then we create an object from that Repository class in controller) and then pass this created object from Repository class to View.
-We can straight away pass only Interfacese from Repository class to View (create in View object from Repository class) and then use it in View
---> see AboutUs View file. (Can't pass BookRepository class because it doesn't have own Interface) --> can pass only Interfaces!!!.
+- using interfaces we can pass data from Repository(database info) straight away to View file (--> see AboutUs View file.)
 
-```
+- It is not mandotory to pass Repository class to controller (then we create an object from that Repository class in controller) and then pass this created object from Repository class to View.
+  We can straight away pass only Interfacese from Repository class to View (create in View object from Repository class) and then use it in View
+  --> see AboutUs View file. (Can't pass BookRepository class because it doesn't have own Interface) --> can pass only Interfaces!!!.
 
 ...........................................................................................................................................................
 
 # How to read the data from different variables in appsettings.json file
 
-- Using configuration service allow us to get get any data from appsettings.json in our application
+- Using configuration service (IConfiguration) allow us to get get any data from appsettings.json in our application (--> See ContactUs.cshtml View file)
 - We can have many appsettings.json files in our app
 
 ### In appsettings.json we can keep :
@@ -805,7 +842,6 @@ Use Dependency Injection to register the IConfuguration services and to use the 
 
 IConfiguration is registred automaticaly by ASP.Net Core framework
 
-/ /
 We can access to appsetiings in Controller,Repository or straigh away from View file
 -->see ContactUs.cshtml and HomeController
 
@@ -836,7 +872,14 @@ var result = _configuration["KeyOfAppSettingsData"];  //now we can read the data
 2. accessing appsetings.json in View file
 
 ```C#
-   @inject Microsoft.Extensions.Configuration.IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+OR
+
+//this example we use with GetValue method
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
 
 <p>@_configuration["Name"]</p>
 
@@ -889,7 +932,7 @@ To have accessto User Secrets in our code --> we use IConfiguration
 
 # Accessing appsettings.json using GetValue method
 
-Whith this approach we can define the data type that we accessing in appsettings.json --> it can be boolean, string and other (with previous options we always get string data type from appsettings.json file)
+With this approach we can define the data type that we accessing in appsettings.json --> it can be boolean, string and other (with previous options we always get string data type from appsettings.json file)
 --> see Contactus.cshtml and HomeController.cs
 
 1.  To use GetValue in Controller--> we use:
@@ -962,7 +1005,8 @@ var newBook = configuration.GetSection("infoObj"); //passing the name of my key
 //all the keys of "infoObj" will be available in newBook
 
 //then we use new variable --> newBook
-newBook.getValue<string>("key1");  //we don't write -"infoObj" anymore, will receive -value 1, as a result
+newBook.GetValue<string>("key1");  //we don't write -"infoObj" anymore, will receive -value 1, as a result
+//in brackets we use only the name of the property
 
 ```
 
@@ -974,7 +1018,7 @@ newBook.getValue<string>("key1");  //we don't write -"infoObj" anymore, will rec
 
 * allow appsettings.json object to bind a particular Model obect
 
-How to bind two objects: (--> See appsetings.json, HomeController and Model/AlertConfig.cs)
+How to bind two objects: (--> See appsetings.json, HomeController (line 64) and Model/AlertConfig.cs)
 
 1. We create new Model class, the property names and data type in new Model class must be the same as in appsettings.json object
 
@@ -1006,10 +1050,10 @@ bool isDisplay = newBookAlert.DisplayNewBookAlert; //now we can acces all the pr
 
 # Identity Core ( responsible for LogIn, SignUp, Passwords, Registration, security in the app and other features)
 
-- It is a universal framework to provide security to any .NET app(can be used Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
+- It is a universal framework to provide security to any .NET application (can be used Blazor,Razor, ASP.NET CORE MVC and other framework that are available in .NET)
 - Common framework for all .NET app
 - It is NOT only limited to SignUp / SignIn but provide lots of feature that are requires for security management
-- this framework provides all required tables to work with Authentication and Authorisation automaticaly, we don't need to create any extra table by ourself, everething is created automaticaly
+- this framework provides all required tables to work with Authentication and Authorisation automaticaly, we don't need to create any extra table by ourself, everething is created automatically
 - Identity nuget package instal AspNetUsers table with some already build in properties. If we want to add some more properties to AspNetUsers table (such as FirstName,LastName, etc.) we need to create new Model (in our case --> ApplicationUser.cs). All properties from AspNetUser table are used and filled when the user is register in our website
 
 Identity core features:
@@ -1045,7 +1089,7 @@ app.UseAuthentication();  //enable authentication connection using middleware, t
 2. In Program.cs file , (line 58)-->
 
 ```C#
-   builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //to work With Identity Core we need to configure Identity to work with database
+   builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //to work With Identity Core we need to configure Identity to work with database. BookStoreContext <-- is name of our database
 ```
 
 - AddIdentity<IdentityUser,IdentityRole>()

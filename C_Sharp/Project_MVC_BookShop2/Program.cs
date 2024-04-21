@@ -58,6 +58,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<MyBookStoreWebDbContext>();  //<--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App. Use this code if you are planning to ADD some properties to AspNetUsers table, ( we use Class ApplicationUser with added properties) to work With Identity Core we need to configure Identity to work with database
 //AddIdentity <-- will get all the feature thta are available in Identity framework core
 //IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
+//ApplicationUser <-- created Model class with added properties to AspNetUsers table 
 //identityRole <--is a table that already buildIn in Identity framework, to work with roles
 //to connect or to work with our database we write--> .AddEntityFrameworkStores<BookStoreContext>();
 //BookStoreContext <--our database name
@@ -89,7 +90,7 @@ builder.Services.ConfigureApplicationCookie(config =>{
 
 
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
-builder.Services.AddScoped<BookRepository, BookRepository>();  //to work with dependency injections
+builder.Services.AddScoped<BookRepository, BookRepository>();  //registration of BookRepository services to work with dependency injections
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
 

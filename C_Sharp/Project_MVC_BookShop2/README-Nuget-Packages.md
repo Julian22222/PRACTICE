@@ -185,9 +185,10 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
     ```
 
 16. ```C#
-     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+      using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     ```
 
+    -->// to insert for LogIn, SignUp, Passwords, Registration, security in the app and other features in our app
     -->// to inherit from IdentityDbContext, in BookStoreContext.cs file
 
 17. ```C#

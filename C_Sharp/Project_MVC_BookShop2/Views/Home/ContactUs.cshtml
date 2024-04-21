@@ -1,8 +1,8 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 
-
 @* these two lines are needed to use GetValue in View file, ( to get data from appsettings.json) *@
 @* @using Microsoft.Extensions.Configuration <-- using this link we can use GetValue method *@
+@* this 2 lines are the same as top line, but this example we use with GetValue method *@
 @using Microsoft.Extensions.Configuration 
 @inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 

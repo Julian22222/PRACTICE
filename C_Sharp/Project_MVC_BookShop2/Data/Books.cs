@@ -29,7 +29,7 @@ namespace Project_MVC_BookShop2.Data
         public string CoverImageUrl { get; set; }
         
 
-        //property to store uploaded pdf file - full path
+        //property to store uploaded pdf file - full path starting from wwwroot folder
          public string BookPdfUrl { get; set; }
 
 // first Language ->data type

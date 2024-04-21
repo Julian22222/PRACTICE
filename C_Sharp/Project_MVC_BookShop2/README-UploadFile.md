@@ -297,10 +297,11 @@ foreach (var file in book.GalleryFiles){ //<--book.GalleryFiles vontain all uplo
 8. Create new table in database --> Data/BookGallery
 
 ```C#
-public int Id {get;set;}
-public int BookId {get;set;}  //<--many Image URL can be linked to one Book, one book cam have multiple images
+public int Id {get;set;}  //<--when created ,this field will be filled automatically
+public int BookId {get;set;}  //<---when created ,this field will be filled automatically, many Image URL can be linked to one Book, one book cam have multiple images
 public string Name {get;set;}
 public string URL {get;set;}
+public Books Book {get;set;}  //<--connection to Books table, in database
 ```
 
 9. Use this table in Context class

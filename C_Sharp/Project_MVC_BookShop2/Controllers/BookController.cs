@@ -187,10 +187,10 @@ ModelState.AddModelError("","This is my 2nd custom error message from BookContro
 //this function return the URL of particular image
 private async Task<string> UploadFile(string folderPath, IFormFile file){
     folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
-    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
-    await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);  //<-- add the server path + folder (join server path and folderPath)
+    await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));   //<-- this line needs to save Image to wwwroot/books/cover, in our Application
 
-    return "/" + folderPath;
+    return "/" + folderPath;  //<-- return uploaded file URL 
 }
 
 // ----------------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ public string FindBook(string bookName, string authorName){
 }
 
 [Route("test/a{a}")] //route must be /test/ + and starts with "a" letter, otherwise is 404 error page
-public string Test(string a){
+public string Test(string a){ //<--in this atring a we will have {a} variable from URL that client will type, example URl --> localhost:65352.test/abb, should start with a and variable {a} = bb
 return a;
 }
 

@@ -37,6 +37,8 @@
 
 # Azure Services to use to deploy your App.--> [Click Here](https://www.youtube.com/watch?v=EKqXAMLsnKQ&list=PLR-Buy35u4SH0lmQhmlpf2gnX5TxCjUNH&index=13)
 
+(Microsoft Azure)[https://portal.azure.com/#home]
+
 1. Subscriptions (Azure subscription)
 
 - What package you use and how mach you pay for using Azure services
@@ -124,3 +126,5 @@ then in View and in the bottom of the same file we write functions -->
         }
     </script>
 ```
+
+..................................................................................................................
