@@ -2,8 +2,32 @@
 
 @{
     ViewData["Title"] = "Sign Up";
+
+    Layout = null;  //<--don't use _layout template
+    //if we don't use _layout --> we need to put -->
+    //<!DOCTYPE html>
+//<html lang="en">
+//<head> .....bootstrap connection
+//<body>
 }
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* @ViewData["Title"] shows the title for each Page, The title showed and related to current page *@
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    	
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+     @* asp-append-version="true" <--(tag helper) will help to clear the cache in browser , and if we change the css it will change on browser as well. Browser will not take old CSS content from cache memory*@
+
+
+</head>
+<body>
 
 <div class="container">
 <h4>Sign Up</h4>
@@ -67,3 +91,5 @@
 </div>
 
 </div>
+</body>
+</html>

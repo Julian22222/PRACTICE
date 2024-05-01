@@ -6,8 +6,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;              //creating new threads for computation, aslo when use async-await operations, and to use Task
 using Project_MVC_BookShop2.Models;
-using Microsoft.Extensions.Configuration;
-using DotNetEnv;  //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+using Microsoft.Extensions.Configuration;  //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
+using DotNetEnv;
+using Project_MVC_BookShop2.Service;  //needs to use Service/UserService.cs class
 
 namespace Project_MVC_BookShop2.Controllers;
 
@@ -17,6 +18,8 @@ public class HomeController : Controller
     private readonly IWebHostEnvironment _env;  //<- dependency injection to know the environment --> Staging test, deployment,Production
 
     private readonly IConfiguration configuration;  //create variable for Configuration, to use appsettings data
+
+    public readonly UserService _userService;
 
     // public HomeController(IConfiguration _configuration) //assign configuration to use it in ContactUs page
     // {
@@ -28,16 +31,23 @@ public class HomeController : Controller
 
 
 // constructor
-    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env) //IConfiguration to read appsettings.json file
+    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env, UserService userService) //IConfiguration to read appsettings.json file
     {
         _logger = logger;
          configuration = _configuration;  //now using configuration --> we can read the appsetings data
         _env = env;  //<-- dependency injection to check the Environment Variable 
+        _userService = userService;
     }
 
     public IActionResult Index()
     {
         Console.WriteLine(_env.EnvironmentName);  //<-- will show Environment variable in which we are working
+
+        var userId = _userService.GetUserId();
+        Console.WriteLine(userId);  //<--will show UserId
+
+        var isLoggedIn = _userService.IsAuthenticated();
+        Console.WriteLine(isLoggedIn);  //<--will show true or false, is the user Logged-In or not
 
         return View();
     }

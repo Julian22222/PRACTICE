@@ -33,7 +33,7 @@ namespace Project_MVC_BookShop2.Models
         [Required(ErrorMessage ="Please enter a strong password")]  //mandatory field
         [Compare("ConfirmPassword", ErrorMessage = "Password does not match")]  //compare value with ConfirmPassword
         [Display( Name ="Password" )]  //show this line above input field
-        [DataType(DataType.Password)]  //password template
+        [DataType(DataType.Password)]  //password template, type = password
         public string Password { get; set; }
 
 

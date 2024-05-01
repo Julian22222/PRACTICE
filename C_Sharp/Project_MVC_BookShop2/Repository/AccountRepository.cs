@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, SaveChangesAs
 using Project_MVC_BookShop2.Models;  //Book class import connection
 using Project_MVC_BookShop2.Controllers;   //BookControllers methods connection
 using Project_MVC_BookShop2.Data;  //import BookstoreContext database and Books class from Data folder
-using Microsoft.AspNetCore.Identity;  //to work with userManager, signInmanager <-- these needed to save save User details
+using Microsoft.AspNetCore.Identity;
+using Project_MVC_BookShop2.Service;  //to work with userManager, signInmanager <-- these needed to save save User details
 
 namespace Project_MVC_BookShop2.Repository;
 
@@ -18,21 +19,25 @@ public class AccountRepository
 //SignInManager is buildIn in Identity framework, needs for SignIn 
 //These 2 Manager are very importan to work with user details and to handle Authentication and Authorisation
 
+
 //IdentityUser <--It is a User Class (is buildin in Identity framework)
 //_userManager <-- is a name of User Class (can be any name)
 
-//  private readonly UserManager<IdentityUser> _userManager;  <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table
-    private readonly UserManager<ApplicationUser> _userManager;  //UserManager is used for Sign Up , create variable for SignUp, to interact with database's AspNetUsers table
+//  private readonly UserManager<IdentityUser> _userManager;  <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table.
+    private readonly UserManager<ApplicationUser> _userManager;  //UserManager is used for Sign Up, Change password and etc. (all operations that are specific for particular user --> these are available in this _userManager ), Here we creating variable for SignUp and ChangePassword, to interact with database's AspNetUsers table
 
-    private readonly SignInManager<ApplicationUser> _signInManager;  //SignInManager is used for Sign In, create variable for SignIn, to interact with database's AspNetUsers table
+// ApplicationUser --> is User Class that we created, where we added extra porperties to standart AspNetUsers table
+    private readonly SignInManager<ApplicationUser> _signInManager;  //SignInManager is used for Sign In and Sign Out. Here we creating variable for SignIn and SignOut, to interact with database's AspNetUsers table
 
+    private readonly UserService _userService;
 
     // constructor, here we use dependency injection, application will resolve AccountRepository automatically
     // because we have written the code in our -Program.cs file -> (line 50) -> 
     //builder.Services.AddScoped<AccountRepository, AccountRepository>();
-    public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager){
+    public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, UserService userService){
         _userManager = userManager;  //using _userManager -> we have acces to AspNetUsers table, when SignUp
         _signInManager = signInManager; //using _signInManager -> we have acces to AspNetUsers table, when SignIn
+        _userService = userService;  //geting userId if the User LoggedIn
     }
 
   //  public AccountRepository(UserManager<IdentityUser> userManager){
@@ -73,13 +78,16 @@ public class AccountRepository
 
 
 
+
+
     //SignIn method
     public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel){
         //here we use a method that is available in SignInManager
         //PasswordSignInAsync --> Go to Definition (to check what variables it takes)
 
      var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, false); //checking data in database's AspNetUsers table, is the data exists (false --> how many incorrect atepts for lockout)
-    
+    //signInModel.RememberMe <--check box in Sign in Form, (can be true or false)
+
     return result;
     }
 
@@ -88,6 +96,19 @@ public class AccountRepository
     //SignOut method,--> will logOut the user
     public async Task SignOutAsync(){
      await _signInManager.SignOutAsync();
+    }
+
+
+
+
+    //Change Password action method
+    public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model){
+
+        var userId = _userService.GetUserId();
+        var user = await _userManager.FindByIdAsync(userId);
+
+//go to defenition of --> ChangePasswordAsync , to see what parametrs it takes
+       return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
     }
     
 

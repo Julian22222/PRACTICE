@@ -4,6 +4,9 @@ In this Project we are using dropDown menu from different resources: from contro
 
 - in our App can be only 1 Context file therefore:
 - To work with local database --> we create a BookStoreContext.cs file (this is database name) --> in Data/ BookStoreContext.cs (Copy all content from README-BookStoreContext.md to BookStoreContext.cs)
+- BookStoreContext ////BookStore <--can be any name, this is a name of our database
+- BookStoreContext ////Context <--must be always in the end of name of our class
+
 - To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext (this is database name) -in Data/MyBookStoreWebDbContext.cs
 - to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
 
@@ -281,6 +284,7 @@ int id = await _bookRepository.AddNewBook(book);  //<-- using Repository method 
 3. In Repository we interact with database (-->See BookRepository.cs)
 
 ```C#
+public async Task<int> AddNewBook(Book model){ //<--model is data which is comming from --> await _bookRepository.AddNewBook(book)
 var newBook = new Books(){
 // assign all proporties from received model(data from form) to our proporties in the table
 // id -will be assign to it automatically to newBook object
@@ -391,6 +395,10 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 2. Create BookStoreContext.cs file in Data folder ( data connection to database)
+
+- BookStoreContext ////BookStore <--can be any name, this is a name of our database
+- BookStoreContext ////Context <--must be always in the end of name of our class
+
 3. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
 4. To create Migrations folder, we write -->
 
@@ -617,7 +625,7 @@ return View(count)
 
 - We can define a unique URL(route) for each resource., All the routes should be unique with combination of URL + Http method
 
-- We can define multiple routes for one resource, We can't define dame route for multiple resources
+- We can define multiple routes for one resource, We can't define same route for multiple resources
 
 When client type something in Browser (URL) and hit enter it goes to the server and URL hit controller. Request contains - URL that we are passing in our browser and type(of our request) -GET,POST,PUT, DELETE
 
@@ -732,7 +740,7 @@ Route constraints, allow us to specify the data type of parametr (For example: [
 [Route("about-us/{id? : int}")]
 ```
 
-id: int <-- id will definately must be am int ( data types: string,decimal,float and other)
+id: int <-- id will definately must be an int ( other data types: string,decimal,float and other)
 
 2. in Routing constraints you can define the Length -->
 
@@ -761,12 +769,15 @@ name : alpha : minlength(5) <-- name has letters only and min length is 5
 6. All constraints that are available in ASP.Net Core in
    [Click](https://github.com/dotnet/aspnetcore/tree/main/src/Http/Routing/src/Constraints)
 
-name : bool
-................................................................................................................................
+- name : bool
+  ................................................................................................................................
 
 # DEPENDENCY INJECTION
 
 - Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
+- Also, we use UserService Class (to get Logge-in User Id in any controller or service)
+  -And Claims Class (to save logged-in User details,)
+
 - after registration our services (Repository classes and Context clas) then we can use them enywhere in our application (--> services registration --> See Proram.cs line 92-94)
 
 - We can use Dependency injection with iterfaces and without interfaces.
@@ -1131,7 +1142,8 @@ dotnet ef database update
 
 # Add columns to AspNetUsers table (Add new properties to standard AspNetUsers table)
 
-- Using Identity framework creates AspNeUsers table,(table for User Registration) and this table has already build in properties, such as: Id, UserName, PhoneNumber, Email and others.
+- Using Identity framework creates AspNeUsers table,(table for User Registration) and this table has already build in properties, such as: Id, UserName, PhoneNumber, Email and others. --> in Data/MyBookStoreWebDbContext.cs we inherit from IdentityDbContext --> // public class BookStoreContext : IdentityDbContext
+
 - If we want to add some more other properties to this table such as: Name,LastName, dateOFBirth, and other -->
 
 In Model folder we create a class (--> ApplicationUser.cs) and inherit from IdentityUser class.
@@ -1140,8 +1152,14 @@ Here in this Model class (-->in our case it is ApplicationUser.cs ) we can add e
 in this class we add custom properties in that new class:
 
 1. In Model folder we create a class which will inherit IdentityUser Class properies
-2. New created class --->(ApplicationUser.cs) we add new properties to AspNetUsers table (such as: Name, LastName,Dob etc.)
-3. Need to update, Change all the places where we used IdentityUser Class with ApplicationUser:
+2. New created class --->Models/ (ApplicationUser.cs) we add new properties to AspNetUsers table (such as: Name, LastName,Dob etc.)
+
+3. We add new fields for a SignUp form in Models/SignUpModel.cs and add new fields in Views/Account/SignUp.cshtml
+
+4. in Context class --> MyBookStoreWebDbContext (line 29) we put -->
+   public class MyBookStoreWebDbContext : IdentityDbContext<ApplicationUser>
+
+5. Need to update, Change all the places where we used IdentityUser Class with ApplicationUser:
 
    - In Program.cs -->line 40
 
@@ -1177,11 +1195,21 @@ in this class we add custom properties in that new class:
    }
    ```
 
-4. dotnet ef migrations add (NameOfMigration) <--add new properties to database
-5. dotnet ef database update <-- update AspNetUsers table, with new added properties to it
-6. assign new properties in AccountRepository -->
+6. dotnet ef migrations add (NameOfMigration) <--add new properties to database
+7. dotnet ef database update <-- update AspNetUsers table, with new added properties to it
+8. assign new properties in AccountRepository -->
 
 ```C#
+private readonly UserManager<ApplicationUser> _userManager;  //UserManager is used for Sign Up , create variable for SignUp, to interact with database's AspNetUsers table
+
+private readonly SignInManager<ApplicationUser> _signInManager;  //SignInManager is used for Sign In, create variable for SignIn, to interact with database's AspNetUsers table
+
+
+  public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager){
+        _userManager = userManager;  //using _userManager -> we have acces to AspNetUsers table, when SignUp
+        _signInManager = signInManager; //using _signInManager -> we have acces to AspNetUsers table, when SignIn
+    }
+
   public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel){
 
         var user = new ApplicationUser(){
@@ -1200,7 +1228,7 @@ in this class we add custom properties in that new class:
 
 - Example-> Password must have 5 symbols, 1 Capital letter, 1 special symbol etc.
 
-- By default Identity framework is configuration these settings for us:
+- By default Identity framework is configurating these settings for us:
 
 1. Password must be at least 6 characters
 2. Password must have at least 1 non alphanumeric character
@@ -1228,7 +1256,7 @@ options.Password.RequireUppercase = false;
 
 ..........................................................................................................................................
 
-# LogIn & LogOut (-->See AccountController, Models/SignInModel. Models/SignUpUserModel.cs, AccountRepository, Views/Account/Login and Signup.cshtml)
+# LogIn & LogOut (-->See AccountController, Models/SignInModel. Models/SignUpUserModel.cs, AccountRepository, Views/Account/Login and Signup.cshtml, Views/Shared/ \_Logininfo.cshtml)
 
 ............................................................................................................................................
 
@@ -1236,14 +1264,24 @@ options.Password.RequireUppercase = false;
 
 - For example if user not loged in he cannot excess --> Add new book page
 - We Implement some security, only loged in user allowed to add new book to database
+- If user not loged in then it will be no permission to access some action method, and by clicking on that action method will show --> page NOT FOUND. To solve this error--> we need to use this code to redirect user to certain page if he is not LogedIn
+
+- In Program.cs file we write (--> line 82 )
+
+```C#
+builder.Services.ConfigureApplicationCookie(config =>{
+    config.LoginPath = "/login";  //<--refirect User to Login page
+});
+
+```
 
 To create this functionality we must:
 
 1. in Program.cs we adding middleware--> ()
 
-```bash
-//app.UseAuthentication();  <-- must always be above Authorization to work correctly!!!
-//app.UseAuthorization();  <-- must always be below Authentication to work correctly!!!
+```C#
+app.UseAuthentication();  <-- must always be above Authorization to work correctly!!!
+app.UseAuthorization();  <-- must always be below Authentication to work correctly!!!
 //ONLY IN THIS ORDER
 
 ```
@@ -1302,7 +1340,7 @@ namespace Project_MVC_BookShop2.Controllers
 
 4. if user not loged In and pressed AddNewBok (but AddNewBook action method has Authorization attribute ) we can redirect user to certain page, (in our case -> login page):
 
-- In Program.cs file we write (--> line 81 )
+- In Program.cs file we write (--> line 82 )
 
 ```C#
 builder.Services.ConfigureApplicationCookie(config =>{
@@ -1314,7 +1352,7 @@ builder.Services.ConfigureApplicationCookie(config =>{
 # Return Url
 
 When we use [Authorize] Attribute and not loged In user press Add New Book it will redirect him to Login page (see above -previous lesson).
-And if you want to return user to AddnewBook page after he Loged in we need:(remebers the url that user presed - but the access was denied for unauthorized users and after user login it return that page that user clicked before)
+And if you want to return user to AddnewBook page after he Loged in we need:(remebers the url that user pressed - but the access was denied for unauthorized users and after user login it return that page that user clicked before)
 
 - We write in controller (In AccountController.cs):
 
@@ -1330,8 +1368,8 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
         if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
 
 
-         if(!string.IsNullOrEmpty(returnUrl)){ //returnUrl <--used to return user to correct
-            return LocalRedirect(returnUrl);
+         if(!string.IsNullOrEmpty(returnUrl)){  //if returnUrl exist then we return this returnUrl page
+            return LocalRedirect(returnUrl);   //returnUrl <--used to return user to correct page after login
         }
 
 
@@ -1353,6 +1391,133 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 ```C#
 <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account"  asp-route-returnUrl="@Context.Request.Path">Login</a>
 
+//we need to access current page path and we can do thar easy by using --> @Context
+
+```
+
+..............................................................................................................
+
+# If can check is the user Loged In or not by using SignInManager
+
+->> See \_Logininfo.cshtml
+
+...................................................................................................................
+
+# Claims
+
+- By useng Claims we can show full name of logged-in user on the UI
+- Claims are provided by Identity framework
+- In very simplest term, Claims are the storage, and in that storage we can save whatever info that we want --> as example: store all details about Logged-in User . We can save all details about logged-in user in Claims -->(FirstName, LastName, any other details from user profile). And we can use this Claims anywhere in my application
+
+- To work with the Claims we add new file --> we can add this file anywhere in our app
+- As example we created Folder --> Helpers and there we add a file --> ApplicationUserClaimsPrincipalFactory.cs
+
+--> See that ApplicationUserClaimsPrincipalFactory.cs class to make Claims
+
+- Then we need to register new Services in main Program.cs file (line 103), this is telling to our app that we use Claims (UserClaimsPrincipalFactory Class)
+
+- Now we can use the Claims to show the values in the UI (--> See Views/Shared/Logininfo.cshtml)
+
+................................................................................
+
+# Get the Id of logged-in user in controller and services
+
+- using this technique we can get Loged In user Id in Controller, repositories, services or anywhere in this app.
+- To handle User Id we create one more Service in this app, the same way as e cretaed Repository folder
+
+1. We create folder --> Service in the root of our App.
+2. in this Service folder we create new Class --> UserService.cs
+3. in this class we create few action methods
+4. to work with Id we need HttpContext, eather we can use HttpContect directly into controller class or we can use HttpContext in UserService class
+5. --> See Service/UserService.cs
+6. now we need to register our service in our application in Program.cs main file (line 96)
+7. Controllers/HomeController.cs in Index action method --> we get loged-in User Id
+
+```C#
+ var userId = _userService.GetUserId();
+  Console.WriteLine(userId);  //<--will show UserId
+```
+
+### how to check is the User logged-In or Not in our app
+
+1. we use the same approach
+2. in UserService.cs file we add new action method
+
+```C#
+ public bool IsAuthenticated(){
+            return _httpContext.HttpContext.User.Identity.IsAuthenticated; //<--action method to check is the User Logged-In or not
+        }
+```
+
+- this action method return - true or false, depending is the user logged-in or not
+
+3. --> Se Controllers/HomeController.cs in the Index action method (line 49-50)
+
+.........................................................................................................
+
+# Change Password
+
+- to change password we need old password -> currentPassword and NewPassword
+
+1. We create new Model in our Models folder --> Models/ChangePasswordModel.cs
+
+- here we create few properties -> CurrentPassword, NewPassword, ConfirmNewPassword
+
+2. In Controllers/AccountController.cs we add new action method to change password
+
+```C#
+//this method dispay the page
+ [Route("change-password")]
+    public IActionResult ChangePassword(){
+        return View();
+    }
+
+
+  //this method handle the submit btn
+    [HttpPost("change-password")]
+     public async Task <IActionResult> ChangePassword(ChangePasswordModel model){
+
+        if(ModelState.IsValid){
+            var result = await _accountRepository.ChangePasswordAsync(model);  //<--invoke action method from AccountRepository
+
+            if(result.Succeeded){ //<--if password has been updated successfully do this code
+            //if password has been updated successfully then we need to display some msg in UI for the user , using ViewBag
+            ViewBag.IsSuccess = true;
+
+
+                ModelState.Clear();  //<--clear ModelState
+                return View();
+            }
+
+
+            //if result.Succeeded ==false, password hasn't been updated, there is some problem and we need to dispay that errors to the user in UI
+            foreach(var error in result.Errors){
+                ModelState.AddModelError("",error.Description);
+            }
+
+
+        }
+        return View(model); //<--if ModelState is not valid it will return View, (the same page)
+    }
+```
+
+3. Create new link to Change passord page in -->Views/Shared/ Logininfo.cshtml (line 19)
+
+4. Create View page of ChangePassword --> Views/Account/ChangePassword.cshtml
+
+5. Repository/AccountRepository.cs -->
+
+- here we create action method to interact and make changes in database table
+
+```C#
+//Change Password action method
+    public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model){
+
+        var userId = _userService.GetUserId();
+        var user = await _userManager.FindByIdAsync(userId);
+
+       return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+    }
 ```
 
 ```

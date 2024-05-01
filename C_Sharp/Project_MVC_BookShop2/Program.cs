@@ -21,7 +21,8 @@ using Microsoft.AspNetCore.Identity;  // LigIn, SignUp, Security
 using Azure.Identity;   //connects Key Vault
 using Microsoft.Extensions.Configuration.AzureKeyVault;   //connects Key Vault
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
-
+using Project_MVC_BookShop2.Service;
+using Project_MVC_BookShop2.Helpers; //<-- to use UserService class
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
@@ -81,7 +82,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkS
 
 //we use [Authorize] Attribute in BookController--> if User is not logedIn and press AddnewBook it will redirect him to LogIn page
 builder.Services.ConfigureApplicationCookie(config =>{
-    config.LoginPath = "/login";
+    config.LoginPath = "/login";  //<--redirect User to Login page
 });
 
 
@@ -93,13 +94,13 @@ builder.Services.ConfigureApplicationCookie(config =>{
 builder.Services.AddScoped<BookRepository, BookRepository>();  //registration of BookRepository services to work with dependency injections
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
-
-
+builder.Services.AddScoped<UserService,UserService>();  //to work with UserService class, to get Logge-in User Id in any controller or service
+//in Dependency Injection we can use Interfaces or classes
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
 // builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
 
-
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>,ApplicationUserClaimsPrincipalFactory>(); //to save logged-in User details into Claims, then we can use them anywhere in our app
 
 // Configuration -> services that allow to acces to the data that we mentioned in appsettings.json or to access our Secrets
 //we need to use IConfiguration in Programm.cs to have access to secrets and appsettings.json data , we use--> builder.Configuration

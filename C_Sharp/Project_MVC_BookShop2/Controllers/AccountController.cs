@@ -47,7 +47,7 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
 
 
 
-        if(!result.Succeeded){ //if it is false- means User has not been created in database, the we do this code( Here we check is the user was created in the database)
+        if(!result.Succeeded){ //if it is false- means User has not been created in database, then we do this code( Here we check is the user was created in the database)
 
         //then we display all error messages
             foreach( var errorMessage in result.Errors){ //result.Errors <--has all errors messages
@@ -55,12 +55,12 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
                 ModelState.AddModelError("", errorMessage.Description); //assign all error msges to ModelState
 
             }
-        return View(userModel);  //if result is not successful we return a View and pasing - userModel (User wasn't created in the database)
+        return View(userModel);  //if result is not successful we return a View and passing - userModel (User wasn't created in the database), fields that are valid will be filled and others empty
         }
 
 
 
-
+        //if User was created successfully
         ModelState.Clear(); // clear the ModelState
      }   
      
@@ -89,8 +89,8 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
         if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
 
 
-        if(!string.IsNullOrEmpty(returnUrl)){ //returnUrl <--used to return user to correct 
-            return LocalRedirect(returnUrl);
+        if(!string.IsNullOrEmpty(returnUrl)){ //if returnUrl exist then we return this returnUrl page
+            return LocalRedirect(returnUrl);   //returnUrl <--used to return user to correct page after login
         }
 
 
@@ -112,9 +112,53 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
     [Route("logout")] //URL--> /Account/Logout --> will logOut the user
     public async Task<IActionResult> Logout(){
         await _accountRepository.SignOutAsync();
-        return RedirectToAction("Index","Home");
+        return RedirectToAction("Index","Home"); //Home Controller, Index action method
     }    
+
+
+
+
+    [Route("change-password")]
+    public IActionResult ChangePassword(){  //View page of ChangePassword
+        return View();
+    }
+
+
+    [HttpPost("change-password")]
+     public async Task <IActionResult> ChangePassword(ChangePasswordModel model){  //action after submitting the form
+
+        if(ModelState.IsValid){
+            var result = await _accountRepository.ChangePasswordAsync(model);  //<--invoke action method from AccountRepository
+
+            if(result.Succeeded){ //<--if password has been updated successfully do this code
+            //if password has been updated successfully then we need to display some msg in UI for the user , using ViewBag
+            ViewBag.IsSuccess = true;
+
+
+                ModelState.Clear();  //<--clear ModelState
+                return View();
+            }
+
+
+            //if result.Succeeded ==false, password hasn't been updated, there is some problem and we need to dispay that errors to the user in UI
+            foreach(var error in result.Errors){
+                ModelState.AddModelError("",error.Description);
+            }
+
+        
+        }
+        return View(model); //<--if ModelState is not valid it will return View, (the same page)
+    }
+
+
+    
+
+
+
 } 
+
+
+
 
 
 

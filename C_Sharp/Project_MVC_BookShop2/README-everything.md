@@ -177,6 +177,7 @@ if(_webHostEnvironment.IsDevelopment){
 1. Anchor Tag Helpers (asp-action='', asp-controller="") (--> See -Header.cshtml file)
 
 ```C#
+//we put original controller name and action name, not Route attribute names
  <a class="nav-link text-dark" asp-controller="book" asp-action="GetAllBooks" >All Books</a>
 ```
 

@@ -14,6 +14,7 @@ namespace Project_MVC_BookShop2.Models
 {
     public class ApplicationUser : IdentityUser //new class inherit all properties and methods from IdentityUser Class
     {
+        //this class allow us to add extra properties to standart AspNetUsers table alredy build-in properties,
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
