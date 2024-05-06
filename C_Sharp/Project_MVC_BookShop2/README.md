@@ -915,7 +915,7 @@ OR
 To keep sensative data - User Id, Passwords, ConnectionString etc.
 
 1. Download nuget package -> Microsoft.Extensions.Configuration.UserSecrets
-2. Then right click on (ProjetName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
+2. Then right click on (ProjectName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
 
 #### secret.json (file contains)
 
@@ -929,8 +929,8 @@ To keep sensative data - User Id, Passwords, ConnectionString etc.
 
    //Insed of example above it should be written the following
    //We should write -->
- "ConnectionStrings:DefaultConnection": "Server=.;Database=BookStore;Tru...".
-  "ConnectionStrings:WebConnection": "Server=tcp:mybookstoredb.d..."
+ "ConnectionStrings:DefaultConnection": "Server=.;Database=BookStore;Tru...",
+  "ConnectionStrings:WebConnection": "Server=tcp:mybookstoredb.d...;"
 
 }
 ```
@@ -1423,7 +1423,7 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 # Get the Id of logged-in user in controller and services
 
 - using this technique we can get Loged In user Id in Controller, repositories, services or anywhere in this app.
-- To handle User Id we create one more Service in this app, the same way as e cretaed Repository folder
+- To handle User Id we create one more Service in this app, the same way as we cretaed Repository folder
 
 1. We create folder --> Service in the root of our App.
 2. in this Service folder we create new Class --> UserService.cs
@@ -1456,6 +1456,8 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 .........................................................................................................
 
 # Change Password
+
+- we are using Identity framework to use change password functionality
 
 - to change password we need old password -> currentPassword and NewPassword
 
@@ -1516,8 +1518,75 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
         var userId = _userService.GetUserId();
         var user = await _userManager.FindByIdAsync(userId);
 
+  //go to defenition of --> ChangePasswordAsync , to see what parametrs it takes
        return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
     }
+```
+
+# AREA
+
+- if you don't want to keep your files in common Models, Controllers and Views folder, Area - allow to add models, controllers and views in separate folder for complitely separate feature to
+  our app (keep it separately)
+
+- to handle this type of situation is ASP.NET Core we have a concept of AREA
+- AREA is a feature that allow to create completely separate folder structure within this application
+- each AREA has its own folder structure
+- if i want to create one AREA in this application then it will have one folder for Controllers, one folder for Models and one folder for Views.
+- By using MVC foder we can add and keep our files complitely separate from main Controllers,Models and Views folders
+- As example, if we want to add admin functionality to application, and i want to keep this separate from other files we should create AREA feature, it will have own layout and own files
+
+- To work with AREA i need to write in terminal
+
+1. In terminal of our app
+
+```C#
+//to install the dotnet-aspnet-codegenerator tool
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 7.0
+dotnet tool install -g dotnet-aspnet-codegenerator --version 7.0
+
+//to add Area folder with all the features to our app
+dotnet-aspnet-codegenerator area AreaNameToGenerate
+```
+
+- This commands will create Areas folder at the root level of our app with all the features (--> Create Models, Controllers, Views folders in Area folder + ScaffoldingReasMe.txt at the root level of our app)
+- This allow to keep your files separately
+
+2. Create files with any names in Controller , Models and Views folder (-->See Areas folder)
+
+- for a navigation in this app we are using Routing, if we want to navigate to particular controller or file in this app then we need to tell to our application that we ae using these files , we have to tell to our app that we added new Area and this is the Route structure for this particular Area. to enable Area routing in ASP.NET Core we have to :
+
+3. in Areas/Admin/Controllers/ HomeController.cs
+
+```C#
+namespace Project_MVC_BookShop2.Areas.Admin.Controllers;
+
+[Area("admin")] //Admin <--here we defined only the name of the area, no Routing been defined
+[Route("admin/[controller]/[action]")]  //Routing to our page
+public class HomeController : Controller
+{
+//some logic
+}
+```
+
+4. In Programm.cs we add (from ScaffoldinReadMe.txt file, it is located at the root of the our app, in the bottom)
+
+```C#
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name : "MyAreas",
+        pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
+```
+
+- If you want to create new Area, you create separate folder in Areas folder with their own Controllers, Models, Views folders
+
+- to return back from Admin page to our main controller and action methods(--> See Areas/Admin/Views/Home/index.cshtml file)
+
+```C#
+//we use asp-area=""
+<a asp-area="" asp-controller="Home" asp-action="Index">Go bak to Home page</a>
 ```
 
 ```

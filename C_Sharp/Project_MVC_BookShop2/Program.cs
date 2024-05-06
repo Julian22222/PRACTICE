@@ -21,8 +21,8 @@ using Microsoft.AspNetCore.Identity;  // LigIn, SignUp, Security
 using Azure.Identity;   //connects Key Vault
 using Microsoft.Extensions.Configuration.AzureKeyVault;   //connects Key Vault
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
-using Project_MVC_BookShop2.Service;
-using Project_MVC_BookShop2.Helpers; //<-- to use UserService class
+using Project_MVC_BookShop2.Service; //<-- to use UserService class, get User Id and is the user logged-in or not
+using Project_MVC_BookShop2.Helpers; //<--to use ApplicationUserClaimsPrincipalFactory class, to add Claims
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
@@ -37,7 +37,7 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 
 
 // Add services to the container.
-// Services - method to connet all different services for our app, after dot
+// Services - this method allow to connect all different services for our app, after dot
 // in here we adding services with name-> AddControllersWithViews, to make application aware that we going to use MVC patern ( Model, View, Controller)
 //In Web API , we only need Models and Controllers, in this case use -> builder.Services.AddControllers(); (to check all the templates , we put in terminal --> dotnet new list)
 //AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
@@ -173,12 +173,23 @@ app.UseAuthorization();   // authorization connection
 // endpoints connection, all your pages registration from Controllers folder,
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
+    
 
 //in this middleware ( --> app.MapDefaultControllerRoute()) already build in  --> pattern: "{controller=Home}/{action=Index}/{id?}");
 //can be used instead of this middleware--> app.MapControllerRoute( ......); 
 // app.MapDefaultControllerRoute();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name : "MyAreas",
+        pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
 
 
 //use this instead -->app.MapControllerRoute( ..)

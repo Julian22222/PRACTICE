@@ -130,12 +130,13 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
         if(ModelState.IsValid){
             var result = await _accountRepository.ChangePasswordAsync(model);  //<--invoke action method from AccountRepository
 
-            if(result.Succeeded){ //<--if password has been updated successfully do this code
+            if(result.Succeeded){ //<--if password has been updated successfully (it is true) --> do this code
+            
             //if password has been updated successfully then we need to display some msg in UI for the user , using ViewBag
             ViewBag.IsSuccess = true;
 
 
-                ModelState.Clear();  //<--clear ModelState
+                ModelState.Clear();  //<--clear ModelState fields of that ChangePasswordModel model 
                 return View();
             }
 

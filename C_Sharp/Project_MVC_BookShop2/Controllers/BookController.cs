@@ -1,3 +1,4 @@
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System;       //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 using System.Collections.Generic;  //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
@@ -71,9 +72,9 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
     return View(data); //passing the data to the View
 }
 
-public List<Book> SearchBook(string title, string authorName){
-    return _bookRepository.SearchBook(title,authorName);
-}
+// public List<Book> SearchBook(string title, string authorName){
+//     return _bookRepository.SearchBook(title,authorName);
+// }
 
 
 [Authorize] //only logedIn user will be able to access this method
@@ -192,6 +193,40 @@ private async Task<string> UploadFile(string folderPath, IFormFile file){
 
     return "/" + folderPath;  //<-- return uploaded file URL 
 }
+
+
+public async Task<IActionResult> SearchBook(string SearchTitle){ //here we receive the typed input from the form
+
+if(string.IsNullOrEmpty(SearchTitle)){  //if received SearchTitle is null or empty we show all the books from database
+    var data = await _bookRepository.GetAllBooks();
+return View(data);
+}else{
+
+var data = await _bookRepository.SearchBook(SearchTitle);  //if received SearchTitle exists( has some value) it will show that searched book 
+return View(data);
+
+}
+
+}
+
+
+
+
+// [HttpPost]
+// public async Task<IActionResult> SearchBook(string title, bool isSuccess = true){ 
+
+// // if(!string.IsNullOrEmpty(title)){ //if title exist then we return this code
+
+// var data = await _bookRepository.SearchBook(title);
+// Console.WriteLine(title);
+
+// ViewBag.IsSuccess = isSuccess;
+
+// return View(data);
+
+// }
+
+
 
 // ----------------------------------------------------------------------------------------
 

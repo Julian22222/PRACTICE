@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, SaveChangesAs
 using Project_MVC_BookShop2.Models;  //Book class import connection
 using Project_MVC_BookShop2.Controllers;   //BookControllers methods connection
 using Project_MVC_BookShop2.Data;  //import BookstoreContext database and Books class from Data folder
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity; // to use <IdentityResult>
 using Project_MVC_BookShop2.Service;  //to work with userManager, signInmanager <-- these needed to save save User details
 
 namespace Project_MVC_BookShop2.Repository;
@@ -104,7 +104,7 @@ public class AccountRepository
     //Change Password action method
     public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model){
 
-        var userId = _userService.GetUserId();
+        var userId = _userService.GetUserId();  //<--Geting Id of Logged-in user
         var user = await _userManager.FindByIdAsync(userId);
 
 //go to defenition of --> ChangePasswordAsync , to see what parametrs it takes

@@ -157,12 +157,29 @@ return newBook.Id;
       
 
 
+ public async Task <List<Book>> SearchBook(string title){
+   return await _context.Books2.Where(x => x.Title.Contains(title)).Select(book => new Book(){
+    Id = book.Id,
+    Title = book.Title,
+    Author = book.Author,
+    Category = book.Category,
+    Description = book.Description,
+    LanguageId = book.LanguageId,
+    Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
+    TotalPages = book.TotalPages,
+    CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
+    BookPdfUrl = book.BookPdfUrl//full path to uploaded img folder -->(wwwroot/books/cover)
+ }).ToListAsync(); 
+ }
+
+
+
           // method SearchBook return List -data type(Book)
-        public List <Book> SearchBook(string title, string authorName){
+        // public List <Book> SearchBook(string title, string authorName){
 // return DataSource().Where(x => x.Title == title && x.Author == authorName).ToList();
 // return DataSource().Where(x => x.Title.Contains(title) || x.Author.Contains(authorName)).ToList();
-return null;
-        }
+// return null;
+//         }
 
 
         // our local application data storage, here we not using data from database

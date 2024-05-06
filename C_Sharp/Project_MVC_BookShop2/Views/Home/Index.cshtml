@@ -27,7 +27,8 @@
 
 <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti accusamus repudiandae aliquam suscipit ullam? Inventore, blanditiis sit. Autem iusto optio suscipit quasi ipsa architecto perferendis repudiandae, quam recusandae excepturi odit.</p>
 <p>
-    <a href="#" class="btn btn-primary my-2">Search books</a>
+    @* <a href="#" class="btn btn-primary my-2">Search books</a> *@
+     <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">Search books</a>
 </p>
     </div>
 </section>
@@ -56,7 +57,7 @@
 
 
 @* View Component -TopBooks *@
-@await Component.InvokeAsync("TopBooks") 
+@await Component.InvokeAsync("TopBooks" ) 
 
 
 
