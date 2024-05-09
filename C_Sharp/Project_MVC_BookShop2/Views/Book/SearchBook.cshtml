@@ -30,14 +30,42 @@
 
 @* } *@
 
-    
 
-        @foreach(var book in Model){
+            <br/>
+            <table class="table">
+                <thead >
+                    <tr>
+                        <th scope="col">Cover photo</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Description</th>
+                       
+                    </tr>
+                </thead>
 
-            @* @book *@
-            <partial name="_bookThumbnail" model="book" />  
+                <tbody id="dynamic_data">
+                    
+                        @foreach(var book in Model){
 
-        }
+                            @* @book *@
+                            @* <partial name="_bookThumbnail" model="book" />   *@
+                            <partial name="_bookLine" model="book" />  
+
+                        }
+                    
+
+
+                </tbody>
+                
+            </table>
+   
+
+<div class="loader-div">
+    <img class="loader-img" src="~/img/ajax-loader.gif" style="height: 120px;width:auto;"/>
+</div>
+
+
+
     
 @* } *@
 
@@ -45,7 +73,8 @@
 @* by using jQuery function it picks up id property --> "search-text1" and then we can do what ever we want *@
     @section scripts{
         <script>
-            $(function (){
+            $(document).ready( //It is good practice to wait for the document/page to be fully loaded and ready before working with it.
+                function (){
                 $("#search-text1").click(function(){  //by clicking the Search btn, the form will be submited to BookController amd Search action method (<--this path we identicated in  <form asp-controller="Book" asp-action="SearchBook">  -line 13 )
                     $("Form").submit();  //we submit our form with input to BookController amd Search method, passing the typed input to Search method,
                 })

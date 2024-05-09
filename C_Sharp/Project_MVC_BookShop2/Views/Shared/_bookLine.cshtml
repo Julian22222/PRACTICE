@@ -1,0 +1,29 @@
+@model Book;  //receiving Book model in this file as we passing --> model="book" in partial tag
+
+<div class="container">
+  <tr>
+        <th scope="row">
+            @* string.IsNullOrEmpty(Model.CoverImageUrl) <-- if Model.CoverImageUrl is null or empty then show --> "/img/340719-200.png" else -> Model.CoverImageUrl*@
+        <img style="max-width:20%;" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/340719-200.png" : Model.CoverImageUrl)" alt="image logo" class="img-thumbnail" />
+        </th>
+
+        <td>
+        <p>@(string.IsNullOrEmpty(Model.Title) ? "Name is not available" : Model.Title)</p>
+        </td>
+
+        <td>
+        <p>@(string.IsNullOrEmpty(Model.Author) ? "Author is not available" : Model.Author)</p>
+        </td>
+
+        <td>
+            @* accessing book Description  *@
+            <p>@(string.IsNullOrEmpty(Model.Description) ? "Description is not available" : Model.Description)</p>
+        </td>
+
+        <td>
+            @* accessing book Id by clicking on each card  *@
+            @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
+        <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+        </td>
+  </tr>
+</div>

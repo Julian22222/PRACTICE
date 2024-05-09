@@ -13,10 +13,10 @@
 
 @* bootstrap alert icon, when form is submitted successfully *@
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Congratulations</strong> You have added new book successfully. <br/>
-  Click <a asp-controller="Book" asp-action="GetBook" asp-route-id="@ViewBag.BookId">here</a> to view the details
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+        <strong>Congratulations</strong> You have added new book successfully. <br/>
+        Click <a asp-controller="Book" asp-action="GetBook" asp-route-id="@ViewBag.BookId">here</a> to view the details
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 
 
@@ -33,7 +33,7 @@
 
 @* to use ajax form*@
     @* <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook"> *@
-@* data-ajax="true"  <-- our form will work with ajax, if in _Layout.cshtml we imported  all needed libraries*@
+@* data-ajax="true"  <-- our form will work with ajax, (this is mandatory text to work with ajax) if in _Layout.cshtml we imported  all needed libraries*@
 @* ata-ajax-complete="myComplete" data-ajax-success="mySuccess"   <-- 3 different functions, the function logic is in the bottom of the file *@
 @* data-ajax-loading="#myLoader" <-- use id="myLoader" in bootstrap piece of code, line 23-29, show loading picture when uploading*@
  <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">

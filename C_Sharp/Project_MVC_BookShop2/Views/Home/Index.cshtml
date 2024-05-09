@@ -9,7 +9,21 @@
    @* Layout = "_Layout"; <--can use any Layout name here, buy default it takes _Layout file*@
 }
 
-<section class="jumbotron text-center">
+
+
+
+@* Bootstrap loding spinners, in form tag we put -> data-ajax-loading="#homeLoader" *@
+@* style="display:none" --> not showing this code all the time, showing loading animation only when uploading new book *@
+@* instead of id="homeLoader"  we can use class <-- class="homeLoader" , then we will use --> data-ajax-loading=".homeLoader" in form tag*@
+<div class="d-flex justify-content-center" >
+  <div class="spinner-border" role="status" id="homeLoader" style="display:none" >  
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
+
+<section class="jumbotron text-center" data-ajax="true" data-ajax-loading="#homeLoader">
     <div class="container">
 <h1>Welcome to Bookstore</h1>
 
@@ -68,7 +82,7 @@
 
 
 
-<div class="col-md-4">
+<div class="col-md-4" >
     @* use the same code from Partial view - from _bookThumbnail.cshtml *@
    <partial name="_bookThumbnail" model="new Book()" />
 </div>
@@ -102,6 +116,10 @@ Scripts -can be any name that is the same with (created name(unique name) from R
 
 @* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
    <script>
+    @* $(function(){
+        $(".loader-div").show();
+    } *@
+    
     $(document).ready(function (){
         alert("document is ready, Click Ok");
     })
