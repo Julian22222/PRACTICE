@@ -9,7 +9,7 @@
 
 3. To deploy new app or deploy new changes, go to correct folder of our app write in terminal-->
 
-```C
+```C#
    dotnet publish -c Release -o ./bin/Publish
 ```
 

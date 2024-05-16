@@ -81,6 +81,10 @@
       "PackagePath": "staticwebassets/img/Cat.png"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/ajax-loader.gif",
+      "PackagePath": "staticwebassets/img/ajax-loader.gif"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/book1.jpg",
       "PackagePath": "staticwebassets/img/book1.jpg"
     },

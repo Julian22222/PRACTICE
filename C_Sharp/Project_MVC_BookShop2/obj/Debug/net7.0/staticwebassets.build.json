@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8NN8vVO7NSkUkgh9iWjHN1LrCcye6XuhUobGYIflugI=",
+  "Hash": "yaiMhNI18lrO5k247FIBQr5JzQErWHNnMurhJM2CRdk=",
   "Source": "Project_MVC_BookShop2",
   "BasePath": "_content/Project_MVC_BookShop2",
   "Mode": "Default",
@@ -355,6 +355,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/img/340719-200.png"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/ajax-loader.gif",
+      "SourceId": "Project_MVC_BookShop2",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/",
+      "BasePath": "_content/Project_MVC_BookShop2",
+      "RelativePath": "img/ajax-loader.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/img/ajax-loader.gif"
     },
     {
       "Identity": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/img/book1.jpg",
