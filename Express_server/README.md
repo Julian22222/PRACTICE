@@ -10,6 +10,8 @@
 
 .................................................................................................
 
+# MVC pattern
+
 # app.js
 
 ```JS
@@ -105,4 +107,44 @@ if(!articleSort.includes(someData)){
         return rows;
     }
 }
+```
+
+..............................................................................................................
+
+# Try Catch sample
+
+# server.js
+
+```JS
+const express = require("express");  // assign express to variale, to use it in our app
+const app = express();  //
+
+const cors = require("cors");  // assign cors to variale, to use it in our app
+app.use(cors());  // in order for your server to be accessible by other origins (domains)
+
+app.use(express.json());  // to access --> req.body (middleware function),
+
+const pool = require("../db/....");  //connction to the data from database
+
+const PORT = process.env.PORT || 9090  //if process.env.PORT not existing then will use PORT=9090
+//this is the same --> const PORT = process.env.PORT ?? 9090
+
+
+app.get("api/topics", async (req,res)=>{
+
+    try{
+
+    const topics = await pool.query(`SELECT * FROM topics`)
+    res.json(topics.rows)
+
+    catch(err){
+        console.error(err)
+    }}
+
+});
+
+
+app.listen(PORT,(err)=>{
+    err ? console.log(err) : console.log(`Server is listening on PORT ${PORT}`)
+})
 ```
