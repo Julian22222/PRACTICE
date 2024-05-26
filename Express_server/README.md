@@ -114,8 +114,8 @@ const db = require("../db/connection.js");  //assign data from database from sep
 // if we passed some data in controllers , then we need to receive it here -->exports.fetchTopics =(topicId, name, dataFromUser)=>{....}
 exports.fetchTopics =()=>{
 
-//to avoid
-//create array with the the same options from filter or any dropdown menu if you have on the Front-End
+//GROUPBY and/or ORDERBY not supported Parammetrs in PSQL requests (User can pass any data to database using this parammers -> GROUPBY, ORDERBY), therefore to avoid SQL injection we need to write some logic-->
+//we create array with the the same options from filter or any dropdown menu if you have on the Front-End
 cons validOrder = ["asc", "desc"];  //<--example of how to filter the list order from Front-End,  we put here only options from the Fron-End --> "asc" and "desc"
 
 
@@ -177,7 +177,7 @@ app.listen(PORT,(err)=>{
 
 .....................................................................................................
 
-3. Callbacks
+3. Callbacks (See--> MySQL-database project)
 
 ## app.js
 
