@@ -422,7 +422,7 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
   - Microsoft.EntityFrameworkCore.Tools
   - Microsoft.EntityFrameworkCore.Design
 
-  - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create databse and create tables:
+  - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create database and create tables:
 
 1. ```bash
     dotnet ef migrations add AnyMigrationsName  //<--to add changes to database
