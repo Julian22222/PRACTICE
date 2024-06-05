@@ -321,6 +321,9 @@ return newBook.Id;
 
 ...other html tags
 
+//when pressing submit all form will go to Controllers/BookController, AddNewBook
+ <input type="submit" value="Add book" class="btn btn-primary" />
+
 </form>
 
 ```
@@ -332,7 +335,7 @@ return newBook.Id;
 public async Task<IActionResult> AddNewBook(Book book){...}
 ```
 
-### When we passing id from URL tobthe database to find element (--> From BookController.cs)
+### When we passing id from URL to the database to find element (--> From BookController.cs)
 
 1. id comes from URL to controller, action method -->
    (example) -> /book/getbook/1
@@ -391,6 +394,44 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 ....................................................................................................................
 
+# Work with Database
+
+- Entity Framework Core (EF Core) connects Asp.Net Core App and Database
+- EF Core is a middle service, works between AsP.net and DB
+- EF Core is Microsoft's official technology to interact with relational database
+- EF Core can work with lots of databases:
+
+  - SQL Server
+  - MySQL
+  - Cosmos db
+  - Etc.
+
+- EF Core features:
+
+  - O/RM (object-relational mapper)
+  - Open-source
+  - Lightweight
+  - Extensible
+  - Support Async
+
+- To work with SQL Server database: (we need to install)
+
+  - Microsoft.EntityFrameworkCore
+  - Microsoft.EntityFrameworkCore.Relational
+  - Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
+  - Microsoft.EntityFrameworkCore.Tools
+  - Microsoft.EntityFrameworkCore.Design
+
+  - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create databse and create tables:
+
+1. ```bash
+    dotnet ef migrations add AnyMigrationsName  //<--to add changes to database
+   ```
+
+2. ```bash
+      dotnet ef database update  //to update database
+   ```
+
 # How to connect your project to SQl Server Database.(used for local database and Azure SQL database)
 
 1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
@@ -408,6 +449,8 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 # use this command when add something in Classes in Data folder(Database)
 
 dotnet ef migrations add (AnyMigrationsName)  //add changes and create databases with tables
+
+dotnet ef migrations add init  //<--Example
 
 ```
 
