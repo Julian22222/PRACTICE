@@ -41,6 +41,9 @@ LanguageId (number of Language)
 
 1. ```bash
    dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+
+   dotnet ef migrations add init  //<--Example
+
    ```
 
 2. ```bash
@@ -396,9 +399,12 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 # Work with Database
 
+- To make connection to our database we have to connect our app to databse using Entity Framework Core
 - Entity Framework Core (EF Core) connects Asp.Net Core App and Database
-- EF Core is a middle service, works between AsP.net and DB
+- EF Core is a middle service, works between Asp.net and DB
 - EF Core is Microsoft's official technology to interact with relational database
+- EF Core is Microsoft's official technology to interact with relational databse
+- EF Core can be used not only in Asp.net core app but also in any .NET technology - Mobile app, Windows app, Console.app other app in .NET
 - EF Core can work with lots of databases:
 
   - SQL Server
@@ -408,21 +414,29 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 - EF Core features:
 
-  - O/RM (object-relational mapper)
-  - Open-source
+  - O/RM (object-relational mapper) (Database table convert to classes and opposit way, column convert to Properties and oposite way)
+  - Open-source (entire code can be found in Git Hub repository)
   - Lightweight
-  - Extensible
+  - Extensible (many extentions and nuget packages)
   - Support Async
 
-- To work with SQL Server database: (we need to install)
+EF Core approach:
 
-  - Microsoft.EntityFrameworkCore
-  - Microsoft.EntityFrameworkCore.Relational
-  - Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
-  - Microsoft.EntityFrameworkCore.Tools
-  - Microsoft.EntityFrameworkCore.Design
+- Code first
+- Db first
 
-  - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create database and create tables:
+All the packages of this Entity Framework Core are available in nuget (official website of all the packages)
+To install --> dotnet add package PackageName
+
+#### To work with SQL Server database: (we need to install)
+
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Relational
+- Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.EntityFrameworkCore.Design
+
+- By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create database and create tables:
 
 1. ```bash
     dotnet ef migrations add AnyMigrationsName  //<--to add changes to database
@@ -484,10 +498,12 @@ dotnet ef migrations remove
 
 jquery, bootstrap, ajax libraries and their packages can be imported from already installed(build up) .NET Core (in wwwwroot -> lib folder) or using CDN (get the libraries from internet --> using special links)
 
+for development environment we use normal library files for Production environment we use min version library files
+
 Example of local (build in bootstrap):
 
 ```c#
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> // min version file
 ```
 
 - CDN - (stands for )-> Content Delivery Network --> (get the libraries from internet)
