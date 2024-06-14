@@ -4,15 +4,16 @@ const axios = require("axios");
 
 // GET request <<<<<<<<<
 
-// axios.get("https://fortnite-api.com/v1/map")
-// .then(res=>{
-//     console.log(res.data)
-// }).catch(error => {
-//     console.error(error)
-// })
+axios
+  .get("https://fortnite-api.com/v1/map")
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-
-/////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GET request <<<<<<<<<
 
 // axios.get("https://fortnite-api.com/v1/map",{
@@ -30,12 +31,12 @@ const axios = require("axios");
 //     console.error(error)
 // })
 
-////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 // POST request <<<<<<<<<
 
 // axios.post("https://jsonplaceholder.typicode.com/posts",{
-//     userId : 1, 
-// title: "My title", 
+// userId : 1,
+// title: "My title",
 // body : "This is my body...."
 // })
 // .then(res=>{
@@ -51,8 +52,8 @@ const axios = require("axios");
 //     method: "POST",
 //     url: "https://jsonplaceholder.typicode.com/posts",
 //     data: {
-//         userId : 1, 
-//         title: "My title", 
+//         userId : 1,
+//         title: "My title",
 //         body : "This is my body...."}
 // })
 // .then(res=>{
@@ -61,25 +62,25 @@ const axios = require("axios");
 //         console.error(error)
 //     })
 
-    ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 // GET request <<<<<<<<<
 
-axios({
-    url: "https://jsonplaceholder.typicode.com/posts",
-    params: {
-        lang: "en"
-    },
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-.then(res=>{
-        console.log(res.data)
-    }).catch(error => {
-        console.error(error)
-    })
+// axios({
+//     url: "https://jsonplaceholder.typicode.com/posts",
+//     params: {
+//         lang: "en"
+//     },
+//     headers: {
+//         "Content-Type": "application/json"
+//     }
+// })
+// .then(res=>{
+//         console.log(res.data)
+//     }).catch(error => {
+//         console.error(error)
+//     })
 
-////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 // GET request <<<<<<<<<
 
 // fetch("https://fortnite-api.com/v1/map")
