@@ -15,7 +15,9 @@
 
 4. In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
 
-5. Once the deployment is finished, click Browse Website to validate the deployment
+5. Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
+
+6. Once the deployment is finished, click Browse Website to validate the deployment
 
 ..............................................................................................................
 
