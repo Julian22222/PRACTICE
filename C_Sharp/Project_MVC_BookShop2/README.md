@@ -102,7 +102,7 @@ dotnet add package (PackageName)
 # Main Locations in different folder
 
 - Data folder --> we keep all data for database here.
-- Data/ Model classes --> no point to use optional proporties, because it is converted from Model Class (As example: public string? Language { get; set; })
+- Data/ Model classes --> in these classes no point to use optional proporties, because it is converted from Model Class (As example: public string? Language { get; set; })
 - Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class
