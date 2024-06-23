@@ -9,6 +9,11 @@ In this Project we are using dropDown menu from different resources: from contro
 
 - To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext (this is database name) -in Data/MyBookStoreWebDbContext.cs
 - to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
+- we use Azure Data Studio (an instrument to control SQL Server ). Alco, can be SQL Server management studio, MySQL workbench
+
+- Keyboard shortcuts:
+  ( prop + Tab --> use in Class, will create public int MyProperty{get;set;})
+  ( ctor + Tab --> create constructor for a class)
 
 Also,
 
@@ -467,6 +472,8 @@ dotnet ef migrations add (AnyMigrationsName)  //add changes and create databases
 dotnet ef migrations add init  //<--Example
 
 ```
+
+- Migrations is used to create tables in DB, Migrations folder has info about added or deleted columns, tables in the DB
 
 5. To make update to our database, we write -->
 
@@ -1607,7 +1614,7 @@ dotnet tool install -g dotnet-aspnet-codegenerator --version 7.0
 dotnet-aspnet-codegenerator area AreaNameToGenerate
 ```
 
-- This commands will create Areas folder at the root level of our app with all the features (--> Create Models, Controllers, Views folders in Area folder + ScaffoldingReasMe.txt at the root level of our app)
+- This commands will create Areas folder at the root level of our app with all the features (--> Create Models, Controllers, Views folders in Area folder + ScaffoldingReasMe.txt file at the root level of our app)
 - This allow to keep your files separately
 
 2. Create files with any names in Controller , Models and Views folder (-->See Areas folder)

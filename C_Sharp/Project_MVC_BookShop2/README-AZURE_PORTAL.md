@@ -87,10 +87,21 @@
 2. JQuery.validate.js
 3. jQuery.validate.unobtrusive.js
 
-- If we use these 3 libraires we can enable client side validations automatically from the server side validations,
+- If we use these 3 libraires we can enable client side validations automatically from the server side validation,
   so you don't need to write your logic again. Whatever code you have written in the Model class as an attribute those attributes will be available as an Client side validation automatically.
+- To use these libraries we import them in `C# _Layout.cshtml ` in the bottom of the file (line 69 - 72)
+
+```JS
+//THE ORDER OF LIBRARIES IS IMPORTANT!!!!!
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+```
 
 - We can use already build in libraries in the project or use CDN
+- - to use these libraries in our app --> we can use build in libraries from wwwroot/lib/ or we can use CDN
+- to disable client-ide validation (if you want to debug your code) --> (--> See Program.cs file, line 47)
 
 # Server side Validation
 
