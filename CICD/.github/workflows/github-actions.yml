@@ -3,15 +3,20 @@ name: Super-Linter
 on: push
 
 jobs:
-    super-lint:
-        name: Lint code base              
-        runs-on: ubuntu-latest            
-        steps:                             
-            -name: Checkout code          
-            uses: actions/checkout@v3      
+  super-lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
 
-            -name: Run Super-Linter
-            uses: github/super-linter@v3
-            env:
-                DEFAULT_BRANCH: main
-                GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      -name:Checkout code
+      -uses:actions/checkout@v3
+
+      # -name: Run Super-Linter
+      # uses: github/super-linter@v3
+      # env:
+      #     DEFAULT_BRANCH: main
+      #     GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}
