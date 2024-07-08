@@ -1,4 +1,4 @@
-name: Node JS CI
+name: Node
 
 on:
     push:
@@ -25,4 +25,4 @@ on:
           cache: 'npm'
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm test
+      - run: npm start

@@ -1,5 +1,12 @@
 # It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
 
+## GitHub Actions
+
+[GitHub Actions]()
+
+- automates your build, test and deployment workflow with simple and secure CI/CD
+
+- Allow to create a pipeline
 - It is build-in CI/CD tool for GitHub
 - CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
 
