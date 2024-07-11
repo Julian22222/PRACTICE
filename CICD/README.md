@@ -2,9 +2,9 @@
 
 ## GitHub Actions
 
-[Actions](https://github.com/features/actions)
+[GitHub Actions](https://github.com/marketplace?type=actions)
 
-[GitHub Actions](https://github.com/Julian22222/PRACTICE/actions/new)
+[Actions](https://github.com/features/actions)
 
 [GitHub Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
