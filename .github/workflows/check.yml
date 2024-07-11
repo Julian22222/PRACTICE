@@ -1,10 +1,11 @@
 name: Check Workflow
 on:
-  push:
-    branches:
-      - "main"
-    paths:
-      - "./CICD/index.js"
+  workflow_dispatch
+  # push:
+  #   branches:
+  #     - "main"
+  #   paths:
+  #     - "./CICD/index.js"
 jobs:
   super-lint:
     name: Lint code base
