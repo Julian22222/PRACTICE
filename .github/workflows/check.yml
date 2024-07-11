@@ -8,10 +8,10 @@ on:
   #     - "./CICD/index.js"
 jobs:
   super-lint:
-    name: Lint code base
+    # name: Lint code base
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
       - name: Run Super-Linter
         uses: github/super-linter@v4
@@ -20,12 +20,12 @@ jobs:
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Check:
-    needs: [super-lint]
+    # needs: [super-lint]
     runs-on: ubuntu-latest
     steps:
-      - name: Testing code
+      - name: Checkout
         uses: actions/checkout@v4, actions/setup-node@v3
         with:
           node-version: 18
-      - name: Test
-      - run: npm run test2
+      - name: Test code
+        run: npm run test2
