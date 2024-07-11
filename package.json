@@ -1,0 +1,21 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test2": "node ./CICD/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julian22222/PRACTICE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julian22222/PRACTICE/issues"
+  },
+  "homepage": "https://github.com/Julian22222/PRACTICE#readme"
+}
