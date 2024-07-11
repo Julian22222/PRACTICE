@@ -14,7 +14,7 @@ jobs:
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Check:
-    needs: [super-lint]
+    # needs: [super-lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
