@@ -1,0 +1,30 @@
+name: Check Workflow
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "./CICD/index.js"
+jobs:
+  super-lint:
+    name: Lint code base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  Check:
+    needs: [super-lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing code
+        uses: actions/checkout@v4, actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Test
+      - run: npm run test2
