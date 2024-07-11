@@ -151,14 +151,15 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-            uses: actions/checkout@v4
-            uses: actions/setup-node@v3    //<--will install node to virtual machine
+              uses: actions/checkout@v4
+            - name: Node
+              uses: actions/setup-node@v3    //<--will install node to virtual machine
             with:
                 node-version: 16   // <--uses only node-version 16
             - name: Install deps
-            run: npm ci
+              run: npm ci
             - name: Test
-            run: npm run test
+              run: npm run test
 ```
 
 # Matrix (use for actions with few different parametrs)
