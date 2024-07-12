@@ -2,13 +2,14 @@
 
 ## GitHub Actions
 
-[GitHub Actions](https://github.com/marketplace?type=actions)
+[GitHub Actions Docs](https://github.com/features/actions)
 
-[Actions](https://github.com/features/actions)
+[Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
 
-[Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
+- To Choose Workflow extensions
+  [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
 
-[GitHub Runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+[GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
 GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
 
@@ -83,7 +84,7 @@ on:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci                                 //<--dependency instalation, the same as --> npm install
       - run: npm run build --if-present
       - run: npm start
 ```
@@ -142,9 +143,9 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
         steps:            //<-- contains actions in order to perform
             - name: Checkout  //<-- name is not mandatory field, can be skipped
             //then follows action(uses) or run command
-            uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version
-            -name: Install deps
-            run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
+              uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version
+            - name: Install deps
+              run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
             // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install
             - name: Lint   //<-- Lint check correct code syntax
             run: npm run lint
@@ -159,7 +160,7 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
             with:
                 node-version: 16   // <--uses only node-version 16
             - name: Install deps
-              run: npm ci
+              run: npm ci           //<--dependency instalation, the same as --> npm install
             - name: Test
               run: npm run test
 ```
@@ -213,7 +214,54 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
             with:
                 node-version: ${{ matrix.version }}   //<-- will use 3 node versions
             - name: Install deps
-            run: npm ci
+            run: npm ci                    //<--dependency instalation, the same as --> npm install
             - name: Test
             run: npm run test
 ```
+
+# Work with variables in GitHub Actions
+
+- most often used is --> Secret
+
+To get an access of Secret -->
+
+1. In GitHub project page --> go to Settings (Horizontal bar menu)
+2. In Settings , go to Secrets and Variables ( left side bar menu) ,and choose Actions
+3. Click --> New repository Secret , --> after we create a secret we won't see it any more, but we can use it in our GitHub Actions (Most often used Secret --> is a Tokken for something)
+4. Secrets always should be written in Capital letters
+5. To use that Secret in GitHub Actions workflow-->
+
+```JS
+run: ${{ secrets.nameOfSecret }}
+```
+
+# Self-hosted runners
+
+- allow to do CI/CD not on GitHub servers but on our local machine, --> you will use less GitHub server minutes (GitHub Free limit 2000 free minutes per mounth), better to use for big projects and quicker
+- uses your own local machine for CI/CD
+
+### How to adjust Self-hosted runners
+
+1. In GitHub Project page --> Go to Settings (Horizontal menu bar)
+2. click --> Actions --> Runners ( Left side menu bar)
+3. To Create a runner --> Click --> New self-hosted runner
+4. Choose you local computer system --> macOS, Linux, Windows
+5. Choose your architecture --> x64
+6. use all the commands below to donwload and link self-hosted runners to your local machine and your GitHub
+
+```JS
+name: Check Self-hosted runners
+on:  push
+jobs:
+    build:
+        runs-on: self-hosted   //<--will run on our local machine
+        steps:
+        ......
+```
+
+### How to Check if the Runners waiting for a Workflow
+
+1. In GitHub Project page --> Go to Settings (Horizontal menu bar)
+2. click --> Actions --> Runners ( Left side menu bar)
+3. If Status --> Offline, it is not working
+4. IF Status -->
