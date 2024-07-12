@@ -9,6 +9,10 @@
 - To Choose Workflow extensions
   [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
 
+  In Marketplace we can find --> Bot, extensions, apps, filter, erc. Actions in Marketplace are workflow code pices that have already written by other developers. That we can use in our workflows
+
+  - To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
+
 [GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
 GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
@@ -55,7 +59,7 @@ jobs:
 
 ```
 
-- linter - it is just something that we use to check to make sure that our code is conforming to certain standards, super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
+- linter - it is just something that we use to check to make sure that our code is conforming to certain standards, We check code quality. super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
 
 # Create a Workflow (Directory structure)
 
@@ -84,11 +88,11 @@ jobs:
       steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4    //<- download specific Node version on GitHub virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci                                 //<--dependency instalation, the same as --> npm install
+      - run: npm ci                                 //<--dependency instalation, the same as --> npm install(npm ci is better to use and safer), to run this command you shold have --> package-lock.json and package.json files in the Repository root,
       - run: npm run build --if-present
       - run: npm start
 ```
@@ -147,10 +151,10 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
     steps:            //<-- contains actions in order to perform
       - name: Checkout  //<-- name is not mandatory field, can be skipped
             //then follows action(uses) or run command
-        uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version
+        uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
       - name: Install deps
         run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
-            // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install
+            // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install.  //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
       - name: Lint   //<-- Lint check correct code syntax
         run: npm run lint
   test: //<--next job, must be on the same level of the first job (lint in our case)
@@ -158,13 +162,13 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
     runs-on: ubuntu-latest
       steps:
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v4    //<-- we getting acces to Repository code
         - name: Node
-          uses: actions/setup-node@v3    //<--will install node to virtual machine
+          uses: actions/setup-node@v3    ///<- download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
                 node-version: 16   // <--uses only node-version 16
         - name: Install deps
-          run: npm ci           //<--dependency instalation, the same as --> npm install
+          run: npm ci            //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
         - name: Test
           run: npm run test
 ```
@@ -183,7 +187,7 @@ strategy:
 .......
 
 //we dont indicate fixed node version, but we put variable that can change
-uses: actions/setup-node@v3    //<--will install node to virtual machine
+uses: actions/setup-node@v4    //<--will install node to virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
                 node-version: ${{ matrix.version }}   //<-- will use 3 node versions
 ```
@@ -199,26 +203,26 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
         steps:            //<-- contains actions in order to perform
             - name: Checkout  //<-- name is not mandatory field, can be skipped
             //then follows action(uses) or run command
-            uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version
+            uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
             -name: Install deps
             run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
-            // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install
+            // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install.  //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
             - name: Lint   //<-- Lint check correct code syntax
             run: npm run lint
     test: //<--next job, must be on the same level of the first job (lint in our case)
-        needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed
+        needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly
         strategy:
           matrix:
             version: [14,16,18]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-            uses: actions/checkout@v4
-            uses: actions/setup-node@v3    //<--will install node to virtual machine
+            uses: actions/checkout@v4       //<-- we getting acces to Repository code
+            uses: actions/setup-node@v4    //<--will install node to virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
                 node-version: ${{ matrix.version }}   //<-- will use 3 node versions
             - name: Install deps
-            run: npm ci                    //<--dependency instalation, the same as --> npm install
+            run: npm ci                     //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
             - name: Test
             run: npm run test
 ```
@@ -269,3 +273,30 @@ jobs:
 2. click --> Actions --> Runners ( Left side menu bar)
 3. If Status --> Offline, means the runner is not connected to GitHub
 4. IF Status -->
+
+As example: if we want to use GitHub Actions with React app (Front-End)
+To test this app we need:
+
+- get access to Repository code --> (uses: actions/checkout@v4). GitHub server don't have access to our code by default.
+- get Node to GitHub virtual machine --> (uses: actions/setup-node@v4 ) --> it downloads specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+- make a build or run some tests
+
+# Most often used Actions from Marketplace
+
+[Click Here](https://github.com/marketplace?type=actions)
+
+- Test Reporter (to check JEST / Mocha test in JS)(.NET / dotnet test ( xUnit / NUnit / MSTest ))
+
+- Build and push docker images
+
+- etc.
+
+# NPM package
+
+- eslint-config-react-app (check code quality in React app)
+- install packages
+- in package.json -->in scripts -->
+
+```JS
+"lint" : "npx eslint ./src"
+```

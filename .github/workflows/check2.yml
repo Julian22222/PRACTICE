@@ -2,7 +2,6 @@ name: Check 2 Workflow
 on: workflow_dispatch
 jobs:
   super-lint:
-    # name: Lint code base
     # runs-on: self-hosted
     runs-on: ubuntu-latest
     steps:
@@ -21,11 +20,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
       - name: Install dependancies
         run: npm ci
         # run: npm test
       - name: Test code
         run: npm run test2
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dependancies
+        run: npm ci
+      - name: Build application
+        run: echo Building some app ...
+        # run: npm run build
+      - name: Deploy
+        run: echo Deploying...
+        # run: npm run deploy
