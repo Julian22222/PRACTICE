@@ -158,7 +158,7 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
       - name: Lint   //<-- Lint check correct code syntax
         run: npm run lint
   test: //<--next job, must be on the same level of the first job (lint in our case)
-    needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed
+    needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
     runs-on: ubuntu-latest
       steps:
         - name: Checkout
@@ -300,3 +300,43 @@ To test this app we need:
 ```JS
 "lint" : "npx eslint ./src"
 ```
+
+# Context Object
+
+- Displaying in the console --> special context object, which allow to add some data or use some data inside our workflow
+
+- Context object has detailed info about current workflow
+
+[GitHub Actions Expressions](https://docs.github.com/en/actions/learn-github-actions/expressions)
+
+```JS
+name: Context demo
+on: workflow_dispatch
+jobs:
+    print:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print context
+              run: echo "${{ github }}"   //<-- won't show an object context, can't see what is inside context
+```
+
+- To convert the value from context object to JSON , to display what is inside context, we need -->
+
+```JS
+name: Context demo
+on: workflow_dispatch
+jobs:
+    print:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print context
+              run: echo "${{ toJSON(github) }}"  //<-- Context object will display detailed info about this current workflow.
+```
+
+### Detailed data about current workflow contains:
+
+- what branch we have used to push our code
+- repository name
+- owner of the repository
+- url of our repository
+- etc. (all info in GitHub related to current Repository )
