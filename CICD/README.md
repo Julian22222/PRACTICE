@@ -77,6 +77,18 @@ on:
     pull_request:
       branches: [ "main" ]
 
+    //another option how to indicate that workflow will run when we push to main branch-->
+    // push:
+    //   branches:
+    //     - main
+
+    //GitHub will ignore all the changes that was done from the path (in workflow in this case), it won't react in the GitHub
+    // push:
+    //   branches:
+    //     - main
+        //  paths-ignore:
+        //   - '.github/workflows/*'
+
 jobs:
   build:       //<--name of the job
     runs-on: ubuntu-latest
@@ -126,6 +138,27 @@ jobs:
 # All Workflow triggers (on:)
 
 [Click Here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+
+- it can be one trigger or many triggers
+
+```JS
+name: nameOfTheWorkflow
+on: workflow_dispatch   //<-- one trigger, triggering manually in GitHub
+....
+////////
+name: nameOfTheWorkflow
+on: [workflow_dispatch, push, pull_request ]   //<-- can put many triggers in the array
+.....
+/////
+name: nameOfTheWorkflow
+on:
+  workflow_dispatch:
+  pull_request:                    //<-- pull request can have many activity types, if we don't use --> types: ..., it will run workflow with all the types
+    types: [opened, edited, reopened]  //<--to be specific with pull request activity type, on which types we want to react and run workflow
+
+```
+
+[All GitHub actions events triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 
 # All Workflow Actions
 
@@ -340,3 +373,29 @@ jobs:
 - owner of the repository
 - url of our repository
 - etc. (all info in GitHub related to current Repository )
+
+- We use context to adjust and automate CI/CD
+
+# Cache
+
+- make workflow run faster,
+- you don't need to run the same command on each job (such as --> npm ci, etc.). It keeps this in cache
+- we can cache some files and folders
+
+To use Cache
+
+- add Cache before a step which we want to put in Cache --> See cache\_&context.yml file
+
+```JS
+....
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:                       //<-- adding some parametrs to Cache
+          path: ~/.npm   //<--always the same path for ubuntu machines (if we want to cache - npm ci )
+          key: node-modules-deps   //<-- the name of created folder for cache. It is better to make this key dynamic which will be dependant from the current dependancy list, because if during development we will add some dependency to this package, then our cache will not be valid. We must use dynamic key-->
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}   //<-- expressions allow to add dynamic to workflow.
+
+          // hashFiles(**/package-lock.json') <-- it is special method / function, and here we are passing the path
+
+          //Then we can copy this cache block and put it before command that we want to put in the cache, it is going to be the same cache code
+```
