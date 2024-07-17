@@ -170,6 +170,8 @@ on:
 
 [Click Here](https://github.com/marketplace?type=actions)
 
+[Marketplace](https://github.com/marketplace)
+
 - All workflows run in the GitHub Virtual machines, We need to folow the same pathway as we do on our local machines--> ( GitHub Actions should have the code of our project on their virual machines ) therefore we need to download Repository of our project to GitHub Actions + npm install (run on GitHub virual machine) + npm run someCommand ( run on GitHub virual machine)
 - After we downloaded project Repository we need to install dependencies, --> npm ci (will install all dependencies in GitHub virtual machine)
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
@@ -373,6 +375,15 @@ jobs:
         steps:
             - name: Print context
               run: echo "${{ toJSON(github) }}"  //<-- Context object will display detailed info about this current workflow.
+```
+
+```JS
+//exporting this toJSON(github.event.inputs) into an environment variable and then use this variable
+
+- name: Parámetros de entrada
+   env:
+      PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
+      run: echo $PARAMS_ENTERED
 ```
 
 ### Detailed data about current workflow contains:
