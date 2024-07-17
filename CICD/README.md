@@ -155,6 +155,12 @@ on:
   workflow_dispatch:
   pull_request:                    //<-- pull request can have many activity types, if we don't use --> types: ..., it will run workflow with all the types
     types: [opened, edited, reopened]  //<--to be specific with pull request activity type, on which types we want to react and run workflow
+///////
+name: nameOfTheWorkflow
+on:
+  workflow_dispatch:
+  schedule:
+    -cron: '*/15****'  //<-- cron will run workflow automatically every 15 min
 
 ```
 
