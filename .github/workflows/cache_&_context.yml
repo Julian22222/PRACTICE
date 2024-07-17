@@ -49,5 +49,7 @@ jobs:
         env:
           PARAMS_GIT: ${{ toJSON(github) }}
         run: echo $PARAMS_GIT
-      # - name: Print context event
-      #   run: echo "${{ toJSON(github.event) }}"
+      - name: Print context event
+        env:
+          PARAMS_EVENT: ${{ toJSON(github.event) }}
+        run: echo $PARAMS_EVENT
