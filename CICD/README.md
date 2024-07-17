@@ -216,8 +216,10 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
 strategy:
     matrix:
         version: [14,16,18]    //<-- different node version
-        os: [ub, w]  //<-- different virual machines (ubuntu, windows)
+        os: [ubuntu-latest, windows-latest]  //<-- different virual machines (ubuntu, windows)
 .......
+
+runs-on: ${{ matrix.os }}  //<-- will run 2 parametrs
 
 //we dont indicate fixed node version, but we put variable that can change
 uses: actions/setup-node@v4    //<--will install node to virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
@@ -246,14 +248,15 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
         needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly
         strategy:
           matrix:
-            version: [14,16,18]
-        runs-on: ubuntu-latest
+            version: [14,16,18]   //version key <-- can be any name
+            os: [ubuntu-latest, windows-latest]
+        runs-on: ${{ matrix.os }}
         steps:
             - name: Checkout
             uses: actions/checkout@v4       //<-- we getting acces to Repository code
             uses: actions/setup-node@v4    //<--will install node to virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
-                node-version: ${{ matrix.version }}   //<-- will use 3 node versions
+                node-version: ${{ matrix.version }}   //<-- will use 3 node versions. we use matrix and a key that we created in the matrix
             - name: Install deps
             run: npm ci                     //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
             - name: Test
