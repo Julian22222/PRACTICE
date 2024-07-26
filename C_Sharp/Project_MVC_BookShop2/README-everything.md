@@ -1,4 +1,4 @@
-Raor Syntax -standards how to use C# code in View file
+Razor Syntax -standards how to use C# code in View file
 
 - Everithing starts with --> @ for C# code in View file.
 - We can have Single Line Syntax:

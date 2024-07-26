@@ -23,7 +23,7 @@ IFormFile //<-- this data type will allow to upload any file to our app, this fi
 Microsoft.AspNetCore.Http
 ```
 
-2. In AddNewBook.cshtml file we insert uploading template block from Bootstrap (Bootstrap Uploading block)[https://getbootstrap.com/docs/4.3/components/forms/#file-browser]
+2. In AddNewBook.cshtml file we insert uploading template block from Bootstrap [Bootstrap Uploading block](https://getbootstrap.com/docs/4.3/components/forms/#file-browser)
 
 ```C#
 //we use this code from Bootstrap

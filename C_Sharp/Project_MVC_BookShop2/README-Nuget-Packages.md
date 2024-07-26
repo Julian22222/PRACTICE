@@ -31,7 +31,7 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
    ```
 
    -->/// package to work with Sql server. use in Program.cs or in Data/MyBookStoreWebDbContext.cs files (This package has relational dependency of first 2 packages, this package will automatically instal first 2 packages), use this package in MyBookStoreWebDbContext.cs and Program.cs
-   (Database Providers,all Nuget packages to work with different DB)[https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli]
+   [Database Providers,all Nuget packages to work with different DB](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
 
 4. ```bash
    Microsoft.EntityFrameworkCore.Tools
@@ -59,54 +59,55 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
    Microsoft.aspnetcore.identity.entityframeworkcore
    ```
 
--->///this package needs to work with Identity core (LogIn,SignUp, Password etc.)
+   -->///this package needs to work with Identity core (LogIn,SignUp, Password etc.)
 
 9. ```bash
    jQuery.Ajax.Unobtrusive
    ```
 
--->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
+   -->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
 
 10. ```bash
-    Microsoft.aspnetcore.identity.entityframeworkcore
+     Microsoft.aspnetcore.identity.entityframeworkcore
     ```
 
--->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
+    -->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
 
-11. ````bash
+11. ```bash
             Microsoft.Extensions.Configuration.UserSecrets
-        ```
-        -->///package to use User Secrets file, to keep sensative data - User Id, Passwords, ConnectionString etc.
-
-    ````
-
-12. ````bash
-    Microsoft.aspnetcore.identity.entityframeworkcore
-        ```
-    -->///To start working with Identity Core framework we need to install this package  --> and all other dependent packages will install automatically in our app
-    -->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
-    ````
-13. ```bash
-    Microsoft.AspNetCore.Authorization
     ```
 
-````
+    -->///package to use User Secrets file, to keep sensative data - User Id, Passwords, ConnectionString etc.
 
--->//to use [Authorize] Attribute in Controllers, when only logedIn users can access certain pages (BookController line 79)
-..............................................................................................................
+12. ```bash
+    Microsoft.aspnetcore.identity.entityframeworkcore
+    ```
+
+-->///To start working with Identity Core framework we need to install this package --> and all other dependent packages will install automatically in our app
+-->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
+
+13. ```bash
+           Microsoft.AspNetCore.Authorization
+    ```
+
+    -->//to use [Authorize] Attribute in Controllers, when only logedIn users can access certain pages (BookController line 79)
+    ..............................................................................................................
 
 # Different namespaces:
 
-1. ```C#
-@using System.Runtime.InteropServices.WindowsRuntime;
-```
-````
+## To quickly add missing namespace in VS Code - Just use CTRL+. / or ctr + space on the word with the red underline. No need to install other extensions.
 
-2. ```C#
-      @using System;
+( CTRL + SHIFT + D )
+
+1. ```C#
+   @using System.Runtime.InteropServices.WindowsRuntime;
    ```
 
-   -->///using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
+2. ```C#
+     @using System;
+   ```
+
+-->///using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
 
 3. ```bash
    @using System.Collections.Generic;
@@ -202,6 +203,22 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
     ```
 
 -->// to use server side validations attributes (or Model validation), used in Class Model
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
 
 ```
 

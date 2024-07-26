@@ -59,6 +59,8 @@ LanguageId (number of Language)
 
   ..............................................................................................................
 
+## To quickly add missing namespace in VS Code- Just use CTRL+. / or ctr + space on the word with the red underline. No need to install other extensions.
+
 # Install new .Net version to work in certain project
 
 As example:
