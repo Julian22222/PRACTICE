@@ -11,19 +11,7 @@
 
 
 
-
-@* Bootstrap loding spinners, in form tag we put -> data-ajax-loading="#homeLoader" *@
-@* style="display:none" --> not showing this code all the time, showing loading animation only when uploading new book *@
-@* instead of id="homeLoader"  we can use class <-- class="homeLoader" , then we will use --> data-ajax-loading=".homeLoader" in form tag*@
-<div class="d-flex justify-content-center" >
-  <div class="spinner-border" role="status" id="homeLoader" style="display:none" >  
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
-
-
-
-<section class="jumbotron text-center" data-ajax="true" data-ajax-loading="#homeLoader">
+<section class="jumbotron text-center" data-ajax="true" >
     <div class="container">
 <h1>Welcome to Bookstore</h1>
 

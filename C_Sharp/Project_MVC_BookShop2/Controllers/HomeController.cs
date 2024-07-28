@@ -8,7 +8,8 @@ using System.Threading.Tasks;              //creating new threads for computatio
 using Project_MVC_BookShop2.Models;
 using Microsoft.Extensions.Configuration;  //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
 using DotNetEnv;
-using Project_MVC_BookShop2.Service;  //needs to use Service/UserService.cs class
+using Project_MVC_BookShop2.Service;    //needs to use Service/UserService.cs class
+using System.Dynamic; 
 
 namespace Project_MVC_BookShop2.Controllers;
 
@@ -49,6 +50,16 @@ public class HomeController : Controller
         var isLoggedIn = _userService.IsAuthenticated();
         Console.WriteLine(isLoggedIn);  //<--will show true or false, is the user Logged-In or not
 
+
+
+        // string num = "13";
+        // var number = Convert.ToInt32(num);
+        //Convert.ToSingle(num)  <-- convert to float 13.0
+        // Console.WriteLine($"ConsoleWriteLine - number from Home/Index - {number}");
+        // Console.WriteLine(num is int);  //<-- sill show true or false, chech the data type of the variable
+        //Console.WriteLine(num is float);   //<-- data type is float, will give true or false
+        //Console.WriteLine(num is Book);  //<-- is the variable num created from Class Book, will show true or false
+
         return View();
     }
 
@@ -58,6 +69,18 @@ public class HomeController : Controller
 
         var obj = new {Id =2, Name = "Hello!!!"}; //<--creating a variable with 2 properties
         //return View("ContactUs",obj) <-- returning ContactUs View from this action method and passing obj to the View
+
+
+        ViewBag.Obj = obj;  //<--in View show --> {Id =2, Name = "Hello!!!"}, can't get separately Id or Name
+        //It is better to use Dynamic object
+
+        dynamic data = new ExpandoObject();
+        data.Id = 2;
+        data.Name = "Hellllooo!!!";
+
+        ViewBag.Data = data;
+
+
 
         return View();
     }

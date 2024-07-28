@@ -2,6 +2,11 @@
 
 @inject Project_MVC_BookShop2.Repository.ILanguageRepository _bookLang //<--inject Interface, _bookLang <--name of interface.
 
+@{
+   dynamic data = ViewBag.Data;
+}
+
+
 <h1>About Us page</h1>
 
 <h2>Dependency Injection passsing straight away to View from Repository, without passing it to controller and then to View</h2>
@@ -11,3 +16,15 @@
 
 <p>@item.Name</p>
 }
+
+
+<br/>
+<br/>
+<h1>Without using Dynamic object</h1>
+<h4>@ViewBag.Obj</h4>
+
+<br/>
+<br/>
+
+<h1>Dynamic object</h1>
+<h4>@data.Name</h4>

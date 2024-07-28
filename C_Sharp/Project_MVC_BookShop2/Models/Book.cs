@@ -70,7 +70,7 @@ namespace Project_MVC_BookShop2.Models
        
 
 
-
+        //public string Name {get; set;}= "Jack";    //<--assign a name by default
 
         // constructor
         // public Book()

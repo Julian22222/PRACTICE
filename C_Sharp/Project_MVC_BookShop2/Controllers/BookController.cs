@@ -108,6 +108,7 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
     Console.WriteLine(book);
 
+    // if(!ModelState.IsValid){....}  <-- if model is filled incorrectly
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
     {

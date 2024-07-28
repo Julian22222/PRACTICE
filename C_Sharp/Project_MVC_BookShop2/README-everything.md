@@ -1,4 +1,155 @@
-Razor Syntax -standards how to use C# code in View file
+# Static access Modificator
+
+- if we use --> "Static" in filed or method that means thta method or field will belong to Class in general but not to its object.
+- We can access the field or method through the Class without creating an object from that Class.
+
+```C#
+static void Main(){
+
+int Num = 7;
+
+    Console.WriteLine("Hello");
+    Console.WriteLine($"My number is {Num}");
+}
+```
+
+```C#
+static void Main(){
+
+//static method, function MyArray
+static int[] MyArray (int arr, int index, int value){
+//some code..
+}
+
+}
+```
+
+```C#
+class User {
+
+public static int Identifications {get; set;}
+public int Identification {get; set;}
+}
+
+
+
+//from other file we can interact with User field-->
+User.Identifications = 10; //interact with this field through the class without creating am object from this User class
+```
+
+# Arrays
+
+- We can't add new elements to arrays (single-dimensional arrays and two-dimensional arrays)
+
+```C#
+//different syntax of array use
+
+int [] cucumbers = new int [5];  //<-- we can indicate the length of the array
+int [] array = new int [3]{3,6,8};  //<-- indicate length of he array and numbers in the array
+int [] numbers = {0,1,2,3,4,5,6};  //<-- put numbers in the array
+
+int [,] array2 = new int [2,3];   //<-- two-dimensional arrays, has 2 lines and 3 columns
+int [,] numbers2 = {{2,3,5},{4,6,8}};   //<-- two-dimensional arrays, has 2 lines and 3 columns
+int [,] array2 = new int [2,3]{{2,3,5},{4,6,8}};  //<--two-dimensional arrays, has 2 lines and 3 columns
+
+```
+
+# Collections (Dynamic arrays)
+
+- Programming object which contains the same or different data type elements.
+- Collections allow to refere to these elements, add new elements and extract the elements from the collection
+
+## List Collection ( Collection First type array)
+
+- it is very similar to usual array
+- more often is used in C#
+
+```C#
+List <int> numbers = new List <int>();  //<--creating empty List, which can have only numbers (data type)--> <int>
+List <int> numbers = new List <int>(3);  //<-- can indicate the length of the List, empty List
+List <int> numbers = new List <int>(){2,5,7,9};  //<--adding elements to the List
+
+//Also there are convinient functions to work with List
+numbers.Add(12);   //<-- will add 12 to our List, will add number to the end of our List
+numbers.AddRange(new int[]{4,6,8,43});   //<-- add few element to the List
+numbers.RemoveAt(3);  //<--will remove element with index 3
+numbers.Sort();   //<--will sort numbers or strrings by ascendent order
+numbers.Reverse();  //<--will turn around all List
+numbers.Remove(6);  //<-- will remove number 6
+numbers.Clear();  //<-- will clear all the List, will make it empty
+numbers.IndexOf(43);  //<--will give index of number 43
+numbers.Insert(1,37);  //<-- 1 -is index , 37 - is number, we are inserting number 37 into index 1, all others elements will be shifted to other indexes
+//also contain other functions ...
+```
+
+## Queue (Collection Second type array)
+
+- use FIFO algorithm, first in firs out
+
+```C#
+Queue <string> patients = new Queue <string>();
+patients.Enqueue("Alex");  //<-- add Alex to the Queue
+patients.Enqueue("Mark");
+patients.Enqueue("Kevin");
+patients.Dequeue();  //<-- will give an ellemnt and removes first element from the Queue (Alex)
+patients.Peek();  //<-- will show first element in the Queue, we can check who is next in the queue
+```
+
+## Stack (Collection Third type array)
+
+- use LIFO algorithm, last in firs out
+
+```C#
+Stack <int> numbers = new Stack <int>();
+numbers.Push(1);  //<--adding an ellemnt to the Stack
+numbers.Push(5);
+
+numbers.Peek();  //<--will show first element in the Stack, we can check who is next in the queue -->(5)
+numbers.Pop();  //<-- removes first element from the Stack
+```
+
+## Dictionary (Collection Fourth type array)
+
+- similar to objects in JavaScript
+- more often is used in C#
+- contains keys and values
+
+```C#
+Dictionary <string,string> countriesCapitals = new Dictionary <string,string>();  //<-- empty Dictionary
+
+countriesCapitals.Add("Australia","Canberra");  //<-- adding elements to our Dictionary, key = Australia, value = Canberra
+countriesCapitals.Add("Turkey","Ankara");
+countriesCapitals.Add("England","London");
+Console.WriteLine(countriesCapitals["Australia"]);   //<-- will give Canberra
+
+if(countriesCapitals.ContainsKey("Australia")){   //<-- if Dictionary contains a key = Australia, will show its value
+   Console.WriteLine(countriesCapitals["Australia"]);
+}
+
+foreach(var item in countriesCapitals){
+    Console.WriteLine($"Country - {item.Key}, Capital - {item.Value}");   //<-- will show keys and values of all elements
+}
+
+
+foreach(var key in countriesCapitals.Keys){
+    Console.WriteLine($"Country - {key}");   //<-- will show only keys of all elements
+}
+
+foreach(var value in countriesCapitals.Values){
+    Console.WriteLine($"Country - {value}");   //<-- will show only values of all elements
+}
+
+countriesCapitals.Remove("Turkey");  //<-- will delete element Turkey from Dictionary
+
+
+//also can use different data types
+Dictionary <int,string> countriesCapitals = new Dictionary <int,string>();
+countriesCapitals.Add(1,"Canberra");
+Console.WriteLine(countriesCapitals[1]);  //<-- will show Canberra
+
+```
+
+# Razor Syntax -standards how to use C# code in View file
 
 - Everithing starts with --> @ for C# code in View file.
 - We can have Single Line Syntax:
