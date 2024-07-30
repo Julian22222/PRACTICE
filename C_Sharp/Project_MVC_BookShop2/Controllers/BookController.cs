@@ -19,6 +19,10 @@ using Microsoft.AspNetCore.Authorization;  // to use [Authorize] Attribute, only
 
 namespace Project_MVC_BookShop2.Controllers
 {
+
+    //if we don't want write routes atributes for each action method then we can use tokken replacement at controller level--> (concept)
+    // [Route("[controller]/[action]")]  
+
     public class BookController : Controller  //inherit this class from Controller class
     {
 

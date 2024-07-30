@@ -164,7 +164,7 @@ if (!app.Environment.IsDevelopment())  //if our environment = not development do
 // app.UseHttpsRedirection();  //redirection from http ->to https
 app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to work with files in wwwroot(css, photos, pictures in wwwroot folder)
 
-app.UseRouting();   // routing connection, -> needs for endpoint connection
+app.UseRouting();   // routing connection, -> needs for endpoint connection, allow to use different routes in controllers , should be writen before app.MapControllerRoute
 
 app.UseAuthentication();  //authentication connection, to use passwords ,LogIn,SignUp etc.(Authentication must be above Authorization!!!! to work correctly)
 
@@ -194,7 +194,7 @@ app.UseEndpoints(endpoints =>
 
 //use this instead -->app.MapControllerRoute( ..)
 // // this will return a msg on URL -> / in this example we don't use Controllers and Models
-// app.UseEndpoints(endpoints =>
+// app.UseEndpoints(endpoints =>     //<-- endpoints -can be any name
 // {
 // endpoints.MapGet("/", async context =>
 // {
@@ -204,7 +204,20 @@ app.UseEndpoints(endpoints =>
 
 // // or
 // app.Use(async(context, next)=>{
-// await context.Response.WriteAsync("Hello from middleware");
+// await context.Response.WriteAsync("Hello from middleware1 \n");
+//await next.Invoke();       //<-- allow to invoke another middleware if we use any after this middleware
+// });
+// app.Use(async(context, next)=>{     //<-- next middleware
+// await context.Response.WriteAsync("Hello from middleware2 \n");
 // });
 
-app.Run();  //run an app, after all have been added to request pipeline
+
+//app.Map("/map1", mapappbuilder => {     //<-- mapappbuiler -can be any name
+//mapappbuilder.Run(async context =>{
+//await context.Response.WriteAsync("Map1 \n");
+//});
+//});
+
+app.Run();  //run an app, after all have been added to request pipeline, it is last line in Program.cs file
+
+//whatever code writen beyond this middleware--> app.Run();  will never be executed

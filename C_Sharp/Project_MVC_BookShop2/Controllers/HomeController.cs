@@ -86,6 +86,9 @@ public class HomeController : Controller
     }
 
 
+    //can insert many routes for one page at the same time
+    // [Route("")]    //<-- will be home page
+    // [Route("something/{id?}")]
     [Route("contact-us")]  //Attribute routing (best and easy way to make new Route to this resource)
     public IActionResult ContactUs(){
 

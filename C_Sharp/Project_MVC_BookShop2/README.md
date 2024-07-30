@@ -838,7 +838,12 @@ name : alpha : minlength(5) <-- name has letters only and min length is 5
    [Click](https://github.com/dotnet/aspnetcore/tree/main/src/Http/Routing/src/Constraints)
 
 - name : bool
-  ................................................................................................................................
+
+```C#
+[HttpGet("{id:int?}")]
+```
+
+................................................................................................................................
 
 # DEPENDENCY INJECTION
 
