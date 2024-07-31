@@ -153,15 +153,32 @@ We use Repository class methods in BookController
 
   If you don't use - 'IIS Express' (Windows only) server then you use Kestrel server
 
-- Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.)
-  Aslo, here we have all meta tags, css links, bootstrap, js links connections.
-  -Generaly if you are creating any View that is common to our app we start the name of the file with underscore
+- Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.). We need let View know that we are using some certain layout-->\_Layout.cshtml file, therefore we need to write in each View file on the top, or indicate it in the Views/\_ViewStart.cshtml file -->
+
+```C#
+@{
+  Layout = "NameOfTheLayout";
+
+  //or
+  Layout = "~/Views/Shared/_Layout.cshtml"
+  }
+```
+
+Aslo, here we have all meta tags, css links, bootstrap, js links connections.
+Generaly if you are creating any View that is common to our app we start the name of the file with underscore
 
 - wwwroot folder --> it is contetnt root foleder or folder for static files, here we have CSS, JS, Img folders <--all extras that we want to show to our user. Also we have different frameworks - Bootstrap, jQuery, JS libraries. To work with static files we write --> middleware -> app.UseStaticFiles(); (line 161) in Program.cs file
 
 - Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages. Also, we can add namespaces here and all View files will have access to this namespaces, therefore we don't need to write them in each View file (example --> @using Project_MVC_BookShop2.Models )
 
-- Views /\_ViewStart.cshtml -->if you are planning to create common View inside our application usually we use underscore before the View name. this is a common file. To dont write the same code in each View file we -> we put this code here -->template for all View files.
+- Views /\_ViewStart.cshtml -->We need let the View know what is the Layout file name. if you are planning to create common View layout inside our application usually we use underscore before the View name. this is a common file. To don't write the same code in each View file we -> we put this code here -->template for all View files.
+- \_ViewStart.cshtml View file is executed before other Views
+
+```C#
+@{
+  Layout = _Layout;
+}
+```
 
 ....................................................................................................................
 
@@ -172,7 +189,7 @@ We use Repository class methods in BookController
 - Strongly binding is in controller when we pass the data with --> return View(data); to View. Located in controller action method
 - We can pass any type of data in ViewBag
 - ViewBag use dynamic property (because Razor renders any data type automatically when we use ViewBag, ether it is int or string or anything else)
-
+- Disadvantage of this method --> we will not get any errors if we misspell the ViewBag property in the View file --> (Example if we put in View file --> @Viewbag.Numm)
 - First we need to create a new property in ViewBag and then assign some data to it:
 
 ```bash
@@ -230,13 +247,15 @@ dynamic data = ViewBag.Data
 
 # ViewData
 
+- is server side code
 - is used to pass any data type from action method to view and we can display this data on view (the same as Viewbag)
 - work in key -value principle (not dynamic principal as Viewbag)
 - This type of data binding is known as loosely binding
 - ViewData use ViewDataDictionary type
-- we create a new key in ViewData and then assign some data to it --> viewData["Title"] = 123;
+- we create a new key in ViewData and then assign some data to it --> ViewData["Title"] = 123;
 - use razor syntax in View --> @ViewData["Title"]
 - ViewData is usually used for a Title of different page in the browser , The title showed and related to current page (Also we put code in the \_Layout.cshtml file (line 7))
+- Disadvantage of this method --> we will not get any errors if we misspell the ViewData key in the View file --> (Example if we put in View file --> @ViewData["Titleeee"])
 
 ### Use ViewData with object data type
 
@@ -251,6 +270,11 @@ ViewData["book"] = new Book(){Author = "Rob", Id = 2};
 ```C#
 @{
    var bookInfo = ViewData["book"] as Book; //<--assign what type is the data type, (Book data type), we don't need it in Viewbag because it works in dynamic principle
+
+   //or , another example
+   @foreach(var item in ViewData["AllUsers"] as List<User>){  //for complex type data we tell to compiler what data we are expecting from ViewData ,  where --> User is a Model Class
+    //lopping Users
+   }
 }
 ```
 

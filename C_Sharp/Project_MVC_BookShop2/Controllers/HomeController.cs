@@ -83,6 +83,8 @@ public class HomeController : Controller
 
 
         return View();
+        //return View("AboutUs");  <-- we can indicate the View name to return from View/Home folder
+         //return View("ContactUs");
     }
 
 

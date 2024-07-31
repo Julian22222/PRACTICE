@@ -32,7 +32,7 @@
 
 
             <br/>
-            <table class="table">
+            <table class="table table-hover">
                 <thead >
                     <tr>
                         <th scope="col">Cover photo</th>
@@ -46,11 +46,15 @@
                 <tbody id="dynamic_data">
                     
                         @foreach(var book in Model){
+                <tr>
+                    <td>
 
                             @* @book *@
                             @* <partial name="_bookThumbnail" model="book" />   *@
                             <partial name="_bookLine" model="book" />  
 
+                    </td>
+                </tr>
                         }
                     
 

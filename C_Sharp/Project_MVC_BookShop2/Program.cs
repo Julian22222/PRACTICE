@@ -40,9 +40,9 @@ var builder = WebApplication.CreateBuilder(args);      // createBuilder -creatin
 // Services - this method allow to connect all different services for our app, after dot
 // in here we adding services with name-> AddControllersWithViews, to make application aware that we going to use MVC patern ( Model, View, Controller)
 //In Web API , we only need Models and Controllers, in this case use -> builder.Services.AddControllers(); (to check all the templates , we put in terminal --> dotnet new list)
-//AddRazorRuntimeCompilation -update server automatically, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
+//AddRazorRuntimeCompilation -update server automatically in any change of code, <--Razor(ViewEngine) will compile, convert all C# and HTML on View page into HTML code only
+//by default,not installed(due to file size and not required when in production) --> Razor file compilation takes places only at build and publish times using the Razor SDK, but not at the runtime.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
 
 
 ///////////////Uncomment this code to disable Client side validation(only in Development mode), add it to the existing chain

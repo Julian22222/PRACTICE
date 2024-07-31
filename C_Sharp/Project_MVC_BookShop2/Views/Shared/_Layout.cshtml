@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @* @ViewData["Title"] shows the title for each Page, The title showed and related to current page *@
     <title>@ViewData["Title"]</title>
+    @* link to bootstrap can be in each View file but it is better to put it in Layout file, to apply for all View files *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     	
 
@@ -89,7 +90,7 @@
 
 
 
-
+@* to don't use JS code on each View page, and to organise the JS code better we use jQuery here *@
     @* RenderSectionAsync("Scripts") we use in _Layout file
     JS code or jquery file or code are always placed in the bottom of the View page
     but you code is at the top. So your code will not work. We need to use  -> @RenderSectionAsync and @Section
@@ -99,7 +100,7 @@
 @* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
     @* Also, to use this code we need to register jquery -->  <script src="~/lib/jquery/dist/jquery.js"></script> *@
     @await RenderSectionAsync("Scripts", required: false) 
-@* required: false) <-- make the section in different View files optional, you don't need to have -->@section directive in each View file*@
+@* required: false) <-- make the section in different View files optional, you don't need to have -->@section directive in each View file, In our case we have section only in Index.cshtml*@
 @* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
 @* Section and RenderSection can be used with any code if you need to send your code from View file to _Layout file *@
 

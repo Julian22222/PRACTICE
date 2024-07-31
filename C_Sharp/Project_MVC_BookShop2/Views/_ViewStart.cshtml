@@ -14,3 +14,15 @@ it is apply to all View files *@
 @{
     Layout = "_Layout";
 }
+
+
+@* 
+@{
+if(Context.Request.Path.ToString().Contains("DeleteBook")){    //<-- if URL contains DeleteBook it will use Layout2 template
+// for Manager / HR / finance etc.
+
+    Layout = "_Layout2";
+}else{
+    layout = "_Layout"                      //<-- else this Layout
+}
+} *@
