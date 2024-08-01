@@ -1,6 +1,6 @@
-# It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
+# GitHub Actions
 
-## GitHub Actions
+- It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
 
 [GitHub Actions Docs](https://github.com/features/actions)
 
@@ -9,13 +9,13 @@
 - To Choose Workflow extensions
   [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
 
-  In Marketplace we can find --> Bot, extensions, apps, filter, erc. Actions in Marketplace are workflow code pices that have already written by other developers. That we can use in our workflows
+  In Marketplace we can find --> Bot, extensions, apps, filter, etc. Actions in Marketplace are workflow code pieces that have already written by other developers. That we can use in our workflows
 
   - To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
 
 [GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
-GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
+# GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
 
 - Allow to create a pipeline
 - It is build-in CI/CD tool for GitHub
@@ -273,7 +273,7 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
 
 # Work with variables in GitHub Actions
 
-- most often used is --> Secret
+- most often used with --> Secret (from GitHub page)
 
 To get an access of Secret -->
 
@@ -378,8 +378,19 @@ jobs:
 ```
 
 ```JS
+//if we have different jobs, steps and actions in one yml file --> this example will not work to get context (-->See cache_&_context.yml)
+  print:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Print context
+         run: echo "${{ toJSON(github) }}"
+       - name: Print context event
+         run: echo "${{ toJSON(github.event) }}"
+
+
 //exporting this toJSON(github.event.inputs) into an environment variable and then use this variable
 
+//Use this example --> (See cache_&_context.yml)
 - name: Parámetros de entrada
    env:
       PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
