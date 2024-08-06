@@ -9,9 +9,17 @@ using Project_MVC_BookShop2.Models;
 using Microsoft.Extensions.Configuration;  //needs to use IConfiguration service, to read appsettings.json file in Controller or any file apart from View file
 using DotNetEnv;
 using Project_MVC_BookShop2.Service;    //needs to use Service/UserService.cs class
-using System.Dynamic; 
+using System.Dynamic;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Project_MVC_BookShop2.Controllers;
+
+
+public class Test {
+    public int EmployeeID { get; set; }
+    public string EmployeeName { get; set; }
+}
+
 
 public class HomeController : Controller
 {
@@ -106,8 +114,51 @@ public class HomeController : Controller
     
 
 
+        //We can use Class Test from line 16
+        Test AnonymousObject= new Test(){
+            EmployeeID = 1,
+            EmployeeName = "Jack"
+        };
+
+        ViewBag.Employee = AnonymousObject;
+
         return View(test);
     }
+
+
+//first option of managing error page, declaration of this use Status code in-> Program.cs file line 175
+    // [Route("/StatusCodeError/{statusCode}")]
+    // public IActionResult Error(int statusCode)
+    // {
+    //     if(statusCode == 404){
+    //         ViewBag.ErrorMessage = "404 page Not Found Exception.";
+    //     }
+
+    //     return View("MyCustomError");
+    // }
+
+
+//second option of managing error page, declaration of this use Status code in-> Program.cs file line 182
+    [Route("/StatusCodeError")]
+    public IActionResult Error(int statusCode)
+    {
+
+        //The endpoint that processes the error can get the original URL that generated the error. Here we assign typed route to ViewBag.OriginalPath and then we can show it to the user
+        var statusCodeReExecuteFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>(); 
+        if(statusCodeReExecuteFeature != null){
+            ViewBag.OriginalPath = statusCodeReExecuteFeature.OriginalPath;
+        }
+
+
+        if(statusCode == 404){
+            ViewBag.ErrorMessage = "404 page Not Found Exception.";
+        }
+
+        return View("MyCustomError");
+    }
+
+
+
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,5 +1,11 @@
 # How to install nuget packages(Entity Framework Core)
 
+Nuget packages can be installed through -->VSCode-->View --> Command Palette
+
+- write in the Palette --> Nuget Package, click it and then write your Nuget package name to download
+
+or
+
 All needed packages to start working with your App
 
 In terminal we write:
@@ -59,7 +65,9 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
    Microsoft.aspnetcore.identity.entityframeworkcore
    ```
 
-   -->///this package needs to work with Identity core (LogIn,SignUp, Password etc.)
+   -->///this package needs to work with Identity Core (Authentication, Authorisation, LogIn,SignUp, Password etc.)
+   -->///To start working with Identity Core framework we need to install this package --> and all other dependent packages will install automatically in our app
+   -->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
 
 9. ```bash
    jQuery.Ajax.Unobtrusive
@@ -68,25 +76,12 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
    -->/// package to use jQuery-ajax-unobtrusive library ( client side validation),not needed for to install for VScode
 
 10. ```bash
-     Microsoft.aspnetcore.identity.entityframeworkcore
-    ```
-
-    -->/// package to use Identity Core (Authentication, Authorisation, SignIn, SignOut etc.)
-
-11. ```bash
             Microsoft.Extensions.Configuration.UserSecrets
     ```
 
     -->///package to use User Secrets file, to keep sensative data - User Id, Passwords, ConnectionString etc.
 
-12. ```bash
-    Microsoft.aspnetcore.identity.entityframeworkcore
-    ```
-
--->///To start working with Identity Core framework we need to install this package --> and all other dependent packages will install automatically in our app
--->///if we want to use LogIn, SignUp, Passwords, Registration, security in the app and other features
-
-13. ```bash
+11. ```bash
            Microsoft.AspNetCore.Authorization
     ```
 

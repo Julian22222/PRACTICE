@@ -24,7 +24,8 @@ Form Tag Helpers -> ( asp-for="")*@
 
 
 
-
+@* we can TagHelper declaration in each View file where we use them, but it is better to put them here in a common file for all Views *@
+@* Microsoft.AspNetCore.Mvc.TagHelpers  <-- it is assembly or namespace from which we can get TagHelpers *@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers  <-- this line will allow to use all tag helpers in my entire app, (Tag helpers -->starts with asp- ..., asp-controller, asp-action, asp-route-id,asp-area) *@
 

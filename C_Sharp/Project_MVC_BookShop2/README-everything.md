@@ -253,7 +253,27 @@ else
 
 ```
 
-# Loops(For ,ForEach etc)
+# Loops(For ,ForEach, while, switch etc)
+
+```C#
+while(age>2){
+    Console.WriteLine("Hello");
+    age--;
+}
+```
+
+```C#
+switch(dayOfTheWeek){
+    case "Monday" : ConsoleWriteLine("First day of the week");
+    break;
+    case "Tuesday" : ConsoleWriteLine("Second day of the week");
+    break;
+    case "Wednesday" :
+    case "Thursday" : ConsoleWriteLine("Relax day");
+    default: ConsoleWriteLine("This day doesn't exist");
+    break;
+}
+```
 
 ```C#
 @for(int i=0; i<5; i++){
@@ -271,6 +291,22 @@ var list = new List<int>(){1,2,3,4,5};
 }
 ```
 
+```C#
+int [] numbers = new int []{2,3,4,5,6};
+
+@for(int i=0; i<numbers.Length; i++){   //<-- with Array use Length instead of Count
+    Console.WriteLine(numbers[i]);
+}
+```
+
+```C#
+List <int> nmbers = new List <int>(){2,5,8,9};
+
+@for(int i=0; i<numbers.Count; i++){   //<-- with List use Count instead of Length
+    Console.WriteLine(numbers[i]);
+}
+```
+
 # Other / mini file and normal file version of libraries
 
 - In wwwroot / lib we have normal version and mini file version of files
@@ -284,6 +320,7 @@ var list = new List<int>(){1,2,3,4,5};
 # Environment variables
 
 - in View files we use (and in \_Layout.cshtml file as well) -->
+- environment tag helpers can have different attributes
 
 ```C#
 <environment include="Production">
@@ -324,6 +361,8 @@ if(_webHostEnvironment.IsDevelopment){
 ```
 
 # Different Tag Helpers
+
+- Tag Helpers enable server-side code to participate in creating and rendering HTML elements in Razor files (in View files)
 
 1. Anchor Tag Helpers (asp-action='', asp-controller="") (--> See -Header.cshtml file)
 

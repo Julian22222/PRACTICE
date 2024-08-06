@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem,
 using Microsoft.AspNetCore.Hosting;  // to use IWebHostEnvironment
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;  // to use Path.Combine function
-using Microsoft.AspNetCore.Authorization;  // to use [Authorize] Attribute, only loged In users can access this action method
+using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol;  // to use [Authorize] Attribute, only loged In users can access this action method
 
 
 // using System.Web.Mvc; 
@@ -85,6 +86,8 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 // form Method to add new book, GET method
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 
+ViewBag.TitlePage = "Add new book";
+
 // passing English language as default to our form  -->in return View(model)
 var model = new Book(){
     LanguageId = 1  //need to pass an Id of the language, because we used SelectList --> new SelectList(await _languageRepository.GetLanguages(), "Id","Name")
@@ -110,7 +113,9 @@ ViewBag.Category = new List<string>(){
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
 
-    Console.WriteLine(book);
+    Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
+
+    ViewBag.TitlePage = "Add new book";
 
     // if(!ModelState.IsValid){....}  <-- if model is filled incorrectly
 
@@ -213,6 +218,71 @@ return View(data);
 }
 
 }
+
+
+public async Task <IActionResult> EditBook(int id) {
+
+ViewBag.TitlePage = "Edit book";
+
+
+var data = await _bookRepository.GetBookById(id);
+
+
+ViewBag.Category = new List<string>(){
+"programming","animals", "technology", "sports"
+};
+
+// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+//also can use --> new SelectListItem(){text="Name, value="1};
+
+return View("AddNewBook",data);
+}
+
+
+
+// [HttpPost]
+// public async Task <IActionResult> EditBook(Book book) {
+
+// ViewBag.TitlePage = "Edit book";
+
+// if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
+// {
+
+// var data = await _bookRepository.EditBook(book);
+
+// if(data){
+// Viewbag.Message = "Data updated successfully";
+// }else{
+// Viewbag.Message = "Internal Error. Not able to update data";
+// }
+
+// ViewBag.Category = new List<string>(){
+// "programming","animals", "technology", "sports"
+// };
+
+// // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+// ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+
+
+// return View("AddNewBook");
+// }
+// }
+
+
+
+// public async Task <IActionResult> DeleteBook(int id) {
+
+//     var data = await _bookRepository.DeleteBook(id);
+
+//     return RedirectToAction("Index");
+// }
+
+
+
+
+
+
 
 
 

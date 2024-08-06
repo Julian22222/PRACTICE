@@ -6,7 +6,8 @@ using System.Threading.Tasks;   //Can you Task with async await , and to use Tas
 using Microsoft.EntityFrameworkCore;  //to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 using Project_MVC_BookShop2.Models;  //Book class import connection
 using Project_MVC_BookShop2.Controllers;   //BookControllers methods connection
-using Project_MVC_BookShop2.Data;  //import BookstoreContext database and Books class from Data folder
+using Project_MVC_BookShop2.Data;
+using Microsoft.AspNetCore.Mvc;  //import BookstoreContext database and Books class from Data folder
 
 namespace Project_MVC_BookShop2.Repository
 {
@@ -42,7 +43,6 @@ namespace Project_MVC_BookShop2.Repository
 // always use data type -> Task with async methods 
 // model coming from BookController [HttpPost] method
 public async Task<int> AddNewBook(Book model){
-
 
 // new varible
 var newBook = new Books(){
@@ -171,6 +171,20 @@ return newBook.Id;
     BookPdfUrl = book.BookPdfUrl//full path to uploaded img folder -->(wwwroot/books/cover)
  }).ToListAsync(); 
  }
+
+
+// public async Task <bool> DeleteBook (int id){
+
+// var deletedBook = new Books(){Id = id};
+
+//   var result = await _context.Books2.Remove(book);
+
+//   await _context.SaveChangesAsync();
+
+// return true;
+// }
+
+
 
 
 

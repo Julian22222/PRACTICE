@@ -15,6 +15,8 @@ In this Project we are using dropDown menu from different resources: from contro
   ( prop + Tab --> use in Class, will create public int MyProperty{get;set;})
   ( ctor + Tab --> create constructor for a class)
 
+- To quickly add missing namespace in VS Code - Just use CTRL + . / or ctr + space on the word with the red underline. No need to install other extensions.
+
 Also,
 
 Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
@@ -97,9 +99,26 @@ As example:
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 ```
 
+................................................................................
+
+# How To migrate from ASP.NET Core MVS Project from .NET 7.0 to .NET 8.0
+
+- delete --> bin and obj folders
+- update your .NET 7.0 to .NET 8.0 in your project Project_MVC_BookShop2.csproj file: -->
+  - Project_MVC_BookShop2.csproj file (this file located in root folder in the bottom)
+  - <TargetFramework>net7.0</TargetFramework> //<-- change this line to net8.0
+  - all the nuget packages with .net version 7.0 change them to 8.0 --> <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="7.0" /> (Example)
+- Then build your project and run application
+
 ..............................................................................................................
 
 # How to install nuget packages(Entity Framework Core)
+
+Nuget packages can be installed through -->VSCode-->View --> Command Palette
+
+- write in the Palette --> Nuget Package, click it and then write your Nuget package name to download
+
+or
 
 In terminal we write:
 dotnet add package (PackageName)
@@ -144,6 +163,8 @@ We use Repository class methods in BookController
 
 - launchSettings.json file:
   · Is only used on the local development machine.(doesn't work on production server, when deploying )
+  · Used for the development environment only
+  · The settings in the this file can be overridden by environment variables or command-line arguments (in Program.cs file)
   · Is not deployed.
   · Contains profile settings.
 
@@ -151,7 +172,12 @@ We use Repository class methods in BookController
 
   (to apply Environment)The app's environment can't be changed while the app is running.We need to stop the app, then change Environment in Proporties/ launchSettings.json and run the app again
 
-  If you don't use - 'IIS Express' (Windows only) server then you use Kestrel server
+  If you don't use - 'IIS Express' (work only on Windows) server then you use Kestrel server
+
+  - IIS is Reach server and Powerful server
+  - Kestrel server allow to run DotNet Core on Linux and MacOs
+  - Kestrel --> is a Web Server, Cross platform, open Source, Works with Reverse Proxy Servers
+  - It is recommended to use other famous and powerful web servers like IIS, Apache, or NGINX as a reverse proxy server when run Kestrel for public websites. because Kestrel is very basic light weight server which is fast but can't manage all the server performance.Therefore Kestrel can use other Powerful web servers such as IIS, Apache, or NGINX to help process all the requests and tasks then validate and pass it to Kestrel. (Kestrel server has no -> Security,management, no support for windows authentication, no support for port sharing , no https logs, no http redirect rules etc.)
 
 - Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.). We need let View know that we are using some certain layout-->\_Layout.cshtml file, therefore we need to write in each View file on the top, or indicate it in the Views/\_ViewStart.cshtml file -->
 
@@ -184,6 +210,7 @@ Generaly if you are creating any View that is common to our app we start the nam
 
 # ViewBag (--> See BookController and AddNewBook.cshtml)
 
+- ViewBag is a type object
 - ViewBag is used to pass any data from action method to View and we can display this data on View
 - This type of data binding is known as loosely binding. If you passing the data by using Viewbag and we using that data in the View (data binding with the View)<--it is loosly binding
 - Strongly binding is in controller when we pass the data with --> return View(data); to View. Located in controller action method
@@ -243,15 +270,29 @@ dynamic data = ViewBag.Data
 @data.Name  //<--will give us Jack
 ```
 
+4. Another way how to pass AnonymousObjects (--> See HomeController contactUs action method and Views/Home/ContactUs)
+
+- Also ViewBag can be passed from action method to View and then we can loop through all the ellement -->
+
+```C#
+//in View file
+
+@foreach (Employee item in ViewBag.employees){  //<--Employee is a Class, ViewBag.employees was passed from action method (it consist of a List of Employee)
+  //code
+  <p>@item.Id<p>     //<--properties from Employee Class
+   <p>@item.Name<p>   //<--properties from Employee Class
+}
+```
+
 ..............................................................................................................
 
 # ViewData
 
+- ViewData use ViewDataDictionary type
 - is server side code
 - is used to pass any data type from action method to view and we can display this data on view (the same as Viewbag)
 - work in key -value principle (not dynamic principal as Viewbag)
 - This type of data binding is known as loosely binding
-- ViewData use ViewDataDictionary type
 - we create a new key in ViewData and then assign some data to it --> ViewData["Title"] = 123;
 - use razor syntax in View --> @ViewData["Title"]
 - ViewData is usually used for a Title of different page in the browser , The title showed and related to current page (Also we put code in the \_Layout.cshtml file (line 7))
@@ -283,6 +324,19 @@ ViewData["book"] = new Book(){Author = "Rob", Id = 2};
 ```C#
 <h2>@bokInfo.Id</h2> //<--wil give 2
 <p>@bookInfo.Author</p> //<--will give Rob
+```
+
+- Also we can pass some Object with ViewData from action method --> ViewData["book"] = new Book(){Author = "Rob", Id = 2}; to View file
+
+```C#
+// in View file
+
+@{
+  var MyData = @ViewData["book"] as dynamic;
+}
+
+<p>@MyData.Author</p>
+<p>@MyData.Id</p>
 ```
 
 .......................................................................................................................
@@ -575,6 +629,7 @@ Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-st
 - Helps to remove duplicate code from app.
 - If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
 - In one application we can use as many partial views as we want, there is no limit of partial views
+- The partial tag helper render content asynchronous
 
 How to use it-->
 partial view is a common code therefore we put it in --> Views/Shared/ (NameOfPartialView).cshtml (Example--> Views/Shared/header.cshtml )
@@ -602,7 +657,27 @@ or
 or you can use another option to render our partial view-->
 
 ```C#
-@Html.Partial("partialViewName", Model)
+@Html.Partial("partialViewName", Model);
+
+or
+
+@await Html.PartialAsync("partialViewName", Model);  //<--synchronous method
+//or
+@{await Html.RenderPartialAsync("partialViewName", Model);}   //<--synchronous method
+```
+
+##### There are other partial tag helpers such as:
+
+- model
+- for (rarely used)
+- view-data (used to assign a ViewData to pass to the partial view)
+
+```C#
+<partial name="somePartialName" for="Name" />  //<-- for tag helper doesn't work together with model tag helper
+
+
+@ViewData["TestMsg"];
+<partial name="somePartialName" model="@Model.Name" view-data="ViewData" />  //<-- can pass data from ViewData to the partial view
 ```
 
 .................................................................................................................................................................
@@ -910,11 +985,13 @@ _context = new BookStoreContext();
 
 ### Services lifetime:
 
-- Transient(AddTransient<>) <-- A new instance of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created
+In ASP.NET Core MVC, there are 3 different ways to register services with build-in dependency injection:
 
-- Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request.
+- Singleton (AddSingleton<>) <--Same instance/object for all entire application. The service is registerd with the first time they are requested and the same instance/object of the service will be used throughout the lifetime of the application. (When you change something you need to stop application, and rerun it againg to apply new changes). Singleton --> Creates only single object and keep the data of this object all the time while application is running.
 
-- Singleton (AddSingleton<>) <--Same instance for all entire application. (When you change something you need to stop application, and rerun it againg to apply new changes)
+- Transient(AddTransient<>) <-- A new instance/object of the service will be created every time it is requested.Every time when you use this service or call this service then new instance will be created and discarded when it is no longer needed. Will create new object every time when needed and discard the object when function has been executed. Works opposite way than Singleton
+
+- Scoped (AddScoped<>) <-- These are created once per client request. instance will be the same for all http request. This means that the same instance/object of the service will be used throughout the entire request, but a new instance/object will be created for each subsequent request.
 
 ...................................................................................................
 
@@ -1622,8 +1699,7 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 
 # AREA
 
-- if you don't want to keep your files in common Models, Controllers and Views folder, Area - allow to add models, controllers and views in separate folder for complitely separate feature to
-  our app (keep it separately)
+- if you don't want to keep your files in common Models, Controllers and Views folder, Area - allow to add models, controllers and views in separate folder for complitely separate feature (functionality) to our app (keep it separately)
 
 - to handle this type of situation is ASP.NET Core we have a concept of AREA
 - AREA is a feature that allow to create completely separate folder structure within this application
@@ -1645,7 +1721,7 @@ dotnet tool install -g dotnet-aspnet-codegenerator --version 7.0
 dotnet-aspnet-codegenerator area AreaNameToGenerate
 ```
 
-- This commands will create Areas folder at the root level of our app with all the features (--> Create Models, Controllers, Views folders in Area folder + ScaffoldingReasMe.txt file at the root level of our app)
+- This commands will create Areas folder at the root level of our app with all the features (--> Create Models, Controllers, Views folders in Area folder + ScaffoldingReasMe.txt file at the root level of our app --> in the bottom of the project's root folder)
 - This allow to keep your files separately
 
 2. Create files with any names in Controller , Models and Views folder (-->See Areas folder)

@@ -23,7 +23,13 @@
                         <div class="btn-group">
                               @* accessing book Id by clicking on each card  *@
                             @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
+                            @* asp-route-{value} <--any value occupying the {value} placeholder is interpreted as a potential route parameter *@
+                            @* We can put few asp-routes --> asp-route-id="@Model.Id" asp-route-Name="@Model.Name" <-- all this will be shown in the URL, by clicking on this link *@
                              <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+                             <a asp-controller="book" asp-action="editbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">Edit 
+                                 @* Font Awesome *@
+                                 <i class="fa fa-marker fa-_lg"></i> 
+                             </a>
                         </div>
                         @* accessing book Author  *@
                         <small class="text-muted">@(string.IsNullOrEmpty(Model.Author) ? "Author is not available" : Model.Author)</small>

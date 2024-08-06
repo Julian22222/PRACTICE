@@ -22,7 +22,8 @@ using Azure.Identity;   //connects Key Vault
 using Microsoft.Extensions.Configuration.AzureKeyVault;   //connects Key Vault
 using Azure.Security.KeyVault.Secrets;  ////import installed nuget package (if you installed any nuget packages , you need this to use packages here)-> AddRazorRuntimeCompilation();
 using Project_MVC_BookShop2.Service; //<-- to use UserService class, get User Id and is the user logged-in or not
-using Project_MVC_BookShop2.Helpers; //<--to use ApplicationUserClaimsPrincipalFactory class, to add Claims
+using Project_MVC_BookShop2.Helpers;
+using Microsoft.Rest.TransientFaultHandling; //<--to use ApplicationUserClaimsPrincipalFactory class, to add Claims
 
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);      // createBuilder -creating a host, is main in deployment of our app,
@@ -92,7 +93,7 @@ builder.Services.ConfigureApplicationCookie(config =>{
 
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
 builder.Services.AddScoped<BookRepository, BookRepository>();  //registration of BookRepository services to work with dependency injections
-builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface)
+builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();  //to work with dependency injections, Here we used ILaguageRepository (interface), --> the code means: if we use ILanguageRepository then provide an objecy of LanguageRepository class
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
 builder.Services.AddScoped<UserService,UserService>();  //to work with UserService class, to get Logge-in User Id in any controller or service
 //in Dependency Injection we can use Interfaces or classes
@@ -139,7 +140,7 @@ options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()))
 
 //Don't need this part, , in Development and Production this part was already used
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
-builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class as DB connection (Also, this line needs to make dependency injection in different classes)
+// builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class as DB connection (Also, this line needs to make dependency injection in different classes)
 
 
 
@@ -152,13 +153,39 @@ var app = builder.Build();  //creating our web app
 
 if (!app.Environment.IsDevelopment())  //if our environment = not development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error");  // <-- will show this page in productions for common users, in case of any errors
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 
 // app.Environment.EnvironmentName  <--will gives us Environment variable value
+
+
+// app.UseStatusCodePages();  <--putting unexisting route will give - Page Not Found, ususally this section is not used in production because it returns a message that isn't useful to users (Page not found, status code: 404)
+//app.UseStatusCodePages(Text.Plain,"Status Code Page with formatted string : {0}");  //<-- UseStatusCodePages with the format string, can write any message and in brackets will show statusCode error number
+//app.UseStatusCodePages(async context =>{ 
+//if(context.HttpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+//{HERE WE GENERATE A CUSTOM 404 PAGE
+// context.HttpContext.Response.ContentType = "text/html";
+//await context.HttpContext.Response.WriteAsync("<html><body><h1>Page Not Found</h1></body></html>")
+//}else if(context.HttpContext.Response.StatusCode == StatusCodes.Status500InternalServerError){.....the same code as above..}});
+
+
+
+
+//////first option, declaring that we are going to use status code error pages
+// app.UseStatusCodePagesWithReExecute("/StatusCodeError/{0}"); 
+/////<--if the route don't exist--> here we can create our custom error pages, StatusCodeError <--it is a route, {0} <--shows status code number, it is placeholder for status code
+/////Then we can create action method in HomeController for this error page, line 128 
+
+//////second option, declaring that we are going to use status code error pages
+app.UseStatusCodePagesWithReExecute("/StatusCodeError", "?statusCode={0}");
+//here we use second argument
+
+
+
+
 
 
 // app.UseHttpsRedirection();  //redirection from http ->to https

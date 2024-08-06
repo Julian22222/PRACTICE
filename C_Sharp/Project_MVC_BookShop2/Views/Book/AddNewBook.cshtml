@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <h3 class="display-4">Add new book</h3>
+    <h3 class="display-4">@ViewBag.TitlePage</h3>
     <hr/>
 @if(ViewBag.IsSuccess == true){
 
@@ -71,16 +71,31 @@ public async Task<IActionResult> AddNewBook(Book book){....}
          <div class="form-group">
             <label asp-for="LanguageId"></label>
             @* dropdown -> using select and option tag *@
-            @* required - use for client side validation (UI)*@
-            @* <option> English </option> <-- will give the value for it automatically*@
-            @* <option selected> Dutch </option>  <-- selected make This Dutch language selected by default when you open AddnewBook View *@
             <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language" required> 
                 <option value="">Please choose book language</option>
+                @* <select asp-formaction="LanguageId" multiple ></select>   <--multiple , allow to choose multiple options from dropdown *@
+                @* required - use for client side validation (UI)*@
+                @* <option> English </option> <-- will give the value for it automatically*@
+                @* <option value="1"> English </option> <-- will give the value 1*@
+                @* <option selected> Dutch </option>  <-- selected make This Dutch language selected by default when you open AddnewBook View *@
             </select>
              @* use only span tag and asp-validation-for --> to show an eeror msg for LanguageId Input if it is wrong *@
              <span asp-validation-for="LanguageId" class="text-danger"></span>  
         </div>
 
+        @* to make group options in dropdown -->
+        <select>
+            <optgroup label="Group A">
+                <option value="1"> Apple </option>
+                <option value="2"> banana </option>
+            </optgroup>
+             <optgroup label="Group B">
+                <option value="3"> Tomato </option>
+                <option value="4" disabled> Cucamber </option>    <--disabled , will disabled this option from dropdown
+            </optgroup>
+        </select>
+        
+         *@
 
         <div class="form-group">
             <label asp-for="Category" class="control-lebel"></label>
@@ -152,7 +167,7 @@ public async Task<IActionResult> AddNewBook(Book book){....}
         <br/>
 
         <div class="form-group">
-            <input type="submit" value="Add book" class="btn btn-primary" />
+            <input type="submit" value="Submit" class="btn btn-primary" />
         </div>
 
       
@@ -161,6 +176,8 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 </div>
 
 @section scripts {
+@* Here we can insert any scripts*@
+
     <script>
         function myComplete(data){ //<--name of the function is myComplete, to receive the data from your function we can pass some attributes--> (data) 
         //this code wil execute , doesn't metter if the request is successful or fail.
@@ -180,3 +197,12 @@ public async Task<IActionResult> AddNewBook(Book book){....}
         }
     </script>
 }
+
+@* @section MyScripts { 
+//client side validation scripts can  ce inserted here, but it is better to keep them in the common Layout.cshtml file --> line 71-73 
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> 
+} *@
+
+@* and then we need to put -->   @await RenderSectionAsync("MyScripts", required: false)  in Layout.cshtml file*@
