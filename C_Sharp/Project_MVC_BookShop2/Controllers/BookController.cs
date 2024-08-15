@@ -165,7 +165,7 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
     // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
     // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
     //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
-    return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});
+    return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL
 }
     }
 

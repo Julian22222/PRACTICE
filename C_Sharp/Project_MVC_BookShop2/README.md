@@ -17,14 +17,16 @@ In this Project we are using dropDown menu from different resources: from contro
 
 - To quickly add missing namespace in VS Code - Just use CTRL + . / or ctr + space on the word with the red underline. No need to install other extensions.
 
+- We use different classes with the same properties in Data folder and in Model folder. Because we can keep the logic separate. Properties in Data classes are representing columns in database table. If in future you have any change in this entity class (in Data folder) then you need to update property in Model class , then in the controller and then in database. And this might be a problem . Therefore we keep these clases separately - Model classes separate and entity clases separate (Classes in Data folder).
+
 Also,
 
 Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
 
 1. ```bash
-   dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+      dotnet ef migrations add (AnyMigrationsName) //to add changes to database
    ```
-
+   - ef --> stands for Entity Framework
 2. ```bash
      dotnet ef database update  //to update database
    ```
@@ -112,9 +114,10 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 
 ..............................................................................................................
 
-# How to install nuget packages(Entity Framework Core)
+# How to install nuget packages (can be any nuget package)
 
 Nuget packages can be installed through -->VSCode-->View --> Command Palette
+if --> Nuget Package Manager extension was installed on VS Code.
 
 - write in the Palette --> Nuget Package, click it and then write your Nuget package name to download
 
@@ -488,13 +491,12 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 - Entity Framework Core (EF Core) connects Asp.Net Core App and Database
 - EF Core is a middle service, works between Asp.net and DB
 - EF Core is Microsoft's official technology to interact with relational database
-- EF Core is Microsoft's official technology to interact with relational databse
 - EF Core can be used not only in Asp.net core app but also in any .NET technology - Mobile app, Windows app, Console.app other app in .NET
 - EF Core can work with lots of databases:
 
   - SQL Server
   - MySQL
-  - Cosmos db
+  - Cosmos db (it is No SQL DB)
   - Etc.
 
 - EF Core features:
@@ -515,11 +517,13 @@ To install --> dotnet add package PackageName
 
 #### To work with SQL Server database: (we need to install)
 
+[All available EntityFrameworkCore nuget packages](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
+
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Relational
 - Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
 - Microsoft.EntityFrameworkCore.Tools
-- Microsoft.EntityFrameworkCore.Design
+- Microsoft.EntityFrameworkCore.Design //<-- needs for EntityFrameWorkCore migrations,
 
 - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create database and create tables:
 
@@ -533,14 +537,32 @@ To install --> dotnet add package PackageName
 
 # How to connect your project to SQl Server Database.(used for local database and Azure SQL database)
 
-1. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
-2. Create BookStoreContext.cs file in Data folder ( data connection to database)
+### For Local DB
+
+1. Create folder Data in the root of your project
+2. create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
+   Database connection file shoul contain db connection string or connection string can be added to Program.cs file.
+3. create new DB or add changes to DB and update the DB --> write in terminal
+
+```C#
+dotnet ef migrations add NameOfTheMigration  //<-- create migrations folder (with Up and Down methods in our App)
+dotnet ef database update
+```
+
+4. It will create BookStore database on your local server, with all tables that you have indicated in the Database connection file (from Data folder)
+
+### For hosted DB - in Azure portal
+
+1. Create hosted Database in Azure Portal (all this services create in Azure Portal --> create subscriotions, Resource group, App Services, SQL database (Here you add the name of your Database), SQL Server, Key Vault, App registration)
+2. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
+3. Create DatabaseNameContext.cs file in Data folder ( data connection to database).
+   The name must be the same as you created in the Auzre Portal, SQL database. NameOfTheDataBase + Context.cs <-- syntax of the database connection file name in our app.
 
 - BookStoreContext ////BookStore <--can be any name, this is a name of our database
-- BookStoreContext ////Context <--must be always in the end of name of our class
+- BookStoreContext ////Context <--must be always in the end of name of our class, suffix
 
-3. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
-4. To create Migrations folder, we write -->
+4. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
+5. To create Migrations folder, we write -->
 
 ```C#
 # creating database with tables, Class proporties converts to table columns.
@@ -563,7 +585,7 @@ dotnet ef database update
 
 ```
 
-6. All migrations commands, we write -->
+6. To see All migrations commands, we write -->
 
 ```c#
 
@@ -617,7 +639,7 @@ Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-st
   or CDN link of main bootstrap link
 ```
 
-(CDN bootstrap css link)[https://getbootstrap.com/docs/5.3/getting-started/introduction/#cdn-links]
+[CDN bootstrap css link](https://getbootstrap.com/docs/5.3/getting-started/introduction/#cdn-links)
 
 - Then in View files we can use Bootstrap css  
   ...............................................................................................................

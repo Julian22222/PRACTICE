@@ -103,11 +103,12 @@ builder.Services.AddScoped<UserService,UserService>();  //to work with UserServi
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>,ApplicationUserClaimsPrincipalFactory>(); //to save logged-in User details into Claims, then we can use them anywhere in our app
 
+
 // Configuration -> services that allow to acces to the data that we mentioned in appsettings.json or to access our Secrets
 //we need to use IConfiguration in Programm.cs to have access to secrets and appsettings.json data , we use--> builder.Configuration
 if(builder.Environment.IsDevelopment())  //if Environment = Development --> do this code (it will show local dabase )
 {
-builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options => //this helps our app understand that we use MyBookStoreWebDbContext database and also we can use database in depandency injection --> context
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //HERE WE GETTING DATA FROM LOCAL DATABSE
 }
 
@@ -138,10 +139,12 @@ options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()))
 }
 
 
-//Don't need this part, , in Development and Production this part was already used
+//Use this code if we connecting to the database from MyBookStoreWebDbContext class --> line 63-89, 
+//No need this code If we connecting from Programm.cs file --> and we use connection in Development and Production ENV
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
-// builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we tell to our application that we use BookStoreContext class as DB connection (Also, this line needs to make dependency injection in different classes)
-
+//This line register our database and we can use our database in Dependency injection --> context
+// builder.Services.AddDbContext<MyBookStoreWebDbContext>(); //we are telling to our application that we use BookStoreContext class as DB connection (Also, this line needs to make dependency injection in different classes), with this example connection string must present in MyBookStoreWebDbContext class --> protected override void OnConfiguring method
+//(the same) or write--> builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  //<--we can put connection string over here as well, then delete all protected override method from MyBookStoreWebDbContext class
 
 
 var app = builder.Build();  //creating our web app
@@ -153,7 +156,7 @@ var app = builder.Build();  //creating our web app
 
 if (!app.Environment.IsDevelopment())  //if our environment = not development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
-    app.UseExceptionHandler("/Home/Error");  // <-- will show this page in productions for common users, in case of any errors
+    app.UseExceptionHandler("/Home/Error");  // <-- will show this page in productions for common users, in case of any errors (except 404,400,500 etc.)
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

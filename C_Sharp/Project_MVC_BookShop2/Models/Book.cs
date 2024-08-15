@@ -15,6 +15,7 @@ namespace Project_MVC_BookShop2.Models
 
         // [DataType(DataType.Date)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others, some attributes are not working in MVC)
         // [Display(Name ="Date")]
+        // [EmailAddress] <-- to validate to be an email
         // public string MyField{get;set;}
 
 

@@ -69,10 +69,18 @@
 
 @* to work with client side validation we need these 3 libraries, this will helpto unable the lient side validation automatically from server side validation *@
 @* THE ORDER OF LIBRARIES IS IMPORTANT!!!!! *@
+<environment include="Development"> 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</environment>
+
+@* this min version will be used in Production,Staging,Testing environments *@
+<environment exclude="Development"> 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
+</environment>
 
 
     @* jquery.unobtrusive-ajax library connection, link from -(https://cdnjs.com/libraries/jquery-ajax-unobtrusive) (this method is -how you can access the library using CDN network) *@

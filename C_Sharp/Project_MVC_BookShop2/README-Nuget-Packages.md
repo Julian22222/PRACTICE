@@ -1,6 +1,7 @@
 # How to install nuget packages(Entity Framework Core)
 
 Nuget packages can be installed through -->VSCode-->View --> Command Palette
+if --> Nuget Package Manager extension was installed on VS Code.
 
 - write in the Palette --> Nuget Package, click it and then write your Nuget package name to download
 
