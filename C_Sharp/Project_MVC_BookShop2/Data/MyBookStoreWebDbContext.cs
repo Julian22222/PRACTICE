@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;  // to inherit from Ide
 using Microsoft.EntityFrameworkCore;   //Enables .NET developers to work with a database using .NET objects, allow to inherit DbContext
 ////allow to use ToListAsync method, SaveChangesAsync(), FindAsync(id); and other asyn methods
 
-using Project_MVC_BookShop2.Models;
+using Project_MVC_BookShop2.Models; // to use ApplicationUser Class
 
 //// --> This file is to use with Web SQL Database in Azure portal
 

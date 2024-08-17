@@ -58,7 +58,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>(); //<--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App (it has already build in properties), it has standard AspNetUsers table. if we don't want to add any extra properties to AspNetUsers table, to work With Identity Core we need to configure Identity to work with database
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<MyBookStoreWebDbContext>();  //<--use this code if you are planning to use Usernames, Passwords, LogIn, SignUp in yur App. Use this code if you are planning to ADD some properties to AspNetUsers table, ( we use Class ApplicationUser with added properties) to work With Identity Core we need to configure Identity to work with database
-//AddIdentity <-- will get all the feature thta are available in Identity framework core
+//AddIdentity <-- will get all the feature that are available in Identity framework core
 //IdentityUser <--is a table that already build in Identity framework, to work with a user we insert this table
 //ApplicationUser <-- created Model class with added properties to AspNetUsers table 
 //identityRole <--is a table that already buildIn in Identity framework, to work with roles
@@ -196,9 +196,12 @@ app.UseStaticFiles();   // UseStaticFiles -> located in folder wwwroot, allow to
 
 app.UseRouting();   // routing connection, -> needs for endpoint connection, allow to use different routes in controllers , should be writen before app.MapControllerRoute
 
-app.UseAuthentication();  //authentication connection, to use passwords ,LogIn,SignUp etc.(Authentication must be above Authorization!!!! to work correctly)
+app.UseAuthentication();  //authentication connection, Work together with Identity Core Framework -->to use passwords ,LogIn,SignUp etc.(Authentication must be above Authorization!!!! to work correctly)
 
-app.UseAuthorization();   // authorization connection
+app.UseAuthorization();   // authorization connection, Work together with Identity Core Framework 
+//UseAuthentication, UseAuthorization must be above MapControllerRoute
+
+
 
 // endpoints connection, all your pages registration from Controllers folder,
 app.MapControllerRoute(

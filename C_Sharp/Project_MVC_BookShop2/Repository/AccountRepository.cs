@@ -50,28 +50,25 @@ public class AccountRepository
     //IdentityResult <--return data type
     public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel){
 
-        //  var user = new IdentityUser(){ 
+        //  var user = new IdentityUser(){   //<--IdentityUser is buid-in Class in Identity Core
         // Email = userModel.Email,
-        //     UserName = userModel.Email,
-
-        //     //Add columns to AspNetUsers table
-        //     FirstName = userModel.FirstName,
-        //     LastName = userModel.LastName
+        // UserName = userModel.Email,
         // } <--use this code if we use standard AspNetUsers table, if we don't add any properties to AspNetUsers table
         
 
-        var user = new ApplicationUser(){
+        //assign all inserted data from Client to --> user variable (filled Form from Signup.cshtml page) 
+        var user = new ApplicationUser(){  //ApplicationUser <-- is our created Model Class
             Email = userModel.Email,
             UserName = userModel.Email,
 
-            //Add columns to AspNetUsers table
+            //Added columns to AspNetUsers table from ApplicationUser Model Class
             FirstName = userModel.FirstName,
             LastName = userModel.LastName
         };
 
         //CreateAsync <-- method that are provided by UserManager,
         //CreateAsync --> Go to Definition (to check what variables it takes)
-       var result = await _userManager.CreateAsync(user, userModel.Password);  //interacting with UserManager, AspNetUsers table (create mew User --> SignUp)
+       var result = await _userManager.CreateAsync(user, userModel.Password);  //interacting with UserManager, AspNetUsers table (create mew User --> SignUp), Adding new User to Database
        
        return result;
     }

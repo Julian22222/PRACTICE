@@ -25,7 +25,7 @@ private readonly AccountRepository _accountRepository;
 //controller
 public AccountController(AccountRepository accountRepository){
 
-_accountRepository = accountRepository;  //dependency injections, to work with Identity framework, (we can use this Depenedency injection because we wrote - line 50- in Program.cs)
+_accountRepository = accountRepository;  //dependency injections, to work with Identity framework, (we can use this Depenedency injection because we wrote - line 97- in Program.cs)
 }
 
 
@@ -37,7 +37,7 @@ _accountRepository = accountRepository;  //dependency injections, to work with I
 
     [Route("sign-up")]  //Attribute routing 
     [HttpPost]
-    public async Task <IActionResult> Signup(SignUpUserModel userModel){
+    public async Task <IActionResult> Signup(SignUpUserModel userModel){ //SignUpUserModel our created class to sign Up for new users
 
      if(ModelState.IsValid){
         
