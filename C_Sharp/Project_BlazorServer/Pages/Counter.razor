@@ -1,0 +1,32 @@
+﻿@* This is the Page when you use --> @page "/some URL" *@
+@page "/counter"  
+
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+
+@* we cab insert components this way --> we put in the tag the component that we want to insert *@
+<Child></Child> 
+
+
+<br/>
+<br/>
+<hr/>
+
+@* passing Counter variable which has --> Counter number (as parammetr) from this page *@
+<TestChild Counter="@currentCount"></TestChild>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
