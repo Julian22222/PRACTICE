@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;   //to use SelectList, SelectListItem,
 using Microsoft.AspNetCore.Hosting;  // to use IWebHostEnvironment
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;  // to use Path.Combine function
-using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol;  // to use [Authorize] Attribute, only loged In users can access this action method
+using Microsoft.AspNetCore.Authorization; // to use [Authorize] Attribute, only loged In users can access this action method
+using NuGet.Protocol;  
 
 
 // using System.Web.Mvc; 

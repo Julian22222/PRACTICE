@@ -12,8 +12,8 @@ using Project_MVC_BookShop2.Data;
 namespace ProjectMVCBookShop2.Migrations
 {
     [DbContext(typeof(MyBookStoreWebDbContext))]
-    [Migration("20240306194331_azurePortalMigrations")]
-    partial class azurePortalMigrations
+    [Migration("20240820231212_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,12 +182,18 @@ namespace ProjectMVCBookShop2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()

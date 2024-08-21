@@ -44,7 +44,7 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
    Microsoft.EntityFrameworkCore.Tools
    ```
 
-   -->/// package to write queries to database
+   -->/// package to write queries to database, and interact with migrations
 
 5. ```bash
    Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation

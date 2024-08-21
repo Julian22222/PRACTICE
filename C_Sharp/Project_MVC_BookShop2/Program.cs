@@ -67,7 +67,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkS
 //MyBookStoreWebDbContext <-- our database name
 
 
-//////////// //Configure the password complexity (User Registration)
+///////////Configure the password complexity (User Registration), we can customize default password settings -->
 // builder.Services.Configure<IdentityOptions>( options=>{
 // ////////here we configure all the settigs for Identity framework, 
 // //////////if we need to configure settings for pasword --> update settings for password
@@ -110,6 +110,10 @@ if(builder.Environment.IsDevelopment())  //if Environment = Development --> do t
 {
 builder.Services.AddDbContext<MyBookStoreWebDbContext>(options => //this helps our app understand that we use MyBookStoreWebDbContext database and also we can use database in depandency injection --> context
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //HERE WE GETTING DATA FROM LOCAL DATABSE
+
+/////another syntax how to write the same connection
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");  /<--make a variable with connection string
+//options.UseSqlServer(connectionString);  /<-- connect to SQL Server
 }
 
 

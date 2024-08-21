@@ -8,7 +8,7 @@
 
 
 
-<h2>Search books</h2>
+<h2 class="text-center mb-5">Search books</h2>
 
     <form asp-controller="Book" asp-action="SearchBook">
         <div class="input-group md-form form-sm form-2 pl-0">
@@ -39,6 +39,9 @@
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
                         <th scope="col">Description</th>
+                        <th>Price</th>
+                        <th>Created At</th>
+                        <th>Action</th>
                        
                     </tr>
                 </thead>
@@ -46,15 +49,15 @@
                 <tbody id="dynamic_data">
                     
                         @foreach(var book in Model){
-                <tr>
-                    <td>
+                @* <tr>
+                    <td> *@
 
                             @* @book *@
                             @* <partial name="_bookThumbnail" model="book" />   *@
                             <partial name="_bookLine" model="book" />  
 
-                    </td>
-                </tr>
+                    @* </td>
+                </tr> *@
                         }
                     
 

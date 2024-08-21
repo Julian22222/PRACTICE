@@ -42,7 +42,7 @@ _configuration = configuration;  //<--needs to connects to appsettings.json and 
 
 
   // this creates Books table in the database
-        // name of your table will be -Books2
+        // name of your table in the database will be -Books2
         //<Books> -> data type(from Data folder), will create columns from Book class proporties
         public DbSet<Books> Books2 {get; set; }
 

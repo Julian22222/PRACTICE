@@ -59,7 +59,9 @@ var newBook = new Books(){
     
     //full path to uploaded img folder -->(wwwroot/books/cover)
     CoverImageUrl = model.CoverImageUrl,  //<-- we could pass data using parametre / ViewBag and assign to  CoverImageUrl, or with new property as we done it here in this example
-    BookPdfUrl = model.BookPdfUrl
+    BookPdfUrl = model.BookPdfUrl,
+    Price = model.Price,
+    CreatedAt = DateTime.UtcNow
 
     // UpdatedOn = DateTime.UtcNow  <-- will put the local time and date of the user
 };
@@ -89,6 +91,11 @@ return newBook.Id;
             //Therefore we need to convert it manually, (without using any mapping- other option to convert data)  
             // We convert it manually --> List<Books> (that we receive from database) into List<Book>
 
+
+
+            //var allbooks = await _context.Book2.OrderByDescending(p => p.Id).ToListAsync();  <--it will make descending order 
+
+
             // if there is any value in the data(in the Books table) then we do this code
             if(allbooks?.Any() == true){
                 foreach (var book in allbooks){
@@ -102,7 +109,10 @@ return newBook.Id;
                         LanguageId = book.LanguageId,  //showing a number 
                         // Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
                         TotalPages = book.TotalPages,
-                        CoverImageUrl = book.CoverImageUrl  //full path to uploaded img folder -->(wwwroot/books/cover)
+                        CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
+                        Price = book.Price,
+                        CreatedAt = book.CreatedAt
+                    
                     });
                 }
             }
@@ -122,7 +132,9 @@ return newBook.Id;
                     LanguageId = book.LanguageId,  //showing a number 
                     // Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
                     TotalPages = book.TotalPages,
-                    CoverImageUrl = book.CoverImageUrl  //full path to uploaded img folder -->(wwwroot/books/cover)
+                    CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
+                    Price = book.Price,
+                    CreatedAt = book.CreatedAt
             }).Take(2).ToListAsync();  //Take(2) <--taking only 2 Books from the database Books2 table
         }
 
@@ -143,7 +155,9 @@ return newBook.Id;
                         Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
                         TotalPages = book.TotalPages,
                         CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
-                        BookPdfUrl = book.BookPdfUrl
+                        BookPdfUrl = book.BookPdfUrl,
+                        Price = book.Price,
+                        CreatedAt = book.CreatedAt
             }).FirstOrDefaultAsync();
 // return DataSource().Where(x=> x.Id ==id).FirstOrDefaultAsync();
 
@@ -168,7 +182,9 @@ return newBook.Id;
     Language = book.Language.Name, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get)
     TotalPages = book.TotalPages,
     CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
-    BookPdfUrl = book.BookPdfUrl//full path to uploaded img folder -->(wwwroot/books/cover)
+    BookPdfUrl = book.BookPdfUrl, //full path to uploaded img folder -->(wwwroot/books/cover)
+    Price = book.Price,
+    CreatedAt = book.CreatedAt
  }).ToListAsync(); 
  }
 

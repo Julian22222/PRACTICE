@@ -57,8 +57,16 @@
       "PackagePath": "staticwebassets/books/cover/b208da07-c4cd-4761-aa0a-f1a0e5fb2ec8_books-4812032_960_720.jpg"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/b7b45a79-ba0e-4e5f-95ff-f7cc7ace18bc_images.jpg",
+      "PackagePath": "staticwebassets/books/cover/b7b45a79-ba0e-4e5f-95ff-f7cc7ace18bc_images.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/c921ccd6-fdba-4f04-b409-2614686cdd6a_book1.jpg",
       "PackagePath": "staticwebassets/books/cover/c921ccd6-fdba-4f04-b409-2614686cdd6a_book1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/cc92f6de-14bf-4ae4-ba81-c0256999b9b1_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/cover/cc92f6de-14bf-4ae4-ba81-c0256999b9b1_books-4812032_960_720.jpg"
     },
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/d5517154-12f6-4c80-91d5-6fea11c5afc6_books-4812032_960_720.jpg",
@@ -105,8 +113,16 @@
       "PackagePath": "staticwebassets/books/pdf/6c50a9e0-a3cc-47eb-aba1-6da9c848c771_2.pdf"
     },
     {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/74baa6fc-98b7-429a-b38b-1ea975ce46cb_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/74baa6fc-98b7-429a-b38b-1ea975ce46cb_1.pdf"
+    },
+    {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/7dbffc6e-8ec1-4cc2-b960-8cf36d5fc624_3.pdf",
       "PackagePath": "staticwebassets/books/pdf/7dbffc6e-8ec1-4cc2-b960-8cf36d5fc624_3.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/8831bb03-be0d-4ed0-a953-0f5b3f9a18ad_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/8831bb03-be0d-4ed0-a953-0f5b3f9a18ad_2.pdf"
     },
     {
       "Id": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/8ed06fd1-5b73-406b-91cd-f4ea04606c4a_2.pdf",

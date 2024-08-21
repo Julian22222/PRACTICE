@@ -71,6 +71,13 @@
             </div>
         </div>
 
+         <div class="row">
+            <div class="col-md-12">
+                  @* using Description property from the Book  *@
+               <p class="description">@Model.CreatedAt</p>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-4">
                 @* target="blank"  <--open pdf file in new web page *@
@@ -89,6 +96,7 @@
             <li class="list-group-item"><span class="font-weight-bold">Category - </span> @Model.Category</li>
             <li class="list-group-item"><span class="font-weight-bold">Total pages - </span> @Model.TotalPages</li>
             <li class="list-group-item"><span class="font-weight-bold">Language - </span> @Model.Language</li>
+            <li class="list-group-item"><span class="font-weight-bold">Price - £</span> @Model.Price</li>
         </ul>
 
     </div>

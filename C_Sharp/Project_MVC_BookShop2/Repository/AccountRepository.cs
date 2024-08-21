@@ -16,7 +16,7 @@ public class AccountRepository
 {   
 
 //UserManager - is buildin in Identity framework, needs for SignUp 
-//SignInManager is buildIn in Identity framework, needs for SignIn 
+//SignInManager is buildIn in Identity framework, needs for LogIn, Log Out, and we can check if User Loged In or Not 
 //These 2 Manager are very importan to work with user details and to handle Authentication and Authorisation
 
 
@@ -78,7 +78,7 @@ public class AccountRepository
 
 
     //SignIn method
-    public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel){
+    public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel){ //SignInModel (first)<--data type, signInModel(secnd)<-- data from AccountController(that came from LogIn Form)
         //here we use a method that is available in SignInManager
         //PasswordSignInAsync --> Go to Definition (to check what variables it takes)
 

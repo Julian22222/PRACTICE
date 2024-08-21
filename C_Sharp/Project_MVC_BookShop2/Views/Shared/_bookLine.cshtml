@@ -9,9 +9,10 @@
         </th> *@
 
          <td>
-         <img style="max-width:20%" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/340719-200.png" : Model.CoverImageUrl)" alt="image logo" class="img-thumbnail" />
+         <img width="100" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/340719-200.png" : Model.CoverImageUrl)" alt="image logo" class="img-thumbnail" />
         </td>
-@* max-width:20% *@
+        @* width="100"  <-- image width 100px*@
+@*<img max-width:20% src="" />*@
 @* style="@((getWidth() >= 500) ? max-width:20% : width:40%)" *@
         <td>
         <p >@(string.IsNullOrEmpty(Model.Title) ? "Name is not available" : Model.Title)</p>
@@ -27,10 +28,26 @@
         </td>
 
         <td>
+            @* accessing book Price  *@
+         <p>
+            <span>£</span> @(Model.Price == null ? "Price is not available" : Model.Price)
+         </p>   
+        </td>
+
+         <td>
+            @* accessing book Price  *@
+            <p>@(string.IsNullOrEmpty(Model.CreatedAt.ToString("MM/dd/yyyy")) ? "Date and time are not available" : Model.CreatedAt.ToString("MM/dd/yyyy"))</p>
+        </td>
+
+        <td style="white-space: nowrap;">
             @* accessing book Id by clicking on each card  *@
             @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
         <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+        <a class="btn btn-primary btn-sm asp-controller="Book" asp-action="EditBook" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-danger btn-sm asp-controller="Book" asp-action="DeleteBook" asp-route-id="@Model.Id">Delete</a>
         </td>
+
+        
   </tr>
 </div>
 

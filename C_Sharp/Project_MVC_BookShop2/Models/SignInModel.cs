@@ -15,7 +15,7 @@ namespace Project_MVC_BookShop2.Models
     public class SignInModel
     {
 
-         // class for Log In
+         // This is a class for Log In
         
 
         // Data anatations

@@ -188,9 +188,7 @@ private readonly SignInManager<ApplicationUser> _signInManager;  //SignInManager
 3. Password must have at least 1 lowercase ("a" - "z")
 4. Password must have at least 1 uppercase ("A" - "Z")
 
-These Default Password settings can be changed. By following code:
-
-- In Program.cs file -->line 67
+These Default Password settings can be changed. We can customize default password settings --> By following code: (--> See Program.cs file -->line 70)
 
 ```C#
 //Configure the password complexity (User Registration password configuration)
@@ -215,11 +213,13 @@ options.Password.RequireUppercase = false;
 
 # Authorize atribute (will allow to use certain action methods only for Loged in users)
 
+- We can implement Authorize atribute after we implemented SignUp, Log In and Log Out functions
+
 - For example if user not loged in he cannot excess --> Add new book page
 - We Implement some security, only loged in user allowed to add new book to database
 - If user not loged in then it will be no permission to access some action method, and by clicking on that action method will show --> page NOT FOUND. To solve this error--> we need to use this code to redirect user to certain page if he is not LogedIn
 
-- In Program.cs file we write (--> line 82 )
+- In Program.cs file we write (--> line 84 )
 
 ```C#
 builder.Services.ConfigureApplicationCookie(config =>{
@@ -239,7 +239,7 @@ app.UseAuthorization();  <-- must always be below Authentication to work correct
 
 ```
 
-2. We use Authorize atribute in Controller (in our case in BookController.cs --> line 79)
+2. We use Authorize atribute in Controller (in our case in BookController.cs --> line 85)
 
 - Only Loged In Users will be able to access this AddNewBook action method
 
@@ -312,7 +312,7 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 ```C#
       [Route("login")]  //Attribute routing
       [HttpPost]
-      public async Task <IActionResult> Login(SignInModel signInModel, string returnUrl){
+      public async Task <IActionResult> Login(SignInModel signInModel, string returnUrl){ //returnUrl <-- comes from URL query parametr that are created when you are clicking on some page, without LogIn
         if(ModelState.IsValid){
 
         var result = await _accountRepository.PasswordSignInAsync(signInModel);
@@ -321,12 +321,12 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
         if(result.Succeeded){ //If logIn is Successful do this code --> (result.Succeeded == true)
 
 
-         if(!string.IsNullOrEmpty(returnUrl)){  //if returnUrl exist then we return this returnUrl page
+         if(!string.IsNullOrEmpty(returnUrl)){  //if returnUrl exist in URL query then we return this returnUrl page
             return LocalRedirect(returnUrl);   //returnUrl <--used to return user to correct page after login
         }
 
 
-        return RedirectToAction("index", "Home");  //return Home/index View Page
+        return RedirectToAction("index", "Home");  //return Home/index View Page, if User Loged In but there is no return URL in URL query
         }
 
 
@@ -340,11 +340,12 @@ And if you want to return user to AddnewBook page after he Loged in we need:(rem
 ```
 
 - In Views/ Shared / \_LoginInfo.cshtml -->
+- here we set returnUrl for Log In button, needed if we on any page and then you click on LogIn button, after LogIn it will retrn you to the same page where you were before
 
 ```C#
 <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account"  asp-route-returnUrl="@Context.Request.Path">Login</a>
 
-//we need to access current page path and we can do thar easy by using --> @Context
+//we need to access current page path and we can do that easy by using --> @Context
 
 ```
 

@@ -1,4 +1,4 @@
-@model Book   //to use Book Model in our Form --> in asp-for="LanguageId", asp-validation-for="Author"  and other properties from Book Model , assign data type- Book, 
+@model Book   //to use Book Model in our Form, to bind it to the form --> in asp-for="LanguageId", asp-validation-for="Author"  and other properties from Book Model , assign data type- Book, 
 
 
 @{ //in this brackets we can use C# code
@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <h3 class="display-4">@ViewBag.TitlePage</h3>
+    <h3 class="display-4 text-center">@ViewBag.TitlePage</h3>
     <hr/>
 @if(ViewBag.IsSuccess == true){
 
@@ -68,10 +68,10 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 
 
 
-         <div class="form-group">
+         <div class="form-group mb-3">
             <label asp-for="LanguageId"></label>
             @* dropdown -> using select and option tag *@
-            <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language" required> 
+            <select asp-for="LanguageId" class="form-select" asp-items="ViewBag.Language" required> 
                 <option value="">Please choose book language</option>
                 @* <select asp-formaction="LanguageId" multiple ></select>   <--multiple , allow to choose multiple options from dropdown *@
                 @* required - use for client side validation (UI)*@
@@ -97,16 +97,18 @@ public async Task<IActionResult> AddNewBook(Book book){....}
         
          *@
 
-        <div class="form-group">
-            <label asp-for="Category" class="control-lebel"></label>
-            <select asp-for="Category" class="form-control" asp-items="new SelectList(ViewBag.Category)">
+
+            @* mb-3  <-- margin bottom =3 px*@
+        <div class="form-group mb-3">
+            <label asp-for="Category" class="col-sm-4 col-form-label"></label>
+            <select asp-for="Category" class="form-select" asp-items="new SelectList(ViewBag.Category)">
                 <option value="">Please choose category</option>
             </select>
              <span asp-validation-for="Category" class="text-danger"></span> 
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             @* asp-for="Title"  input element for Title property for our Book Model  *@
             <label asp-for="Title" class="control-lebel"></label>
             <input asp-for="Title" class="form-control"/>
@@ -115,27 +117,33 @@ public async Task<IActionResult> AddNewBook(Book book){....}
             <span asp-validation-for="Title" class="text-danger"></span> 
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label asp-for="Author" class="control-lebel"></label>
             <input asp-for="Author" class="form-control"/>
              <span asp-validation-for="Author" class="text-danger"></span> 
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label asp-for="Description" class="control-lebel"></label>
             <textarea asp-for="Description" class="form-control"></textarea>
               <span asp-validation-for="Description" class="text-danger"></span> 
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label asp-for="TotalPages" class="control-lebel"></label>
             <input asp-for="TotalPages" class="form-control" />
              <span asp-validation-for="TotalPages" class="text-danger"></span> 
         </div>
 
+        <br/>
 
-        <div class="form-group">
+        @if(!string.IsNullOrEmpty(Model.CoverImageUrl)){  //<--if we have a path in the CoverImageUrl (When Edit the Book), then -->show pcs
+        <img style="inline-size: 300px;" src="@Model.CoverImageUrl" alt="book Image"/>
+        }
+
+
+        <div class="form-group mb-3">
             @* asp-for="Title"  input element for Title property for our Book Model  *@
             <label asp-for="CoverPhoto" class="control-lebel"></label>
 
@@ -153,7 +161,7 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 
 
 
-        <div class="form-group">
+        <div class="form-group mb-3">
         <label asp-for="BookPdf" class="control-lebel"></label>
         <div class="custom-file">
         <input asp-for="BookPdf" class="form-control" id="customFile">
@@ -163,12 +171,32 @@ public async Task<IActionResult> AddNewBook(Book book){....}
         <span asp-validation-for="BookPdf" class="text-danger"></span> 
         </div>
 
+
+         <div class="form-group">
+            <label asp-for="Price" class="control-lebel"></label>
+            <input asp-for="Price" class="form-control" />
+             <span asp-validation-for="Price" class="text-danger"></span> 
+        </div>
         
         <br/>
 
-        <div class="form-group">
-            <input type="submit" value="Submit" class="btn btn-primary" />
+
+        <div class="row">
+
+            @* <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>   *@
+
+            <div class="offset-sm-4 col-sm-4 d-grid">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div> 
+        
+            <div class="col-sm-4 d-grid">
+                <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Index" role="button">Cancel</a>
+            </div>
+
         </div>
+     
 
       
         

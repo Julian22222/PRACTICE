@@ -32,6 +32,10 @@ namespace Project_MVC_BookShop2.Data
         //property to store uploaded pdf file - full path starting from wwwroot folder
          public string BookPdfUrl { get; set; }
 
+         public decimal Price { get; set; }
+
+         public DateTime CreatedAt { get; set; }
+
 // first Language ->data type
 //second Language ->Name of property
         public Language Language { get; set; } //we create relationship between Books2 table and Language table
