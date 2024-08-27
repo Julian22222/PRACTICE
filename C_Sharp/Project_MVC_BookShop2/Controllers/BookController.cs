@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System;       //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
@@ -12,7 +13,8 @@ using Microsoft.AspNetCore.Hosting;  // to use IWebHostEnvironment
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.IO;  // to use Path.Combine function
 using Microsoft.AspNetCore.Authorization; // to use [Authorize] Attribute, only loged In users can access this action method
-using NuGet.Protocol;  
+using NuGet.Protocol;
+using Project_MVC_BookShop2.Data;
 
 
 // using System.Web.Mvc; 
@@ -32,19 +34,23 @@ namespace Project_MVC_BookShop2.Controllers
 private readonly BookRepository _bookRepository = null;
 private readonly ILanguageRepository _languageRepository = null;
 
+private readonly MyBookStoreWebDbContext _context;
+
 private readonly IWebHostEnvironment _webHostEnvironment;  ///dependency injection for server path to store uploaded photos on the server, contains all details about this environment
 //helps to make part of path and to save the path in wwwroot/books/cover 
 //Also used to identify environment
 
 // ctor + tab -to make constructor
         // this is constructor
-public BookController(BookRepository bookRepository, ILanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment){
+
+public BookController(BookRepository bookRepository, ILanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment, MyBookStoreWebDbContext context){
 // here we are assigning BookRepository class with all its methods to -> _bookRepository
 // can acess to BookRepository class methods , after creating an object from BookRepository class -> _bookRepository
 //also can use static class in BookRepository class, and have acess to class methods through the class folown by dot and class method
 _bookRepository = bookRepository;             //dependency injection, to make object from bookRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<BookRepository, BookRepository>(); (we can use this Depenedency injection because we wrote - line 48 in Program.cs)
 _languageRepository = languageRepository;    //dependency injection using interface, to make object from languageRepository class, to use it here we write in Program.cs -> builder.Services.AddScoped<ILanguageRepository, LanguageRepository>(); (we can use this Depenedency injection because we wrote  - line 49 in Program.cs)
 _webHostEnvironment = webHostEnvironment;   //dependency injection for server path to store uploaded photos on the server, (we don't write this variable in Program.cs to use it here) , Also used to identify environment ---> if(_webHostEnvironment.IsDevelopment){} <-- if it envionment Development do some code
+_context = context;
 }
 
 
@@ -56,7 +62,7 @@ _webHostEnvironment = webHostEnvironment;   //dependency injection for server pa
 // }
 
  // always use data return type -> Task with async methods 
-public async Task<IActionResult> GetAllBooks(){
+public async Task<IActionResult> GetAllBooks(){  //using IActionReult we can return any datatype from this action method, ViewResult - can return only View()
     var data = await _bookRepository.GetAllBooks();
 
     return View(data); //passing the data to the View
@@ -86,8 +92,6 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 // form Method to add new book, GET method
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 
-ViewBag.TitlePage = "Add new book";
-
 // passing English language as default to our form  -->in return View(model)
 var model = new Book(){
     LanguageId = 1  //need to pass an Id of the language, because we used SelectList --> new SelectList(await _languageRepository.GetLanguages(), "Id","Name")
@@ -105,7 +109,7 @@ ViewBag.Category = new List<string>(){
     // and create variable int bookId = 0 and by default we passing it to View page -->AddNewBook
     ViewBag.IsSuccess = isSuccess;
     ViewBag.BookId = bookId;
-    return View(model);
+    return View();
 }
 
 
@@ -113,15 +117,32 @@ ViewBag.Category = new List<string>(){
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
 
-    Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
+    // Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
 
-    ViewBag.TitlePage = "Add new book";
+
+        if(book.CoverPhoto == null){  //If the user didn't added CoverPhoto we add Customized Error specifically for this property
+            ModelState.AddModelError("CoverPhoto", "The Image file is required");  //<-- assign the error for CoverPhoto (it is a key), with the message --> The Image file is required (this is a value)
+        }  
+
+        if(book.BookPdf == null){  //If the user didn't added BookPdf we add Customized Error specifically for this property
+            ModelState.AddModelError("BookPdf", "The Pdf file is required");  //<-- assign the error for BookPdf (it is a key), with the message --> The Pdf file is required (this is a value)
+        } 
+
+
+        ViewBag.Category = new List<string>(){
+            "programming","animals", "technology", "sports"
+        };
+
+        // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+        ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+
+
+
 
     // if(!ModelState.IsValid){....}  <-- if model is filled incorrectly
 
     if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
     {
-
 
         // to save uploaded cover photo in the wwwroot/books/cover
         if(book.CoverPhoto != null){
@@ -149,6 +170,18 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
             // new FileStream(serverFolder <- the server path)
             await book.CoverPhoto.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
+
+         /////////////           Another option how to Save file
+        ////////////    First we need to make unique name for each file that we are saving--> which contains DateTime + FileName
+        // string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- first part of Saved file
+        // newFileName += path.GetExtension(book.CoverPhoto!.FileName);    //<-- in addition we adding to the curent string + FileName
+        ////Then we need a full path where we save the image , books <-- folder where we keep all the images in the wwwroot folder, _webHostEnvironment.WebRootPath <-- full path of our public folder of our application in WEB (which is wwwroot)
+        // string imageFullPath = _webHostEnvironment.WebRootPath + "/books/" + newFileName;
+        // using (var steam = System.IO.File.Create(imageFullPath)){book.CoverPhoto.CopyTo(steam);}  //<--allow us to save received image, System.IO.File.Create(imageFullPath))  or   System.IO.AddNewBook(imageFullPath)
+        ////////// Then we need to Save new book in the database-->
+        /// book.CoverImageUrl = newFileName;
+
+
         }
 
         if(book.BookPdf != null){
@@ -161,12 +194,14 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
           int id = await _bookRepository.AddNewBook(book);
 
-    if(id > 0){
-    // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
-    // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
-    //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
-    return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL
-}
+        Console.WriteLine($"This is new Book id - {id}");
+
+        if(id > 0){
+        // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
+        // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
+        //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
+        return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL
+        }
     }
 
     // if form is not ValidateAntiForgeryTokenAttribute = return false, and call this code
@@ -175,21 +210,14 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
 
 
-    ViewBag.Category = new List<string>(){
-"programming","animals", "technology", "sports"
-};
-
-// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
-
 
 
 // add some custom error messages to your model -> validation-summary
-ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key, second is an error msg, if we dont have any key then keep it blank
+ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key (Key can be any of Model properties such as: Title, Author, Description, CAtegory, LanguageID, Language, TotalPages, CoverPhoto, CoverImageUrl, BookPdf, BookPdfUrl, Price, CreatedAt, if it is empty it is general message ), second is an error msg, if we dont have any key then keep it blank
 ModelState.AddModelError("","This is my 2nd custom error message from BookController");
 
 
-   return View();
+   return View();  //if Model.State == false return a View
 }
 
 
@@ -222,7 +250,7 @@ return View(data);
 
 public async Task <IActionResult> EditBook(int id) {
 
-ViewBag.TitlePage = "Edit book";
+ViewBag.IsSuccess = false;
 
 
 var data = await _bookRepository.GetBookById(id);
@@ -236,47 +264,135 @@ ViewBag.Category = new List<string>(){
 ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 //also can use --> new SelectListItem(){text="Name, value="1};
 
-return View("AddNewBook",data);
+
+if(data == null){  // if we can't find the id of the book then it will be null
+    return RedirectToAction("Index", "Home");   //--> we redirect to main page if the id is not existing
+}
+
+return View(data);
 }
 
 
 
-// [HttpPost]
-// public async Task <IActionResult> EditBook(Book book) {
+[HttpPost]
+public async Task <IActionResult> EditBook(int id, Book book) {  //takes id from URL, and book from post method
 
-// ViewBag.TitlePage = "Edit book";
+ViewBag.IsSuccess = true;
 
-// if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
-// {
+var data = await _bookRepository.EditBook(id);
 
-// var data = await _bookRepository.EditBook(book);
+if(data == null){  //<-- if there is no Id, if we can't find a book
+    return RedirectToAction("Index", "Home");
+}
 
-// if(data){
-// Viewbag.Message = "Data updated successfully";
-// }else{
-// Viewbag.Message = "Internal Error. Not able to update data";
-// }
+ViewBag.Category = new List<string>(){
+"programming","animals", "technology", "sports"
+};
 
-// ViewBag.Category = new List<string>(){
-// "programming","animals", "technology", "sports"
-// };
-
-// // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
-// ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
 
 
-// return View("AddNewBook");
-// }
-// }
+Console.WriteLine($"This is Edited book data - {book.ToJson()}");
+
+if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
+{
+
+ViewBag.Message = "Data updated successfully";
+
+///////////update the image file if we have a new submitted image file
+string newURLFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
+
+Console.WriteLine($"This is URL From DB - {newURLFileName}");
+
+if(book.CoverPhoto != null ){                             //<-- if we have Uploaded new image file we can update the file
+    newURLFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
+    newURLFileName += Path.GetExtension(book.CoverPhoto.FileName);  //<-- adding a Uploaded file name to the string of time
+
+     //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+    string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newURLFileName;
+    using (var stream = System.IO.File.Create(imageFullPath)){
+       await book.CoverPhoto.CopyToAsync(stream);
+    }
+
+    //delete the old image
+    //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+    string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
+    System.IO.File.Delete(oldImageFullPath);
+}
+//////////////////////////////////////////
 
 
 
-// public async Task <IActionResult> DeleteBook(int id) {
+///////////update the PDF file if we have a new submitted image file
+string newPdfFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
 
-//     var data = await _bookRepository.DeleteBook(id);
+Console.WriteLine($"This is URL From DB - {newPdfFileName}");
 
-//     return RedirectToAction("Index");
-// }
+if(book.BookPdf != null ){                             //<-- if we have Uploaded new image file we can update the file
+    newPdfFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
+    newPdfFileName += Path.GetExtension(book.BookPdf.FileName);  //<-- adding a Uploaded file name to the string of time
+
+     //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+    string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newPdfFileName;
+    using (var stream = System.IO.File.Create(imageFullPath)){
+       await book.BookPdf.CopyToAsync(stream);
+    }
+
+    //delete the old image
+    //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+    string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
+    System.IO.File.Delete(oldImageFullPath);
+}
+//////////////////////////////////////////
+
+
+//Update the book in the database
+data.Title = book.Title;
+data.Author = book.Author;
+data.Category = book.Category;
+data.Description = book.Description;
+data.LanguageId = book.LanguageId;
+data.TotalPages = book.TotalPages.HasValue ? book.TotalPages.Value : 0;
+data.CoverImageUrl = newURLFileName;
+data.BookPdfUrl = newPdfFileName;
+data.Price = book.Price;
+
+
+await _context.SaveChangesAsync();
+
+return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
+
+}
+
+ViewBag.Message = "Internal Error. Not able to update data";
+return View(book);  //if ModelState is unccessful
+}
+
+
+
+
+
+public async Task <IActionResult> DeleteBook(int id) {
+
+    var data = await _bookRepository.DeleteBook(id);
+
+    if(data == null){
+        return RedirectToAction("SearchBook", "Book");
+    }
+
+    Console.WriteLine($"This isfull path - {_webHostEnvironment.WebRootPath}");
+
+    string imageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
+
+    System.IO.File.Delete(imageFullPath);
+
+    _context.Books2.Remove(data);
+    _context.SaveChanges();
+    ViewBag.Message = "Book Deleted Successfully";
+    
+    return RedirectToAction("SearchBook", "Book");
+}
 
 
 

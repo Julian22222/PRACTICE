@@ -1,3 +1,5 @@
+[Microsoft ASP.NET Notes](https://learn.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-8.0)
+
 # Static access Modificator
 
 - if we use --> "Static" in filed or method that means thta method or field will belong to Class in general but not to its object.
@@ -484,3 +486,16 @@ crossorigin="anonymous"></script>
     data-ajax-loading="#myLoader"
   ```
   <-- use id="myLoader" in bootstrap piece of code, line 23-29 in AddnewBook.cshtml file, show loading picture when uploading
+
+# Form
+
+- A Form has various input options for user to get data easily:
+- Text box
+- Text Area,
+- Calendar,
+- Radio button,
+- Checkbox,
+- Dropdown,
+- Nummber,
+- Email,
+- etc

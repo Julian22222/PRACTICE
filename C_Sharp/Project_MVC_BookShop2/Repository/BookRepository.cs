@@ -93,7 +93,7 @@ return newBook.Id;
 
 
 
-            //var allbooks = await _context.Book2.OrderByDescending(p => p.Id).ToListAsync();  <--it will make descending order 
+            //var allbooks = await _context.Book2.OrderByDescending(p => p.Id).ToListAsync();  <--it will make descending order, reverse the order
 
 
             // if there is any value in the data(in the Books table) then we do this code
@@ -189,16 +189,84 @@ return newBook.Id;
  }
 
 
-// public async Task <bool> DeleteBook (int id){
+public async Task <Books> EditBook(int id ){
+
+//need to get book from DB (Books data type ) without converting it to Book type, because we don't need to show the book but update it in the DB
+
+    return await _context.Books2.Where(x=>x.Id == id).FirstOrDefaultAsync();
+
+    // var bookToEdit = await _context.Books2.Where(x => x.Id == id).FirstOrDefaultAsync();
+    
+    
+    
+//     .Select(book => new Book{
+//     Id = book.Id,
+//     Title = book.Title,
+//     Author = book.Author,
+//     Category = book.Category,
+//     Description = book.Description,
+//     LanguageId = book.LanguageId,
+//     Language = book.Language.Name, 
+//     TotalPages = book.TotalPages,
+//     CoverImageUrl = book.CoverImageUrl,
+//     BookPdfUrl = book.BookPdfUrl,
+//     Price = book.Price,
+//     CreatedAt = book.CreatedAt
+//    }).FirstOrDefaultAsync();
+    ///////////////////////////////////////sdesj u nas kniga kotoruju nado pimenjatj iz db
+
+//   var editedBook = new Books(){
+//     Id = book.Id,
+//     Title = book.Title,
+//     Author = book.Author,
+//     Category = book.Category,
+//     Description = book.Description,
+//     LanguageId = book.LanguageId,
+//     TotalPages = book.TotalPages.HasValue ? book.TotalPages.Value : 0,
+//     CoverImageUrl = book.CoverImageUrl,
+//     BookPdfUrl = book.BookPdfUrl,
+//     Price = book.Price,
+//     CreatedAt = book.CreatedAt
+//   };
+
+//   var editedBookFrontEnd = new Book(){
+//     Id = editedBook.Id,
+//     Title = editedBook.Title,
+//     Author = editedBook.Author,
+//     Category = editedBook.Category,
+//     Description = editedBook.Description,
+//     LanguageId = editedBook.LanguageId,
+//     Language = editedBook.Language.Name, 
+//     TotalPages = editedBook.TotalPages,
+//     CoverImageUrl = editedBook.CoverImageUrl,
+//     BookPdfUrl = editedBook.BookPdfUrl,
+//     Price = editedBook.Price,
+//     CreatedAt = editedBook.CreatedAt
+//   };
+
+
+
+
+
+
+//    await _context.Books2.AddAsync(editedBook);
+//    await _context.SaveChangesAsync();
+
+//    return editedBookFrontEnd;
+}
+
+
+
+public async Task <Books> DeleteBook (int id){
 
 // var deletedBook = new Books(){Id = id};
 
-//   var result = await _context.Books2.Remove(book);
+ return await _context.Books2.Where(x=>x.Id ==id).FirstOrDefaultAsync();
 
 //   await _context.SaveChangesAsync();
 
 // return true;
-// }
+}
 
 
 

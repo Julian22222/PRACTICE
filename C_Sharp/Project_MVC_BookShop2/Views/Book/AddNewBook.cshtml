@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <h3 class="display-4 text-center">@ViewBag.TitlePage</h3>
+    <h3 class="display-4 text-center">Add new book"</h3>
     <hr/>
 @if(ViewBag.IsSuccess == true){
 
@@ -36,7 +36,8 @@
 @* data-ajax="true"  <-- our form will work with ajax, (this is mandatory text to work with ajax) if in _Layout.cshtml we imported  all needed libraries*@
 @* ata-ajax-complete="myComplete" data-ajax-success="mySuccess"   <-- 3 different functions, the function logic is in the bottom of the file *@
 @* data-ajax-loading="#myLoader" <-- use id="myLoader" in bootstrap piece of code, line 23-29, show loading picture when uploading*@
- <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
+
+<form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
 @* enctype="multipart/form-data"   <- If you are dealing with the file(if we planning to uploading files in View) in your form then you use this attribute in Form tag*@
 @* asp-controller="Book" asp-action="AddNewBook"  <-- we don't need to write this part, if in Controller (-->See BookController.cs) the View page-(form page) name has the same name as [HttpPost] method- (when we send the data) -->
 AddNewBook <--is the same name for View page and [HttpPost] method
@@ -46,6 +47,8 @@ public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId =
 [HttpPost]
 public async Task<IActionResult> AddNewBook(Book book){....}
  *@
+
+
 
 
 
@@ -138,44 +141,43 @@ public async Task<IActionResult> AddNewBook(Book book){....}
 
         <br/>
 
-        @if(!string.IsNullOrEmpty(Model.CoverImageUrl)){  //<--if we have a path in the CoverImageUrl (When Edit the Book), then -->show pcs
-        <img style="inline-size: 300px;" src="@Model.CoverImageUrl" alt="book Image"/>
-        }
-
 
         <div class="form-group mb-3">
             @* asp-for="Title"  input element for Title property for our Book Model  *@
             <label asp-for="CoverPhoto" class="control-lebel"></label>
 
-         @* code block from bootstrap , (4 lines) *@
-        <div class="custom-file">
-        <input asp-for="CoverPhoto" class="form-control" id="customFile">  
-        <label class="custom-file-label" for="customFile">Choose file</label>
-        </div>
+            @* code block from bootstrap , (4 lines) *@
+            <div class="custom-file">
+                <input asp-for="CoverPhoto" class="form-control" id="customFile">  
+                @* <label class="custom-file-label" for="customFile">Choose file</label> *@
 
 
             @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
             <span asp-validation-for="CoverPhoto" class="text-danger"></span> 
+            </div>
+
         </div>
 
 
 
 
         <div class="form-group mb-3">
-        <label asp-for="BookPdf" class="control-lebel"></label>
-        <div class="custom-file">
-        <input asp-for="BookPdf" class="form-control" id="customFile">
-        @* <label class="form-control-label" for="customFile">Choose file</label> *@
-        </div>
-            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
-        <span asp-validation-for="BookPdf" class="text-danger"></span> 
+            <label asp-for="BookPdf" class="control-lebel"></label>
+            <div class="custom-file">
+                <input asp-for="BookPdf" class="form-control" id="customFile">
+                @* <label class="form-control-label" for="customFile">Choose file</label> *@
+        
+                @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+                <span asp-validation-for="BookPdf" class="text-danger"></span> 
+            </div>
         </div>
 
-
-         <div class="form-group">
+        <div class="form-group mb-3">
             <label asp-for="Price" class="control-lebel"></label>
-            <input asp-for="Price" class="form-control" />
-             <span asp-validation-for="Price" class="text-danger"></span> 
+            <div class="form-group">
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span> 
+            </div>
         </div>
         
         <br/>

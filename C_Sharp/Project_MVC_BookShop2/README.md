@@ -50,7 +50,7 @@ LanguageId (number of Language)
 
 1.
 
-```bash
+```C#
    dotnet ef migrations add (AnyMigrationsName) //to add changes to database
 
    dotnet ef migrations add init  //<--Example
@@ -59,13 +59,29 @@ LanguageId (number of Language)
 
 2.
 
-```bash
+```C#
       dotnet ef database update  //to update database
 ```
 
 - Server side validation is written in Model class/ Model folder
 
-  ..............................................................................................................
+3. If we already have some data in the DB (We added many items to the DB and we want to delete everithing from DB) and we want to clear all the data from DB:
+
+- Delete Migrations folder in VS Code of your project
+- Delete all used tables for your project in the DB
+- Then add migrations and update the DB
+
+```C#
+ dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+
+dotnet ef migrations add init   //<--Example
+```
+
+```C#
+      dotnet ef database update  //to update database
+```
+
+..............................................................................................................
 
 ## To quickly add missing namespace in VS Code- Just use CTRL+. / or ctr + space on the word with the red underline. No need to install other extensions.
 
@@ -135,7 +151,7 @@ dotnet add package (PackageName)
 # Main Locations in different folder
 
 - Data folder --> we keep all data for database here.
-- Data/ Model classes --> in these classes no point to use optional proporties, because it is converted from Model Class (As example: public string? Language { get; set; })
+- Data/ Model classes --> if we use optional proporties in these classes, it will be --> null if there is no data (As example: public string? Language { get; set; })
 - Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class

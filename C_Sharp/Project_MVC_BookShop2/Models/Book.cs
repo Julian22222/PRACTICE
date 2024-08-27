@@ -20,6 +20,9 @@ namespace Project_MVC_BookShop2.Models
         // public string MyField{get;set;}
 
     
+        // unique identifier, using Guid property for Id
+        // public Guid Id { get; set; }
+
 
         // [Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
         public int Id { get; set; }
@@ -56,7 +59,10 @@ namespace Project_MVC_BookShop2.Models
         // IFormFile - it is a special data type(it allow to create a property where we can upload the file), this property will hold all the details about uploaded files / Uploded image, img name(file Name)
         [Display(Name ="Choose the cover photo of your book")]
         // [Required] //<--mandatory field
+         //CoverPhoto is optional property, because when we editing the book yo don't have to insert new Image for the book into the form
         public IFormFile? CoverPhoto { get; set; }
+
+         //We don't have to create another property where we keep URL path to the correct image, we can --> in <img src="/books/cover/@book.CoverPhoto.FileName/>
 
         // uploaded image path, from wwwroot/books/cover + File name. We don't need full path --> serverFolder from BookController
         public string? CoverImageUrl {get; set;}
@@ -64,9 +70,11 @@ namespace Project_MVC_BookShop2.Models
 
         
        
+        
         // IFormFile - it is a special data type(it allow to create a property where we can upload the file), this property will hold all the details about uploaded files / img (file Name)
         [Display(Name ="Upload your book in pdf format")]
         // [Required]
+        //BookPdf is optional property, because when we editing the book yo don't have to insert new PDF for the book into the form
         public IFormFile? BookPdf { get; set; }
 
         // uploaded image full path

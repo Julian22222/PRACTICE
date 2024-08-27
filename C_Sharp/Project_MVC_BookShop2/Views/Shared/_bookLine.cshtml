@@ -43,8 +43,10 @@
             @* accessing book Id by clicking on each card  *@
             @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
         <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
-        <a class="btn btn-primary btn-sm asp-controller="Book" asp-action="EditBook" asp-route-id="@Model.Id">Edit</a>
-        <a class="btn btn-danger btn-sm asp-controller="Book" asp-action="DeleteBook" asp-route-id="@Model.Id">Delete</a>
+        <a class="btn btn-primary btn-sm" asp-controller="Book" asp-action="EditBook" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-danger btn-sm" asp-controller="Book" asp-action="DeleteBook" asp-route-id="@Model.Id" onclick="return confirm('Are sure that you want to delete this file?')">Delete</a>
+       @*/////// Make different design of the buttons *@
+        @* <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id">View details</a> |  <a asp-controller="Book" asp-action="EditBook" asp-route-id="@Model.Id">Edit</a> | <a asp-controller="Book" asp-action="DeleteBook" asp-route-id="@Model.Id" onclick="return confirm('Are sure that you want to delete this file?')">Delete</a> *@
         </td>
 
         
