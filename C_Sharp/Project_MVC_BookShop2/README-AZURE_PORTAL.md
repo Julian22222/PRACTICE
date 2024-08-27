@@ -19,6 +19,120 @@
 
 6. Once the deployment is finished, click Browse Website to validate the deployment
 
+............................................................................................................
+
+If we want to added tables or/and new properties to the Database. Doesn't matter Local database and/or to Web Application (to Azure portal) the process is the same:
+
+### Connection string full path allows to connect with that Database which is mentioned in the connection string and allows to add tables and properties that we indicated in Data folder/Context DB connection file and Data/Models --> to that DB that is mentioned in connecion string.
+
+### Key Vault --> doesn't have connection string full path, therefore can't add needed tables and properties to the correct Database.
+
+Process step by step:
+
+- We will update only that database that is mentioned in ConnectionString full path --> can be in User Secrets file /or Variable environment /or in appsettings.json (don't keep web Connection string in the appsettings.json). Example below-->
+
+```C#
+//Connection string from User Secrets file / appsettings.json file (For example)
+"ConnectionStrings:DefaultConnection": "Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!"
+```
+
+- Then we use that connection in Data/ Context Database connection file, or in Program.cs file -->
+
+```C#
+if(builder.Environment.IsDevelopment())
+{
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+```
+
+and
+
+```C#
+//For PRODUCTION ENVIRONMENT WE DON'T HAVE ACTUAL CONNECTION STRING HERE WITH KEY VAULT, THEREFORE IT CANNOT UPDATE THE WEB DATABASE IN THE AZURE, WE HAVE TO PUT --> FULL CONNECTION STRING PATH FROM USER SECRETS file or FROM ENVIRONMENT VARIABLES TO CONNECT / UPDATE / ADD ALL THE TABLES AND PROPERTIES (FOR A FIRST TIME WHEN YOU CONNECT TO THE WEB DB or YOU WANT TO ADD SOME PROPERTIES OR/AND UPDATE THE FUNCTIONALITY OF THE APP)
+
+
+//THIS EXAMPLE WILL NOT WORK, WILL NOT ADD ALL NEEDED TABLES AND PROPERTIES TO CORRECT DATABASE,
+//WILL NOT CONNECT / UPDATE / ADD NEW PROPETIES,FUNCTIONS , (WHEM YOU CONNECT FIRST TIME TO WEB DB USE FULL CONNECTION STRING PATH),
+//KEY VALT DOESN'T PROVIDE FULL CONNECTION STRING PATH
+if(builder.Environment.IsProduction())
+{
+var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");
+var keyVaultClientId = builder.Configuration.GetSection("KeyVault:ClientId");
+var keyVaultClientSecret = builder.Configuration.GetSection("KeyVault:ClientSecret");
+var keyVaultDirectoryID = builder.Configuration.GetSection("KeyVault:DirectoryID");
+
+var credential = new ClientSecretCredential(keyVaultDirectoryID.Value!.ToString(), keyVaultClientId.Value!.ToString(), keyVaultClientSecret.Value!.ToString());
+
+builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!.ToString(), keyVaultClientId.Value!.ToString(), keyVaultClientSecret.Value!.ToString(), new DefaultKeyVaultSecretManager());
+
+var client = new SecretClient(new Uri(keyVaultURL.Value!.ToString()), credential);
+
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(client.GetSecret("ProdConnection").Value.Value.ToString()));
+}
+```
+
+- Instead of KEY VAULT OPTION we need to add -->
+
+```C#
+if(builder.Environment.IsDevelopment())
+{
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  //Where DefaultConnection will be full Connection string path to Web DATABASE FROM USER SECRETS FILE /ENVIRONMENT VARIABLES, TO ADD ALL THE TABLES AND PROPERTIES TO WEB APPLICATION DB
+}
+```
+
+```C#
+//Full Connection String path
+
+"Server= api of your database here;Database=NameOfYourDatabase;TrustServerCertificate=true;User ID=sa(userName);Password=PasswordForDatabase"
+```
+
+- Then in terminal we put
+
+```C#
+ dotnet ef migrations add (AnyMigrationsName) //to add changes to database + add migrations folder to the project
+
+dotnet ef migrations add init   //<--Example
+```
+
+```C#
+      dotnet ef database update  //to update database
+```
+
+- Once we added all needed tables and properties to the Web DB ,Then we can put KEY VAULT option back for Production environment,as it is
+- AND leave Development option as normal , with connection string to local databse
+
+```C#
+if(builder.Environment.IsDevelopment())
+{
+builder.Services.AddDbContext<MyBookStoreWebDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  //change DefaultConnection variable to be a full connection string path to local DB
+}
+```
+
+- Then -->
+
+# To Deploy ASP.Net web application in Azure (preparing and creating all resources to deploy)
+
+- go to --> [Azure Portal](https://portal.azure.com/)
+  Create App Services
+
+- install Azure App Service extension in VS code
+
+- To deploy new app or deploy new changes, go to correct folder of our app write in terminal-->
+
+```C#
+   dotnet publish -c Release -o ./bin/Publish
+```
+
+- In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
+
+- Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
+
+- Once the deployment is finished, click Browse Website to validate the deployment
+
 ..............................................................................................................
 
 ### To deploy project to App services in AZURE PORTAL:
