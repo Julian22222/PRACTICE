@@ -99,7 +99,7 @@ builder.Services.AddScoped<UserService,UserService>();  //to work with UserServi
 //in Dependency Injection we can use Interfaces or classes
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
-// builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;User ID=sa;Password=julik3322J!"));
+// builder.Services.AddDbContext<BookStoreContext>(options => options.UseSqlServer("Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!"));
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>,ApplicationUserClaimsPrincipalFactory>(); //to save logged-in User details into Claims, then we can use them anywhere in our app
 

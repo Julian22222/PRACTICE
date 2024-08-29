@@ -68,6 +68,9 @@ public class HomeController : Controller
         //Console.WriteLine(num is float);   //<-- data type is float, will give true or false
         //Console.WriteLine(num is Book);  //<-- is the variable num created from Class Book, will show true or false
 
+
+        //  var modifiedReleaseDate = DateTime.Now.Date;
+
         return View();
     }
 

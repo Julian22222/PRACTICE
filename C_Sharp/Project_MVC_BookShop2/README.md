@@ -11,6 +11,20 @@ In this Project we are using dropDown menu from different resources: from contro
 - to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
 - we use Azure Data Studio (an instrument to control SQL Server ). Alco, can be SQL Server management studio, MySQL workbench
 
+#### To start new app--> write in terminal
+
+1. in terminal --> dotnet new list
+2. In terminal --> dotnet new mvc
+
+---
+
+# SQL Server Management Studio (SSMS)
+
+- We use it to create Database locally and then we can work with database through this app
+- To Create Web Database --> first we create it im Microsoft Azure Portal, and then we write the connection string for that Database in the application, -->then it will appear in SSMS and we can work with the Web Database through SSMS
+
+---
+
 - Keyboard shortcuts:
   ( prop + Tab --> use in Class, will create public int MyProperty{get;set;})
   ( ctor + Tab --> create constructor for a class)
@@ -244,9 +258,36 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
   - all the nuget packages with .net version 7.0 change them to 8.0 --> <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="7.0" /> (Example)
 - Then build your project and run application
 
-..............................................................................................................
+# How to Check what .NET version we are using
 
-# How to install nuget packages (can be any nuget package)
+- Go to Project_MVC_BookShop2.csproj file (located in the bootom of the root Project Folder)
+- Then Check line 4 -->
+
+```C#
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+```
+
+# Install packages from Nuget Package
+
+#### USE Nuget Gallery-->
+
+- In Command Palette put (ctr + shift + p )-->
+
+```bash
+NuGet:Open NuGet Gallery
+```
+
+- add your .NET version for a package and press "+" in api.csproj section
+- to delete some packages we can press "-" in api.csproj section
+
+#### Or To install nuget packages with different version , not the latest version we put: (EXMAPLE). We put in terminal -->
+
+```C#
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
+```
+
+#### How to install nuget packages (can be any nuget package)
 
 Nuget packages can be installed through -->VSCode-->View --> Command Palette
 if --> Nuget Package Manager extension was installed on VS Code.

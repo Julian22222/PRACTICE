@@ -13,7 +13,7 @@ namespace Project_MVC_BookShop2.Models
 {
     public class Book
     {
-
+        //[DataType(DataType.EmailAddress)]
         // [DataType(DataType.Date)] //assign specific type for a field(Password,Date,DateTime, Currency, EmailAddress,CreditCard, PhoneNumber,Time,Upload and others, some attributes are not working in MVC)
         // [Display(Name ="Date")]
         // [EmailAddress] <-- to validate to be an email
@@ -22,6 +22,17 @@ namespace Project_MVC_BookShop2.Models
     
         // unique identifier, using Guid property for Id
         // public Guid Id { get; set; }
+
+
+        // [Range(0, 999.99, ErrorMessage = "Price Should be between 0 and 999.99")]
+        // public decimal Price { get; set; }
+
+        // [RegularExpression(@"regularExpression here", ErrorMessage ="Password is not valid")]
+
+        // [StringLength(8, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
+        //public string Name {get; set;}   //{0} <-- property name == Name
+
+        //[StringLength(50, MinimumLength = 3, ErrorMessage = "Full Name must be between 3 and 50 chars")]
 
 
         // [Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
@@ -42,6 +53,8 @@ namespace Project_MVC_BookShop2.Models
         //[Required, MaxLength(100)]  <-- we can join the attributes together
         public string Description { get; set; }
         public string Category { get; set; }
+
+        [Display(Name = "Language")]
         public int LanguageId { get; set; }  //store Id of our language
 
         public string? Language { get; set; }

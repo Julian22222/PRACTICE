@@ -44,3 +44,25 @@
 
 <h3>Counter: @Counter</h3>
 <button onclick="${IncrementCount}">Add +1</button> *@
+
+
+
+@* <input name="home" type="button" onclick="executeInsert()" />
+
+
+
+<script type="text/javascript">
+function executeInsert(){
+   $.get('/Home/Index');
+}
+</script> *@
+
+@*$.ajax({
+            type: "POST",
+            data: mydata,
+            url: "@(Url.Action("Action", "Controller"))",
+            data: JSON.stringify(mydata),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        cache: false
+        });*@

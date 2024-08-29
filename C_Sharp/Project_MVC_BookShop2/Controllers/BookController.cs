@@ -139,69 +139,67 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
 
 
-    // if(!ModelState.IsValid){....}  <-- if model is filled incorrectly
+        // if(!ModelState.IsValid){....}  <-- if model is filled incorrectly
 
-    if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
-    {
+        if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
+        {
 
-        // to save uploaded cover photo in the wwwroot/books/cover
-        if(book.CoverPhoto != null){
+            // to save uploaded cover photo in the wwwroot/books/cover
+            if(book.CoverPhoto != null){
 
-            string folder ="books/cover/";  //path to folder where we store uploaded photos
-            // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,
-            //or this folder (path) is not available because we need a server actual path to store images in this app  --> 
-            //therefore we need to use this parametr --> IWebHostEnvironment webHostEnvironment (it contains all details about environment), in contructor we create it and then assign to _webHostEnvironment) and then use it in lne 133
+                string folder ="books/cover/";  //path to folder where we store uploaded photos
+                // if we deploy this app on a server (using the folder path only)then we will get an error (because this folder (path) is not accessable,
+                //or this folder (path) is not available because we need a server actual path to store images in this app  --> 
+                //therefore we need to use this parametr --> IWebHostEnvironment webHostEnvironment (it contains all details about environment), in contructor we create it and then assign to _webHostEnvironment) and then use it in lne 133
 
-            //add uploaded img file Name to the path --> book.CoverPhoto.FileName;
-            //also we need to avoid errors when upload images with the same name, make the img files name unique -> + Guid.NewGuid().ToString()
-            folder += Guid.NewGuid().ToString() + "_" + book.CoverPhoto.FileName;
+                //add uploaded img file Name to the path --> book.CoverPhoto.FileName;
+                //also we need to avoid errors when upload images with the same name, make the img files name unique -> + Guid.NewGuid().ToString()
+                folder += Guid.NewGuid().ToString() + "_" + book.CoverPhoto.FileName;
 
-            // assign folder variable to CoverImageUrl property, / <--must be added in front of folder to display an image from database
-            book.CoverImageUrl = "/" + folder;  //<-saving CoverPhoto path to the variable(we don't use serverFolder variable, to save path in database we use only path from wwwtoot folder and we don't need full path using environment variable --> _webHostEnvironment), 
-            //We use --> "/" picture to be visible in UI
+                // assign folder variable to CoverImageUrl property, / <--must be added in front of folder to display an image from database
+                book.CoverImageUrl = "/" + folder;  //<-saving CoverPhoto path to the variable(we don't use serverFolder variable, to save path in database we use only path from wwwtoot folder and we don't need full path using environment variable --> _webHostEnvironment), 
+                //We use --> "/" picture to be visible in UI
 
-            // we need server path to store(Save) these imges in this application using Global access WEB (When app is deployed),(we need to use IWebHostEnvironment dependency injection)
-            // Define the path for a server of the actual folder where we keep imgs, add the server path + folder (join server path and folder)
-            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <-- this function combine 2 variables --> _webHostEnvironment.WebRootPath  +  folder. 
-            //This serverFolder variable will allow server to save the file using our path to correct folder
+                // we need server path to store(Save) these imges in this application using Global access WEB (When app is deployed),(we need to use IWebHostEnvironment dependency injection)
+                // Define the path for a server of the actual folder where we keep imgs, add the server path + folder (join server path and folder)
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);  // <-- this function combine 2 variables --> _webHostEnvironment.WebRootPath  +  folder. 
+                //This serverFolder variable will allow server to save the file using our path to correct folder
 
-            //this line needs to save Image to wwwroot/books/cover, in our Application
-            // we save image (this is uploaded image -->book.CoverPhoto) and make a copy of the full img path in wwwroot/books/cover,
-            // new FileStream(serverFolder <- the server path)
-            await book.CoverPhoto.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
-
-
-         /////////////           Another option how to Save file
-        ////////////    First we need to make unique name for each file that we are saving--> which contains DateTime + FileName
-        // string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- first part of Saved file
-        // newFileName += path.GetExtension(book.CoverPhoto!.FileName);    //<-- in addition we adding to the curent string + FileName
-        ////Then we need a full path where we save the image , books <-- folder where we keep all the images in the wwwroot folder, _webHostEnvironment.WebRootPath <-- full path of our public folder of our application in WEB (which is wwwroot)
-        // string imageFullPath = _webHostEnvironment.WebRootPath + "/books/" + newFileName;
-        // using (var steam = System.IO.File.Create(imageFullPath)){book.CoverPhoto.CopyTo(steam);}  //<--allow us to save received image, System.IO.File.Create(imageFullPath))  or   System.IO.AddNewBook(imageFullPath)
-        ////////// Then we need to Save new book in the database-->
-        /// book.CoverImageUrl = newFileName;
+                //this line needs to save Image to wwwroot/books/cover, in our Application
+                // we save image (this is uploaded image -->book.CoverPhoto) and make a copy of the full img path in wwwroot/books/cover,
+                // new FileStream(serverFolder <- the server path)
+                await book.CoverPhoto.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
 
-        }
+                /////////////           Another option how to Save file
+                ////////////    First we need to make unique name for each file that we are saving--> which contains DateTime + FileName
+                // string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- first part of Saved file
+                // newFileName += path.GetExtension(book.CoverPhoto!.FileName);    //<-- in addition we adding to the curent string + FileName
+                ////Then we need a full path where we save the image , books <-- folder where we keep all the images in the wwwroot folder, _webHostEnvironment.WebRootPath <-- full path of our public folder of our application in WEB (which is wwwroot)
+                // string imageFullPath = _webHostEnvironment.WebRootPath + "/books/" + newFileName;
+                // using (var steam = System.IO.File.Create(imageFullPath)){book.CoverPhoto.CopyTo(steam);}  //<--allow us to save received image, System.IO.File.Create(imageFullPath))  or   System.IO.AddNewBook(imageFullPath)
+                ////////// Then we need to Save new book in the database-->
+                /// book.CoverImageUrl = newFileName;
+            }
 
-        if(book.BookPdf != null){
+            if(book.BookPdf != null){
         
-        string folder = "books/pdf/";
-        book.BookPdfUrl = await UploadFile(folder, book.BookPdf);  //invoke UploadeFile function (line 172), this function can be used for all uploaded files
-        }
+            string folder = "books/pdf/";
+            book.BookPdfUrl = await UploadFile(folder, book.BookPdf);  //invoke UploadeFile function (line 172), this function can be used for all uploaded files
+            }
 
 
 
-          int id = await _bookRepository.AddNewBook(book);
+            int id = await _bookRepository.AddNewBook(book);
 
-        Console.WriteLine($"This is new Book id - {id}");
+            Console.WriteLine($"This is new Book id - {id}");
 
-        if(id > 0){
-        // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
-        // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
-        //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
-        return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL
-        }
+            if(id > 0){
+                // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
+                // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
+                //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
+                return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL, passing in URL with the Post method
+            }
     }
 
     // if form is not ValidateAntiForgeryTokenAttribute = return false, and call this code
@@ -212,12 +210,13 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
 
 
-// add some custom error messages to your model -> validation-summary
-ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key (Key can be any of Model properties such as: Title, Author, Description, CAtegory, LanguageID, Language, TotalPages, CoverPhoto, CoverImageUrl, BookPdf, BookPdfUrl, Price, CreatedAt, if it is empty it is general message ), second is an error msg, if we dont have any key then keep it blank
-ModelState.AddModelError("","This is my 2nd custom error message from BookController");
+    // add some custom error messages to your model -> validation-summary
+    ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key (Key can be any of Model properties such as: Title, Author, Description, CAtegory, LanguageID, Language, TotalPages, CoverPhoto, CoverImageUrl, BookPdf, BookPdfUrl, Price, CreatedAt, if it is empty it is general message ), second is an error msg, if we dont have any key then keep it blank
+    ModelState.AddModelError("","This is my 2nd custom error message from BookController");
+    ModelState.AddModelError("","Please check fields for errors");
 
 
-   return View();  //if Model.State == false return a View
+    return View();  //if Model.State == false  -->return a View
 }
 
 
@@ -362,6 +361,7 @@ data.Price = book.Price;
 await _context.SaveChangesAsync();
 
 return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
+// return View ("SearchBook");
 
 }
 
