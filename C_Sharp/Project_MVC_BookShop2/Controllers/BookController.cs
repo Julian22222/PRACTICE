@@ -234,41 +234,40 @@ private async Task<string> UploadFile(string folderPath, IFormFile file){
 
 public async Task<IActionResult> SearchBook(string SearchTitle){ //here we receive the typed input from the form
 
-if(string.IsNullOrEmpty(SearchTitle)){  //if received SearchTitle is null or empty we show all the books from database
-    var data = await _bookRepository.GetAllBooks();
-return View(data);
-}else{
+    if(string.IsNullOrEmpty(SearchTitle)){  //if received SearchTitle is null or empty we show all the books from database
+        var data = await _bookRepository.GetAllBooks();
+        return View(data);
+    }else{
 
-var data = await _bookRepository.SearchBook(SearchTitle);  //if received SearchTitle exists( has some value) it will show that searched book 
-return View(data);
-
-}
+    var data = await _bookRepository.SearchBook(SearchTitle);  //if received SearchTitle exists( has some value) it will show that searched book 
+    return View(data);
+    }
 
 }
 
 
 public async Task <IActionResult> EditBook(int id) {
 
-ViewBag.IsSuccess = false;
+    ViewBag.IsSuccess = false;
 
 
-var data = await _bookRepository.GetBookById(id);
+    var data = await _bookRepository.GetBookById(id);
 
 
-ViewBag.Category = new List<string>(){
-"programming","animals", "technology", "sports"
-};
+    ViewBag.Category = new List<string>(){
+    "programming","animals", "technology", "sports"
+    };
 
-// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
-//also can use --> new SelectListItem(){text="Name, value="1};
+    // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+    ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+    //also can use --> new SelectListItem(){text="Name, value="1};
 
 
-if(data == null){  // if we can't find the id of the book then it will be null
-    return RedirectToAction("Index", "Home");   //--> we redirect to main page if the id is not existing
-}
+    if(data == null){  // if we can't find the id of the book then it will be null
+        return RedirectToAction("Index", "Home");   //--> we redirect to main page if the id is not existing
+    }
 
-return View(data);
+    return View(data);
 }
 
 
@@ -276,94 +275,94 @@ return View(data);
 [HttpPost]
 public async Task <IActionResult> EditBook(int id, Book book) {  //takes id from URL, and book from post method
 
-ViewBag.IsSuccess = true;
+    ViewBag.IsSuccess = true;
 
-var data = await _bookRepository.EditBook(id);
+    var data = await _bookRepository.EditBook(id);
 
-if(data == null){  //<-- if there is no Id, if we can't find a book
+    if(data == null){  //<-- if there is no Id, if we can't find a book
     return RedirectToAction("Index", "Home");
-}
-
-ViewBag.Category = new List<string>(){
-"programming","animals", "technology", "sports"
-};
-
-// ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
-ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
-
-
-Console.WriteLine($"This is Edited book data - {book.ToJson()}");
-
-if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
-{
-
-ViewBag.Message = "Data updated successfully";
-
-///////////update the image file if we have a new submitted image file
-string newURLFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
-
-Console.WriteLine($"This is URL From DB - {newURLFileName}");
-
-if(book.CoverPhoto != null ){                             //<-- if we have Uploaded new image file we can update the file
-    newURLFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
-    newURLFileName += Path.GetExtension(book.CoverPhoto.FileName);  //<-- adding a Uploaded file name to the string of time
-
-     //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
-    string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newURLFileName;
-    using (var stream = System.IO.File.Create(imageFullPath)){
-       await book.CoverPhoto.CopyToAsync(stream);
     }
 
-    //delete the old image
-    //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
-    string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
-    System.IO.File.Delete(oldImageFullPath);
-}
-//////////////////////////////////////////
+    ViewBag.Category = new List<string>(){
+    "programming","animals", "technology", "sports"
+    };
+
+    // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
+    ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id","Name");  //under the hood --> Id- value property(in our case =1), Name - Text property(in our case =English)  -> <option value="1" > English </option>
+
+
+    Console.WriteLine($"This is Edited book data - {book.ToJson()}");
+
+    if (ModelState.IsValid) //if all fields of form is valid ,it will give = true
+    {
+
+        ViewBag.Message = "Data updated successfully";
+
+        ///////////update the image file if we have a new submitted image file
+        string newURLFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
+
+        Console.WriteLine($"This is URL From DB - {newURLFileName}");
+
+        if(book.CoverPhoto != null ){                             //<-- if we have Uploaded new image file we can update the file
+            newURLFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
+            newURLFileName += Path.GetExtension(book.CoverPhoto.FileName);  //<-- adding a Uploaded file name to the string of time
+
+            //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+            string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newURLFileName;
+            using (var stream = System.IO.File.Create(imageFullPath)){
+            await book.CoverPhoto.CopyToAsync(stream);
+            }
+
+            //delete the old image
+            //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+            string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
+            System.IO.File.Delete(oldImageFullPath);
+        }
+        //////////////////////////////////////////
 
 
 
-///////////update the PDF file if we have a new submitted image file
-string newPdfFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
+        ///////////update the PDF file if we have a new submitted image file
+        string newPdfFileName = data.CoverImageUrl;  //<-- assign a CoverImageUrl string from data that from DB (old file image URL)
 
-Console.WriteLine($"This is URL From DB - {newPdfFileName}");
+        Console.WriteLine($"This is URL From DB - {newPdfFileName}");
 
-if(book.BookPdf != null ){                             //<-- if we have Uploaded new image file we can update the file
-    newPdfFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
-    newPdfFileName += Path.GetExtension(book.BookPdf.FileName);  //<-- adding a Uploaded file name to the string of time
+        if(book.BookPdf != null ){                             //<-- if we have Uploaded new image file we can update the file
+            newPdfFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");   //<-- creating Unique file name using current date and time
+            newPdfFileName += Path.GetExtension(book.BookPdf.FileName);  //<-- adding a Uploaded file name to the string of time
 
-     //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
-    string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newPdfFileName;
-    using (var stream = System.IO.File.Create(imageFullPath)){
-       await book.BookPdf.CopyToAsync(stream);
+            //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+            string imageFullPath = _webHostEnvironment.WebRootPath + "/books/cover/" + newPdfFileName;
+            using (var stream = System.IO.File.Create(imageFullPath)){
+            await book.BookPdf.CopyToAsync(stream);
+            }
+
+            //delete the old image
+            //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
+            string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
+            System.IO.File.Delete(oldImageFullPath);
+        }
+        //////////////////////////////////////////
+
+
+        //Update the book in the database
+        data.Title = book.Title;
+        data.Author = book.Author;
+        data.Category = book.Category;
+        data.Description = book.Description;
+        data.LanguageId = book.LanguageId;
+        data.TotalPages = book.TotalPages.HasValue ? book.TotalPages.Value : 0;
+        data.CoverImageUrl = newURLFileName;
+        data.BookPdfUrl = newPdfFileName;
+        data.Price = book.Price;
+
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
+        // return View ("SearchBook");
+
     }
-
-    //delete the old image
-    //_webHostEnvironment.WebRootPath  --> /home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/wwwroot
-    string oldImageFullPath = _webHostEnvironment.WebRootPath + data.CoverImageUrl;
-    System.IO.File.Delete(oldImageFullPath);
-}
-//////////////////////////////////////////
-
-
-//Update the book in the database
-data.Title = book.Title;
-data.Author = book.Author;
-data.Category = book.Category;
-data.Description = book.Description;
-data.LanguageId = book.LanguageId;
-data.TotalPages = book.TotalPages.HasValue ? book.TotalPages.Value : 0;
-data.CoverImageUrl = newURLFileName;
-data.BookPdfUrl = newPdfFileName;
-data.Price = book.Price;
-
-
-await _context.SaveChangesAsync();
-
-return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
-// return View ("SearchBook");
-
-}
 
 ViewBag.Message = "Internal Error. Not able to update data";
 return View(book);  //if ModelState is unccessful

@@ -1,3 +1,5 @@
+[ASP.NET Docs](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio-code)
+
 ## Overview of this Project
 
 In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(In AddNewBook View)
@@ -21,7 +23,7 @@ In this Project we are using dropDown menu from different resources: from contro
 # SQL Server Management Studio (SSMS)
 
 - We use it to create Database locally and then we can work with database through this app
-- To Create Web Database --> first we create it im Microsoft Azure Portal, and then we write the connection string for that Database in the application, -->then it will appear in SSMS and we can work with the Web Database through SSMS
+- To Create Web Hosted Database --> first we create it im Microsoft Azure Portal, and then we write the connection string for that Database in the application, -->then it will appear in SSMS and we can work with the Web Database through SSMS
 
 ---
 
@@ -79,6 +81,8 @@ LanguageId (number of Language)
 
 - Server side validation is written in Model class/ Model folder
 
+[Example of Server Side Validation in the Model Class](https://www.c-sharpcorner.com/UploadFile/cda5ba/adding-custom-validation-in-mvc/)
+
 3. If we already have some data in the DB (We added many items to the DB and we want to delete everithing from DB) and we want to clear all the data from DB:
 
 - Delete Migrations folder in VS Code of your project
@@ -101,13 +105,17 @@ dotnet ef migrations add init   //<--Example
 
 ### Key Vault --> doesn't have connection string full path, therefore can't add needed tables and properties to the correct Database.
 
-Process step by step:
+Process step by step how to add tables and properties to the DB:
 
 - We will update only that database that is mentioned in ConnectionString full path --> can be in User Secrets file /or Variable environment /or in appsettings.json (don't keep web Connection string in the appsettings.json). Example below-->
 
 ```C#
 //Connection string from User Secrets file / appsettings.json file (For example)
 "ConnectionStrings:DefaultConnection": "Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!"
+```
+
+```C#
+"ConnectionStrings:DefaultConnection":"Server={Server Name};Initial Catalog={Database Name};Persist Security Info=False;User ID={DB User Name};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
 ```
 
 - Then we use that connection in Data/ Context Database connection file, or in Program.cs file -->
@@ -250,6 +258,8 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 ................................................................................
 
 # How To migrate from ASP.NET Core MVS Project from .NET 7.0 to .NET 8.0
+
+[Migrate from ASP.NET Core in .NET 7 --> to .NET 8](https://learn.microsoft.com/en-us/aspnet/core/migration/70-80?view=aspnetcore-7.0&tabs=visual-studio-code)
 
 - delete --> bin and obj folders
 - update your .NET 7.0 to .NET 8.0 in your project Project_MVC_BookShop2.csproj file: -->

@@ -53,10 +53,10 @@ public class HomeController : Controller
         Console.WriteLine(_env.EnvironmentName);  //<-- will show Environment variable in which we are working
 
         var userId = _userService.GetUserId();
-        Console.WriteLine(userId);  //<--will show UserId
+        Console.WriteLine($"Show User Id (From Home/Index) - {userId}");  //<--will show UserId
 
         var isLoggedIn = _userService.IsAuthenticated();
-        Console.WriteLine(isLoggedIn);  //<--will show true or false, is the user Logged-In or not
+        Console.WriteLine($"Is user Loged In(From Home/Index)? - {isLoggedIn}");  //<--will show true or false, is the user Logged-In or not
 
 
 

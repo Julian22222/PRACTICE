@@ -27,10 +27,17 @@ namespace Project_MVC_BookShop2.Models
         // [Range(0, 999.99, ErrorMessage = "Price Should be between 0 and 999.99")]
         // public decimal Price { get; set; }
 
+
+        //[Range(0, 999.99)]
+        //public decimal Price { get; set; }
+
         // [RegularExpression(@"regularExpression here", ErrorMessage ="Password is not valid")]
 
         // [StringLength(8, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
         //public string Name {get; set;}   //{0} <-- property name == Name
+
+        //[StringLength(8, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
+        //When applied to a Name property, the error message created by the preceding code would be "Name length must be between 6 and 8."
 
         //[StringLength(50, MinimumLength = 3, ErrorMessage = "Full Name must be between 3 and 50 chars")]
 
