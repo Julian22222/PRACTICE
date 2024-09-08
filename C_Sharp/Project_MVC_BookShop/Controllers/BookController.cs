@@ -6,7 +6,7 @@ using System.Threading.Tasks;              //creating new threads for computatio
 using Microsoft.AspNetCore.Mvc;           //allow to use Routes , //importing to inherit Controller
 using Project_MVC_BookShop.Repository;    //BookRepository connection and methods - GetAllBooks and others
 using Project_MVC_BookShop.Models;        //Book class import connection
-
+//To quickly add missing namespace(to import missing namespaces on the top of the file) --> Just use CTRL+. / or ctr + space , on the word with the red underline. No need to install other extensions.
 // using System.Web.Mvc; 
 
 
