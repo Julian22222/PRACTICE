@@ -12,8 +12,8 @@ using Project_MVC_BookShop2.Data;
 namespace ProjectMVCBookShop2.Migrations
 {
     [DbContext(typeof(MyBookStoreWebDbContext))]
-    [Migration("20240826191837_firstMigrations")]
-    partial class firstMigrations
+    [Migration("20240910214706_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

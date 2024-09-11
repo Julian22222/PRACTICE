@@ -722,30 +722,46 @@ To install --> dotnet add package PackageName
 
 ### For Local DB
 
-1. Create folder Data in the root of your project
-2. create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
+1. First of all you need to install and configure Microsoft SQL Server in your VS Code --> Check the video
+   [How to Install and Configure Microsoft SQL Server](https://www.youtube.com/watch?v=EbePHFUE9sI)
+
+https://totatca.com/ttc-144/
+
+[Microsoft Docs](https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16&tabs=ubuntu2004)
+
+2. Create folder Data in the root of your project
+3. create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
    Database connection file shoul contain db connection string or connection string can be added to Program.cs file.
-3. create new DB or add changes to DB and update the DB --> write in terminal
+4. create new DB or add changes to DB and update the DB --> write in terminal
 
 ```C#
 dotnet ef migrations add NameOfTheMigration  //<-- create migrations folder (with Up and Down methods in our App)
 dotnet ef database update
 ```
 
-4. It will create BookStore database on your local server, with all tables that you have indicated in the Database connection file (from Data folder)
+5. It will create BookStore database on your local server, with all tables that you have indicated in the Database connection file (from Data folder)
 
 ### For hosted DB - in Azure portal
 
-1. Create hosted Database in Azure Portal (all this services create in Azure Portal --> create subscriotions, Resource group, App Services, SQL database (Here you add the name of your Database), SQL Server, Key Vault, App registration)
-2. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
-3. Create DatabaseNameContext.cs file in Data folder ( data connection to database).
+(go to step 2 if you have already Installed and configured Microsoft SQL Server for local Database)
+
+1. Install and configure Microsoft SQL Server in your VS Code --> Check this video
+   [How to Install and Configure Microsoft SQL Server](https://www.youtube.com/watch?v=EbePHFUE9sI)
+
+https://totatca.com/ttc-144/
+
+[Microsoft Docs](https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16&tabs=ubuntu2004)
+
+2. Create hosted Database in Azure Portal (all this services create in Azure Portal --> create subscriotions, Resource group, App Services, SQL database (Here you add the name of your Database), SQL Server, Key Vault, App registration)
+3. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
+4. Create DatabaseNameContext.cs file in Data folder ( data connection to database).
    The name must be the same as you created in the Auzre Portal, SQL database. NameOfTheDataBase + Context.cs <-- syntax of the database connection file name in our app.
 
 - BookStoreContext ////BookStore <--can be any name, this is a name of our database
 - BookStoreContext ////Context <--must be always in the end of name of our class, suffix
 
-4. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
-5. To create Migrations folder, we write -->
+5. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
+6. To create Migrations folder, we write -->
 
 ```C#
 # creating database with tables, Class proporties converts to table columns.
@@ -760,7 +776,7 @@ dotnet ef migrations add init  //<--Example
 
 - Migrations is used to create tables in DB, Migrations folder has info about added or deleted columns, tables in the DB
 
-5. To make update to our database, we write -->
+7. To make update to our database, we write -->
 
 ```C#
 
@@ -768,7 +784,7 @@ dotnet ef database update
 
 ```
 
-6. To see All migrations commands, we write -->
+8. To see All migrations commands, we write -->
 
 ```c#
 
@@ -776,7 +792,7 @@ dotnet ef migrations
 
 ```
 
-7. To remove some proporties from table
+9. To remove some proporties from table
 
 ```c#
 

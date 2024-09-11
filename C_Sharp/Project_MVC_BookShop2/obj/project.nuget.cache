@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lcuyyfF0GyQbfYMgYJMC7FtazGtHCUb5ctspR89hdciAEync7lszuD0bJRVhJ4toK/YRO0EGwLPXQszzk6v1yQ==",
+  "dgSpecHash": "SWA11+M6NOz61cm+3vqH3BngPGdTso+I0yyhS/gJlbTTwY6GUKX4zqw7j+2GghM7fls/dLHNXbnf6kA9E7/UeQ==",
   "success": true,
-  "projectFilePath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Project_MVC_BookShop2/Project_MVC_BookShop2.csproj",
+  "projectFilePath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/Project_MVC_BookShop2.csproj",
   "expectedPackageFiles": [
     "/home/codenitro/.nuget/packages/azure.core/1.37.0/azure.core.1.37.0.nupkg.sha512",
     "/home/codenitro/.nuget/packages/azure.identity/1.10.4/azure.identity.1.10.4.nupkg.sha512",
