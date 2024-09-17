@@ -386,7 +386,10 @@ public async Task <IActionResult> DeleteBook(int id) {
 
     System.IO.File.Delete(imageFullPath);
 
-    _context.Books2.Remove(data);
+
+    //Remove is not async. Removing an object is very simple and fast operation, it doesn't involve waiting any external resources db call,making network calls, and reading from disk
+    //The reason why Remove() doesn't allow await --> it doesn't involve any immediate database interaction when called, doesn't involve waiting and it is quick in-memory operation
+    _context.Books2.Remove(data);    //<-- Remove is NOT asynchronous function, Don't need to add --> await in front of --> _context
     _context.SaveChanges();
     ViewBag.Message = "Book Deleted Successfully";
     

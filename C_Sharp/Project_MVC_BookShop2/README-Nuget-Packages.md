@@ -87,7 +87,35 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
     ```
 
     -->//to use [Authorize] Attribute in Controllers, when only logedIn users can access certain pages (BookController line 79)
+
+12. ```bash
+      Microsoft.AspNetCore.Authentication.Facebook
+    ```
+
+--> LogIn through Facebook
+
+13. ```bash
+      Microsoft.AspNetCore.Authentication.JwtBearer
+    ```
+
+    --> LogIn --> will encrypt the password, more secure to store the password
+
+14. ````C#
+          //other different Nuget packages
+
+          Microsoft.AspNetCore.Authentication.Cookies
+
+          Microsoft.AspNetCore.StaticFiles
+
+          Microsoft.Extensions.Logging.Debug
+
+          Microsoft.VisualStudio.Web.BrowserLink
+
+          Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+        ```
     ..............................................................................................................
+    ````
 
 # Different namespaces:
 
@@ -98,6 +126,8 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
 1. ```C#
    @using System.Runtime.InteropServices.WindowsRuntime;
    ```
+
+````
 
 2. ```C#
      @using System;
@@ -223,3 +253,4 @@ allow to inherit DbContext, allow to use ToListAsync method, SaveChangesAsync(),
 ```
 
 ```
+````

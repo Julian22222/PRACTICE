@@ -12,7 +12,7 @@ using Project_MVC_BookShop2.Data;
 namespace ProjectMVCBookShop2.Migrations
 {
     [DbContext(typeof(MyBookStoreWebDbContext))]
-    [Migration("20240910214706_init")]
+    [Migration("20240917213713_init")]
     partial class init
     {
         /// <inheritdoc />

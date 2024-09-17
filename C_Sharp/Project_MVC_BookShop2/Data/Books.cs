@@ -21,7 +21,7 @@ namespace Project_MVC_BookShop2.Data
         // public string? Category { get; set; }
         public string Category { get; set; }
         //  when you put -> ? -> this field is  - not Required
-        public int LanguageId { get; set; }  //store Id of our language
+        public int LanguageId { get; set; }  //store Id of our each language
 
         public int TotalPages { get; set; }
 

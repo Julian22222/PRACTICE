@@ -2,7 +2,7 @@
 
 ## Overview of this Project
 
-In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(In AddNewBook View)
+In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(See --> AddNewBook View)
 
 - in our App can be only 1 Context file therefore:
 - To work with local database --> we create a BookStoreContext.cs file (this is database name) --> in Data/ BookStoreContext.cs (Copy all content from README-BookStoreContext.md to BookStoreContext.cs)
@@ -11,21 +11,15 @@ In this Project we are using dropDown menu from different resources: from contro
 
 - To work with AZURE SQL DATABASE --> we use MyBookStoreWebDbContext (this is database name) -in Data/MyBookStoreWebDbContext.cs
 - to work with WEB AZURE SQL DB, change all BookStoreContext --> to MyBookStoreWebDbContext ( In Program.cs, Repository )
-- we use Azure Data Studio (an instrument to control SQL Server ). Alco, can be SQL Server management studio, MySQL workbench
+- we use Azure Data Studio (an instrument to control and interact with SQL Server, it is used more often ). Also, can be SQL Server management studio (SSMS) or MySQL workbench (these last 2 options --> used rarely)
 
 #### To start new app--> write in terminal
 
 1. in terminal --> dotnet new list
 2. In terminal --> dotnet new mvc
+3. dotnet watch run
 
----
-
-# SQL Server Management Studio (SSMS)
-
-- We use it to create Database locally and then we can work with database through this app
-- To Create Web Hosted Database --> first we create it im Microsoft Azure Portal, and then we write the connection string for that Database in the application, -->then it will appear in SSMS and we can work with the Web Database through SSMS
-
----
+### Small but important things
 
 - Keyboard shortcuts:
   ( prop + Tab --> use in Class, will create public int MyProperty{get;set;})
@@ -35,28 +29,32 @@ In this Project we are using dropDown menu from different resources: from contro
 
 - We use different classes with the same properties in Data folder and in Model folder. Because we can keep the logic separate. Properties in Data classes are representing columns in database table. If in future you have any change in this entity class (in Data folder) then you need to update property in Model class , then in the controller and then in database. And this might be a problem . Therefore we keep these clases separately - Model classes separate and entity clases separate (Classes in Data folder).
 
-Also,
+Also, Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
 
-Everithing you change in Classes in Data folder (Database) --> we need to update the database using:
-
-1. ```bash
-      dotnet ef migrations add (AnyMigrationsName) //to add changes to database
+1. ```C#
+      dotnet ef migrations add (AnyMigrationsName) //<-- this command create Migrations folder in the App and add changes to database whern update the properties or tables in DB,
    ```
    - ef --> stands for Entity Framework
-2. ```bash
-     dotnet ef database update  //to update database
+2. ```C#
+     dotnet ef database update  //<-- this command update database. Using connection string in the APP--> creates tables / updates data in SSMS
    ```
 
 - Add New Book --> in NavBar , we are filling the Form and we have dropdown options:
 
 - Language dropdown menu <-- is coming from database, (they not hardcoded in the View)
-- Category dropdown menu <-- is coming from Controller (BookController), -hardcoded options
+- Category dropdown menu <-- is coming from Controller (See --> BookController.cs) <--hardcoded options
 
 - We create new class for dropdown -->Language ,in Data folder and in Models folder
-- -We Create connection, relationship between two tables - Books table and language table in Data folder--> (--> See Data/Language.cs file)
+- We Create connection, relationship between two tables - Books table and language table in Data folder--> (--> See Data/Language.cs file)
 
-in Books class we put property-->public Language(data type) Language(Name)
-LanguageId (number of Language)
+In Books class we use property-->
+
+```C#
+//Language <--first Language it is data type (Language table)
+//Language <-- second language it is a name of property
+
+public Language Language { get; set; }
+```
 
 - For each table in databse we create Class in Data folder
 
@@ -85,8 +83,8 @@ LanguageId (number of Language)
 
 3. If we already have some data in the DB (We added many items to the DB and we want to delete everithing from DB) and we want to clear all the data from DB:
 
-- Delete Migrations folder in VS Code of your project
-- Delete all used tables for your project in the DB
+- Delete Migrations folder in VS Code, in your project
+- Go to Azure Data Studio app --> Delete all used tables for your project in the DB
 - Then add migrations and update the DB
 
 ```C#
@@ -101,13 +99,13 @@ dotnet ef migrations add init   //<--Example
 
 4. If we want to added tables or/and new properties to the Database. Doesn't matter Local database and/or to Web Application (to Azure portal) the process is the same:
 
-### Connection string full path allows to connect with that Database which is mentioned in the connection string and allows to add tables and properties that we indicated in Data folder/Context DB connection file and Data/Models --> to that DB that is mentioned in connecion string.
+### use Connection string full path, it allows to connect with that Database which is mentioned in the connection string and allows to add tables and properties that we indicated in Data folder/Context DB connection file and Data/Models --> to that DB that is mentioned in connecion string.
 
 ### Key Vault --> doesn't have connection string full path, therefore can't add needed tables and properties to the correct Database.
 
-Process step by step how to add tables and properties to the DB:
+### Process step by step how to add tables and properties to the DB:
 
-- We will update only that database that is mentioned in ConnectionString full path --> can be in User Secrets file /or Variable environment /or in appsettings.json (don't keep web Connection string in the appsettings.json). Example below-->
+- We will update only that database that is mentioned in ConnectionString full path --> ConnectionString can be written in User Secrets file /or Variable environment /or in appsettings.json (DON'T KEEP WEB CONNECTION STRING in the appsettings.json --> only localhost connection string). Example below-->
 
 ```C#
 //Connection string from User Secrets file / appsettings.json file (For example)
@@ -118,7 +116,7 @@ Process step by step how to add tables and properties to the DB:
 "ConnectionStrings:DefaultConnection":"Server={Server Name};Initial Catalog={Database Name};Persist Security Info=False;User ID={DB User Name};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30";
 ```
 
-- Then we use that connection in Data/ Context Database connection file, or in Program.cs file -->
+- Then we use that connection in Data/ Context Database connection file, or in Program.cs file (depends where do do you want to connect to the DB)-->
 
 ```C#
 if(builder.Environment.IsDevelopment())
@@ -217,7 +215,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 ..............................................................................................................
 
-## To quickly add missing namespace in VS Code- Just use CTRL+. / or ctr + space on the word with the red underline. No need to install other extensions.
+## To quickly add missing namespace in VS Code --> Just use CTRL+. / or ctr + space on the word with the red underline. No need to install other extensions.
 
 # Install new .Net version to work in certain project
 
@@ -278,7 +276,9 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
     <TargetFramework>net7.0</TargetFramework>
 ```
 
-# Install packages from Nuget Package
+# Easiest way to work with Nuget Packages and Install packages from Nuget Package
+
+- Download NuGet Gallery //<--by pcisco , from VS Code extensions
 
 #### USE Nuget Gallery-->
 
@@ -288,16 +288,19 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 NuGet:Open NuGet Gallery
 ```
 
+- add in serch nuget package that you want to download
 - add your .NET version for a package and press "+" in api.csproj section
 - to delete some packages we can press "-" in api.csproj section
 
-#### Or To install nuget packages with different version , not the latest version we put: (EXMAPLE). We put in terminal -->
+#### Another option how to download Nuget packages
+
+- To install nuget packages with different version , not the latest version we put: (EXMAPLE). We put in terminal -->
 
 ```C#
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 ```
 
-#### How to install nuget packages (can be any nuget package)
+#### Another option, How to install nuget packages (can be any nuget package)
 
 Nuget packages can be installed through -->VSCode-->View --> Command Palette
 if --> Nuget Package Manager extension was installed on VS Code.
@@ -314,7 +317,7 @@ dotnet add package (PackageName)
 # Main Locations in different folder
 
 - Data folder --> we keep all data for database here.
-- Data/ Model classes --> if we use optional proporties in these classes, it will be --> null if there is no data (As example: public string? Language { get; set; })
+- Data/ Model classes --> if we use optional proporties in these classes, if there is no data in that property it will == null (As example: public string? Language { get; set; })
 - Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class
@@ -331,10 +334,10 @@ _context  // <-- database connection
 
 ```
 
-Repository is a place where you can get, post,edit,delete the data in database.
+Repository is a place where you can get, post, edit, delete the data in database.
 We use Repository class methods in BookController
 
-- In View , when we fill Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
+- In View , when we fill the Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
 
 - Components folder --> we use for ViewComponent
   Also we use Views/Shared folder to display ViewComponent View
@@ -365,7 +368,7 @@ We use Repository class methods in BookController
   - Kestrel --> is a Web Server, Cross platform, open Source, Works with Reverse Proxy Servers
   - It is recommended to use other famous and powerful web servers like IIS, Apache, or NGINX as a reverse proxy server when run Kestrel for public websites. because Kestrel is very basic light weight server which is fast but can't manage all the server performance.Therefore Kestrel can use other Powerful web servers such as IIS, Apache, or NGINX to help process all the requests and tasks then validate and pass it to Kestrel. (Kestrel server has no -> Security,management, no support for windows authentication, no support for port sharing , no https logs, no http redirect rules etc.)
 
-- Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.). We need let View know that we are using some certain layout-->\_Layout.cshtml file, therefore we need to write in each View file on the top, or indicate it in the Views/\_ViewStart.cshtml file -->
+- Views/Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.). We need let View know that we are using some certain layout-->\_Layout.cshtml file, therefore we need to write in each View file on the top, or indicate it in the Views/\_ViewStart.cshtml file -->
 
 ```C#
 @{
@@ -529,7 +532,7 @@ ViewData["book"] = new Book(){Author = "Rob", Id = 2};
 
 # How data travel through the files
 
-### When we addidng some Data to the database using form (--> From AddnewBook.cshtml)
+### When we addidng some Data to the database using form (--> See AddnewBook.cshtml)
 
 1. Filled data from the form go to controller, acion method --> (--> See BookController.cs)
 
@@ -671,10 +674,10 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 # Work with Database
 
 - To make connection to our database we have to connect our app to databse using Entity Framework Core
-- Entity Framework Core (EF Core) connects Asp.Net Core App and Database
-- EF Core is a middle service, works between Asp.net and DB
+- Entity Framework Core (EF Core) connects ASP.NET Core App and Database
+- EF Core is a middle service, works between ASP.NET and DB
 - EF Core is Microsoft's official technology to interact with relational database
-- EF Core can be used not only in Asp.net core app but also in any .NET technology - Mobile app, Windows app, Console.app other app in .NET
+- EF Core can be used not only in ASP.NET core app but also in any .NET technology - Mobile app, Windows app, Console.app other app in .NET
 - EF Core can work with lots of databases:
 
   - SQL Server
@@ -700,7 +703,7 @@ To install --> dotnet add package PackageName
 
 #### To work with SQL Server database: (we need to install)
 
-[All available EntityFrameworkCore nuget packages](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
+[All available EntityFrameworkCore nuget packages To work with different DB](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
 
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Relational
@@ -727,19 +730,23 @@ To install --> dotnet add package PackageName
 
 https://totatca.com/ttc-144/
 
+or
+
+[YouTube video](https://www.youtube.com/watch?v=GBboALYvvuE)
+
 [Microsoft Docs](https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16&tabs=ubuntu2004)
 
 2. Create folder Data in the root of your project
-3. create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
-   Database connection file shoul contain db connection string or connection string can be added to Program.cs file.
-4. create new DB or add changes to DB and update the DB --> write in terminal
+3. Create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
+   Database connection file should contain DB connection string or connection string can be added to Program.cs file.
+4. We can Create new DB or add changes to existing DB or update the existing DB --> write in terminal
 
 ```C#
 dotnet ef migrations add NameOfTheMigration  //<-- create migrations folder (with Up and Down methods in our App)
 dotnet ef database update
 ```
 
-5. It will create BookStore database on your local server, with all tables that you have indicated in the Database connection file (from Data folder)
+5. It will create BookStore database on your local server--> in Azure Data Studio, with all tables that you have indicated in the Database connection file (from Data folder)
 
 ### For hosted DB - in Azure portal
 
@@ -750,9 +757,13 @@ dotnet ef database update
 
 https://totatca.com/ttc-144/
 
+or
+
+[YouTube video](https://www.youtube.com/watch?v=GBboALYvvuE)
+
 [Microsoft Docs](https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16&tabs=ubuntu2004)
 
-2. Create hosted Database in Azure Portal (all this services create in Azure Portal --> create subscriotions, Resource group, App Services, SQL database (Here you add the name of your Database), SQL Server, Key Vault, App registration)
+2. Create hosted Database in Azure Portal (create all these services in --> Azure Portal --> create subscriotions, Resource group, App Services, SQL database (Here you add the name of your Database), SQL Server, Key Vault, App registration)
 3. We create new folder with any name (in our case) Data folder. Inside Data folder we create new class to use it for database --> Books.cs
 4. Create DatabaseNameContext.cs file in Data folder ( data connection to database).
    The name must be the same as you created in the Auzre Portal, SQL database. NameOfTheDataBase + Context.cs <-- syntax of the database connection file name in our app.
@@ -760,8 +771,9 @@ https://totatca.com/ttc-144/
 - BookStoreContext ////BookStore <--can be any name, this is a name of our database
 - BookStoreContext ////Context <--must be always in the end of name of our class, suffix
 
-5. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
-6. To create Migrations folder, we write -->
+5. In Azure Data Studio app--> Create New Connection --> fill Server name, User Name, Password, Database name from Microsoft Azure Database
+6. After creating Data folder with all needed files and content we can create --> MIGRATIONS FOLDER
+7. To create Migrations folder, we write -->
 
 ```C#
 # creating database with tables, Class proporties converts to table columns.
@@ -776,7 +788,7 @@ dotnet ef migrations add init  //<--Example
 
 - Migrations is used to create tables in DB, Migrations folder has info about added or deleted columns, tables in the DB
 
-7. To make update to our database, we write -->
+8. To make update to our database, we write -->
 
 ```C#
 
@@ -784,7 +796,7 @@ dotnet ef database update
 
 ```
 
-8. To see All migrations commands, we write -->
+9. To see All migrations commands, we write -->
 
 ```c#
 
@@ -792,7 +804,7 @@ dotnet ef migrations
 
 ```
 
-9. To remove some proporties from table
+10. To remove some proporties from table
 
 ```c#
 
@@ -1231,9 +1243,16 @@ In ASP.NET Core MVC, there are 3 different ways to register services with build-
 - Using configuration service (IConfiguration) allow us to get get any data from appsettings.json in our application (--> See ContactUs.cshtml View file)
 - We can have many appsettings.json files in our app
 
+```C#
+//if use connection string in appsettings.json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=.;Database=BookStore;TrustServerCertificate=true;User ID=sa;Password=julik3322J!"
+  }
+```
+
 ### In appsettings.json we can keep :
 
-- ConnectionString
+- ConnectionString to localhost only
 - Server Link
 - Application Name
 - We NOT keeping here secret passwords or passcodes!!! ( IHostEnvironment.Production (User Secrets file) <-- we use for passwords )

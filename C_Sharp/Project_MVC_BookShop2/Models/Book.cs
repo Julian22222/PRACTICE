@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;  //querying any type of data source
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;   //to use server side validations attributes (or Model validation)
+using System.ComponentModel.DataAnnotations.Schema;  //<--if use this --> [Column(TypeName = "decima(18,2)")]
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;    //to use IFormFile (special data type to hold information about uploaded files), allow to upload any file to our app, used in Model class
 
@@ -29,7 +30,7 @@ namespace Project_MVC_BookShop2.Models
 
 
         //[Range(0, 999.99)]
-        //public decimal Price { get; set; }
+        //public decimal Price { get; set; }  //<-- it is better avoid decimal, coz will cause weird rounding issues ,(in example -->if work with money)
 
         // [RegularExpression(@"regularExpression here", ErrorMessage ="Password is not valid")]
 
@@ -41,6 +42,7 @@ namespace Project_MVC_BookShop2.Models
 
         //[StringLength(50, MinimumLength = 3, ErrorMessage = "Full Name must be between 3 and 50 chars")]
 
+        //[Column(TypeName = "decima(18,2)")]   //<-- it is better avoid decimal, coz will cause weird rounding issues ,(in example -->if work with money)
 
         // [Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
         public int Id { get; set; }
@@ -54,7 +56,7 @@ namespace Project_MVC_BookShop2.Models
 
 
         [Required] //mandatory field to field
-        public string Author { get; set; }
+        public string Author { get; set; } = "";
 
         // [MaxLength(100)]  <--max length, different syntax
         //[Required, MaxLength(100)]  <-- we can join the attributes together
@@ -103,7 +105,7 @@ namespace Project_MVC_BookShop2.Models
 
         // [Precision(16,2)]
         [Required]
-        public decimal Price {get; set; }
+        public decimal Price {get; set; }  //<-- it is better avoid decimal, coz will cause weird rounding issues ,(in example -->if work with money)
        
 
        public DateTime CreatedAt { get; set; }
