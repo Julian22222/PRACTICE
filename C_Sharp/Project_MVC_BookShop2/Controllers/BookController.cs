@@ -90,12 +90,14 @@ public async Task<IActionResult> GetBook (int id){  //returning a View - that me
 
 [Authorize] //only logedIn user will be able to access this method
 // form Method to add new book, GET method
+[HttpGet]
 public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
 
 // passing English language as default to our form  -->in return View(model)
 var model = new Book(){
     LanguageId = 1  //need to pass an Id of the language, because we used SelectList --> new SelectList(await _languageRepository.GetLanguages(), "Id","Name")
 };
+
 
 // here we get all languages from database , Language Table
 // and passing the data in ViewBag
@@ -109,6 +111,8 @@ ViewBag.Category = new List<string>(){
     // and create variable int bookId = 0 and by default we passing it to View page -->AddNewBook
     ViewBag.IsSuccess = isSuccess;
     ViewBag.BookId = bookId;
+
+    ModelState.Clear();
     return View();
 }
 
@@ -117,7 +121,7 @@ ViewBag.Category = new List<string>(){
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
 
-    // Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
+    Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
 
 
         if(book.CoverPhoto == null){  //If the user didn't added CoverPhoto we add Customized Error specifically for this property
@@ -195,28 +199,29 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
             Console.WriteLine($"This is new Book id - {id}");
 
             if(id > 0){
+
+                
                 // here after pressing form button we redirect to the same page and passing isSuccess = true and correct id
                 // ViewBag.IsSuccess = isSuccess; <--Don't need to write here, just assign values in AddNewBook action method 
                 //ViewBag.BookId = bookId; <--Don't need to write here, just assign values in AddNewBook action method 
-                return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL, passing in URL with the Post method
+                return RedirectToAction("AddNewBook", new{isSuccess = true, bookId = id});  //isSuccess = true,bookId = id -->shows in the URL, passing in URL with the Post method,  This will pass these values as query string parameters.
+           
+                // return View("AddNewBook", id);
             }
-    }
+        }
 
     // if form is not ValidateAntiForgeryTokenAttribute = return false, and call this code
     // ViewBag.IsSuccess = false;
     // ViewBag.BookId = 0;
 
 
-
-
-
     // add some custom error messages to your model -> validation-summary
-    ModelState.AddModelError("","This is my 1st custom error message from BookController"); // "" <-is a key (Key can be any of Model properties such as: Title, Author, Description, CAtegory, LanguageID, Language, TotalPages, CoverPhoto, CoverImageUrl, BookPdf, BookPdfUrl, Price, CreatedAt, if it is empty it is general message ), second is an error msg, if we dont have any key then keep it blank
-    ModelState.AddModelError("","This is my 2nd custom error message from BookController");
-    ModelState.AddModelError("","Please check fields for errors");
+    ModelState.AddModelError("", "This is my 1st custom error message from BookController"); // "" <-is a key (Key can be any of Model properties such as: Title, Author, Description, CAtegory, LanguageID, Language, TotalPages, CoverPhoto, CoverImageUrl, BookPdf, BookPdfUrl, Price, CreatedAt, if it is empty it is general message ), second is an error msg, if we dont have any key then keep it blank
+    ModelState.AddModelError("", "This is my 2nd custom error message from BookController");
+    ModelState.AddModelError("", "Please check fields for errors");
 
 
-    return View();  //if Model.State == false  -->return a View
+    return View(book);  //if Model.State == false  -->return a View
 }
 
 
@@ -359,8 +364,8 @@ public async Task <IActionResult> EditBook(int id, Book book) {  //takes id from
 
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
-        // return View ("SearchBook");
+        // return RedirectToAction("SearchBook");  //if the action is located in the same Controller, we don't need to indicate controller name
+        return View ("SearchBook");
 
     }
 

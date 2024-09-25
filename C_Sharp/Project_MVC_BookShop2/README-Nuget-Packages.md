@@ -1,11 +1,38 @@
 # How to install nuget packages(Entity Framework Core)
 
+- Download NuGet Gallery //<--by pcisco , from VS Code extensions
+
+#### USE Nuget Gallery-->
+
+- In Command Palette put (ctr + shift + p )-->
+
+```bash
+NuGet:Open NuGet Gallery
+```
+
+- add in serch nuget package that you want to download
+- add your .NET version for a package and press "+" in api.csproj section
+- to delete some packages we can press "-" in api.csproj section
+
+#### Another option how to download Nuget packages
+
+To install nuget packages with different version , not the latest version we put: (EXMAPLE). We put in terminal -->
+
+```C#
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
+```
+
+#### Another option, How to install nuget packages (can be any nuget package)
+
 Nuget packages can be installed through -->VSCode-->View --> Command Palette
 if --> Nuget Package Manager extension was installed on VS Code.
 
 - write in the Palette --> Nuget Package, click it and then write your Nuget package name to download
 
 or
+
+In terminal we write:
+dotnet add package (PackageName)
 
 All needed packages to start working with your App
 

@@ -17,6 +17,10 @@
 
 5. Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
 
+- first time in Comand Palette --> LogIn through Comand Palette
+
+- if Comand Palette is blank and doesn't show any options --> close VS Code and open again
+
 6. Once the deployment is finished, click Browse Website to validate the deployment
 
 ............................................................................................................
@@ -131,6 +135,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 - Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
 
+- first time in Comand Palette --> LogIn through Comand Palette
+
+- if Comand Palette is blank and doesn't show any options --> close VS Code and open again
+
 - Once the deployment is finished, click Browse Website to validate the deployment
 
 ..............................................................................................................
@@ -151,27 +159,37 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 ....................................................................................................................
 
-# Azure Services to use to deploy your App.--> [Click Here](https://www.youtube.com/watch?v=EKqXAMLsnKQ&list=PLR-Buy35u4SH0lmQhmlpf2gnX5TxCjUNH&index=13)
+# Azure Services to use to deploy your App.-->
+
+[YouTube How to Deploy to Azure](https://www.youtube.com/watch?v=EKqXAMLsnKQ&list=PLR-Buy35u4SH0lmQhmlpf2gnX5TxCjUNH&index=13)
 
 [Microsoft Azure](https://portal.azure.com/#home)
 
-1. Subscriptions (Azure subscription)
+1. Subscriptions (Azure subscription) // all Projects can go under one subscription (--> Azure subscription 1, in our case)
 
 - What package you use and how mach you pay for using Azure services
 
-2. Resource group
+2. Resource group (Create new Resource Group for each project)
 
 - works as a bag where we put all used, needed services for our app in 1 Resource group. (App Services, SQL databases,SQL server,Key Vault, Log Analytics workspace, App Service Plan) <-- all of them must be in the same Resource group for particular applicatiopn
 
 3. App Services
 
 - allow you build and deploy your app.
+- When creating new app services --> create Web App ( Not a Web App + Database)
 
-4. SQL databases
-5. SQL server
+4. SQL server
+
+- allow to create Server name, Server user ID (In Azure Portal --> Server admin login) and Server Password
+
+5. SQL databases
+
+- allow to get the connection string to DB
+
 6. Key Vault [How to use Key Vault for your secrets](https://www.youtube.com/watch?v=ZXfuxisC0IA&t=1s)
 
 - Creates KeyVaultURL <--copy - paste it to - to use in appsettings.json and in Program.cs for Our secrets /// (Vault URL <- in Key Vault)
+- KeyVault Client Secret value expires after some time --> will not connect to your Database , Need to Renew Client Secret for KeyVault in Microsoft Azure/ to Update --> Azure/App registrations/All applications --> choose your project name --> Certificates & secrets --> Create new Client Secret value here
 - Located in Azure cloud, this is Azure service where we can store Secrets
 - help to keep secrets that are encreapted,
 - Here we insert our Secrets (Connection String etc.)

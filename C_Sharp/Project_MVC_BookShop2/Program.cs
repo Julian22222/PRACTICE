@@ -119,7 +119,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 
 
-
+//Key Vault after sometime expires and won't connect to DB -->  Need to Renew Client Secret for KeyVault in Microsoft Azure
 if(builder.Environment.IsProduction()) //if Environment = Production --> do this code, getting data from SQL server Azure Portal, using Key Vault
 {
 var keyVaultURL = builder.Configuration.GetSection("KeyVault:KeyVaultURL");             //getting info from appsettings.json

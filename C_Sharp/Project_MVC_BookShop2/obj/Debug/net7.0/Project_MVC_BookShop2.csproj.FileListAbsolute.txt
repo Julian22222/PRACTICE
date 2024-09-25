@@ -1182,3 +1182,5 @@
 /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/Project_MVC_BookShop2.pdb
 /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/Project_MVC_BookShop2.genruntimeconfig.cache
 /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/obj/Debug/net7.0/ref/Project_MVC_BookShop2.dll
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.AspNetCore.Server.Kestrel.Https.dll
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/bin/Debug/net7.0/Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.dll

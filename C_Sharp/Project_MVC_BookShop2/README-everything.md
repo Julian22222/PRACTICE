@@ -499,3 +499,7 @@ crossorigin="anonymous"></script>
 - Nummber,
 - Email,
 - etc
+
+# Redirects
+
+[Click Here](https://www.scholarhat.com/tutorial/mvc/return-view-vs-return-redirecttoaction-vs-return-redirect-vs-return-redirecttoroute)

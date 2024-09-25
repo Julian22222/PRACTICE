@@ -1,5 +1,10 @@
 [ASP.NET Docs](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio-code)
 
+To work with in ASP.NET MVC Core with C# we need VS Code extensions:
+
+- C# Dev Kit (by Microsoft)
+- C# Extensions (by JosKreativ)
+
 ## Overview of this Project
 
 In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(See --> AddNewBook View)
@@ -211,6 +216,10 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 - Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
 
+- first time in Comand Palette --> LogIn through Comand Palette
+
+- if Comand Palette is blank and doesn't show any options --> close VS Code and open again
+
 - Once the deployment is finished, click Browse Website to validate the deployment
 
 ..............................................................................................................
@@ -394,6 +403,54 @@ Generaly if you are creating any View that is common to our app we start the nam
   Layout = _Layout;
 }
 ```
+
+....................................................................................................................
+
+# What is Interface?
+
+- Interfaces is similar to Repository Classes,
+- Interfaces are inherited by Repository Classes and have the same methods and arguments as -> Repository Class that inherits this Interface
+- Interfaces have only Method names with arguments but all logic of these methods are in Repository Class
+- Interfaces are easier to implement and use in Application
+- Then we use Interfaces to interact with DB in different classes, we import Interface
+- To use Interfaces in ASP.NET Core MVC --> we need to register them in Program.cs file with Dependency injection
+
+```C#
+//example
+builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
+```
+
+# Claims Vs. Roles
+
+Roles:
+
+All we needed for app are User and Admin. You can easily add more complicated roles by inserting them into role table and adding annotations to controllers to prevent people from accessing certain endpoints. You could also add logic into controllers via RoleManager for more complicated scenarios
+
+- Roles are more generic and broad (old school)
+- if our App become more complex, for exapmple if we have 20 different roles and each time when we need to get the Role --> we need to get it from DB and that is limitation with Roles. To get the Role we have to hit the Database and DB should respond
+
+This is wnhen Claims come in ...
+
+Claims:
+
+- Claims are everything, like a tag associated with the User
+- Claims don't require DB and they are very flexible (new shool)
+- Claims don't use DB and give much more flexibility (this makes Claims much better than Roles)
+- Microsoft has moved away from Roles
+
+#### Claims path (For Claims we used Services and Interface)
+
+- Claims is almost like Roles --> Key -valie pairs of things that are going describe what the User does and what he can't do
+- when User Submits his LogIn Form with Username , email etc. when LogIn--> it sends JWT to the Server
+- And if LogIn data is correct --> User is Authenticated --> then We get the access to all the values in the DB related to this User, that we have created such as (User info(as example) --> username, email, is User loggedIn, etc.) --> (See Service/TokenService.cs line 35) <-- set User values that we have access to
+- And all these data will be associated with this User
+- We will have an object with all these User's data --> (See Service/TokenService.cs line 34) <--indicate the User prperties
+- And we can use this object --> use this HttpUser.Context all throughout the app as long as the User is LogedIn. Object is created -->(See Service/TokenService.cs line 35)
+- We get all User data once when User LogIn we don't need to hit the server every time
+
+The concept of the ClaimPrincipal is almost like a valet, like Authentication valet <-- it is an object that holds all information about this User
+
+- In our case we create ClaimPrincipal object with values that we have created in --> Service/TokenService.cs line 35, This values we can use to identify the User and express what the User can and can't do withing your app. Very similar to the Role( in Data/ApplicationDBContext.cs file)--> but more flexible
 
 ....................................................................................................................
 
@@ -739,11 +796,12 @@ or
 2. Create folder Data in the root of your project
 3. Create all required files in Data folder, such as --> Models(Entity classes), Database connection file(in our case it is BookStoreContext.cs file).
    Database connection file should contain DB connection string or connection string can be added to Program.cs file.
-4. We can Create new DB or add changes to existing DB or update the existing DB --> write in terminal
+4. (If needed use this step) In Azure Data Studio app--> Create New Connection --> fill Server name, User Name, Password, Database name from Microsoft Azure Database
+5. We can Create new DB or add changes to existing DB or update the existing DB --> write in terminal
 
 ```C#
 dotnet ef migrations add NameOfTheMigration  //<-- create migrations folder (with Up and Down methods in our App)
-dotnet ef database update
+dotnet ef database update  //<-- will connect to DB, DataBase appear in Azure Data Studio App
 ```
 
 5. It will create BookStore database on your local server--> in Azure Data Studio, with all tables that you have indicated in the Database connection file (from Data folder)
@@ -780,7 +838,7 @@ or
 # Also, can add new proporties to the table in database
 # use this command when add something in Classes in Data folder(Database)
 
-dotnet ef migrations add (AnyMigrationsName)  //add changes and create databases with tables
+dotnet ef migrations add (AnyMigrationsName)  //add changes and create databases with tables, create Migrations Folder in our App, Create all the tables and columns
 
 dotnet ef migrations add init  //<--Example
 
@@ -792,7 +850,7 @@ dotnet ef migrations add init  //<--Example
 
 ```C#
 
-dotnet ef database update
+dotnet ef database update  //<-- will connect to DB, DataBase appear in Azure Data Studio App
 
 ```
 
