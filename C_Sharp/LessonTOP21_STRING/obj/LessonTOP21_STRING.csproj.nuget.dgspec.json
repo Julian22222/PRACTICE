@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj",
         "projectName": "LessonTOP21_STRING",
-        "projectPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP21_STRING/LessonTOP21_STRING.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP21_STRING/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.115/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
         }
       }
     }

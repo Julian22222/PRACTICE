@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj",
         "projectName": "LessonTOP18_ARRAY4",
-        "projectPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP18_ARRAY4/LessonTOP18_ARRAY4.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP18_ARRAY4/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.115/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.119/RuntimeIdentifierGraph.json"
         }
       }
     }
