@@ -1,5 +1,7 @@
 [ASP.NET Docs](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&WT.mc_id=dotnet-35129-website&tabs=visual-studio-code)
 
+[ASP.net docs](https://www.csharpschool.com/blog?tag=asp.net+core+2.2)
+
 To work with in ASP.NET MVC Core with C# we need VS Code extensions:
 
 - C# Dev Kit (by Microsoft)

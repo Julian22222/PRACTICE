@@ -206,6 +206,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 - Creates ClientId, DirectoryID, ClientSecret(Secret value) <-- copy - paste it to use in appsettings.json and in Program.cs for Our secrets
 
+# Debug or find an Error when your project is hosted on Azure Portal
+
+1. [Azure LogIn](https://azure.microsoft.com/en-gb/get-started/azure-portal)
+2. Click on App Services of the project that you want to debug
+3. Diagnose and solve problems (Left menu column)
+4. Click on --> Application Logs (bottom of the page)
+
 ....................................................................................................................
 
 # Client side Validation

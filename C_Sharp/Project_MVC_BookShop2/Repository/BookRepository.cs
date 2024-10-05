@@ -92,9 +92,10 @@ return newBook.Id;
             // We convert it manually --> List<Books> (that we receive from database) into List<Book>
 
 
-
             //var allbooks = await _context.Book2.OrderByDescending(p => p.Id).ToListAsync();  <--it will make descending order, reverse the order
 
+            //await _context.Book2.Find()
+            //await _context.Book2.OrderBy(c => c.Title).Select(x => new Book(){Id = x.Id, Title = x.Title, ...})
 
             // if there is any value in the data(in the Books table) then we do this code
             if(allbooks?.Any() == true){

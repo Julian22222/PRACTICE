@@ -309,6 +309,17 @@ List <int> nmbers = new List <int>(){2,5,8,9};
 }
 ```
 
+# Chain Methods in ASP.NET
+
+```C#
+//if we relationship between 2 tables, we can use Method -> Include(). Where Genre is a property from other table
+public IActionResult Index (){
+    var books = _context.Books2.Include(m => m.Genre).OrderBy(m => m.Title).ToLyst();
+
+    return View(books);
+}
+```
+
 # Other / mini file and normal file version of libraries
 
 - In wwwroot / lib we have normal version and mini file version of files

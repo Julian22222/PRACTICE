@@ -1,3 +1,5 @@
+[Authentication Docs](<https://www.csharpschool.com/blog/ASP-NET%20Core%202-2%20For%20Beginners%20(Part%2010):%20Forms%20Authentication>)
+
 # Identity Core Framework needs for App Security
 
 ### Used for:
