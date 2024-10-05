@@ -320,6 +320,15 @@ public IActionResult Index (){
 }
 ```
 
+# Convert
+
+```C#
+Convert.ToInt32(Value to convert to Int32 goes here)
+
+Convert.ToBoolean(Value to convert to bool goes here)
+
+```
+
 # Other / mini file and normal file version of libraries
 
 - In wwwroot / lib we have normal version and mini file version of files
