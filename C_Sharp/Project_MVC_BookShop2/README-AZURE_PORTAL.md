@@ -2,6 +2,19 @@
 
 # To Deploy ASP.Net web application in Azure (preparing and creating all resources to deploy)
 
+### First option how to Deploy your project to Azure
+
+- go to --> [Azure Portal](https://portal.azure.com/)
+  Create App Services
+
+- install Azure App Service extension and Azure Account extension in VS code
+- From the Left Menu bar find Azure tab in VS Code
+- Open correct Subscription (Where is your project)--> Right Click on correct App Services (Name of your project that you are deploying) --> from the menu choose --> Deploy to Web App..
+- during first deployment I need select Browse (where is my Application compiles)
+  [Chech here](https://www.youtube.com/watch?v=4BwyqmRTrx8&t=363s)
+
+### Second option how to Deploy your project to Azure
+
 1. go to --> [Azure Portal](https://portal.azure.com/)
    Create App Services
 
@@ -175,8 +188,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 3. App Services
 
-- allow you build and deploy your app.
+- allow you build and deploy/host your app (web apps, mobile back end and RESTful APIs)
 - When creating new app services --> create Web App ( Not a Web App + Database)
+  [App Services](https://www.youtube.com/watch?v=4BwyqmRTrx8&t=363s)
 
 4. SQL server
 
