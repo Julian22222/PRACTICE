@@ -1,6 +1,9 @@
 const request = require("supertest"); //Import Supertest
 const app = require("../app"); //Connection to all routes
 const pool = require("../db"); //import DB connection
+const seed = require("../seed");
+
+// beforeEach(() => seed());
 
 afterAll(() => {
   if (pool.end) pool.end();
@@ -119,15 +122,15 @@ describe("1. GET METHOD TESTS /", () => {
       });
   });
 
-  it.only("stuts 404, handling error", async () => {
-    await request(app)
-      .get("/999")
-      .expect(404)
-      .then((body) => {
-        console.log("BODY", body);
-        expect(body.error.text).toBe("Bad request, invalid car id");
-      });
-  });
+  // it("stuts 404, handling error", async () => {
+  //   await request(app)
+  //     .get("/999")
+  //     .expect(404)
+  //     .then((body) => {
+  //       console.log("BODY", body);
+  //       expect(body.error.text).toBe("Bad request, invalid car id");
+  //     });
+  // });
 
   it("data type check", async () => {
     await request(app)

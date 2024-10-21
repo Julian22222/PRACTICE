@@ -1,4 +1,5 @@
 const db = require("./db");
+const format = require("pg-format");
 
 const seed = async () => {
   await db.query(`DROP TABLE IF EXISTS cars;`);
