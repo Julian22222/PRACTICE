@@ -40,7 +40,7 @@ app.get("/:carId", async (req, res, next) => {
 
     if (!carId) {
       return Promise.reject({
-        status: 400,
+        status: 404,
         message: "Bad request, invalid car id",
       });
     }
@@ -57,9 +57,11 @@ app.get("/:carId", async (req, res, next) => {
             res.status(400).send(err);
           }
 
+          console.log(result);
+
           //   if carId doesn't exist in database -> the result.length === 0
           if (result.length === 0) {
-            res.status(404).send("Wrong card Id has been inserted.");
+            res.status(400).send("Wrong card Id has been inserted.");
             // return Promise.reject({ status: 404, msg: "Id not found" });
           }
 

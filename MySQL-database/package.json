@@ -4,7 +4,7 @@
   "description": "",
   "main": "db.js",
   "scripts": {
-    "test": "jest",
+    "test": "TZ=UTC jest",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },

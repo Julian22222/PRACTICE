@@ -31,7 +31,7 @@ describe("1. GET METHOD TESTS /", () => {
     expect(res.statusCode).toEqual(200);
   });
 
-  test.only("200: respond with all cars", async () => {
+  test("200: respond with all cars", async () => {
     await request(app)
       .get("/")
       .expect(200)
@@ -109,13 +109,23 @@ describe("1. GET METHOD TESTS /", () => {
       });
   });
 
-  it("stuts 404, handling error", async () => {
+  it("stuts 400, handling error", async () => {
     await request(app)
       .get("/tom")
-      .expect(404)
-      .then(({ body }) => {
+      .expect(400)
+      .then((body) => {
         console.log("BODY", body);
-        expect(body).toBe("Wrong card Id has been inserted");
+        expect(body.error.text).toBe("Wrong card Id has been inserted.");
+      });
+  });
+
+  it.only("stuts 404, handling error", async () => {
+    await request(app)
+      .get("/999")
+      .expect(404)
+      .then((body) => {
+        console.log("BODY", body);
+        expect(body.error.text).toBe("Bad request, invalid car id");
       });
   });
 
