@@ -205,19 +205,16 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 ### First option how to Deploy your project to Azure
 
-- go to --> [Azure Portal](https://portal.azure.com/)
-  Create App Services
-
+- go to --> [Azure Portal](https://portal.azure.com/) and Create App Services
 - install Azure App Service extension and Azure Account extension in VS code
 - From the Left Menu bar find Azure tab in VS Code
 - Open correct Subscription (Where is your project)--> Right Click on correct App Services (Name of your project that you are deploying) --> from the menu choose --> Deploy to Web App..
 - during first deployment I need select Browse (where is my Application compiles)
-  [Chech here](https://www.youtube.com/watch?v=4BwyqmRTrx8&t=363s)
+  [Check here](https://www.youtube.com/watch?v=4BwyqmRTrx8&t=363s)
 
 ### Second option how to Deploy your project to Azure
 
-- go to --> [Azure Portal](https://portal.azure.com/)
-  Create App Services
+- go to --> [Azure Portal](https://portal.azure.com/) and Create App Services
 
 - install Azure App Service extension and Azure Account extension in VS code
 
@@ -275,6 +272,8 @@ As example:
 
 ```C#
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
+
+// --version 7.0  <-- must match with .NET version that you are using in this app
 ```
 
 ................................................................................
@@ -375,11 +374,12 @@ We use Repository class methods in BookController
 4. Testing
 
 - launchSettings.json file:
-  · Is only used on the local development machine.(doesn't work on production server, when deploying )
-  · Used for the development environment only
-  · The settings in the this file can be overridden by environment variables or command-line arguments (in Program.cs file)
-  · Is not deployed.
-  · Contains profile settings.
+
+  - Is only used on the local development machine.(doesn't work on production server, when deploying )
+  - Used for the development environment only
+  - The settings in the this file can be overridden by environment variables or command-line arguments (in Program.cs file)
+  - Is not deployed.
+  - Contains profile settings.
 
   The environment for local machine development can be set in the Properties\launchSettings.json file of the project. Environment values set in launchSettings.json override values set in the system environment.
 
@@ -775,18 +775,32 @@ To install --> dotnet add package PackageName
 
 #### To work with SQL Server database: (we need to install)
 
-[All available EntityFrameworkCore nuget packages To work with different DB](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
+[All available EntityFrameworkCore nuget packages To work with different DB is HERE](https://learn.microsoft.com/en-us/ef/core/providers/?tabs=dotnet-core-cli)
 
-- Microsoft.EntityFrameworkCore
-- Microsoft.EntityFrameworkCore.Relational
-- Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
-- Microsoft.EntityFrameworkCore.Tools
-- Microsoft.EntityFrameworkCore.Design //<-- needs for EntityFrameWorkCore migrations,
+- ```C#
+  Microsoft.EntityFrameworkCore
+  ```
+
+- ```C#
+  Microsoft.EntityFrameworkCore.Relational
+  ```
+
+- ```C#
+  Microsoft.EntityFrameworkCore.SqlServer //<-- this package has dependancy of Microsoft, EntityFrameworkCore, Microsoft.EntityFrameworkCore.Relational and will instal them automatically
+  ```
+
+- ```C#
+  Microsoft.EntityFrameworkCore.Tools
+  ```
+
+- ```C#
+  Microsoft.EntityFrameworkCore.Design //<-- needs for EntityFrameWorkCore migrations,
+  ```
 
 - By creating Data folder and BookStoreContext.cs class --> then by using these commands it will create database and create tables:
 
 1. ```bash
-    dotnet ef migrations add AnyMigrationsName  //<--to add changes to database
+   dotnet ef migrations add AnyMigrationsName  //<--to add changes to database
    ```
 
 2. ```bash
@@ -925,8 +939,51 @@ Bootstrap web page --> [Click Here](https://getbootstrap.com/docs/5.3/getting-st
 
 [CDN bootstrap css link](https://getbootstrap.com/docs/5.3/getting-started/introduction/#cdn-links)
 
-- Then in View files we can use Bootstrap css  
-  ...............................................................................................................
+- Then in View files we can use Bootstrap css
+
+#### jQuery is used for
+
+- automatic client side validation from server side validation (--> See Views/Shared/\_Layout.cshtml file, line 77-88)
+- using Scripts in the bottom of the View page --> allow to add some functions to the page that will be trigered, when page is loading, loaded or from other page behaviour (--> See Views/Home/Index.cshtml line 106 - 119)
+
+#### Ajax is used for (similar to jQuery)
+
+- when adding new book in Views/Book/AddNewBook.cshtml in line 40 we have <form> tag --> where we put
+
+```C#
+<form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook">
+```
+
+and in the bottom of the page
+
+```C#
+@section scripts {
+@* Here we can insert any scripts*@
+
+    <script>
+        function myComplete(data){ //<--name of the function is myComplete, to receive the data from your function we can pass some attributes--> (data)
+        //this code wil execute , doesn't metter if the request is successful or fail.
+            alert("I am from complete");
+        }
+
+        function mySuccess(data){  //<--name of the function is mySuccess
+
+        //this code wil execute if the request is successful
+            alert("I am from Success");
+        }
+
+        function myFailure(data){  //<--name of the function is myFailure
+
+        //this code wil execute if the request was failed
+            alert("I am from Failure");
+        }
+    </script>
+}
+```
+
+Which allow to trigger different function depending from View Page behaviour. if it will successfuly post the form or fail or other.
+
+...............................................................................................................
 
 # Partial views (Similar to React JS components)
 
@@ -1622,4 +1679,8 @@ app.UseEndpoints(endpoints =>
 ```C#
 //we use asp-area=""
 <a asp-area="" asp-controller="Home" asp-action="Index">Go bak to Home page</a>
+```
+
+```
+
 ```

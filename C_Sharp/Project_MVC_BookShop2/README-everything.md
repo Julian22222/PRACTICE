@@ -4,6 +4,35 @@
 
 - if we use --> "Static" in filed or method that means thta method or field will belong to Class in general but not to its object.
 - We can access the field or method through the Class without creating an object from that Class.
+- Static classes are used as containers for static members like methods, constructors and others.
+
+```C#
+//Example
+
+public static class MyCollege{   //MyCollege is static container for other static class fileds, methods and constructors
+
+//static fields
+public static string collegeName;
+public static string address;
+
+//static constructor
+static MyCollege(){
+    collegeName = "ABC College";
+}
+
+//static method
+public static void CollegeBranch(){
+    Console.WriteLine("Computers");
+}
+
+//static method
+public static void CollegeTime(){
+    Console.WriteLine("Morning time");
+}
+
+
+}
+```
 
 ```C#
 static void Main(){
