@@ -282,6 +282,8 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0
 
 [Migrate from ASP.NET Core in .NET 7 --> to .NET 8](https://learn.microsoft.com/en-us/aspnet/core/migration/70-80?view=aspnetcore-7.0&tabs=visual-studio-code)
 
+[-->EXAMPLE HERE<--](https://www.youtube.com/watch?v=Bq7nSZfyBrg)
+
 - delete --> bin and obj folders
 - update your .NET 7.0 to .NET 8.0 in your project Project_MVC_BookShop2.csproj file: -->
   - Project_MVC_BookShop2.csproj file (this file located in root folder in the bottom)
@@ -1347,6 +1349,8 @@ _context = new BookStoreContext();
 ```
 
 ### Services lifetime:
+
+[-->Click HERE<--](https://www.youtube.com/watch?v=vDJMzs1OYqo)
 
 In ASP.NET Core MVC, there are 3 different ways to register services with build-in dependency injection:
 
