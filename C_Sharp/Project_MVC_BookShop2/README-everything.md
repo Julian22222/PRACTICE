@@ -6,6 +6,14 @@
 - We can access the field or method through the Class without creating an object from that Class.
 - Static classes are used as containers for static members like methods, constructors and others.
 
+Check examples on my React_Asp.Net_WebAPi project.
+Mappers file has static classes.
+These Static classes are used in Controllers to change some objects to DTO objects
+
+[-->One of the Mapper file Here<--](https://github.com/Julian22222/React_Asp.Net_WebAPI/blob/main/api/Mappers/ItemMappers.cs)
+
+[-->One of he Controller file Here<--](https://github.com/Julian22222/React_Asp.Net_WebAPI/blob/main/api/Controllers/ItemController.cs)
+
 ```C#
 //Example
 
