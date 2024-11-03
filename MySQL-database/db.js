@@ -17,7 +17,10 @@ const pool = mysql.createPool({
   database: process.env.DB_DATABASE,
 
   //   how many connections do you want by default , max number of connections it will allow you to create
-  //   max: 20
+  // connectionLimit: 1000,
+
+  //delete all active connections
+  // connectTimeout: 1000,
 });
 
 // connection to the pool database
