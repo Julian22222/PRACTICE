@@ -2,8 +2,6 @@
 
 This is ElephantSQL settings -->
 
-![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/pic1.jpg)
-
 - ElephantSQL provides all data for DB connection, such as:
 
   - Server
@@ -13,6 +11,7 @@ This is ElephantSQL settings -->
 
 - DBeaver needs all this Data from ElephantSQL to connect our DB
 - Insert Data from ElephantSQL to DBeaver-->
+  ![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/pic1.jpg)
 
   1. Server(from ElephantSQL) === Host(from Dbeaver)
   2. User & Default database (from ElephantSQL) === Database and Username (from Dbeaver)
