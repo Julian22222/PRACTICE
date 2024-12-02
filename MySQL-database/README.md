@@ -2,8 +2,7 @@
 
 This is ElephantSQL settings -->
 
-![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database
-/pic1.jpg)
+![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/pic1.jpg)
 
 - ElephantSQL provides all data for DB connection, such as:
 
