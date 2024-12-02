@@ -23,21 +23,21 @@ const pool = mysql.createPool({
   // connectTimeout: 1000,
 });
 
-// connection to the pool database
+// connection to the pool dataSbase
 // pool.connect((err,connction)=>{})  <-the same
 
 pool.getConnection((err, connection) => {
   if (err) {
     if (err.code === "PROTOCOL_CONNECTION_LOST") {
-      console.error("Database connection was closed.");
+      Console.error("Database connection was closed.");
     }
 
     if (err.code === "ER_CON_COUNT_ERROR") {
-      console.error("Database has too many connections.");
+      Console.error("Database has too many connections.");
     }
 
     if (err.code === "ECONNREFUSED") {
-      console.error("Database connection was refused.");
+      Console.error("Database connection was refused.");
     }
   }
 

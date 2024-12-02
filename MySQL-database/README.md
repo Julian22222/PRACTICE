@@ -1,5 +1,9 @@
 # Connection using ElephantSQL + DBeaver
 
+This is ElephantSQL settings -->
+
+![pic122](https://github.com/Julian22222/PRACTICE/blob/main/pic1.jpg)
+
 - ElephantSQL provides all data for DB connection, such as:
 
   - Server

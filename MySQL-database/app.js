@@ -39,15 +39,22 @@ app.get("/:carId", async (req, res, next) => {
     //get ID from request body
     const { carId } = req.params;
 
-    Console.log(carId);
+    // console.log(carId);
+    // console.log(typeof carId);
 
-    if (typeof carId !== Number) {
-      // return Promise.reject({
-      //   status: 400,
-      //   message: "Wrong card Id has been inserted.",
-      // });
-      res.status(400).send("Wrong card Id has been inserted.");
+    // console.log(!isNaN(carId));
+
+    if (!isNaN(carId) === false) {
+      return res.status(400).send("Wrong card Id has been inserted.");
     }
+
+    // if (Number(carId) === NaN) {
+    //   // return Promise.reject({
+    //   //   status: 400,
+    //   //   message: "Wrong card Id has been inserted.",
+    //   // });
+    //   res.status(400).send("Wrong card Id has been inserted.");
+    // }
 
     // find if the ID exists in the database
     // const item = await pool.query((err) => {
@@ -81,38 +88,40 @@ app.get("/:carId", async (req, res, next) => {
 });
 ////////////////////////////////////////////////////////////////POST
 app.post("/", async (req, res, next) => {
+  // console.log(req.body);
+
   try {
     // error handling, when posting but brand or /and seats field is empty
     if (req.body.brand === undefined) {
-      res.send("Wrong Brand Input");
+      res.status(400).send("Wrong Brand Input");
     } else if (req.body.seats === undefined) {
       res.send("Wrong Seats Input");
     } else {
       // if all field correctly ,send a req to database
-      await pool.query((err) => {
-        if (err) {
-          res.send(err);
-        }
+      // await pool.query((err) => {
+      //   if (err) {
+      //     res.send(err);
+      //   }
 
-        pool.query(
-          `INSERT INTO cars(brand,seats, year, fuel) VALUES
+      pool.query(
+        `INSERT INTO cars(brand,seats, year, fuel) VALUES
         ('${req.body.brand}','${req.body.seats}','${req.body.year}','${req.body.fuel}')
         `,
-          (err, result, fields) => {
-            if (err) {
-              res.send(err);
-            }
-
-            if (result) {
-              res.status(201).send("Data Inserted Successfully");
-            }
-
-            if (fields) {
-              console.log(fields);
-            }
+        (err, result, fields) => {
+          if (err) {
+            res.send(err);
           }
-        );
-      });
+
+          if (result) {
+            res.status(201).send("Data Inserted Successfully");
+          }
+
+          if (fields) {
+            console.log(fields);
+          }
+        }
+      );
+      // });
     }
   } catch (err) {
     next(err);
@@ -146,7 +155,7 @@ app.put("/:carId", async (req, res, next) => {
                 }
 
                 if (result1) {
-                  res.send("Data Updated Successfully");
+                  res.status(204).send("Data Updated Successfully");
                 }
 
                 if (fields1) {
