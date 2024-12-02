@@ -20,11 +20,11 @@ This is ElephantSQL settings -->
 
 - URL link (from ElephantSQL) we use in Render.com -->in Environment variables (to host our DB to web)
 
-(Connection ElephantSQL + DBeaver)[https://technology.amis.nl/database/quick-start-with-free-managed-postgresql-database-on-elephantsql/]
+[Connection ElephantSQL + DBeaver](https://technology.amis.nl/database/quick-start-with-free-managed-postgresql-database-on-elephantsql/)
 
 # JEST AND SUPERTEST
 
-(CLICK HERE)[https://create-react-app.dev/docs/running-tests/#:~:text=Jest%20will%20look%20for%20test,in%20__tests__%20folders]
+[CLICK HERE](https://create-react-app.dev/docs/running-tests/#:~:text=Jest%20will%20look%20for%20test,in%20__tests__%20folders)
 
 - Jest is a Node-based runner. This means that the tests always run in a Node environment and not in a real browser.
 
@@ -83,4 +83,4 @@ However, the skip postfix is available for all different functions for example t
 
 ## Unit testing allows us to test the individual functionality of our React components.
 
-(HERE)[https://dev.to/knowicki024/setting-up-test-files-in-react-with-jest-26la#:~:text=The%20best%20way%20to%20set,will%20keep%20your%20test%20files]
+[HERE](https://dev.to/knowicki024/setting-up-test-files-in-react-with-jest-26la#:~:text=The%20best%20way%20to%20set,will%20keep%20your%20test%20files)
