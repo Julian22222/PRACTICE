@@ -351,7 +351,7 @@ List <int> nmbers = new List <int>(){2,5,8,9};
 ```C#
 //if we relationship between 2 tables, we can use Method -> Include(). Where Genre is a property from other table
 public IActionResult Index (){
-    var books = _context.Books2.Include(m => m.Genre).OrderBy(m => m.Title).ToLyst();
+    var books = _context.Books2.Include(m => m.Genre).OrderBy(m => m.Title).ToList();
 
     return View(books);
 }
@@ -360,11 +360,22 @@ public IActionResult Index (){
 # Convert
 
 ```C#
-Convert.ToInt32(Value to convert to Int32 goes here)
+Convert.ToInt32(Value to convert to Int32 goes here)  <-- convert to int
+
+Convert.ToSingle(5) /2  <-- convert 5 to float (5.0),  and devide on 2 --> 2.5
+//if 5 is in int data type and 2 is in in data type --> 5/2 == 2, because one of the numbers must be in float or double data type to get correct result -->5/2==2.5
+
+//double data type example --> 5.7 or 5.7d
+//float data type example --> 5.7f
 
 Convert.ToBoolean(Value to convert to bool goes here)
-
 ```
+
+# Overload
+
+......notes from notebook
+
+..........
 
 # Other / mini file and normal file version of libraries
 
@@ -553,7 +564,7 @@ crossorigin="anonymous"></script>
 - Radio button,
 - Checkbox,
 - Dropdown,
-- Nummber,
+- Number,
 - Email,
 - etc
 
