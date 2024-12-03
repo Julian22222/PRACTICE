@@ -254,7 +254,7 @@ describe("Put method", () => {
       .send(newCar)
       .expect(204)
       .then((response) => {
-        console.log("HEREEE", response);
+        // console.log("HEREEE", response);
         // expect(response.text).toBe("Data Updated Successfully");
         expect(response.statusCode).toBe(204);
         expect(response.request._data).toEqual({
@@ -265,4 +265,28 @@ describe("Put method", () => {
         });
       });
   });
+});
+
+describe("Delete method", () => {
+  test.only("Delete /7,  Volvo delete. status 204", async () => {
+    await request(app)
+      .delete("/7")
+      .expect(204)
+      .then(({ res }) => {
+        console.log("HEREEE TEST", res);
+
+        expect(response).toBe("Data Deleted Successfully");
+      });
+  });
+
+  // test("Delete /999, status 400", async () => {
+  //   await request(app)
+  //     .delete("/999")
+  //     .expect(400)
+  //     .then((response) => {
+  //       console.log(response);
+
+  //       expect(response.error.text).toEqual("Wrong card Id has been inserted.");
+  //     });
+  // });
 });

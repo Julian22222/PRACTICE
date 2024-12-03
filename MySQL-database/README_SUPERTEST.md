@@ -1,27 +1,3 @@
-# Connection using ElephantSQL + DBeaver
-
-This is ElephantSQL settings -->
-
-- ElephantSQL provides all data for DB connection, such as:
-
-  - Server
-  - User & DataBase name
-  - password
-  - URL link
-
-- DBeaver needs all this Data from ElephantSQL to connect our DB
-- Insert Data from ElephantSQL to DBeaver-->
-  ![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/pic1.jpg)
-
-  1. Server(from ElephantSQL) === Host(from Dbeaver)
-  2. User & Default database (from ElephantSQL) === Database and Username (from Dbeaver)
-  3. Password (from ElephantSQL) === Password (from Dbeaver)
-  4. PORT (in DBeaver always stays 5432)
-
-- URL link (from ElephantSQL) we use in Render.com -->in Environment variables (to host our DB to web)
-
-[Connection ElephantSQL + DBeaver](https://technology.amis.nl/database/quick-start-with-free-managed-postgresql-database-on-elephantsql/)
-
 # JEST AND SUPERTEST
 
 [CLICK HERE](https://create-react-app.dev/docs/running-tests/#:~:text=Jest%20will%20look%20for%20test,in%20__tests__%20folders)

@@ -177,50 +177,65 @@ app.put("/:carId", async (req, res, next) => {
 ////////////////////////////////////////////////////////////////////////DELETE
 
 app.delete("/:carId", async (req, res, next) => {
-  try {
-    // Get ID from request body
-    const { carId } = req.params;
+  // try {
+  // Get ID from request body
+  const { carId } = req.params;
 
-    //  Find if the ID exists in the database or not
-    const item = await pool.query((err) => {
-      pool.query(
-        `SELECT * FROM cars WHERE car_id = '` + carId + "'",
-        (err, result, fields) => {
-          if (err) {
-            res.send(err);
-          }
+  //  Find if the ID exists in the database or not
+  // const item = await pool.query((err) => {
+  // pool.query(
+  //   `SELECT * FROM cars WHERE car_id = '` + carId + "'",
+  //   (err, result, fields) => {
+  //     if (err) {
+  //       res.send(err);
+  //     }
 
-          //   if ID exists in database
-          if (result && result.length) {
-            pool.query(
-              `DELETE FROM cars WHERE car_id = '${carId}'`,
-              (err1, result1, fields1) => {
-                if (err1) {
-                  res.send(err1);
-                }
+  //   if ID exists in database
+  // if (result && result.length) {
 
-                if (result1.length === 0) {
-                  res.send("Wrong card Id has been inserted.");
-                }
+  /////////////////////////////////////////////////////////////////////////
+  // pool.query(
+  //   `DELETE FROM cars WHERE car_id = '${carId}'`,
+  //   (err1, result1, fields1) => {
+  //     if (err1) {
+  //       res.send(err1);
+  //     }
 
-                if (result1.length > 0) {
-                  res.send("Data Deleted Successfully");
-                }
+  //     if (result1.length === 0) {
+  //       res.status(400).send("Wrong card Id has been inserted.");
+  //     }
 
-                if (fields1) {
-                  console.log(fields1);
-                }
-              }
-            );
-          } else {
-            res.send("Record not found.");
-          }
-        }
-      );
-    });
-  } catch (error) {
-    next(error);
-  }
+  //     if (result1.length > 0) {
+  //       res.status(204).send("Data Deleted Successfully");
+  //     }
+
+  //     if (fields1) {
+  //       console.log(fields1);
+  //     }
+  //   }
+  // );
+
+  console.log(carId);
+
+  const data = pool.query(`DELETE FROM cars WHERE car_id = '${carId}'`);
+  // if (data) {
+  res.status(204).send("Data Deleted Successfully");
+  // }
+
+  console.log("Console from app.js", data);
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+  // }
+
+  // else {
+  //   res.send("Record not found.");
+  // }
+  // }
+  // );
+  // });
+  // } catch (error) {
+  //   next(error);
+  // }
 });
 
 // Error handler
