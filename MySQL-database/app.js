@@ -217,12 +217,19 @@ app.delete("/:carId", async (req, res, next) => {
 
   console.log(carId);
 
-  const data = pool.query(`DELETE FROM cars WHERE car_id = '${carId}'`);
-  // if (data) {
-  res.status(204).send("Data Deleted Successfully");
-  // }
+  await pool.query(
+    `DELETE FROM cars WHERE car_id = '${carId}'`,
+    (err, result, fields) => {
+      // console.log("Console from app.js", result.affectedRows);
 
-  console.log("Console from app.js", data);
+      if (result.affectedRows > 0) {
+        return res.status(204).send();
+      }
+
+      return res.status(404).send("Car Id not found");
+    }
+  );
+
   //////////////////////////////////////////////////////////////////////////////////////////
 
   // }

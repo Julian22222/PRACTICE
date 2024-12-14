@@ -268,25 +268,25 @@ describe("Put method", () => {
 });
 
 describe("Delete method", () => {
-  test.only("Delete /7,  Volvo delete. status 204", async () => {
+  it("Delete /7,  Volvo delete. status 204", async () => {
     await request(app)
       .delete("/7")
       .expect(204)
-      .then(({ res }) => {
-        console.log("HEREEE TEST", res);
+      .then((res) => {
+        // console.log("HEREEE TEST", res);
 
-        expect(response).toBe("Data Deleted Successfully");
+        expect(res.body).toEqual({});
       });
   });
 
-  // test("Delete /999, status 400", async () => {
-  //   await request(app)
-  //     .delete("/999")
-  //     .expect(400)
-  //     .then((response) => {
-  //       console.log(response);
+  test("Delete /999, status 400", async () => {
+    await request(app)
+      .delete("/999")
+      .expect(404)
+      .then((response) => {
+        console.log(response);
 
-  //       expect(response.error.text).toEqual("Wrong card Id has been inserted.");
-  //     });
-  // });
+        expect(response.error.text).toEqual("Car Id not found");
+      });
+  });
 });

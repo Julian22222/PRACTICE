@@ -1,0 +1,24 @@
+name: SuperTest check
+on: workflow_dispatch
+jobs:
+  get-code:
+    name: get code from GitHub
+    runs-on: ubuntu-latest
+    steps:
+      - name: print to console
+        run: echo Starting my workflow!
+
+      - name: Get code from Repo
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v3
+
+      - name: open correct Repo
+        run: cd MySQL-database
+
+      - name: Install deps
+        run: npm ci
+
+      - name: SuperTest
+        run: npm run test
