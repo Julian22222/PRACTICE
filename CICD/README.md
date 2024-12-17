@@ -13,19 +13,21 @@
 
   - To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
 
-[GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
-
 # GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
 
 - Allow to create a pipeline
 - It is build-in CI/CD tool for GitHub
 - CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
+- Workflow it is a process of GitHub Actions. Workflow it is an instruction in yml format. workflow reacts on different types of events.
+- GitHub Actions have 2000 Free minutes per month, after that if you use more you need to pay to use GitHub virtual servers to run GitHub Actions, or you can run GitHub Actions using your computer.
 
-What is CI/CD --> Example:
+#### What is CI/CD --> Example:
 
-- For example we are developing some app, and there are few stages of development, (implimenting many features to your app) and you want to see how it will display in real time app
-  CI - it intigrates (new features) your code to your project
-- after you have tested some features in your app you need to deploy it to production (it can be automated by --> CD). For example - we can build some docker container, expand it on particular server, make a LogIn and run the app. Or after you have tested your app you can publish your app to Production
+- CI --> For example we are developing some app, and there are few stages of development, (implimenting many features to your app) and you want to see how it will display in real time app.
+
+  CI - it intigrates (new features) your code to your project.
+
+- CD --> after you have tested some features in your app, you need to deploy it to production (it can be automated by --> CD). For example - we can build some docker container, expand it on particular server, make a LogIn and run the app. Or after you have tested your app you can publish your app to Production
 
 # Terminology of the GitHub Actions Workflow YAML File
 
@@ -37,17 +39,19 @@ Workflow contains:
    To see all the events options, after--> on: , we can press --> ctr + space
 2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job)
 3. Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
+   [GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+
 4. Steps - we have 2 steps
 5. Actions ( in this sample we have 2 actions underneath the steps there's 2 actions)
 
 ```JS
-name: Super-Linter    //<--name of the workflow
-on: push              // <-- it is listenning for a push event, to start workflow, To see all the events after--> on: , we can press --> ctr + space
+name: Super-Linter                      //<--name of the workflow
+on: push                                //<--it is listenning for a push event, to start workflow, To see all the events after--> on: , we can press --> ctr + space
 jobs:
-  super-lint:   //<--job name, can have any name
-    name: Lint code base               //<-- the name can have any name, description for this action
+  super-lint:                          //<--job name, can have any name
+    name: Lint code base               //<--the name can have any name, description for this action
     runs-on: ubuntu-latest             //<--runs ubuntu latest version on virtual GitHub server
-    steps:                               //<-- we have 2 steps underneath
+    steps:                             //<--we have 2 steps underneath
       - name: Checkout code           //<-- the name can have any name, description for this action
         uses: actions/checkout@v4      //<-- will copy our code to GitHub server
 
@@ -61,7 +65,7 @@ jobs:
 
 - linter - it is just something that we use to check to make sure that our code is conforming to certain standards, We check code quality. super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
 
-# Create a Workflow (Directory structure)
+# How to Create a Workflow (Directory structure)
 
 - we need to create a new file in the root of the Project Folder otherwise GitHub can't find "yml" files. GitHub searches all workflows in --> .github/workflows/anyFileName.yml
 - we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
@@ -111,9 +115,9 @@ jobs:
 
 ```JS
 name: Demo Workflow
-on: workflow_dispatch   //<--need to trigger this workflow manually, from GitHub
+on: workflow_dispatch                  //<--need to trigger this workflow manually, from GitHub
 jobs:
-  print_demo:         //<--name of the job
+  print_demo:                         //<--name of the job
     runs-on: ubuntu-latest
     steps:
       - name: print to console
@@ -122,15 +126,15 @@ jobs:
 
 ```JS
 name: Demo Workflow
-on: workflow_dispatch
+on: workflow_dispatch                   //<--trigger for a workflow
 jobs:
-  print_demo:                                  //<--job name can have any name
-    runs-on: ubuntu-latest
+  print_demo:                           //<--job name can have any name
+    runs-on: ubuntu-latest              //<-- choose runners (ubuntu, windows, macOS), chooseing what operatin system to use for this workflow
     steps:
-      - name: print to console                //<-- name of the step can have any name
-        run: echo Hello GH Actions!             //<-- will write in console --> Hello GH Actions!
-      - name: Print a few lines                //<-- name of the step can have any name
-        run: |                                //<--add few lines in the console
+      - name: print to console         //<-- name of the step, can have any name, we give a name to identify what is going on on this step
+        run: echo Hello GH Actions!    //<-- will write in console --> Hello GH Actions!
+      - name: Print a few lines        //<-- name of the step can have any name
+        run: |                         //<--add few lines in the console
           echo First line!
           echo Second line!
 ```
