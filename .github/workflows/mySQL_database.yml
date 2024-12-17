@@ -8,11 +8,11 @@ jobs:
       - name: print to console
         run: echo Starting my workflow!
 
-      - name: Get code from Repo
-        uses: actions/checkout@v4
-
       - name: Node
         uses: actions/setup-node@v3
+        
+      - name: Get code from Repo
+        uses: actions/checkout@v4
 
       - name: open correct Repo
         run: cd MySQL-database
