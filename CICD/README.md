@@ -93,6 +93,18 @@ jobs:
 - and then you can name your file whatever you want, following with 'yml' file format
 - workflows could not be triggered if the path is wrong. Correct path --> .github/workflows/nameOfTheFile.yml
 
+# How to find GitHub actions for your created Repo in GitHub.comSS
+
+![pic4](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic4.jpg)
+
+- Go to your Repository (step 1, our Repository in GitHub to check or run GitHub Actions)
+- Then click Actions (step 2 on the picture)
+- then click --> All workflows (step 3 on the picture)
+
+![pic5](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic5.jpg)
+
+- then you can click on specific workflow that you need
+
 ```JS
 name: Node
 
