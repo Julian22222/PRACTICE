@@ -53,13 +53,13 @@ Also, you can find alredy written actions in GitHub Actions ecosystem--> From Gi
 
 - Click Marketplace (step 2 on the picture)
 
-![pic2](https://github.com/Julian22222/Clouds/blob/main/CICD/IMG/pic2.jpg)
+![pic2](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic2.jpg)
 
 - In Marketplace we can find many additional extensions, bots, etc. that we can use in GitHub Actions
 
 - Click on Actions, and then --> all actions ( step 3 on the picture), these are already written pieces of code that we can use
 
-![pic3](https://github.com/Julian22222/Clouds/blob/main/CICD/IMG/pic3.jpg)
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic3.jpg)
 
 here you can find what code to write in --> steps to performe certain actions, For example to copy or code to GitHub server -->
 package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
