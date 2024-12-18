@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test2": "node ./CICD/index.js"
+    "test2": "node ./CICD/index.js",
+    "test_cicd": "cd MySQL-database && npm run test"
   },
   "repository": {
     "type": "git",
