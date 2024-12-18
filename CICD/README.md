@@ -37,12 +37,33 @@ Workflow contains:
 
 1. Events - trigger for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file,
    To see all the events options, after--> on: , we can press --> ctr + space
-2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job)
+2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job).You can have many jobs in 1 workflow
 3. Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
-   [GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
-4. Steps - we have 2 steps
+[GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+
+4. Steps - we have 2 steps, (you can have as many steps as you want)
 5. Actions ( in this sample we have 2 actions underneath the steps there's 2 actions)
+
+Also, you can find alredy written actions in GitHub Actions ecosystem--> From GitHub.com click:
+
+- Left menu button (step 1 on the picture)
+
+![pic1](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic1.jpg)
+
+- Click Marketplace (step 2 on the picture)
+
+![pic2](https://github.com/Julian22222/Clouds/blob/main/CICD/IMG/pic2.jpg)
+
+- In Marketplace we can find many additional extensions, bots, etc. that we can use in GitHub Actions
+
+- Click on Actions, and then --> all actions ( step 3 on the picture), these are already written pieces of code that we can use
+
+![pic3](https://github.com/Julian22222/Clouds/blob/main/CICD/IMG/pic3.jpg)
+
+here you can find what code to write in --> steps to performe certain actions, For example to copy or code to GitHub server -->
+package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
+uses: actions/setup-node@v3 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
 
 ```JS
 name: Super-Linter                      //<--name of the workflow
@@ -53,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest             //<--runs ubuntu latest version on virtual GitHub server
     steps:                             //<--we have 2 steps underneath
       - name: Checkout code           //<-- the name can have any name, description for this action
-        uses: actions/checkout@v4      //<-- will copy our code to GitHub server
+        uses: actions/checkout@v4      //<-- will copy our code to GitHub server, give access to our code for GitHub virtual server
 
       - name: Run Super-Linter
         uses: github/super-linter@v4
@@ -118,7 +139,7 @@ name: Demo Workflow
 on: workflow_dispatch                  //<--need to trigger this workflow manually, from GitHub
 jobs:
   print_demo:                         //<--name of the job
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest            //<--first parametr of the job is -> runs-on
     steps:
       - name: print to console
         run: echo Hello GH Actions!
