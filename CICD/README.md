@@ -6,13 +6,6 @@
 
 [Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
 
-- To Choose Workflow extensions
-  [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
-
-  In Marketplace we can find --> Bot, extensions, apps, filter, etc. Actions in Marketplace are workflow code pieces that have already written by other developers. That we can use in our workflows
-
-  - To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
-
 # GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
 
 - Allow to create a pipeline
@@ -40,12 +33,18 @@ Workflow contains:
 2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job).You can have many jobs in 1 workflow
 3. Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
 
-[GitHub Runners Docs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+[--> GitHub Runners Docs <--](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
 4. Steps - we have 2 steps, (you can have as many steps as you want)
-5. Actions ( in this sample we have 2 actions underneath the steps there's 2 actions)
+5. Actions
 
-Also, you can find alredy written actions in GitHub Actions ecosystem--> From GitHub.com click:
+[--> GitHub Actions Marketplace <--](https://github.com/marketplace?type=actions)
+
+In Marketplace we can find --> Bot, extensions, apps, filter, etc. Actions in Marketplace are workflow code pieces that have already written by other developers. That we can use in our workflows
+
+- To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
+
+You can find alredy written actions in GitHub Actions ecosystem--> From GitHub.com click:
 
 - Left menu button (step 1 on the picture)
 
@@ -61,30 +60,9 @@ Also, you can find alredy written actions in GitHub Actions ecosystem--> From Gi
 
 ![pic3](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic3.jpg)
 
-here you can find what code to write in --> steps to performe certain actions, For example to copy or code to GitHub server -->
+here you can find what code to write in --> steps. It helps to performe certain actions, For example to copy our code to GitHub server -->
 package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
 uses: actions/setup-node@v3 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
-
-```JS
-name: Super-Linter                      //<--name of the workflow
-on: push                                //<--it is listenning for a push event, to start workflow, To see all the events after--> on: , we can press --> ctr + space
-jobs:
-  super-lint:                          //<--job name, can have any name
-    name: Lint code base               //<--the name can have any name, description for this action
-    runs-on: ubuntu-latest             //<--runs ubuntu latest version on virtual GitHub server
-    steps:                             //<--we have 2 steps underneath
-      - name: Checkout code           //<-- the name can have any name, description for this action
-        uses: actions/checkout@v4      //<-- will copy our code to GitHub server, give access to our code for GitHub virtual server
-
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}
-
-```
-
-- linter - it is just something that we use to check to make sure that our code is conforming to certain standards, We check code quality. super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
 
 # How to Create a Workflow (Directory structure)
 
@@ -92,89 +70,26 @@ jobs:
 - we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
 - and then you can name your file whatever you want, following with 'yml' file format
 - workflows could not be triggered if the path is wrong. Correct path --> .github/workflows/nameOfTheFile.yml
+- we can meke many workflows in Repository, each workflow can be responsible for different things
 
 # How to find GitHub actions for your created Repo in GitHub.comSS
 
-![pic4](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic4.jpg)
-
 - Go to your Repository (step 1, our Repository in GitHub to check or run GitHub Actions)
 - Then click Actions (step 2 on the picture)
+
+![pic4](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic4.jpg)
+
 - then click --> All workflows (step 3 on the picture)
 
 ![pic5](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic5.jpg)
 
 - then you can click on specific workflow that you need
 
-```JS
-name: Node
-
-on:
-    push:
-      branches: [ "main" ]
-    pull_request:
-      branches: [ "main" ]
-
-    //another option how to indicate that workflow will run when we push to main branch-->
-    // push:
-    //   branches:
-    //     - main
-
-    //GitHub will ignore all the changes that was done from the path (in workflow in this case), it won't react in the GitHub
-    // push:
-    //   branches:
-    //     - main
-        //  paths-ignore:
-        //   - '.github/workflows/*'
-
-jobs:
-  build:       //<--name of the job
-    runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          node-version: [14.x, 16.x, 18.x]
-          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-      steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4    //<- download specific Node version on GitHub virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci                                 //<--dependency instalation, the same as --> npm install(npm ci is better to use and safer), to run this command you shold have --> package-lock.json and package.json files in the Repository root,
-      - run: npm run build --if-present
-      - run: npm start
-```
-
-```JS
-name: Demo Workflow
-on: workflow_dispatch                  //<--need to trigger this workflow manually, from GitHub
-jobs:
-  print_demo:                         //<--name of the job
-    runs-on: ubuntu-latest            //<--first parametr of the job is -> runs-on
-    steps:
-      - name: print to console
-        run: echo Hello GH Actions!
-```
-
-```JS
-name: Demo Workflow
-on: workflow_dispatch                   //<--trigger for a workflow
-jobs:
-  print_demo:                           //<--job name can have any name
-    runs-on: ubuntu-latest              //<-- choose runners (ubuntu, windows, macOS), chooseing what operatin system to use for this workflow
-    steps:
-      - name: print to console         //<-- name of the step, can have any name, we give a name to identify what is going on on this step
-        run: echo Hello GH Actions!    //<-- will write in console --> Hello GH Actions!
-      - name: Print a few lines        //<-- name of the step can have any name
-        run: |                         //<--add few lines in the console
-          echo First line!
-          echo Second line!
-```
-
 # All Workflow triggers (on:)
 
-[Click Here](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+This is called Events. It triggers for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file, To see all the events options, after--> on: , we can press --> ctr + space
+
+[--> Workflow syntax <--](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
 - it can be one trigger or many triggers
 
@@ -221,34 +136,123 @@ on:
 - Example with node version 16
 
 ```JS
-name: Check    //<--name of the Workflow, can be any name
-on:  push     //<--when to trigger this workflow
-jobs:         //<-- list of jobs that will be done after workflow triggering
-  lint:   //<--name of the job, can have any name
-    runs-on: ubuntu-latest   //<--virtual GitHub machine(GitHub resource), container where the code will run, (Free tarif 2000 min per month)
-    steps:            //<-- contains actions in order to perform
-      - name: Checkout  //<-- name is not mandatory field, can be skipped
-            //then follows action(uses) or run command
-        uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
+name: Check                            //<--name of the Workflow, can be any name
+on:  push                              //<--when to trigger this workflow
+jobs:                                  //<-- list of jobs that will be done after workflow triggering
+  lint:                                //<--name of the job, can have any name
+    runs-on: ubuntu-latest             //<--virtual GitHub machine(GitHub resource), container where the code will run, (Free tarif 2000 min per month)
+    steps:                             //<-- contains actions in order to perform
+      - name: Checkout                 //<-- name is not mandatory field, can be skipped
+                                       //then follows action(uses) or run command
+        uses: actions/checkout@v4      //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
       - name: Install deps
-        run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
-            // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install.  //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
-      - name: Lint   //<-- Lint check correct code syntax
+        run: npm ci                    //<-- run will allow to make some command in our environment in ubuntu latest. npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install. To run this command you should have --> package-lock.json and package.json files in the Repository root
+      - name: Lint                     //<-- Lint check correct code syntax
         run: npm run lint
-  test: //<--next job, must be on the same level of the first job (lint in our case)
-    needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
+  test:                                //<--next job, must be on the same level of the first job (lint in our case)
+    needs: [lint]                      //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
     runs-on: ubuntu-latest
       steps:
         - name: Checkout
-          uses: actions/checkout@v4    //<-- we getting acces to Repository code
+          uses: actions/checkout@v4      //<-- we getting acces to Repository code
         - name: Node
           uses: actions/setup-node@v3    ///<- download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
-                node-version: 16   // <--uses only node-version 16
+                node-version: 16        // <--uses only node-version 16
         - name: Install deps
-          run: npm ci            //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
+          run: npm ci                    //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
         - name: Test
           run: npm run test
+```
+
+# GitHub Action code examples
+
+```JS
+name: Super-Linter                      //<--name of the workflow
+on: push                                //<--it is listenning for a push event, to start workflow, To see all the events after--> on: , we can press --> ctr + space
+jobs:
+  super-lint:                          //<--job name, can have any name
+    name: Lint code base               //<--the name can have any name, description for this action
+    runs-on: ubuntu-latest             //<--runs ubuntu latest version on virtual GitHub server
+    steps:                             //<--we have 2 steps underneath
+      - name: Checkout code            //<-- the name can have any name, description for this action
+        uses: actions/checkout@v4      //<-- will copy our code to GitHub server, give access to our code for GitHub virtual server
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}
+
+```
+
+- linter - it is just something that we use to check to make sure that our code is conforming to certain standards, We check code quality. super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
+
+```JS
+name: Node
+
+on:
+    push:
+      branches: [ "main" ]
+    pull_request:
+      branches: [ "main" ]
+
+    //another option how to indicate that workflow will run when we push to main branch-->
+    // push:
+    //   branches:
+    //     - main
+
+    //GitHub will ignore all the changes that was done from the path (in workflow in this case), it won't react in the GitHub
+    // push:
+    //   branches:
+    //     - main
+        //  paths-ignore:
+        //   - '.github/workflows/*'
+
+jobs:
+  build:       //<--name of the job
+    runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [14.x, 16.x, 18.x]
+          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+      steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4    //<- download specific Node version on GitHub virtual machine, By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci                                 //<--dependency instalation, the same as --> npm install(npm ci is better to use and safer), to run this command you shold have --> package-lock.json and package.json files in the Repository root,
+      - run: npm run build --if-present
+      - run: npm start
+```
+
+```JS
+name: Demo Workflow
+on: workflow_dispatch                    //<--need to trigger this workflow manually, from GitHub
+jobs:
+  print_demo:                           //<--name of the job
+    runs-on: ubuntu-latest              //<--first parametr of the job is -> runs-on
+    steps:
+      - name: print to console
+        run: echo Hello GH Actions!
+```
+
+```JS
+name: Demo Workflow
+on: workflow_dispatch                   //<--trigger for a workflow
+jobs:
+  print_demo:                           //<--job name can have any name
+    runs-on: ubuntu-latest              //<-- choose runners (ubuntu, windows, macOS), chooseing what operatin system to use for this workflow
+    steps:
+      - name: print to console          //<-- name of the step, can have any name, we give a name to identify what is going on on this step
+        run: echo Hello GH Actions!     //<-- will write in console --> Hello GH Actions!
+      - name: Print a few lines         //<-- name of the step can have any name
+        run: |                          //<--add few lines in the console
+          echo First line!
+          echo Second line!
 ```
 
 # Matrix (use for actions with few different parametrs)
