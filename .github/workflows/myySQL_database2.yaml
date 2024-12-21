@@ -23,8 +23,5 @@ jobs:
       # - name: Super-Linter
       #   uses: super-linter/super-linter@v7.2.1
 
-      - name: start server
-        run: npm run start
-
       - name: testing application with SuperTest
         run: npm run test
