@@ -31,6 +31,19 @@ Workflow contains:
 1. Events - trigger for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file,
    To see all the events options, after--> on: , we can press --> ctr + space
 2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job).You can have many jobs in 1 workflow
+
+If we have few jobs in our workflow, by default they are not dependant from other jobs then they will be running in parallel, at the same time. All the jobs will start running separately, not dependent from each other, they run parallel to each other.
+We can make jobs dependant from other jobs --> For example: second job will start running only first job is successfully completed. (Example: line 310)
+
+```JS
+//some code..
+jobName:
+  needs: [name of the dependant job]
+  runs-on: ubuntu-latest
+  steps:
+    - name: nameOfTheStep
+```
+
 3. Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
 
 [--> GitHub Runners Docs <--](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
@@ -129,7 +142,7 @@ on:
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
   As example it is better to make jobs dependant, to do not run all the jobs on the virtual machines if Lint failed,( code syntax is wrong), in this case we can make other jobs dependant from Lint job
 
-# YML syntaxis
+# YML syntaxis ( file can be written --> nameOfTheWorkFlow.yml or nameOfTheWorkFlow.yaml)
 
 - yml is compatible with JSON, it means we can use JSON inside "yml" file
 
@@ -150,19 +163,19 @@ jobs:                                  //<-- list of jobs that will be done afte
       - name: Lint                     //<-- Lint check correct code syntax
         run: npm run lint
   test:                                //<--next job, must be on the same level of the first job (lint in our case)
-    needs: [lint]                      //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
     runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4      //<-- we getting acces to Repository code
-        - name: Node
-          uses: actions/setup-node@v3    ///<- download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+    needs: [lint]                      //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4      //<-- we getting acces to Repository code
+      - name: Node
+        uses: actions/setup-node@v3    ///<- download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
             with:
                 node-version: 16        // <--uses only node-version 16
-        - name: Install deps
-          run: npm ci                    //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
-        - name: Test
-          run: npm run test
+      - name: Install deps
+        run: npm ci                    //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
+      - name: Test
+        run: npm run test
 ```
 
 # GitHub Action code examples
@@ -282,23 +295,23 @@ uses: actions/setup-node@v4    //<--will install node to virtual machine, By def
 name: Check    //<--name of the Workflow, can be any name
 on:  push     //<--when to trigger this workflow
 jobs:         //<-- list of jobs that will be done after workflow triggering
-    lint:   //<--name of the job, can have any name
-        runs-on: ubuntu-latest   //<--virtual GitHub machine(GitHub resource), container where the code will run, (Free tarif 2000 min per month)
-        steps:            //<-- contains actions in order to perform
-            - name: Checkout  //<-- name is not mandatory field, can be skipped
+  lint:   //<--name of the job, can have any name
+    runs-on: ubuntu-latest   //<--virtual GitHub machine(GitHub resource), container where the code will run, (Free tarif 2000 min per month)
+    steps:            //<-- contains actions in order to perform
+      - name: Checkout  //<-- name is not mandatory field, can be skipped
             //then follows action(uses) or run command
-            uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
-            -name: Install deps
-            run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
+        uses: actions/checkout@v4     //<--allow to download our Project Repository to GitHub virtual machine, @v4 <--version of checkout version, we getting acces to Repository code
+      -name: Install deps
+        run: npm ci//<-- run will allow to make some command in our environment in ubuntu latest
             // npm ci --> (will install all dependencies in GitHub virtual machine), the same as npm install.  //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
-            - name: Lint   //<-- Lint check correct code syntax
-            run: npm run lint
+      - name: Lint   //<-- Lint check correct code syntax
+        run: npm run lint
     test: //<--next job, must be on the same level of the first job (lint in our case)
-        needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly
-        strategy:
-          matrix:
-            version: [14,16,18]   //version key <-- can be any name
-            os: [ubuntu-latest, windows-latest]
+      needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly
+      strategy:
+        matrix:
+          version: [14,16,18]   //version key <-- can be any name
+          os: [ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         steps:
             - name: Checkout
