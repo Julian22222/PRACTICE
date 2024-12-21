@@ -17,8 +17,8 @@ jobs:
       - name: open correct Repo
         run: npm run openCorrectFolder
 
-      - name: start server
-        run: npm start
+      # - name: start server
+      #   run: npm start
 
       # - name: Super-Linter
       #   uses: super-linter/super-linter@v7.2.1

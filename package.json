@@ -6,7 +6,7 @@
   "scripts": {
     "test": "TZ=UTC jest",
     "test2": "node ./CICD/index.js",
-    "openCorrectFolder": "cd MySQL-database",
+    "openCorrectFolder": "cd MySQL-database && node server.js",
     "start": "node server.js"
   },
   "repository": {
