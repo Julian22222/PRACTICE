@@ -8,14 +8,14 @@ jobs:
       - name: print to console
         run: echo Starting my workflow!
 
+      - name: open correct Repo
+        run: cd MySQL-database
+
       - name: Get code from Repo
         uses: actions/checkout@v4
 
       # - name: Super-Linter
       #   uses: super-linter/super-linter@v7.2.1
-
-      - name: open correct Repo
-        run: cd MySQL-database
 
       - name: Install dependencies
         run: npm ci
