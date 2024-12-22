@@ -11,17 +11,17 @@ jobs:
       - name: Get Repository code
         uses: actions/checkout@v4
 
-      - name: open correct Repo
-        run: cd MySQL-database
-
       # - name: Super-Linter
       #   uses: super-linter/super-linter@v7.2.1
 
       - name: Install dependencies
+        working-directory: MySQL-database
         run: npm ci
 
       - name: start server
-        run: npm run start
+        working-directory: MySQL-database
+        run: npx pm2 start server.js
 
       - name: testing application with SuperTest
+        working-directory: MySQL-database
         run: npm run test
