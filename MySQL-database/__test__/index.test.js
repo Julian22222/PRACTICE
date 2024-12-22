@@ -3,7 +3,6 @@ const app = require("../app"); //Connection to all routes
 const pool = require("../db"); //import DB connection
 const seed = require("../seed");
 const { describe } = require("node:test");
-const { Console } = require("console");
 
 //this before each invoke seed function beforeEach describe block
 //if you want to invoke seed before each test --> put beforeeach inside before each block
