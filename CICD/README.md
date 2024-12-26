@@ -13,6 +13,15 @@
 - CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
 - Workflow it is a process of GitHub Actions. Workflow it is an instruction in yml format. workflow reacts on different types of events.
 - GitHub Actions have 2000 Free minutes per month, after that if you use more you need to pay to use GitHub virtual servers to run GitHub Actions, or you can run GitHub Actions using your computer.
+- GitHub Actions can have only one terminal, (if we need to check some tests -> we need start server in one terminal and run the tests from another terminal). In this case you need to install npm package to current repository --> pm2. This package allow to use containers for separate tasks.
+
+```JS
+//npx <-- download and run the pm2 package
+// npx pm2 <-- will create new container for separate task (command), to run our server -> start server.js
+npx pm2 start server.js
+
+
+```
 
 #### What is CI/CD --> Example:
 
@@ -104,6 +113,8 @@ This is called Events. It triggers for a workflow, (on: push) <-- when someone p
 
 [--> Workflow syntax <--](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
+[--> All events that trigger workflows <--](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
+
 - it can be one trigger or many triggers
 
 ```JS
@@ -112,7 +123,7 @@ on: workflow_dispatch   //<-- one trigger, triggering manually in GitHub
 ....
 ////////
 name: nameOfTheWorkflow
-on: [workflow_dispatch, push, pull_request ]   //<-- can put many triggers in the array
+on: [workflow_dispatch, push, pull_request ]   //<-- can put many triggers in the array, workflow will react on each of these triggers from array
 .....
 /////
 name: nameOfTheWorkflow
@@ -142,6 +153,73 @@ on:
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
   As example it is better to make jobs dependant, to do not run all the jobs on the virtual machines if Lint failed,( code syntax is wrong), in this case we can make other jobs dependant from Lint job
 
+### Cache (It is an another Action from GitHub marketPlace)
+
+if you make the same commands on each job you can put it in cache and then use it.
+
+- often used action
+- make workflow run faster,
+- you don't need to run the same command on each job (such as --> npm ci, etc.). It keeps this in cache
+- we can cache some files and folders
+
+To use Cache
+
+- add Cache before a step which we want to put in Cache --> See cache\_&_context.yml file
+
+```JS
+....
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:                       //<-- adding some parametrs to Cache
+          path: ~/.npm   //<--always the same path for ubuntu machines, on this path all cache will be stored (if we want to cache - npm ci )
+          key: node-modules-deps   //<-- the name of created folder for cache.
+
+          //(the same line but with dynamic data). It is better to make this key dynamic which will be dependant from the current dependancy list, because if during development we will add some dependency to this package, then our cache will not be valid. We must use dynamic key-->
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}   //<-- expressions allow to add dynamic to workflow.
+
+          // hashFiles(**/package-lock.json') <-- it is special method / function, and here we are passing the path
+
+          //Then we can copy this cache block and put it in each job before command that we want to put in the cache. it is going to be the same cache code for each job. If we install all dependencies on each job, then we can cache that and insert the cache code block before each dependency installation
+```
+
+### Artifact (It is an another Action from GitHub marketPlace)
+
+it allows to get acces to build folder from our repository, or to any static files/test reports from our repository. We can download any static file
+We use 2 different GitHub actions to upload artifact (from your repository) and then to download artifact --> to us it
+
+[upload artifact docs](https://github.com/marketplace/actions/upload-a-build-artifact)
+[download artifact docs](https://github.com/marketplace/actions/download-a-build-artifact)
+
+```JS
+name: Build & Deploy
+on: [push, work_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install deps
+        run: npm ci
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: build   //searching file or folder using this path to add to our artifact, in this case it is folder--> build, (other example- path/to/artifac/word.txt)
+          name: build-files  //we name the artifact that we upload
+  deploy:
+    needs: build   //depends from build job, to get downloaded artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build project
+        uses: actions/download-artifact@v4  //this will download artifact to GitHub actions, where we can see that file and download.
+        with:
+          name: build-files //name artifacts that we uploaded previously
+```
+
+After running this workflow the artifact will appear on GitHub Actions page. Go to current repo GitHub actions ,click on current workflow
+
+![pic6](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic6SSS.jpg)
+
 # YML syntaxis ( file can be written --> nameOfTheWorkFlow.yml or nameOfTheWorkFlow.yaml)
 
 - yml is compatible with JSON, it means we can use JSON inside "yml" file
@@ -164,7 +242,7 @@ jobs:                                  //<-- list of jobs that will be done afte
         run: npm run lint
   test:                                //<--next job, must be on the same level of the first job (lint in our case)
     runs-on: ubuntu-latest
-    needs: [lint]                      //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
+    needs: lint                      //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If lint fails then other job will not be executed, won't run (test job is dependant from lint job)
     steps:
       - name: Checkout
         uses: actions/checkout@v4      //<-- we getting acces to Repository code
@@ -202,6 +280,14 @@ jobs:
 - linter - it is just something that we use to check to make sure that our code is conforming to certain standards, We check code quality. super-linter is made up of multiple linters so it is doesn't matter which code you use in your repository, super-linter is going to understand it and make sure you conform to the standards of that language (Can check for correct spelling any Language -JS,Java, C# etc.)
 
 ```JS
+//if we have another Folder in the Root folder where we want to run our GitHub Actions, You need to specify what folder/directory you are working in
+
+ - name: Install dependencies
+        working-directory: MySQL-database
+        run: npm ci
+```
+
+```JS
 name: Node
 
 on:
@@ -219,8 +305,8 @@ on:
     // push:
     //   branches:
     //     - main
-        //  paths-ignore:
-        //   - '.github/workflows/*'
+      //  paths-ignore:
+      //   - '.github/workflows/*'
 
 jobs:
   build:       //<--name of the job
@@ -268,6 +354,76 @@ jobs:
           echo Second line!
 ```
 
+# Context Object
+
+- Displaying in the console --> special context object, which allow to add some data or use some data inside our workflow
+
+- Context object has detailed info about current workflow
+
+- context object --> "${{ github }}"
+
+[GitHub Actions Expressions](https://docs.github.com/en/actions/learn-github-actions/expressions)
+
+```JS
+name: Context demo
+on: workflow_dispatch
+jobs:
+    print:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print context
+              run: echo "${{ github }}"   //<-- won't show an object context, can't see what is inside context
+```
+
+You can search in Google for GitHub Action expressions to see what else we can use in GitHub Actions, check link below
+
+[--> Here <--](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/evaluate-expressions-in-workflows-and-actions)
+
+- To convert the value from context object to JSON , to display what is inside context, we need -->
+
+```JS
+name: Context demo
+on: workflow_dispatch
+jobs:
+    print:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print context
+              run: echo "${{ toJSON(github) }}"  //<-- Context object will display detailed info about this current workflow.
+
+              //It will show detailed info from github object, from this forkflow (info such as: from what branch we pushed the code, name of repository, repository owner, workflow id, etc. ) <-- info from github related to current repository will be here
+```
+
+```JS
+//if we have different jobs, steps and actions in one yml file --> this example will not work to get context (-->See cache_&_context.yml)
+  print:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Print context
+         run: echo "${{ toJSON(github) }}"
+       - name: Print context event
+         run: echo "${{ toJSON(github.event) }}"
+
+
+//exporting this toJSON(github.event.inputs) into an environment variable and then use this variable
+
+//Use this example --> (See cache_&_context.yml)
+- name: Parámetros de entrada
+   env:
+      PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
+      run: echo $PARAMS_ENTERED
+```
+
+### Detailed data about current workflow contains:
+
+- what branch we have used to push our code
+- repository name
+- owner of the repository
+- url of our repository
+- etc. (all info in GitHub related to current Repository )
+
+- We use context to adjust and automate CI/CD
+
 # Matrix (use for actions with few different parametrs)
 
 - will allow to run the same action with different parammetrs
@@ -277,8 +433,8 @@ jobs:
 ```JS
 strategy:
     matrix:
-        version: [14,16,18]    //<-- different node version
-        os: [ubuntu-latest, windows-latest]  //<-- different virual machines (ubuntu, windows)
+        version: [14,16,18]    //<-- different node version, word --> version (can have any name, it is a key that we will use)
+        os: [ubuntu-latest, windows-latest]  //<-- different virual machines (ubuntu, windows), word --> os (can have any name, it is a key that we will use)
 .......
 
 runs-on: ${{ matrix.os }}  //<-- will run 2 parametrs
@@ -307,7 +463,8 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
       - name: Lint   //<-- Lint check correct code syntax
         run: npm run lint
     test: //<--next job, must be on the same level of the first job (lint in our case)
-      needs: [lint]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly
+      needs: [lint, otherNameOfJob]  //<--link of dependancies, not mandatory field, to perform test we need successful lint(good code syntax), this job will start running only after lint job finishes its execution, will not run at the same time but after lint successfully executed. If we don't put --> needs: --> Jobs are not dependant from each other and running at the same time. Each Job was invoked separatelly, See --> check.yml file line 24
+      continue-on-error: true // will continue to run CI/CD if some threads had errors, and some threads have passed
       strategy:
         matrix:
           version: [14,16,18]   //version key <-- can be any name
@@ -325,7 +482,7 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
             run: npm run test
 ```
 
-# Work with variables in GitHub Actions
+# Work with variables in GitHub Actions (allow to work with environment variables) --> See env.yml file
 
 - most often used with --> Secret (from GitHub page)
 
@@ -381,7 +538,7 @@ To test this app we need:
 
 # Most often used Actions from Marketplace
 
-[Click Here](https://github.com/marketplace?type=actions)
+[--> Marketplace <--](https://github.com/marketplace?type=actions)
 
 - Test Reporter (to check JEST / Mocha test in JS)(.NET / dotnet test ( xUnit / NUnit / MSTest ))
 
@@ -397,90 +554,4 @@ To test this app we need:
 
 ```JS
 "lint" : "npx eslint ./src"
-```
-
-# Context Object
-
-- Displaying in the console --> special context object, which allow to add some data or use some data inside our workflow
-
-- Context object has detailed info about current workflow
-
-[GitHub Actions Expressions](https://docs.github.com/en/actions/learn-github-actions/expressions)
-
-```JS
-name: Context demo
-on: workflow_dispatch
-jobs:
-    print:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Print context
-              run: echo "${{ github }}"   //<-- won't show an object context, can't see what is inside context
-```
-
-- To convert the value from context object to JSON , to display what is inside context, we need -->
-
-```JS
-name: Context demo
-on: workflow_dispatch
-jobs:
-    print:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Print context
-              run: echo "${{ toJSON(github) }}"  //<-- Context object will display detailed info about this current workflow.
-```
-
-```JS
-//if we have different jobs, steps and actions in one yml file --> this example will not work to get context (-->See cache_&_context.yml)
-  print:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Print context
-         run: echo "${{ toJSON(github) }}"
-       - name: Print context event
-         run: echo "${{ toJSON(github.event) }}"
-
-
-//exporting this toJSON(github.event.inputs) into an environment variable and then use this variable
-
-//Use this example --> (See cache_&_context.yml)
-- name: Parámetros de entrada
-   env:
-      PARAMS_ENTERED: ${{ toJSON(github.event.inputs) }}
-      run: echo $PARAMS_ENTERED
-```
-
-### Detailed data about current workflow contains:
-
-- what branch we have used to push our code
-- repository name
-- owner of the repository
-- url of our repository
-- etc. (all info in GitHub related to current Repository )
-
-- We use context to adjust and automate CI/CD
-
-# Cache
-
-- make workflow run faster,
-- you don't need to run the same command on each job (such as --> npm ci, etc.). It keeps this in cache
-- we can cache some files and folders
-
-To use Cache
-
-- add Cache before a step which we want to put in Cache --> See cache\_&context.yml file
-
-```JS
-....
-      - name: Cache deps
-        uses: actions/cache@v4
-        with:                       //<-- adding some parametrs to Cache
-          path: ~/.npm   //<--always the same path for ubuntu machines (if we want to cache - npm ci )
-          key: node-modules-deps   //<-- the name of created folder for cache. It is better to make this key dynamic which will be dependant from the current dependancy list, because if during development we will add some dependency to this package, then our cache will not be valid. We must use dynamic key-->
-          key: node-modules-${{ hashFiles('**/package-lock.json') }}   //<-- expressions allow to add dynamic to workflow.
-
-          // hashFiles(**/package-lock.json') <-- it is special method / function, and here we are passing the path
-
-          //Then we can copy this cache block and put it before command that we want to put in the cache, it is going to be the same cache code
 ```
