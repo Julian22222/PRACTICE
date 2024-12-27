@@ -18,6 +18,7 @@ const util = require("util"); //node utilities for mySQL, give access to differe
 //util.promisify <-- return Promise
 const query = util.promisify(db.query).bind(db);
 const seed = async () => {
+  await query(`USE ${process.env.DB_DATABASE};`);
   const drop = await query(`DROP TABLE IF EXISTS cars;`);
 
   // console.log(drop);
