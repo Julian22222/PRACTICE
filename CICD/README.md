@@ -86,6 +86,10 @@ here you can find what code to write in --> steps. It helps to performe certain 
 package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
 uses: actions/setup-node@v3 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
 
+[--> Most used Workflow Actions <--](https://about.codecov.io/blog/discovering-the-most-popular-and-most-used-github-actions/)
+
+basically you add additional packages from Actions if you use AWS, python, Azure,Docker, C# etc.
+
 # How to Create a Workflow (Directory structure)
 
 - we need to create a new file in the root of the Project Folder otherwise GitHub can't find "yml" files. GitHub searches all workflows in --> .github/workflows/anyFileName.yml
@@ -440,7 +444,7 @@ env:                 // define Environment variables here
   PORT: 8080
   DB_HOST: localhost
   GH_SECRET: 42
-  GH2_SECRET: ${{ secrets.DEPLOY_SECRET}}  // secret from GitHub Action Secrets
+  GH2_SECRET: ${{ secrets.DEPLOY_SECRET}}  // secret from GitHub Action Secrets, GitHub won't show secret, it will show --> ***, we can use secrests for passwords, connection strings, etc. But GitHub Won't show the secrets
 jobs:
   build:                     // name of the job
     runs-on: ubuntu-latest
@@ -546,7 +550,7 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
 
 # Self-hosted runners
 
-- allow to do CI/CD not on GitHub servers but on our local machine, --> you will use less GitHub server minutes (GitHub Free limit 2000 free minutes per mounth), better to use for big projects and quicker
+- allow to run CI/CD not on GitHub servers but on your local machine, --> you will use less GitHub server minutes (GitHub Free limit 2000 free minutes per mounth), better to use for big projects and quicker. When you often need to run CI/CD on your project, check different tests.
 - uses your own local machine for CI/CD
 
 ### How to adjust Self-hosted runners
