@@ -39,10 +39,13 @@ Workflow contains:
 
 1. Events - trigger for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file,
    To see all the events options, after--> on: , we can press --> ctr + space
-2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions( super-lint: <-- we have a single job, it is name of the job).You can have many jobs in 1 workflow
+
+[--> All events that trigger workflows <--](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
+
+2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions.You can have many jobs in 1 workflow
 
 If we have few jobs in our workflow, by default they are not dependant from other jobs then they will be running in parallel, at the same time. All the jobs will start running separately, not dependent from each other, they run parallel to each other.
-We can make jobs dependant from other jobs --> For example: second job will start running only first job is successfully completed. (Example: line 310)
+We can make jobs dependant from other jobs --> For example: second job will start running only first job is successfully completed. (Example: ckeck2.yml)
 
 ```JS
 //some code..
@@ -57,7 +60,7 @@ jobName:
 
 [--> GitHub Runners Docs <--](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
 
-4. Steps - we have 2 steps, (you can have as many steps as you want)
+4. Steps. you can have as many steps as you want
 5. Actions
 
 [--> GitHub Actions Marketplace <--](https://github.com/marketplace?type=actions)
@@ -96,9 +99,9 @@ basically you add additional packages from Actions if you use AWS, python, Azure
 - we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
 - and then you can name your file whatever you want, following with 'yml' file format
 - workflows could not be triggered if the path is wrong. Correct path --> .github/workflows/nameOfTheFile.yml
-- we can meke many workflows in Repository, each workflow can be responsible for different things
+- we can make many workflows in Repository, each workflow can be responsible for different things
 
-# How to find GitHub actions for your created Repo in GitHub.comSS
+# How to find GitHub actions for your created Repo in GitHub.com
 
 - Go to your Repository (step 1, our Repository in GitHub to check or run GitHub Actions)
 - Then click Actions (step 2 on the picture)
@@ -157,7 +160,15 @@ on:
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
   As example it is better to make jobs dependant, to do not run all the jobs on the virtual machines if Lint failed,( code syntax is wrong), in this case we can make other jobs dependant from Lint job
 
-### Cache (It is an another Action from GitHub marketPlace)
+### Checkout (actions/checkout@v4)
+
+### Setup node (actions/setup-node@v4)
+
+### Super-linter (github/super-linter@v4)
+
+### actions/checkout@v4
+
+### Cache (It is an another Action from GitHub marketPlace) (actions/cache@v4)
 
 if you make the same commands on each job you can put it in cache and then use it.
 
@@ -222,7 +233,7 @@ jobs:
 
 After running this workflow the artifact will appear on GitHub Actions page. Go to current repo GitHub actions ,click on current workflow
 
-![pic6](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic6SSS.jpg)
+![pic6](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic6.jpg)
 
 # YML syntaxis ( file can be written --> nameOfTheWorkFlow.yml or nameOfTheWorkFlow.yaml)
 
@@ -277,7 +288,7 @@ jobs:
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
-          GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEK: ${{ secrets.GITHUB_TOKEN }}  //<-- use secrets from GitHub secrets section
 
 ```
 
