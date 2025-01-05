@@ -414,7 +414,7 @@ jobs:
       run: echo $PARAMS_ENTERED
 ```
 
-### Detailed data about current workflow contains:
+### Context Object contains Detailed data about current workflow:
 
 - what branch we have used to push our code
 - repository name
@@ -423,6 +423,63 @@ jobs:
 - etc. (all info in GitHub related to current Repository )
 
 - We use context to adjust and automate CI/CD
+
+# Work with variables in GitHub Actions (allow to work with environment variables) --> See env.yml file
+
+```JS
+//env.yml file
+
+name: Environment
+on:
+  push:                //this is a triiger
+    branches:
+      - main
+  workflow_dispatch:  //this is a triiger
+env:                 // define Environment variables here
+  NODE_ENV: production
+  PORT: 8080
+  DB_HOST: localhost
+  GH_SECRET: 42
+  GH2_SECRET: ${{ secrets.GH2_SECRET }}  // secret from GitHub Action Secrets
+jobs:
+  build:                     // name of the job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Env Build
+        run: |
+          echo "${{ env.DB_HOST }}"  // to show environment variables from line 441, here we are using env object and DB_HOST key to get needed value
+          echo "${{ env.GH_SECRET }}"
+  deploy:                   // name of the job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Env Deploy
+        run: |
+          echo "${{ env.PORT }}"
+          echo "${{ env.NODE_ENV }}"
+```
+
+- most often used with --> Secret (from GitHub page)
+
+## How to write Secret variables on GitHub page and then use them in CI/CD-->
+
+1. In GitHub project Repository --> go to Settings (Horizontal bar menu)
+
+![pic7](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic7.jpg)
+
+2. In Settings , go to Secrets and Variables ( left side bar menu) ,and choose Actions
+
+![pic8](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic8.jpg)
+
+3. Click --> New repository Secret --> after we create a secret we won't see it any more, but we can use it in our GitHub Actions (Most often used Secret --> is a Tokken for something)
+
+![pic9](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic9.jpg)
+
+4. Secrets always should be written in Capital letters
+5. To use that Secret in GitHub Actions workflow we write -->
+
+```JS
+run: ${{ secrets.nameOfSecret }}
+```
 
 # Matrix (use for actions with few different parametrs)
 
@@ -480,22 +537,6 @@ jobs:         //<-- list of jobs that will be done after workflow triggering
             run: npm ci                     //<--dependency instalation, the same as --> npm install, to run this command you shold have --> package-lock.json and package.json files in the Repository root
             - name: Test
             run: npm run test
-```
-
-# Work with variables in GitHub Actions (allow to work with environment variables) --> See env.yml file
-
-- most often used with --> Secret (from GitHub page)
-
-To get an access of Secret -->
-
-1. In GitHub project page --> go to Settings (Horizontal bar menu)
-2. In Settings , go to Secrets and Variables ( left side bar menu) ,and choose Actions
-3. Click --> New repository Secret , --> after we create a secret we won't see it any more, but we can use it in our GitHub Actions (Most often used Secret --> is a Tokken for something)
-4. Secrets always should be written in Capital letters
-5. To use that Secret in GitHub Actions workflow-->
-
-```JS
-run: ${{ secrets.nameOfSecret }}
 ```
 
 # Self-hosted runners
