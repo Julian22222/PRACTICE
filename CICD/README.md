@@ -429,7 +429,7 @@ jobs:
 ```JS
 //env.yml file
 
-name: Environment
+name: Environment   // Under this name will be workflow in GitHub Actions
 on:
   push:                //this is a triiger
     branches:
@@ -440,7 +440,7 @@ env:                 // define Environment variables here
   PORT: 8080
   DB_HOST: localhost
   GH_SECRET: 42
-  GH2_SECRET: ${{ secrets.GH2_SECRET }}  // secret from GitHub Action Secrets
+  GH2_SECRET: ${{ secrets.DEPLOY_SECRET}}  // secret from GitHub Action Secrets
 jobs:
   build:                     // name of the job
     runs-on: ubuntu-latest
@@ -449,8 +449,13 @@ jobs:
         run: |
           echo "${{ env.DB_HOST }}"  // to show environment variables from line 441, here we are using env object and DB_HOST key to get needed value
           echo "${{ env.GH_SECRET }}"
+          echo "${{ env.PORT }}"
+          echo "${{ env.NODE_ENV }}"
   deploy:                   // name of the job
     runs-on: ubuntu-latest
+    env:                     //declearing other environment varibles, this show environment variable scope
+        NODE_ENV: staging
+        PORT: 8081
     steps:
       - name: Print Env Deploy
         run: |
