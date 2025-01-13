@@ -7,6 +7,8 @@ To work with in ASP.NET MVC Core with C# we need VS Code extensions:
 - C# Dev Kit (by Microsoft)
 - C# Extensions (by JosKreativ)
 
+Before you start your project - install all needed nuget packages
+
 ## Overview of this Project
 
 In this Project we are using dropDown menu from different resources: from controller hard code and from database. We have options where we get data from controller and get data from database for dropDown menu when we adding a book.(See --> AddNewBook View)
@@ -104,7 +106,7 @@ dotnet ef migrations add init   //<--Example
       dotnet ef database update  //to update database
 ```
 
-4. If we want to added tables or/and new properties to the Database. Doesn't matter Local database and/or to Web Application (to Azure portal) the process is the same:
+4. If we want to add tables or/and new properties to the Database. Doesn't matter Local database and/or to Web Application (to Azure portal) the process is the same:
 
 ### use Connection string full path, it allows to connect with that Database which is mentioned in the connection string and allows to add tables and properties that we indicated in Data folder/Context DB connection file and Data/Models --> to that DB that is mentioned in connecion string.
 
