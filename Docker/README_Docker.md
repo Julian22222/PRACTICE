@@ -10,7 +10,7 @@
 - Docker provides the ability to package and run an application in a loosely isolated environment called a container. The isolation and security lets you run many containers simultaneously on a given host.
 - Docker allow to develop your application and its supporting components using containers.
 - Docker is written on --> Go language
-- The Docker is based on Images and Containers. Images and Containers are called -> Entities. Images - are templates/patterns which are designed to create containers. Images exist only for Read only (We can't edit them). Container always creating from the Image (we read the Image and run the containe, our app/ service runs in the Container). Containers are launched on the basis of Image.
+- The Docker is based on Images and Containers. Images and Containers are called -> Entities. Images - are templates/patterns which are designed to create containers. Images exist only for Read only (We can't edit them). Container always creating from the Image (we read the Image and run the container, our application or service runs in the Container). Containers are launched on the basis of Image.
 - Docker has whole chain of image inheritances which allow us to run different applications in different operation systems.
 
 # Container
@@ -83,11 +83,15 @@ docker stop ContainerID //<-- to stop running Container
 
 FROM python //<-- we take python image, name of the Image that we want to use for our environment
 
-WORKDIR /app //<-- identify Root directory/ working directory is -> /app (folder)
+WORKDIR /app //<-- identify Root directory/ working directory is -> /app (folder), app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
 
-COPY . . //<-- copy all the files from working directory, fisrt dot means - copy files from current location, second dot - means paste all copied files to Root folder
+COPY . . //<-- copy all the files from working directory, fisrt dot means - copy files from current location, second dot - means paste all copied files to Root Docker Image folder
+//<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project.
+//Location of Project Root place is defined by --> Dockerfile folder (where you have Dockerfile document). After that we declare -> where we want to paste those files into new Docker Image. (COPY . .) --> Second dot means that we will paste all files to Root Docker Image Folder. Usually we create special folder, which will serve as Root folde for all our App. If we use --> WORKDIR /app before this, than we can write --> COPY . . - Because we will be located in /app folder after WORKDIR /app command.
 
-CMD ["python", "index.py"] //<-- command where we take python image and we run file -> index.py
+
+CMD ["python", "index.py"] //<-- an array, with few elements. Each element represent one command. -> Locally to start our application in Python we write in terminal --> python index.py, Where index.py is file to run. Here is the same but all elements we put separately
+//CMD command is running all the time when we convert our Image to Container
 ```
 
 ```JS
@@ -96,7 +100,7 @@ CMD ["python", "index.py"] //<-- command where we take python image and we run f
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app
+WORKDIR /app   ///app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
 
 //Now we need to set our Image, we need to set what files we want to move to new Image and keep it there. Image is used for read only. When you create the Image, you can't edit it. COPY command copy some certains Folders and files from our project to new Docker Image
 COPY . . //<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project. Project Root place is located, where you have Dockerfile document. After that we declare -> where we want to paste those files into new Image. (COPY . .) --> Second dot means that we will paste all files to Root Image Folder. If we use --> WORKDIR /app before this, than we can write --> COPY . . - Because we will be located in /app folder after WORKDIR /app command.
