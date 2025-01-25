@@ -37,6 +37,9 @@ npx pm2 logs
 ![pic11](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic11.jpg)
 
 ```JS
+//Ci/CD code FROM Root Project folder --> Practice --> .github/workflows -->mySQL_database.yml
+//example of using pm2 package
+
    - name: start server
         working-directory: MySQL-database
         run: |
