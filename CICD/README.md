@@ -36,6 +36,15 @@ npx pm2 logs
 
 ![pic11](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic11.jpg)
 
+```JS
+   - name: start server
+        working-directory: MySQL-database
+        run: |
+          npx pm2 start server.js
+          sleep 10  // <-- wait 10 seconds after start server, and then do --> npm run test
+          npm run test
+```
+
 #### What is CI/CD --> Example:
 
 - CI --> For example we are developing some app, and there are few stages of development, (implimenting many features to your app) and you want to see how it will display in real time app.
