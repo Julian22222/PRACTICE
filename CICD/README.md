@@ -20,8 +20,21 @@
 // npx pm2 <-- will create new container for separate task (command), to run our server -> start server.js
 npx pm2 start server.js
 
+npx pm2 stop 0 //to stop container with id = 0, from table
+
+npx pm2 monit 0 //show CPU usage, memory usage, loop delay or request/min for each container with id = 0
+
+npx pm2 list  //will show table with all container tasks
+
+npx pm2 logs
+
+//Example on the pic below
 
 ```
+
+![pic10](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic10.jpg)
+
+![pic11](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic11.jpg)
 
 #### What is CI/CD --> Example:
 
