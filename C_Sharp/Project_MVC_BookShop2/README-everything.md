@@ -571,3 +571,49 @@ crossorigin="anonymous"></script>
 # Redirects
 
 [Click Here](https://www.scholarhat.com/tutorial/mvc/return-view-vs-return-redirecttoaction-vs-return-redirect-vs-return-redirecttoroute)
+
+# ORM, What is an ORM – The Meaning of Object Relational Mapping Database Tools
+
+Object Relational Mapping (ORM) is a technique used in creating a "bridge" between object-oriented programs and, in most cases, relational databases
+
+You can see the ORM as the layer that connects object oriented programming (OOP) to relational databases.
+
+## What is an ORM Tool?
+
+An ORM tool is software designed to help OOP developers interact with relational databases. So instead of creating your own ORM software from scratch, you can make use of these tools
+
+```C#
+// As example: instead of writing a request to database  -->
+
+"SELECT id, name, email, country, phone_number FROM users WHERE id = 20"
+
+// Using ORM we can simply write --> users.GetById(20)
+```
+
+So the code above does the same as the SQL query. Note that every ORM tool is built differently so the methods are never the same, but the general purpose is similar.
+
+Most OOP languages have a variety of ORM tools that you can choose from.
+
+## Popular ORM Tools for .NET
+
+- Entity Framework is a multi-database object-database mapper. It supports SQL, SQLite, MySQL, PostgreSQL, and Azure Cosmos DB.
+
+## Popular ORM Tools for Typescript
+
+- Prisma
+
+## Advantages of Using ORM Tools
+
+Here are some of the advantages of using an ORM tool:
+
+- It speeds up development time for teams.
+- Decreases the cost of development.
+- Handles the logic required to interact with databases.
+- Improves security. ORM tools are built to eliminate the possibility of SQL injection attacks.
+- You write less code when using ORM tools than with SQL.
+
+## Disadvantages of Using ORM Tools
+
+- Learning how to use ORM tools can be time consuming.
+- They are likely not going to perform better when very complex queries are involved.
+- ORMs are generally slower than using SQL.
