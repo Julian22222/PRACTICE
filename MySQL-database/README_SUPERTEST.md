@@ -15,6 +15,10 @@ When you run npm test, Jest will launch in watch mode\*. Every time you save a f
 
 jest --watch
 
+- To have the same data before eaach test we can implement --> beforeEach or afterEach function
+
+[-->afterEach example<--](https://www.youtube.com/watch?app=desktop&v=UFjtOmvmAU0)
+
 ### Jest has many advantages, some of which are listed below.
 
 - It requires minimal configuration to run the tests
@@ -60,3 +64,15 @@ However, the skip postfix is available for all different functions for example t
 ## Unit testing allows us to test the individual functionality of our React components.
 
 [HERE](https://dev.to/knowicki024/setting-up-test-files-in-react-with-jest-26la#:~:text=The%20best%20way%20to%20set,will%20keep%20your%20test%20files)
+
+```JS
+//example block
+
+request('https://dog.ceo')
+.get('/api/breeds/image/random')
+.expect(200)
+.expect('Content-Type', 'application/json')
+.expect(function(res) {
+if (!res.body.hasOwnProperty('status')) throw new Error("Expected 'status' key!");
+
+```
