@@ -167,8 +167,18 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 # how to Set server firewall on Azure Portal SQL database (go to database in Azure Portal --> SQL database --> set server firewall)
 
+![pic1](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic1.jpg)
+
 1. Connect your IP firewall rules
 2. To avoid HTTP 500 error , It is not allowed to access the server.Go to azure portal address and choose your database.Press"Set server firewall " and Allow Azure services and resources to access this server choose "Yes" save that page and refresh your service.Than you can see your data
+
+Go to SQL sever, to allow connect to our database from our local computer (see picture below) (adding new Firewall rule to allow your IP address to connect Azure). Why it is helpful? -> when you created your DB in Azure Portal you may want to connect from your IP adress (from your local machine) to Azure SQL Database in Azure. It will be blocked if you don't make these 4 steps. will show error 500,
+
+Go to Networking (Step 1)
+
+Fill fields (Step 2 and 3 ), Step 3 - is your IP address,
+
+Tick Step 4 and SAVE
 
 ....................................................................................................................
 
