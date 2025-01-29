@@ -40,23 +40,45 @@ When testing is complete, getting the fix to the customer is as simple as pushin
 
 ### Docker commands
 
+```JS
+sudo docker images  //This command will open this table, check picture below
+```
+
+![pic2](https://github.com/Julian22222/PRACTICE/blob/main/Docker/IMG/pic2.jpg)
+
 write in terminal
 
 ```JS
+clear //<-- clear the console
+
 docker -v //will show Docker version, if it is installed on your computer
 
 docker //<-- will give different commands
+
+docker build .  //<-- will create new Image from Dockerfile instructions / you need to be in correct folder
 
 docker images --help  //<--will show what this command does, and show description. use --> --help for any of the commands, don't need to memorise all the Docker commands
 sudo docker images //<-- will show all images
 sudo docker image ls //<-- the same command, will show all images
 
 
-docker run ImageID //<-- will run container from ImageId that we indicated in ImageID
+//Every time when we run command  --> docker run ImageId, -It creates and runs new container from ImageId, and creates new ContainerId every time !!!!
+
+docker run ImageID //<-- will create and run container from ImageId that we indicated in ImageID
 docker run ImageName // the same command
 docker run -it node //<-- run node with parametr, it -> means interactive, we get inside container and can insert and interact with Node how we want.
 // To check what Node version is installed in container --> inside container we write -> process.version
 // To exit from current container to local computer --> .exit
+
+docker run -p 3000:3000 ImageID  //<-- we can pass some parammeters, -p <-- means PORT, which has special syntaxis where we indicate 2 ports -->
+//first 3000 port tells which local port on local machine we need to use to run this Docker container, we use localhost:3000 in our browser to run this container
+//second 3000 port tells which PORT from Docker container we want to use, (second port indicates the PORT inside Docker container). This number MUST match Dockerfile !!!  --> EXPOSE 3000
+
+docker run -d -p 80:3000 ImageId //<-- here we adding another parammetr -d <-- means Detached. We don't enter inside this container. We stay im main console and we can use other commands to check the docker processes, we can keep working with other containers or data.
+//it helps to continue working with other data, we do not get inside current container. To get to main console we need to exit from current running container therefore we need to stop container.
+//first PORT =80, we use localhost:80 in our browser to run this container
+//second PORT=3000, Docker container PORT, This PORT must be the same as --> EXPOSE 3000, in Dockerfile !!!
+
 
 docker ps --help //<-- will show what this command does, and show description. use --> --help for any of the commands, don't need to memorise all the Docker commands
 docker ps //<-- show the list of all running/active containers
@@ -69,6 +91,8 @@ docker rm ContainerID  //<-- delete inactive containers from local machine, to d
 docker container prune //<-- delete all inactive containers in the list
 
 docker stop ContainerID //<-- to stop running Container
+
+docker start ContainerID  //<-- if we have container in our list inactive containers (you can check that using this command--> docker ps -a)
 ```
 
 ### Give certain instructions for Docker
@@ -158,3 +182,17 @@ sudo docker images  //This command will open this table, check picture below
 ```
 
 ![pic2](https://github.com/Julian22222/PRACTICE/blob/main/Docker/IMG/pic2.jpg)
+
+To interact with certain Docker Container we can use ContainerID or Container Name, they are unique for each created container (The same with Images)
+
+- (Step 1 on the pic below) Container ID
+- (Step 2 on the pic) Container Name
+- (Step 3 on the pic ) -> docker ps , will show all active containers
+- (Step 4 on the pic ) -> docker stop loving_jennings, will stop running container with Name = loving_jennings
+
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/Docker/IMG/pic3.jpg)
+
+## Difference between docker run ImageId and docker start containerId (Both commands start running container)
+
+- run <-- this command works only with docker Images, NOT with docker containers !!!
+- start <-- this command work only with docker containers !!!
