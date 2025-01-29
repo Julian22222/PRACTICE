@@ -80,9 +80,17 @@ docker run -d -p 80:3000 ImageId //<-- here we adding another parammetr -d <-- m
 //second PORT=3000, Docker container PORT, This PORT must be the same as --> EXPOSE 3000, in Dockerfile !!!
 
 
+docker run -p 50:3000 -d --name any_container_name ImageId   //<-- we can pass extra parametrs when we start certain container, we can set a name for new container
+
+docker logs containerID_or_containerName //<-- will show all activity in current container
+
 docker ps --help //<-- will show what this command does, and show description. use --> --help for any of the commands, don't need to memorise all the Docker commands
 docker ps //<-- show the list of all running/active containers
 docker ps -a //<-- will show all containers on our local machine (will show running and inactive containers)
+
+
+docker attach containerID or container Name //<--if we need to connect to certain container, after using detached parametr. As example-> (docker run -d -p 80:3000 ImageId )
+
 
 //You need to delete all inactive/unused containers, because they will build up and take more and more space and resources on your local machine
 docker rm ContainerID  //<-- delete inactive containers from local machine, to don't waste memory and resources
@@ -90,9 +98,9 @@ docker rm ContainerID  //<-- delete inactive containers from local machine, to d
 
 docker container prune //<-- delete all inactive containers in the list
 
-docker stop ContainerID //<-- to stop running Container
+docker stop ContainerID_or_containerName //<-- to stop running Container
 
-docker start ContainerID  //<-- if we have container in our list inactive containers (you can check that using this command--> docker ps -a)
+docker start ContainerID_or_containerName  //<-- if we have container in our list inactive containers (you can check that using this command--> docker ps -a)
 ```
 
 ### Give certain instructions for Docker
@@ -102,7 +110,7 @@ docker start ContainerID  //<-- if we have container in our list inactive contai
 - Inside of this Dockerfile we can write instructions for Docker, here we creating new Image
 
 ```JS
-//Dockerfile instructions example 1
+//Dockerfile instructions - EXAMPLE 1 (not fully correct example to use)
 //Dockerfile helps to create an Image
 
 FROM python //<-- we take python image, name of the Image that we want to use for our environment
@@ -119,7 +127,7 @@ CMD ["python", "index.py"] //<-- an array, with few elements. Each element repre
 ```
 
 ```JS
-//Dockerfile instructions example 2
+//Dockerfile instructions - EXAMPLE 2 (not fully correct example to use)
 
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
@@ -185,14 +193,69 @@ sudo docker images  //This command will open this table, check picture below
 
 To interact with certain Docker Container we can use ContainerID or Container Name, they are unique for each created container (The same with Images)
 
-- (Step 1 on the pic below) Container ID
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/Docker/IMG/pic3.jpg)
+
+- (Step 1 on the pic above) Container ID
 - (Step 2 on the pic) Container Name
 - (Step 3 on the pic ) -> docker ps , will show all active containers
 - (Step 4 on the pic ) -> docker stop loving_jennings, will stop running container with Name = loving_jennings
 
-![pic3](https://github.com/Julian22222/PRACTICE/blob/main/Docker/IMG/pic3.jpg)
+## Difference between: docker run ImageId and docker start containerId (Both commands start running container)
 
-## Difference between docker run ImageId and docker start containerId (Both commands start running container)
+```JS
+docker run ImageId //<-- this command works only with docker Images, NOT with docker containers !!!
+```
 
-- run <-- this command works only with docker Images, NOT with docker containers !!!
-- start <-- this command work only with docker containers !!!
+```JS
+docker start containeId  //<-- this command work only with docker containers !!!
+```
+
+## Images hold only that code which was in your application on the moment when you were creating current Image
+
+- When you create an Image from Dockerfile (from your app) - it takes only current code (which we had on that moment) and makes an Image from it --> Image is fixed and we can't change it, it is read only
+- After changing or adding something in your app --> you will not see these changes in your running container, to apply change to your container -> you need to create new Image and then run container
+
+# Dockerfile correct syntaxis
+
+Previous Dockerfile examples wasn't fully correct, because every time when we create new Image from our current application using Dockerfile instructions we do extra work.
+
+- For example: If we adding or changing something in our code in the Application and we want to apply it to new container. Then we need to create new Image from our updated code and then create and run new container.
+
+- If we going to use Dockerfile instruction examples 1 and 2 (used previously, above), every time we will run:
+
+```JS
+RUN npm install  //<-- it will takes a lot of traffic, time consuming, etc.
+```
+
+but for example we have changed only 1 line in our code, and we need to run -> npm install again (it is not good solution)
+
+Docker can compare your previous code version and updated code version and take some code from cashe to do not do extra work. Therefore we can optimize our Dockerfile instruction process (which is related to node_modules folder)
+
+```JS
+//Dockerfile instructions - EXAMPLE 3 (Correct version of instructions)
+
+FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
+
+//working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
+WORKDIR /app   ///app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
+
+
+COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application. This command to use if copy to our app folder--> (COPY package.json /app)
+
+//To run this Node app we need all dependencies from our app
+RUN npm install  //RUN is used when we build an Image
+
+//Now we need to set our Image, we need to set what files we want to move to new Image and keep it there. Image is used for read only. When you create the Image, you can't edit it. COPY command copy some certains Folders and files from our project to new Docker Image
+COPY . . //<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project. Project Root place is located, where you have Dockerfile document. After that we declare -> where we want to paste those files into new Image. (COPY . .) --> Second dot means that we will paste all files to Root Image Folder. If we use --> WORKDIR /app before this, than we can write --> COPY . . - Because we will be located in /app folder after WORKDIR /app command.
+
+
+EXPOSE 3000//<-- This command is not mandatory in Docker , but it is best practise. It tells what PORT will run our application
+//This code means -> when we start this application, we will use PORT 3000
+
+//To run our application
+CMD ["node", "app.js"] //<-- an array, with few elements. Each element represent one command. -> Locally to start our application we write in terminal --> node app.js, Where app.js is file to run. Here is the same but all elements we put separately
+//CMD command is running all the time when we convert our Image to Container
+
+```
+
+This command order is correct, when we want to recreate new Image because of the changes you made in the code. If we don't change node mudules -> Docker will take node modules from CASHE and will not make extra work every time when we add some changes to our app.
