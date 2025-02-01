@@ -88,12 +88,18 @@ docker run -d -p 80:3000 ImageId //<-- here we adding another parammetr -d <-- m
 
 docker run -p 50:3000 -d --name any_container_name ImageId   //<-- we can pass extra parametrs when we start certain container, we can set a name for new container
 
-docker run -d -p 3000:3000 --name myapp --rm imageID  //<-- anather paramer -> rm. Means as soon as we stop this running container it will be deleted from container list, (docker ps -a) <-- this command won't show this container. myapp <-- is the name of our new container
+docker run -d -p 3000:3000 --name myapp --rm imageID  //<-- another paramer -> rm. Means as soon as we stop this running container it will be deleted from container list, (docker ps -a) <-- this command won't show this container. myapp <-- is the name of our new container
 
 docker run -d -p 3000:3000 --name myapp --rm imageID:imageTag  //<-- if we have Images with the same names we can specify which image to convert to container by adding imageTag --> :imageTag
 
+docker run -d -p 3000:3000 -v myvolume:/app/data --name myapp --rm imageID:imageTag   //<-- another paramer -v . Using this code,docker create volume name: myvolume , AUTOMATICALLY !!!
+// -v myvolume:/app/data
+// -v <-- volumes parametr
+// myvolume: <-- any name, we give a volume name here
+//  /app/data  <-- the path to volume folder, should be the same what we indicated in Dockerfile -> VOLUMES [ "/app/data" ]
 
-docker logs containerID_or_containerName //<-- will show all activity in current container
+
+docker logs containerID_or_containerName //<-- will show all activity in current container, show what Docker container Port is used fro our running application etc.
 
 docker ps --help //<-- will show what this command does, and show description. use --> --help for any of the commands, don't need to memorise all the Docker commands
 docker ps //<-- show the list of all running/active containers
@@ -112,6 +118,16 @@ docker container prune //<-- delete all inactive containers in the list
 docker stop ContainerID_or_containerName //<-- to stop running Container
 
 docker start ContainerID_or_containerName  //<-- if we have container in our list inactive containers (you can check that using this command--> docker ps -a)
+
+
+docker volume --help    //<-- will show all commands related to volumes
+docker volume ls   //<-- will show all volumes
+docker volume inspect yourVolumeName  //<-- we can check what we have in this volume, (when it was created, drivers, path to folder, etc.)
+
+docker volume rm volumeName  //<-- delete volume name
+docker volume prune  //<-- delete all unused valumes
+
+docker volume create volumeName  //<-- create manually volume name
 ```
 
 ### Give certain instructions for Docker
@@ -127,7 +143,7 @@ docker start ContainerID_or_containerName  //<-- if we have container in our lis
 
 FROM python //<-- we take python image, name of the Image that we want to use for our environment
 
-WORKDIR /app //<-- identify Root directory/ working directory is -> /app (folder), app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
+WORKDIR /app //<-- identify Root directory/ working directory is -> /app (itis file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
 
 COPY . . //<-- copy all the files from working directory, fisrt dot means - copy files from current location, second dot - means paste all copied files to Root Docker Image folder
 //<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project.
@@ -144,18 +160,18 @@ CMD ["python", "index.py"] //<-- an array, with few elements. Each element repre
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app   ///app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen codelisten code
 
 //Now we need to set our Image, we need to set what files we want to move to new Image and keep it there. Image is used for read only. When you create the Image, you can't edit it. COPY command copy some certains Folders and files from our project to new Docker Image
 COPY . . //<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project. Project Root place is located, where you have Dockerfile document. After that we declare -> where we want to paste those files into new Image. (COPY . .) --> Second dot means that we will paste all files to Root Image Folder. If we use --> WORKDIR /app before this, than we can write --> COPY . . - Because we will be located in /app folder after WORKDIR /app command.
 
 //usually you need to create special folder, which will serve as a Root folder for all our application. example below--> (we create app folder and paste all the files into this folder)
-COPY . /app
+COPY . /app  //<-- we use COPY . . or use this line if we didn't use --> WORKDIR /app
 
 //To run this Node app we need all dependencies from our app
 RUN npm install  //RUN is used when we build an Image
 
-EXPOSE 3000//<-- This command is not mandatory in Docker , but it is best practise. It tells what PORT will run our application
+EXPOSE 3000//<-- This command is not mandatory in Docker , but it is best practise. It tells what PORT will be used in Docker Container to run our application.
 //This code means -> when we start this application, we will use PORT 3000
 
 //To run our application
@@ -249,11 +265,11 @@ Docker can compare your previous code version and updated code version and take 
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app   ///app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
 COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application.
 //or
-COPY package.json /app  //<-- This command to use if copy to our app folder
+COPY package.json /app  //<-- This command to use if copy to our app.js file
 
 //To run this Node app we need all dependencies from our app
 RUN npm install  //RUN is used when we build an Image
@@ -261,7 +277,7 @@ RUN npm install  //RUN is used when we build an Image
 //Now we need to set our Image, we need to set what files we want to move to new Image and keep it there. Image is used for read only. When you create the Image, you can't edit it. COPY command copy some certains Folders and files from our project to new Docker Image
 COPY . . //<-- First of all we mention from where we want to copy our files and what we want to copy. First dot (COPY .) means we copy all folders and files from Root folder of our Project. Project Root place is located, where you have Dockerfile document. After that we declare -> where we want to paste those files into new Image. (COPY . .) --> Second dot means that we will paste all files to Root Image Folder. If we use --> WORKDIR /app before this, than we can write --> COPY . . - Because we will be located in /app folder after WORKDIR /app command.
 
-EXPOSE 3000//<-- This command is not mandatory in Docker , but it is best practise. It tells what PORT will run our application
+EXPOSE 3000//<-- This command is not mandatory in Docker , but it is best practise. It tells what PORT will be used in Docker Container to run our application.
 //This code means -> when we start this application, we will use PORT 3000
 
 //To run our application
@@ -317,7 +333,7 @@ We can ignore / do not allow to copy certain files or folders that don't need to
 ```
 
 ```JS
-.dockerignore
+// .dockerignore file
 //here we put files and folders that we don't need to COPY to Docker Image
 
 node_modules
@@ -339,11 +355,11 @@ We can use env varibales in Dockerfile.
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app   ///app folder already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
 COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application.
 //or
-COPY package.json /app  //<-- This command to use if copy to our app folder
+COPY package.json /app  //<-- This command to use if copy to our app.js file
 
 //To run this Node app we need all dependencies from our app
 RUN npm install  //RUN is used when we build an Image
@@ -353,8 +369,10 @@ COPY . . //<-- First of all we mention from where we want to copy our files and 
 
 ENV PORT 3000  // PORT is env variable, 3000 is a value of ENV variable
 
-EXPOSE $PORT //<-- we use this syntaxis to use -> PORT variable.  It tells what PORT will run our application
+EXPOSE $PORT //<-- we use this syntaxis to use -> PORT variable. It tells what PORT will be used in Docker Container to run our application.
 //This code means -> when we start this application, we will use PORT 3000
+
+VOLUME [ "/app/data" ]  //<-- it is array where we indicate the path to current VOLUME
 
 //To run our application
 CMD ["node", "app.js"] //<-- an array, with few elements. Each element represent one command. -> Locally to start our application we write in terminal --> node app.js, Where app.js is file to run. Here is the same but all elements we put separately
@@ -385,4 +403,65 @@ and to use the value from .env file we use -->
 
 ```JS
 docker run -d -p 80:4200 --env-file ./env --rm --name myContainerName imageId   // we use ->  --env-file  and full path to .env file
+```
+
+# Make your work with Docker in more convenient way
+
+- Install "make" package on your computer if it is not installed, usually it is installed in VScode. How to Install, write in google --> make install linux
+- create file in the project Root --> Makefile (no extensions)
+- It works the same way as --> package.json (scripts), where you can write write commands and use shortcuts to invoke this command
+
+```JS
+//Makefile
+
+run:    //<-- name of command
+    docker run -d -p 3000:3000 --name myapp --rm imageID:imageTag
+stop:   //<-- name of command
+    docker stop containerID_or_containerName
+run-dev:
+    docker run -d -p 3000:3000 -v myvolume:/app/data --name myapp --rm imageID:imageTag
+```
+
+- write in terminal -->
+
+```JS
+make run  //<-- to invoke our command
+```
+
+# Volumes
+
+- Volumes it is a folder which is located somewhere in the Docker, which is used by Docker to hold some data for different containers.
+- Container can contact this Volumes folder and get needed data from there.
+- Volumes allow keep the data even if we deleted current container, and rebuild new container from the same Docker Image
+- There are 2 types of volumes:
+  - anonymous (there is no name to this volume, will be deleted after container is deleted)
+  - name (save data in the volumes)
+
+Without giving Volume names for container it will create annonymous volumes (it creates volume folder without a name - it has some random letters and numbers).
+In this case, if we have some data in this container with anonymous volume, --> then when we will delete this container --> all data will be deleted.
+For example: To Do List, all saved todo's will be deleted after container will be deleted.
+
+To give volume name, we need to add 1 more parametr (-v) when we creating Container from Docker Image. Syntaxis of volumes -->
+
+```JS
+docker run -d -p 3000:3000 -v myvolume:/app/data --name myapp --rm imageID:imageTag
+
+// -v myvolume:/app/data
+// -v <-- volumes parametr
+// myvolume: <-- any name, we give a volume name here
+//  /app/data  <-- the path to volume folder, should be the same what we indicated in Dockerfile -> VOLUMES [ "/app/data" ]
+```
+
+# Create your own VOLUMES from console
+
+- for example: we used command:
+
+```JS
+docker run -d -p 3000:3000 -v myvolume:/app/data --name myapp --rm imageID:imageTag   //<-- using this code,docker create volume name: myvolume , AUTOMATICALLY !!!
+```
+
+We can manualy create name volumes by isng this code in terminal -->
+
+```JS
+docker volume create volumeName
 ```
