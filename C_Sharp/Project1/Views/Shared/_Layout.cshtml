@@ -29,8 +29,17 @@
     </div>
 
     <footer>
-       2023 - ASP.Net Project
+       Copyright &copy; ASP.NET @DateTime.Now.Year  
        
     </footer>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+@* scripts are located not on every View page *@
+@await RenderSectionAsync("Scripts", required: false) 
+
 </body>
 </html>
