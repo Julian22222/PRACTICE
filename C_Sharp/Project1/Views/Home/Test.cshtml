@@ -51,16 +51,24 @@ int MyNum = 0;
 
 </div>
 
+@* Section Declaration: The @section syntax defines a "section" in Razor views. This is typically used for placing content (such as scripts or additional markup) into a specific part of the layout (e.g., a <script> block at the bottom of the page). 
+The scripts section is used here to insert JavaScript into the page. *@
 @section scripts {
 @* Here we can insert any scripts*@
 
-   <script>
+@* Script Block: This is a standard HTML <script> block containing JavaScript code. The code inside will be executed in the browser when the page loads. *@
+   <script> 
     $(document).ready(function () {
+      @* jQuery: $(document).ready(function () { ... }); ensures the JavaScript code inside the function is executed after the DOM is fully loaded (i.e., after the HTML elements have been completely rendered). 
+      This avoids potential errors that could occur if the script tries to interact with elements before they exist on the page. *@
         let myNum = @MyNum; // Read initial value from Razor
 
         $("#incrementButton").click(function () {
             myNum++;
+
             $("#numberDisplay").text(myNum);
+            @* Updating the Display: This line updates the content of the <h2> element (with ID numberDisplay) to reflect the new value of myNum. 
+              The text() function in jQuery sets the inner text of the targeted element. So, it changes the number shown in the <h2> tag to the new value of myNum after each increment. *@
         });
     });
 </script>
