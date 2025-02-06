@@ -1,4 +1,5 @@
-@using Project1.Models  
+```C#
+@using Project1.Models
 
 @{
     ViewData["Title"] = "Game";
@@ -32,14 +33,14 @@
 
 @* assign to --> data-fighter-name="@fighter.Name" *@
 @* assign to --> data-fighter-Img ="@fighter.Img" *@
-<button class="fighterbtn" class="card-btn" data-fighter-name="@fighter.Name" data-fighter-Img ="@fighter.Img" >
+<button class="card-btn" data-fighter-name="@fighter.Name" data-fighter-Img ="@fighter.Img" onclick="selectFighter(this)">
     <div class="card-container">
 
         <ul >
             <li class="img-container">
                 <p class="fighter-name"><b>
                 @fighter.Name
-                </b></p> 
+                </b></p>
               <img src="@fighter.Img" alt="Fighter logo" width="150" height="150"/>
             </li>
         </ul>
@@ -48,105 +49,83 @@
     }
     </section>
 
-@* When choose fighter1 --> will add new button to cancel figter  *@
-<div id="figterContainer1" style="display: none; margin-top: 20px;">
+@* When choose fighter1 --> will add new button to cancel figter *@
+<div id="newButtonContainer1" style="display: none; margin-top: 20px;">
     @* <img src="https://www.pngkey.com/png/full/114-1149878_cancel-button-cancel-button-png.png" alt="fighter logo" width="50" height="50"/> *@
     <img src="@Fighter1Logo" alt="fighter1 logo" width="100" height="100"/>
     <br/>
-    <button id="cancelFighter1" class="btn btn-primary" >Choose Another Fighter</button>
-    <button id="confirmFighter1" class="btn btn-primary">confirm Fighter</button> 
-</div>
-
-@* Confirmed fighter1 block *@
-<div id="confirmFighterContainer1" style="display: none; margin-top: 20px;">
-    <img src="@Fighter1Logo" alt="fighter1 logo" width="120" height="120"/>
-    <hr style="width: 120px; color: red;"/>
+    <button id="cancelFighter1" class="btn btn-primary" onclick="cancelFighter1(this)">Choose Another Fighter</button>
 </div>
 
 
-@* Fighter2 block *@
-@* When choose fighter1 --> will add new button to cancel figter  *@
-<div id="figterContainer2" style="display: none; margin-top: 20px; float: right;">
+
+
+
+@* When choose fighter2 --> will add new button to cancel figter *@
+<div id="newButtonContainer2" style="display: none; margin-top: 20px; float: right;">
     @* <img src="https://www.pngkey.com/png/full/114-1149878_cancel-button-cancel-button-png.png" alt="fighter logo" width="50" height="50"/> *@
-    <img src="@Fighter1Logo" alt="fighter2 logo" width="100" height="100"/>
+    <img src="@Fighter2Logo" alt="fighter2 logo" width="100" height="100"/>
     <br/>
-    <button id="cancelFighter2" class="btn btn-primary" >Choose Another Fighter</button>
-    <button id="confirmFighter2" class="btn btn-primary">confirm Fighter</button> 
+    <button id="cancelFighter2" class="btn btn-primary" onclick="cancelFighter2(this)">Choose Another Fighter</button>
 </div>
 
-@* Confirmed fighter2 block *@
-<div id="confirmFighterContainer2" style="display: none; margin-top: 20px;">
-    <img src="@Fighter1Logo" alt="fighter2 logo" width="120" height="120"/>
-    <hr style="width: 120px; color: red;"/>
-</div>
 
- 
+
+
 
 
 <script>
 
-$(document).ready(function() {
-    console.log("jQuery is working!");
-    let Fighter1Logo = "@Fighter1Logo";
-    console.log("Fighter button is clicked!");
-        
-    $(".fighterbtn").click(function() { // Use class instead of ID
+    function selectFighter(button) {
 
-        let fighetrImg = $(this).data("fighter-img"); // Get image URL from data attribute
+        // Get the fighter name from the data attribute
 
-        // Example: Set the image inside a container when button is clicked
-        $("#figterContainer1 img").attr("src", fighetrImg);
-    
+        var fighterName = button.getAttribute('data-fighter-name'); //from line 35 we use this assignments
+        var fighterLogo = button.getAttribute("data-fighter-Img");  //from line 35 we use this assignments
 
-        $("#figterContainer1").show(); // Show the container
-    });
-
-  /////////////////////////////cancelFighter1 function
-
-    $("#cancelFighter1").click(function() { 
-    $("#figterContainer1").hide(); // Hide the container
-  });
-  
-  ////////////////////////confirmFighter1 function
-    $("#confirmFighter1").click(function() { 
-        $("#figterContainer1").hide(); // Hide the container
-
-       let confirmedImg = $("#figterContainer1 img").attr("src"); // Get selected image src
-
-        $("#confirmFighterContainer1 img").attr("src", confirmedImg); // Set image in confirmed container
-        $("#confirmFighterContainer1").show(); // Show confirmed fighter block
-    });
-
-    //////////////////////if figterContainer1 confirmed choose fighter2
-    if($("#confirmFighterContainer1").is(":visible")){
-        
-
-        $(".fighterbtn").click(function() { // Use class instead of ID
-            
-            
-        let fighetrImg = $(this).data("fighter-img"); // Get image URL from data attribute
-
-        // Example: Set the image inside a container when button is clicked
-        $("#figterContainer2 img").attr("src", fighetrImg);
-    
-        $("#figterContainer2").show(); // Show the container
-
-        });
+        console.log("Selected Fighter: " + fighterName);
+        console.log("Selected Img: " + fighterLogo);
 
 
-        /////////////////////////////confirm figter 2 
-        $("#confirmFighter2").click(function() { 
-            $("#figterContainer2").hide(); // Hide the container
+        // You can assign the fighter name to a variable here if needed
+        var selectedFighter = fighterName;
 
-            let confirmedImg = $("#figterContainer2 img").attr("src"); // Get selected image src
 
-            $("#confirmFighterContainer2 img").attr("src", confirmedImg); // Set image in confirmed container
-            $("#confirmFighterContainer1").show();  // Show confirmed fighter1 block
-            $("#confirmFighterContainer2").show(); // Show confirmed fighter2 block
+        // Update the image source dynamically from Fighter 1
+        var fighterImgElement1 = newButtonContainer1.querySelector("img");
+        fighterImgElement1.src = fighterLogo;
 
-            alert("Fighter 1 and Fighter 2 are confirmed");
-        });
+
+        // Show the new button by changing its display style
+        newButtonContainer1.style.display = "block"; // Make newButtonContainer1 block visible
+
+
+
+        @* if(@Fighter1Logo != ""){
+
+        // Update the image source dynamically from FIGHTER 2
+        var fighterImgElement2 = newButtonContainer2.querySelector("img");
+        fighterImgElement2.src = fighterLogo;
+
+
+            // Show the new button by changing its display style
+        newButtonContainer1.style.display = "block"; // Make newButtonContainer1 block visible
+        } *@
+
+
     }
-  
-});
+
+
+
+    function cancelFighter1(button) {
+        // Hide the new button by changing its display style
+        newButtonContainer1.style.display = "none"; // Hide the new button
+    }
+
+     function cancelFighter2(button) {
+        // Hide the new button by changing its display style
+        newButtonContainer2.style.display = "none"; // Hide the new button
+    }
+
 </script>
+```
