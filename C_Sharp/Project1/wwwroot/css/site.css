@@ -135,6 +135,12 @@ section {
   margin-left: -10%;
 }
 
+#figterContainer2 {
+  position: absolute;
+  right: 0;
+  top: 200px; /* Adjust as needed */
+}
+
 /* ////////////////////////////////////////////////////////////////// */
 /* Contacts */
 

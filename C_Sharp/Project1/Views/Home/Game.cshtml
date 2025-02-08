@@ -19,8 +19,8 @@
 
         };
 
-    string Fighter1Logo = "";
-    string Fighter2Logo = "";
+    
+   
 }
 <h1 class="header">Mortal Combat TEST .....</h1>
 <hr>
@@ -30,8 +30,6 @@
 <section>
 @foreach(var fighter in fighters){
 
-@* assign to --> data-fighter-name="@fighter.Name" *@
-@* assign to --> data-fighter-Img ="@fighter.Img" *@
 <button class="fighterbtn" class="card-btn" data-fighter-name="@fighter.Name" data-fighter-Img ="@fighter.Img" >
     <div class="card-container">
 
@@ -49,104 +47,155 @@
     </section>
 
 @* When choose fighter1 --> will add new button to cancel figter  *@
-<div id="figterContainer1" style="display: none; margin-top: 20px;">
+    <div id="figterContainer1" style="display: none; margin-top: 20px;">
     @* <img src="https://www.pngkey.com/png/full/114-1149878_cancel-button-cancel-button-png.png" alt="fighter logo" width="50" height="50"/> *@
-    <img src="@Fighter1Logo" alt="fighter1 logo" width="100" height="100"/>
-    <br/>
-    <button id="cancelFighter1" class="btn btn-primary" >Choose Another Fighter</button>
-    <button id="confirmFighter1" class="btn btn-primary">confirm Fighter</button> 
-</div>
+        <img alt="fighter1 logo" width="100" height="100"/>
+        <br/>
+        <button id="cancelFighter1" class="btn btn-primary" >Return</button>
+        <br/>
+        <button id="confirmFighter1" class="btn btn-primary">confirm Fighter</button> 
+    </div>
 
-@* Confirmed fighter1 block *@
-<div id="confirmFighterContainer1" style="display: none; margin-top: 20px;">
-    <img src="@Fighter1Logo" alt="fighter1 logo" width="120" height="120"/>
-    <hr style="width: 120px; color: red;"/>
-</div>
+    @* Confirmed fighter1 block *@
+    <div id="confirmFighterContainer1" style="display: none; margin-top: 20px;">
+        <h2 id= "headerofConfirmedFighetr1"></h2>
+        <img alt="fighter1 logo" width="150" height="150"/>
+        <hr style="width: 150px; color: red;"/>
+    </div>
 
 
-@* Fighter2 block *@
-@* When choose fighter1 --> will add new button to cancel figter  *@
-<div id="figterContainer2" style="display: none; margin-top: 20px; float: right;">
-    @* <img src="https://www.pngkey.com/png/full/114-1149878_cancel-button-cancel-button-png.png" alt="fighter logo" width="50" height="50"/> *@
-    <img src="@Fighter1Logo" alt="fighter2 logo" width="100" height="100"/>
-    <br/>
-    <button id="cancelFighter2" class="btn btn-primary" >Choose Another Fighter</button>
-    <button id="confirmFighter2" class="btn btn-primary">confirm Fighter</button> 
-</div>
+    @* Fighter2 block *@
+    @* When choose fighter1 --> will add new button to cancel figter  *@
+    <div id="figterContainer2" style="display: none; margin-top: 20px;">
+   
+        @* <img src="https://www.pngkey.com/png/full/114-1149878_cancel-button-cancel-button-png.png" alt="fighter logo" width="50" height="50"/> *@
+        <img alt="fighter2 logo" width="100" height="100"/>
+        <br/>
+        <button id="cancelFighter2" class="btn btn-primary" >Return</button>
+        <button id="confirmFighter2" class="btn btn-primary">confirm Fighter</button> 
+    </div>
 
-@* Confirmed fighter2 block *@
-<div id="confirmFighterContainer2" style="display: none; margin-top: 20px;">
-    <img src="@Fighter1Logo" alt="fighter2 logo" width="120" height="120"/>
-    <hr style="width: 120px; color: red;"/>
-</div>
+   
 
- 
+    @* Confirmed fighter2 block *@
+    <div id="confirmFighterContainer2" style="display: none; margin-top: 20px; margin-left: 100% ;">
+        <h2 id= "headerofConfirmedFighetr2"></h2>
+        <img alt="fighter2 logo" width="150" height="150"/>
+        <hr style="width: 120px; color: red;"/>
+     </div>
 
 
 <script>
 
 $(document).ready(function() {
-    console.log("jQuery is working!");
-    let Fighter1Logo = "@Fighter1Logo";
-    console.log("Fighter button is clicked!");
-        
-    $(".fighterbtn").click(function() { // Use class instead of ID
 
-        let fighetrImg = $(this).data("fighter-img"); // Get image URL from data attribute
+    console.log("jQuery is working!");
+
+    let fighter_Img1;
+    let fighter_Name1;
+
+    let fighter_Img2;
+    let fighter_Name2;
+
+
+
+        
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////Choose fighter1
+    $(".fighterbtn").click(function() { // Use class instead of ID
+    
+        console.log("Fighter1 button is clicked!");
+
+        fighter_Img1 = $(this).data("fighter-img"); // Get image URL from data attribute
+        fighter_Name1 = $(this).data("fighter-name"); // Get Name from data attribute
 
         // Example: Set the image inside a container when button is clicked
-        $("#figterContainer1 img").attr("src", fighetrImg);
+        $("#figterContainer1 img").attr("src", fighter_Img1);
     
 
         $("#figterContainer1").show(); // Show the container
     });
 
-  /////////////////////////////cancelFighter1 function
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////cancelFighter1 function
 
     $("#cancelFighter1").click(function() { 
     $("#figterContainer1").hide(); // Hide the container
   });
   
-  ////////////////////////confirmFighter1 function
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////confirmFighter1 function
     $("#confirmFighter1").click(function() { 
         $("#figterContainer1").hide(); // Hide the container
 
-       let confirmedImg = $("#figterContainer1 img").attr("src"); // Get selected image src
+        @* let confirmedImg = $("#figterContainer1 img").attr("src"); // Get selected image src
+        let fighterName = $(this).data("fighter-name"); // Get image Name from data attribute *@
 
-        $("#confirmFighterContainer1 img").attr("src", confirmedImg); // Set image in confirmed container
-        $("#confirmFighterContainer1").show(); // Show confirmed fighter block
+        console.log("FROM confirm fighter 1",fighter_Name1);
+
+        $("#confirmFighterContainer1 img").attr("src", fighter_Img1); // Set image in confirmed container
+        $("#confirmFighterContainer1").fadeIn(2000).show(); // Show confirmed fighter block
+      
+        $("#headerofConfirmedFighetr1").text(fighter_Name1);
+
+        $("#confirmFighterContainer1").append("<p>Figter 1 SELECTED!</p>");
+        
+        @* alert("Fighter 1 is confirmed"); *@
     });
 
-    //////////////////////if figterContainer1 confirmed choose fighter2
-    if($("#confirmFighterContainer1").is(":visible")){
+    ////////////////////////////////////////////////////////////////////////////////if figterContainer1 confirmed choose fighter2
+    if(fighter_Name1 !== null && fighter_Name2 == null){ //<----------------------------------------------------------------------------------------------------------HERE is error
         
+        console.log("Fighter2 button is clicked!");
 
         $(".fighterbtn").click(function() { // Use class instead of ID
             
-            
-        let fighetrImg = $(this).data("fighter-img"); // Get image URL from data attribute
-
+        fighter_Img2 = $(this).data("fighter-img"); // Get image URL from data attribute
+        fighter_Name2 = $(this).data("fighter-name"); // Get Name from data attribute
         // Example: Set the image inside a container when button is clicked
-        $("#figterContainer2 img").attr("src", fighetrImg);
+
+        console.log("FROM choose fighter 2",fighter_Name1)
+        console.log("FROM choose fighter 2",fighter_Name2); 
+
+
+        $("#figterContainer2 img").attr("src", fighter_Img2);
     
         $("#figterContainer2").show(); // Show the container
 
         });
 
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////cancelFighter1 function
 
-        /////////////////////////////confirm figter 2 
+        $("#cancelFighter2").click(function() { 
+        $("#figterContainer2").hide(); // Hide the container
+        });
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////confirm figter 2 
         $("#confirmFighter2").click(function() { 
             $("#figterContainer2").hide(); // Hide the container
 
-            let confirmedImg = $("#figterContainer2 img").attr("src"); // Get selected image src
+            @* let confirmedImg = $("#figterContainer2 img").attr("src"); // Get selected image src *@
 
-            $("#confirmFighterContainer2 img").attr("src", confirmedImg); // Set image in confirmed container
+            console.log(fighter_Name2);
+            $("#confirmFighterContainer2 img").attr("src", fighter_Img2); // Set image in confirmed container
+            $("#confirmFighterContainer2").fadeIn(2000).show();  // Show confirmed fighter2 block
             $("#confirmFighterContainer1").show();  // Show confirmed fighter1 block
-            $("#confirmFighterContainer2").show(); // Show confirmed fighter2 block
+            
+            $("#headerofConfirmedFighetr2").text(fighter_Name2);
 
-            alert("Fighter 1 and Fighter 2 are confirmed");
+            $("#confirmFighterContainer2").append("<p>Figter 2 SELECTED!</p>");
+
+            @* alert("Fighter 1 and Fighter 2 are confirmed"); *@
         });
     }
+
+
+    if($("#confirmFighterContainer1").is(":visible") && ("#confirmFighterContainer2").is(":visible")){
+
+        alert("Fighter 1 and Fighter 2 are confirmed");
+
+    }
+
+
   
 });
 </script>
