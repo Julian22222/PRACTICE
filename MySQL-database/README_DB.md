@@ -1,3 +1,23 @@
+# Avoid to make the same varibles when you connect to DB and to API server
+
+use DB before variables to connect to Database -->
+
+```JS
+DB_USERNAME = ********
+DB_PASSWORD = ********
+PGDATABASE = ******
+DB_HOST = ********
+DB_PORT = ********
+```
+
+and PORT variable --> for port connection to API server,
+
+```JS
+PORT = ****
+```
+
+to make different names for variables
+
 # Connection using ElephantSQL + DBeaver
 
 This is ElephantSQL settings -->
