@@ -78,12 +78,12 @@ docker run -it node //<-- run node with parametr, it -> means interactive, we ge
 // To exit from current container to local computer --> .exit
 
 docker run -p 3000:3000 ImageID  //<-- we can pass some parammeters, -p <-- means PORT, which has special syntaxis where we indicate 2 ports -->
-//first 3000 port tells which local port on local machine we need to use to run this Docker container, we use localhost:3000 in our browser to run this container
+//first 3000 port tells which local port on local machine we need to use to run this Docker container, we use localhost:3000 in our browser to run this container, this localhost PORT --> MUST be the same as API PORT from our API server that we put in container--> app.listen(PORT)
 //second 3000 port tells which PORT from Docker container we want to use, (second port indicates the PORT inside Docker container). This number MUST match Dockerfile !!!  --> EXPOSE 3000
 
 docker run -d -p 80:3000 ImageId //<-- here we adding another parammetr -d <-- means Detached. We don't enter inside this container. We stay im main console and we can use other commands to check the docker processes, we can keep working with other containers or data.
 //it helps to continue working with other data, we do not get inside current container. To get to main console we need to exit from current running container therefore we need to stop container.
-//first PORT =80, we use localhost:80 in our browser to run this container
+//first PORT =80, we use localhost:80 in our browser to run this container, this localhost PORT --> MUST be the same as API PORT from our API server that we put in container--> app.listen(PORT)
 //second PORT=3000, Docker container PORT, This PORT must be the same as --> EXPOSE 3000, in Dockerfile !!!
 
 docker run -p 50:3000 -d --name any_container_name ImageId   //<-- we can pass extra parametrs when we start certain container, we can set a name for new container
