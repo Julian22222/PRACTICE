@@ -5,6 +5,74 @@
       "PackagePath": "staticwebassets/Project1.bundle.scp.css"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/baraka.jpg",
+      "PackagePath": "staticwebassets/IMG/baraka.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/cybex.jpg",
+      "PackagePath": "staticwebassets/IMG/cybex.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jade.jpg",
+      "PackagePath": "staticwebassets/IMG/jade.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jax.jpg",
+      "PackagePath": "staticwebassets/IMG/jax.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jonny.jpg",
+      "PackagePath": "staticwebassets/IMG/jonny.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jonny1.jpg",
+      "PackagePath": "staticwebassets/IMG/jonny1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/kitana.jpg",
+      "PackagePath": "staticwebassets/IMG/kitana.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/lao.jpg",
+      "PackagePath": "staticwebassets/IMG/lao.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/liukang.jpg",
+      "PackagePath": "staticwebassets/IMG/liukang.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/raiden.jpg",
+      "PackagePath": "staticwebassets/IMG/raiden.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/reptile.jpg",
+      "PackagePath": "staticwebassets/IMG/reptile.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/scorpion.jpg",
+      "PackagePath": "staticwebassets/IMG/scorpion.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/shangsung.jpg",
+      "PackagePath": "staticwebassets/IMG/shangsung.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/shangsung1.jpg",
+      "PackagePath": "staticwebassets/IMG/shangsung1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/shaukan.jpg",
+      "PackagePath": "staticwebassets/IMG/shaukan.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/sonya.jpg",
+      "PackagePath": "staticwebassets/IMG/sonya.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/subzero.jpg",
+      "PackagePath": "staticwebassets/IMG/subzero.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

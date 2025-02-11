@@ -51,6 +51,14 @@ int MyNum = 0;
 
 </div>
 
+<br/>
+<br/>
+<br/>
+<br/>
+
+<input type="text" id="username" placeholder="Enter your name">
+<button id="submitBtn">Submit</button>
+
 @* Section Declaration: The @section syntax defines a "section" in Razor views. This is typically used for placing content (such as scripts or additional markup) into a specific part of the layout (e.g., a <script> block at the bottom of the page). 
 The scripts section is used here to insert JavaScript into the page. *@
 @section scripts {
@@ -69,6 +77,13 @@ The scripts section is used here to insert JavaScript into the page. *@
             $("#numberDisplay").text(myNum);
             @* Updating the Display: This line updates the content of the <h2> element (with ID numberDisplay) to reflect the new value of myNum. 
               The text() function in jQuery sets the inner text of the targeted element. So, it changes the number shown in the <h2> tag to the new value of myNum after each increment. *@
+        });
+
+
+
+         $("#submitBtn").click(function() {
+            var username = $("#username").val();  // Get value from the input field
+            alert("Hello, " + username + "!");
         });
     });
 </script>

@@ -539,6 +539,18 @@ console.log(bgColor);
 $("#myElement").css("background-color", "green");
 ```
 
+or another sample
+
+```C#
+$(document).ready(function() {
+    $("#fighterImg").css({
+        "position": "absolute",
+        "right": "20px",
+        "top": "50px"
+    });
+});
+```
+
 15. .siblings()
 
 Finds all the sibling elements of the selected element.

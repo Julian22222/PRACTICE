@@ -95,7 +95,7 @@
 
 @* Butle block *@
 <div id="buttle_btn" style="display: none;">
-    <h2 id="header_buttle" style="margin-bottom: 50px; color: white; display: flex; justify-content: center;">READY FOR BATTLE?</h2>
+    <h2 id="header_buttle" style="margin-bottom: 50px; color: white; display: flex; justify-content: center;">ARE YOUR READY FOR A BATTLE?</h2>
     <div class="battle_block" style="display: flex; justify-content: center;">
     <button class="btl_btn" style="width: 120px; height:40px; background-color: greenyellow; border-radius: 5px; display: flex; justify-content: center; align-items: center;">Battle</button>
 
@@ -133,7 +133,7 @@ $(document).ready(function() {
             fighter_Name1 = $(this).data("fighter-name"); // Get Name from data attribute
 
             // Example: Set the image inside a container when button is clicked
-            $("#figterContainer1 img").attr("src", fighter_Img1);
+            $("#figterContainer1 img").attr("src", fighter_Img1);  // sets the src of the <img> inside #figterContainer1.
     
 
             $("#figterContainer1").show(); // Show the container
@@ -165,7 +165,7 @@ $(document).ready(function() {
 
                 console.log("FROM choose fighter 2", fighter_Name2);
 
-                $("#figterContainer2 img").attr("src", fighter_Img2);
+                $("#figterContainer2 img").attr("src", fighter_Img2); arguments // sets the src of the <img> inside #figterContainer2.
                 $("#figterContainer2").show(); // Show Fighter 2 selection container
             });
 
@@ -200,7 +200,9 @@ $(document).ready(function() {
     
 
 
-   
+   $(".btl_btn").click(function() {
+        alert("Battle is started!");
+    });
 
 
   

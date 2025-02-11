@@ -280,3 +280,22 @@ console.log(selectedFighter2.Damage); // Get the damage of Fighter 2
 This will allow you to use the selected fighters' full data in other parts of your code (such as for a battle simulation or to display stats).
 
 Let me know if you need further clarification or adjustments!
+
+# If-else inside a click event
+
+```C#
+$("#toggleButton").click(function() {
+    if ($("#box").hasClass("hidden")) {
+        $("#box").removeClass("hidden").show();
+    } else {
+        $("#box").addClass("hidden").hide();
+    }
+});
+
+
+
+if ($("#myInput").val() === "") {
+    alert("Input field is empty!");
+}
+
+```

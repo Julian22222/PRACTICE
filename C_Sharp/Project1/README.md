@@ -1,6 +1,26 @@
 # jQuery
 
-to work with jQuery --> The easiest way is to include the jQuery CDN, or local library link in your \_Layout.cshtml or directly in your View file.
+to work with jQuery --> The easiest way is to include the jQuery CDN, or local library link in your:
+
+1.
+
+```C#
+_Layout.cshtml
+
+//  in the <head> tag
+
+```
+
+2.  or directly in your View file.
+
+```C#
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function() {
+       //some logic
+   });
+</script>
+```
 
 The most popular and traditional ways to add client-side functionality using <scripts> to a web page:
 
@@ -42,6 +62,7 @@ Example of code:
 
 <script>
 
+// $(document).ready(function() {...}); ensures that the script runs once the page has fully loaded.
     $(document).ready(function() {
 
         // jQuery function to handle button click
