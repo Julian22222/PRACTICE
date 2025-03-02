@@ -1,25 +1,84 @@
 # jQuery
 
-to work with jQuery --> The easiest way is to include the jQuery CDN, or local library link in your:
+- It is popular library that allow to interact with UI, can create any animation and animated menu blocks.
+- It is free libabray that compliements JavaScript and allow to work with HTML much easier. We eailly can work with DOM.
+- Using jQuery you can easily interact with any HTML element comparing with JavaScript
+- jQuery have the same logic as CSS when you interacting with HTML elements --> (id -> #myId, class -> .myclass, tag -> mytag, etc.)
+
+# Conneect jQuery to your project
+
+- If you want to add jQuery to your HTML file you can download the jQuery file and save in your project folder to use it
+  [download jQuery](https://jquery.com/download/)
+
+To work with jQuery --> The easiest way is to include the jQuery CDN, or local library link in your:
 
 1.
 
 ```C#
 _Layout.cshtml
 
-//  in the <head> tag
+//jQuery library should be loaded after our page with all HTML elements is fully uploaded
+// connect in the bottom of the <body> tag, if we will connect it in the <head> -> HTML components can loaded longer than usual and jQuery could not work
+
+
+
+
+// We can make jQuery connection --> in the <head> tag but we need to write in script-->
+$(document).ready(function(){ //<-- jquery code will run only after all HTML file loaded
+ //jquery code here
+});
+
+//the same option as option above-->
+$(function(){
+  //jquery code here
+});
 
 ```
 
 2.  or directly in your View file.
 
 ```C#
+// write -> script:src + Tab  --> <script src=""></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
    $(document).ready(function() {
        //some logic
    });
 </script>
+
+
+//example
+@model ..... //<--if needed
+@{
+    ViewData["Title"] = "PageName";
+    Layout = null; ////<--don't use _layout template
+
+    //some other code
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My ASP.NET Core MVC App</title>
+    <!-- Include jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <!-- Your content here -->
+    <!-- You can now use jQuery here -->
+    <script>
+        $(document).ready(function(){
+            $('h1').click(function(){
+                alert("You clicked the header!");
+            });
+        });
+    </script>
+</body>
+</html>
 ```
 
 The most popular and traditional ways to add client-side functionality using <scripts> to a web page:

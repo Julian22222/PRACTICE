@@ -298,4 +298,12 @@ if ($("#myInput").val() === "") {
     alert("Input field is empty!");
 }
 
+
+
+if ($("#myElement").is(":visible")) {
+    console.log("Element is visible!");
+} else {
+    console.log("Element is hidden!");
+}
+
 ```
