@@ -132,3 +132,128 @@ $('img').attr('title', 'this is title');  //<-- when you drug the mouse over thi
 
 $('img').removeAttr('src');  //<-- remove src attribute in img tag
 ```
+
+8. addClass and removeClass
+
+```C#
+//CSS class that we don't use anywhere for now
+
+.border{
+    border: 1px solid red;
+    padding: 10px;
+    background: #222;
+    color: white;
+}
+```
+
+```C#
+$("nav menu").addClass('border');  //<--adding class border to this component, Don't use dot --> (.boarder) in here for classes
+
+$('.mainText').removeClass('border');  //<--name of the class that needs to be removed
+```
+
+9. css
+
+- allow to add some properties without adding a class
+
+```C#
+$('nav menu').css('font-size');  //<-- we will get the font size of this element
+$('nav menu').css('color');  //<-- we will get the color of this element
+
+$('nav menu').css('font-size', '25px');   //<--add or change font size for this element
+$('nav menu li a').css('color', 'red');   //<-- add or change color for this element
+
+$('nav menu').css('font-size', '25px').css('color', '#0000ff');  //<--can use chain functions
+```
+
+```C#
+- if we need to pass few properties --> we can pass full object of properties for certain element
+
+$('nav menu').css({
+    'color':'#ff0000',
+    'font-size':'20px',
+    'padding':'10px'
+});
+```
+
+10. animate
+
+- this method very similar to css() method, but it change properties using some time to chnage them
+- it allows change only numeric parametrs, can't change color in animate
+
+```C#
+$('nav menu').animate({
+    'font-size':'20px',
+    'padding':'10px'
+},3000);
+
+
+//also we can pass some function after animate time pass
+$('nav menu').animate({
+    'font-size':'20px',
+    'padding':'10px'
+},3000, myfunction());
+
+//or this function
+$('nav menu').animate({
+    'font-size':'20px',
+    'padding':'10px'
+},3000, function(){
+    alert('Hello from alert!!!')
+});
+```
+
+11. html elements before and after
+
+- somethimes you need to add some element, HTML tag to your page
+
+```C#
+//add HTML tag before some block
+
+$('.mainText').before('<span class="myClass">New block</span><p>Hello</p>');   //<-- will add <span> tag before choosen element. Add all tags in 1 line
+
+$('.mainText').after('<span>New block</span>');   //<-- will add <span> tag after choosen element
+
+$('.mainText').prepend('<span>New block</span>');   //<--will add <span> tag inside choosen element --> in the beggining of element, first
+
+$('.mainText').append('<span>New block</span>');   //<-- will add <span> tag inside choosen element --> in very bottom, last
+```
+
+12. each and $(this)
+
+```C#
+//HTML
+
+<div class="icons">
+    <div>
+        <img src="..." alt="">
+        <h2>....</h2>
+        <p>...</p>
+        <div>....</div>
+    </div>
+
+    <div>
+        <img src="..." alt="">
+        <h2>....</h2>
+        <p>...</p>
+    </div>
+
+    <div>
+        <img src="..." alt="">
+        <h2>....</h2>
+        <p>...</p>
+    </div>
+```
+
+```C#
+$('.icons img'); //<-- it will have 3 objects in here, it has an array of 3 images
+
+$('.icons img').each(function(){  //<--for each image we can set the function, we can check some conditions or add some actions
+// $(this) <-- current element that are processing
+
+    if($(this).attr('src')=='img/icon1.png'){ //if this true
+        //some code
+        $(this).fadeOut(1000); //<-- will hide current element
+    }
+});
+```

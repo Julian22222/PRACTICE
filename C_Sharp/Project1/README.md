@@ -1,27 +1,22 @@
 # jQuery
 
 - It is popular library that allow to interact with UI, can create any animation and animated menu blocks.
-- It is free libabray that compliements JavaScript and allow to work with HTML much easier. We eailly can work with DOM.
+- It is free libabray that compliments JavaScript and allow to work with HTML elements much easier. We eailly can work with DOM.
 - Using jQuery you can easily interact with any HTML element comparing with JavaScript
 - jQuery have the same logic as CSS when you interacting with HTML elements --> (id -> #myId, class -> .myclass, tag -> mytag, etc.)
 
-# Conneect jQuery to your project
+# Connect jQuery to your project
 
-- If you want to add jQuery to your HTML file you can download the jQuery file and save in your project folder to use it
+- If you want to add jQuery to your HTML file you can download the jQuery file and save in your project folder to use it.
+
   [download jQuery](https://jquery.com/download/)
 
 To work with jQuery --> The easiest way is to include the jQuery CDN, or local library link in your:
 
-1.
-
 ```C#
-_Layout.cshtml
+1. We can connect jQuery library in  --> _Layout.cshtml
 
-//jQuery library should be loaded after our page with all HTML elements is fully uploaded
-// connect in the bottom of the <body> tag, if we will connect it in the <head> -> HTML components can loaded longer than usual and jQuery could not work
-
-
-
+//jQuery library should be loaded after our page with all HTML elements is fully uploaded, therefore -->
 
 // We can make jQuery connection --> in the <head> tag but we need to write in script-->
 $(document).ready(function(){ //<-- jquery code will run only after all HTML file loaded
@@ -33,11 +28,14 @@ $(function(){
   //jquery code here
 });
 
+
+
+// also we can connect jQuery library in the bottom of the <body> tag, if we will connect it in the <head> without -->
+//$(document).ready(function(){...} -> HTML components can loading longer than usual and jQuery could not work
 ```
 
-2.  or directly in your View file.
-
 ```C#
+2. Also, We can connect jQuery library --> directly in your View file.
 // write -> script:src + Tab  --> <script src=""></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
