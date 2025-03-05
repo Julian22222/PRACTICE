@@ -52,6 +52,8 @@ $(".logo")  //<-- class Selector
 $("section") //<-- tag Selector
 $("#block")  //<-- id Selector
 $("body .icons h4")  //<-- nested Selector
+$('img, a');  //<-- allow to choose different elements -> images and anker tags(links) together
+$('img[alt]');   //<-- if alt attribute exists in image tag then we can work with this element, doesn't metter what value has alt atrribute
 $(.icons img + h2)  //<--interact with h2 that are located after img (only one element) in icons class
 
 $('img[height=150]')  //<-- attribute selector, no quotes in jquery to use attribute selector

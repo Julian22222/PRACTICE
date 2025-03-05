@@ -257,3 +257,165 @@ $('.icons img').each(function(){  //<--for each image we can set the function, w
     }
 });
 ```
+
+13. length
+
+- We can check how many elements we have in array
+
+```C#
+// $('div')  <-- it is an array of all div tegs
+
+$('div').length;  //<-- it will give how many div tags we have on our page
+
+```
+
+14. clone and remove
+
+- we can clone the code to don't write the same code
+
+```C#
+var mainText = $('.mainText').clone();  //<-- clone this element
+
+$('body').append(maintext);  //<--inserting cloned block
+$('body').prepend(maintext);  //<--inserting cloned block
+$('body').before(maintext);  //<--inserting cloned block
+$('body').after(maintext);  //<--inserting cloned block
+
+var block = $('.mainText').remove();  //<-- remove this element, can save in variable to save it for latter, to insert it later for example
+```
+
+15. events
+
+```C#
+$('.logo').mouseover(function(){
+    alert("mouseover")
+});
+
+$('.logo').mouseout(function(){
+    alert("mouseout")
+});
+
+$('.logo').click(function(){
+    alert("click")
+});
+
+$('.logo').mousemove(function(){
+    alert("mousemove")
+});
+
+$('.logo').mouseup(function(){
+    alert("mousemove")
+});
+
+
+//other events
+submit
+focus
+blur
+change
+reset
+
+keypress
+keydown
+keyup
+
+load  //<-- if all elements was loaded
+resize //<--check if browser window was changed
+scroll
+```
+
+```C#
+$(window).scroll(function(){
+    alert('scroll event')
+}); //<-- all window on the page, anywhere on window if we make a scroll -> it will invoke function
+
+
+$('.mainText').click(function(){
+    // var clone = $(this) //<--we will take current element, that we clicked
+
+    var clone = $(this).clone();  //<-- clone the current element, that we clicked
+
+    $(this).after(clone);  //<-- insert element to current element
+});
+```
+
+```C#
+var link = $('menu li a');  //<-- menu links
+
+link.mouseover(function(){
+    $(this).addClass('border');  //<-- add class for current element, when mouse over menu link
+})
+
+link.mouseout(function(){
+    $(this).removeClass('border');  //<-- remove class for current element, when mouse out menu link
+})
+
+//or another option
+link.hover(
+    function(){
+        $(this).addClass('border');
+    }, function(){
+        $(this).removeClass('border');
+});
+```
+
+16. eventObject
+
+```C#
+//we can pass parametr in the function, can have any name
+//using eventObject we can get certain properties, coordinates on x and y axis, where mouse was clicked etc.
+
+
+$('mainText').click(function(e){
+    alert(e.target);  //<--will give tag name where you click
+});
+
+$('mainText').click(function(e){
+    alert(e.screenX + " " + e.screenY);  //<--takes cordinates from monitor edge
+});
+
+
+$('mainText').click(function(e){
+    alert(e.pageX + " " + e.pageY);  //<--takes cordinates from browser edge
+});
+
+$('mainText').click(function(e){
+    alert(e.altKey);  //<--will give true if you press this element with pressed alt key, otherwise false
+});
+
+$('mainText').click(function(e){
+    alert(e.ctrlKey);  //<--will give true if you press this element with pressed ctrl key, otherwise false
+});
+
+$('mainText').click(function(e){
+    alert(e.shiftKey);  //<--will give true if you press this element with pressed shift key, otherwise false
+});
+```
+
+17. cancel default action from pressed button, anker tags etc.
+
+```C#
+$('.btn').click(function(e){
+    e.preventDefault();  //<-- this will cancel default action
+});
+
+
+//or the same thing
+$('.btn').click(function(){
+    //some code here
+    return false;  //<-- this will cancel default action
+});
+
+```
+
+```C#
+$('.btn').click(function(){
+    //some code here
+    var answer = confirm('Do you want to send data?');
+
+    if(!answer){
+        e.preventDefault();
+    }
+
+});
+```

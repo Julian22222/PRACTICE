@@ -4,7 +4,22 @@
     ViewData["Title"] = "Game";
 
       var fighters = new List<Fighter>(){
-         new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/subzero.jpg", Health = 100, Damage = 15, Armor = 5, Move = 1},
+         new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/subzero.jpg", Health = 100, Damage = 15},
+         new Fighter(){Id = 2, Name = "Cyrax", Img = "/IMG/cybex.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 3, Name = "Jax", Img = "/IMG/jax.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 4, Name = "Johnny Cage", Img = "/IMG/jonny1.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 5, Name = "Kung Lao", Img = "/IMG/lao.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 6, Name = "Liu Kang", Img = "/IMG/liukang.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 7, Name = "Scorpion", Img = "/IMG/scorpion.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 8, Name = "Reptile", Img = "/IMG/reptile.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 9, Name = "Jade", Img = "/IMG/jade.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 10, Name = "Raiden", Img = "/IMG/raiden.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 11, Name = "Sonya", Img = "/IMG/sonya.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 12, Name = "Baraka", Img = "/IMG/baraka.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 13, Name = "Kitana", Img = "/IMG/kitana.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 14, Name = "Shao Kahn", Img = "/IMG/shaukan.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 15, Name = "Shang Tsung", Img = "/IMG/shangsung1.jpg", Health = 120, Damage = 20},
+         @* new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/subzero.jpg", Health = 100, Damage = 15, Armor = 5, Move = 1},
          new Fighter(){Id = 2, Name = "Cyrax", Img = "/IMG/cybex.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
          new Fighter(){Id = 3, Name = "Jax", Img = "/IMG/jax.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
          new Fighter(){Id = 4, Name = "Johnny Cage", Img = "/IMG/jonny1.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
@@ -18,14 +33,14 @@
          new Fighter(){Id = 12, Name = "Baraka", Img = "/IMG/baraka.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
          new Fighter(){Id = 13, Name = "Kitana", Img = "/IMG/kitana.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
          new Fighter(){Id = 14, Name = "Shao Kahn", Img = "/IMG/shaukan.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
-         new Fighter(){Id = 15, Name = "Shang Tsung", Img = "/IMG/shangsung1.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
+         new Fighter(){Id = 15, Name = "Shang Tsung", Img = "/IMG/shangsung1.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1}, *@
         };
 
     
    
 }
 
-<h1 class="header">Mortal Combat TEST .....</h1>
+<h1 class="header">Mortal Combat</h1>
 <hr>
 
 <h4 >SELECT YOUR FIGHTER</h4>
@@ -33,7 +48,7 @@
 <section>
     <div class="allfightersblock">
     @foreach(var fighter in fighters){
-    <button class="fighterbtn" class="card-btn" data-fighter-name="@fighter.Name" data-fighter-Img ="@fighter.Img" >
+    <button class="fighterbtn" class="card-btn" data-fighter-name="@fighter.Name" data-fighter-Img ="@fighter.Img" data-fighter-health="@fighter.Health" data-fighter-damage="@fighter.Damage">
         <div class="card-container">
 
             <ul >
@@ -110,13 +125,21 @@
 
 $(document).ready(function() {
 
+     var audioFight = new Audio('/sounds/fight-deep-voice-172194.mp3');
+     var audioSwords = new Audio('/sounds/swords-collide-230574.mp3');
+
+
     console.log("jQuery is working!");
 
     let fighter_Img1;
     let fighter_Name1;
+    let fighter_Health1;
+    let fighter_Damage1;
 
     let fighter_Img2;
     let fighter_Name2;
+    let fighter_Health2;
+    let fighter_Damage2;
 
 
 
@@ -131,6 +154,8 @@ $(document).ready(function() {
 
             fighter_Img1 = $(this).data("fighter-img"); // Get image URL from data attribute,#buttle_btn extracts the data-fighter-Img attribute value.
             fighter_Name1 = $(this).data("fighter-name"); // Get Name from data attribute
+            fighter_Health1 = $(this).data("fighter-health"); // Get Health from data attribute
+            fighter_Damage1 = $(this).data("fighter-damage"); // Get Damage from data attribute
 
             // Example: Set the image inside a container when button is clicked
             $("#figterContainer1 img").attr("src", fighter_Img1);  // sets the src of the <img> inside #figterContainer1.
@@ -138,7 +163,9 @@ $(document).ready(function() {
 
             $("#figterContainer1").show(); // Show the container
         
-            console.log("Fighter1 Name", fighter_Name1)
+            console.log("Fighter1 Name", fighter_Name1);
+            console.log("Fighter1 Health", fighter_Health1);
+            console.log("Fighter1 Damage", fighter_Damage1);
         });
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////cancelFighter1 function
@@ -162,8 +189,12 @@ $(document).ready(function() {
             $(".fighterbtn").off("click").on("click", function() {
                 fighter_Img2 = $(this).data("fighter-img"); // Get image URL from data attribute
                 fighter_Name2 = $(this).data("fighter-name"); // Get Name from data attribute
+                fighter_Health2 = $(this).data("fighter-health"); // Get Health from data attribute
+                fighter_Damage2 = $(this).data("fighter-damage"); // Get Damage from data attribute
 
                 console.log("FROM choose fighter 2", fighter_Name2);
+                console.log("Fighter2 Health", fighter_Health2);
+                console.log("Fighter2 Damage", fighter_Damage2);
 
                 $("#figterContainer2 img").attr("src", fighter_Img2); arguments // sets the src of the <img> inside #figterContainer2.
                 $("#figterContainer2").show(); // Show Fighter 2 selection container
@@ -201,7 +232,14 @@ $(document).ready(function() {
 
 
    $(".btl_btn").click(function() {
-        alert("Battle is started!");
+
+        audioSwords.play();
+        audioFight.play();
+        $('section, h4, #buttle_btn').hide();
+
+        Console.log("Battle is started!");
+
+        @* alert("Battle is started!"); *@
     });
 
 
