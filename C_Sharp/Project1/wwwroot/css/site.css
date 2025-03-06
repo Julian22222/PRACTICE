@@ -54,6 +54,38 @@ footer {
 /* ///////////////////////////////////////// */
 /* Game */
 
+.image-container {
+  display: absolute;
+  margin-left: 45%;
+  margin-top: 200px;
+  perspective: 1000px; /* Adds 3D effect */
+  width: 200px;
+  height: 200px;
+}
+
+.spin-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: center;
+  animation: spinX 2s linear infinite; /* Animation */
+}
+
+@keyframes spinX {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.vs-block {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+
 .card-btn {
   margin: 1px;
   margin-bottom: 4px;

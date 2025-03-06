@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GzDVz8QjXyTvksEUKOboKoRCq1hWnqXc2gvDzjL4n1I=",
+  "Hash": "BB2OVFB7rmLt/EYSyAji31zGORhKJhIGq6IrUwhwJiM=",
   "Source": "Project1",
   "BasePath": "_content/Project1",
   "Mode": "Default",
@@ -1358,6 +1358,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fight-deep-voice-172194.mp3",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "sounds/fight-deep-voice-172194.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/sounds/fight-deep-voice-172194.mp3"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/swords-collide-230574.mp3",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "sounds/swords-collide-230574.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/sounds/swords-collide-230574.mp3"
     }
   ]
 }

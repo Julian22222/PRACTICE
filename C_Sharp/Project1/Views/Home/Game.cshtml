@@ -40,7 +40,7 @@
    
 }
 
-<h1 class="header">Mortal Combat</h1>
+<h1 class="header">Mortal Kombat</h1>
 <hr>
 
 <h4 >SELECT YOUR FIGHTER</h4>
@@ -108,7 +108,7 @@
 </div>
 
 
-@* Butle block *@
+@* Battle block *@
 <div id="buttle_btn" style="display: none;">
     <h2 id="header_buttle" style="margin-bottom: 50px; color: white; display: flex; justify-content: center;">ARE YOUR READY FOR A BATTLE?</h2>
     <div class="battle_block" style="display: flex; justify-content: center;">
@@ -117,6 +117,22 @@
     </div>
 </div>
 
+<div class="vs-block" style="display: none;">
+    <img class="vs-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png" alt="vs logo" width="150" height="150"/>
+</div>
+
+
+<div class="image-container" style="display: none;">
+        <img class="spin-image" src="/IMG/dragon-logo.png" alt="Front" width="200" height="200">
+</div>
+
+
+<div class="outcome-block" style="display: none;">
+    <h2 id="header_outcome" style="margin-top: 50px; color: white; display: flex; justify-content: center;"></h2>
+    <div class="outcome" style="display: flex; justify-content: center;">
+        <button>Play again</button>
+    </div>
+</div>
 
 @* <script @Url.Action("actionName", "controllerName")> *@
 @* </script> *@
@@ -234,13 +250,54 @@ $(document).ready(function() {
    $(".btl_btn").click(function() {
 
         audioSwords.play();
-        audioFight.play();
+
+        $(".vs-block").fadeIn(1000).fadeOut(1000);
+
+        setTimeout(function () {
+            $(".image-container").fadeIn();
+        }, 2000);
+        
+
+        setTimeout(function () {
+            audioFight.play();
+        }, 2000);
+
+       
         $('section, h4, #buttle_btn').hide();
 
-        Console.log("Battle is started!");
+        console.log("Battle is started!");
 
         @* alert("Battle is started!"); *@
-    });
+
+        function fight() {
+        if (fighter_Health1 > 0 && fighter_Health2 > 0) {
+            fighter_Health1 -= fighter_Damage2;
+            fighter_Health2 -= fighter_Damage1;
+
+            console.log("Fighter1 Health: ", fighter_Health1);
+            console.log("Fighter2 Health: ", fighter_Health2);
+
+            setTimeout(fight, 500); // Continue the battle with a delay
+        } else {
+            $(".outcome-block").show();
+
+            if (fighter_Health1 <= 0 && fighter_Health2 <= 0) {
+                console.log("Both fighters are dead!");
+                $("#header_outcome").text("Both fighters are dead!");
+            } else if (fighter_Health1 <= 0) {
+                console.log("Fighter 1 is dead!");
+                $("#header_outcome").text("Fighter 1 is dead!");
+                $("#outcome").text("Fighter 2 wins!");
+            } else if (fighter_Health2 <= 0) {
+                console.log("Fighter 2 is dead!");
+                $("#header_outcome").text("Fighter 2 is dead!");
+                $("#outcome").text("Fighter 1 wins!");
+            }
+        }
+    }
+
+    fight(); // Start the fight
+});
 
 
   

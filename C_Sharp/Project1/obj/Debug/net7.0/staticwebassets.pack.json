@@ -313,6 +313,14 @@
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fight-deep-voice-172194.mp3",
+      "PackagePath": "staticwebassets/sounds/fight-deep-voice-172194.mp3"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/swords-collide-230574.mp3",
+      "PackagePath": "staticwebassets/sounds/swords-collide-230574.mp3"
+    },
+    {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.Project1.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
