@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BB2OVFB7rmLt/EYSyAji31zGORhKJhIGq6IrUwhwJiM=",
+  "Hash": "7MRkzpWEmpFwf5IJagWkntbMnJ8ZUG319rZ3JWdGoyI=",
   "Source": "Project1",
   "BasePath": "_content/Project1",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/IMG/cybex.jpg"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/dragon-logo.png",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "IMG/dragon-logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/IMG/dragon-logo.png"
     },
     {
       "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jade.jpg",
@@ -372,6 +389,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/IMG/subzero.jpg"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/Index.cshtml",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "Index.cshtml",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "wwwroot/Index.cshtml"
     },
     {
       "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/js/site.js",
