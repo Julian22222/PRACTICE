@@ -419,3 +419,135 @@ $('.btn').click(function(){
 
 });
 ```
+
+18. slideToggle
+
+```C#
+$("nav menu").slideToggle(500);  //slide in and slide out the menu
+
+```
+
+19. Selecting and element filtering in the Form
+
+```C#
+//we use new selectors here
+
+$(document).ready(function(){
+//$(':checkbox').fadeOut(1000);  //<--selecting all <input type="checkbox" > tegs on the Page
+//$(':radio').fadeOut(1000);   //<-- selecting all <input type="radio" > tegs on the Page
+//$(':submit').fadeOut(1000);  //<-- selecting all <button type="submit"> tegs (buttons) on the Page
+//$(':reset').fadeOut(1000);   //<-- selecting all <button type="reset" > tegs (buttons) on the Page
+//$(':file').fadeOut(1000);    //<-- selecting button to upload the file on the Page
+//$(':button').fadeOut(1000);  //<-- all buttons with teg <btn> will be selected on the Page
+//$(':text').fadeOut(1000);     //<-- <input type="text" /> all this tags will be selected on the Page
+//$(':password').fadeOut(1000);  //<-- <input type="password" /> all this tags will be selected on the Page
+//$(':input').fadeOut(1000);   //<-- all <input /> tegs will be selected on the Page
+//$('.form1 :input').fadeOut(1000);   //<-- selecting all inputs <input> in the .form1 class
+}
+
+```
+
+```C#
+//condition of checkboxes or radio can be different for example
+
+<input type="checkbox" checked >  //<-- will have tick by default
+
+// we have another filter ->checked
+$('.form1 :checkbox:checked');   //<-- selection of all checkboxes that are checked,(has tick by default)
+$('.form1 :radio:checked');   //<-- selection of all radio that are checked,(has tick by default)
+
+$('.form1 :selected');  //<-- selection of drop down menu checked option -> example below
+
+// <select>
+//     <option value="1" selected>1</option>
+//     <option value="2">2</option>
+//     <option value="3">3</option>
+// </select>
+```
+
+- How to get the value of inserted text from <input type="text"> teg or <textarea >
+
+```C#
+$(document).ready(function(){
+$(':submit').click(function(){   //<-- choosing submit btn and clicking on it
+    var value = $('textarea').val();   //<-- get the value text in textarea
+
+    alert(value);  //<-- show value of textarea
+});
+
+}
+```
+
+```C#
+//example for checkbox from checkbox
+// <input type="checkbox" value="checkValue1" checked />
+
+$(document).ready(function(){
+$(':submit').click(function(){   //<-- choosing submit btn and clicking on it
+    var value = $(':checkbox').each(function(){
+        var value = $(this).val();   //<-- get the value of current checkbox
+        alert(value);  //<-- show value of checkbox
+    });
+
+});
+
+}
+```
+
+20. Submit and focus the input in Form and blur (when no focus)
+
+```C#
+//if FORM is filled correctly it will be sent when clicking submit btn
+
+$(document).ready(function(){
+    $('.form1').submit(function(e){
+        if($('.text1').val()==""){   //<-- if this input field is empty, don't sent form
+            e.preentDefault();
+            alert("input fild is empty");
+        }
+    });
+}
+```
+
+```C#
+//when the input will be in focus (when click on thet input field) -> it will invoke a function
+
+$(document).ready(function(){
+$('.text1').focus(function(){
+//function to invoke
+$(this).css({
+    "border": "2px solid red"
+});
+});
+}
+```
+
+```C#
+$(document).ready(function(){
+$('.text1').blur(function(){   //<-- when input is in blur (not in focus)
+
+$(this).removeClass('border');  //<-- remove class
+});
+}
+```
+
+21. Blocking element in the Form
+
+```C#
+<input type="text" disabled placeholder="text" />
+
+
+$(document).ready(function(){
+$(':submit').click(function(e){
+    $('.text2').attr('disabled','disabled');   //<-- adding attribute disabled
+    e.preventDefault();
+});
+
+$(':reset').click(function(e){
+    $('.text2').removeAttr('disabled');   //<-- deleting attribute disabled
+    e.preventDefault();
+});
+
+});
+
+```

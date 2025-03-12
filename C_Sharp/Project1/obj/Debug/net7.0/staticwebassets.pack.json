@@ -77,6 +77,10 @@
       "PackagePath": "staticwebassets/IMG/subzero.jpg"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/Index.html",
+      "PackagePath": "staticwebassets/Index.html"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/css/site.css",
       "PackagePath": "staticwebassets/css/site.css"
     },

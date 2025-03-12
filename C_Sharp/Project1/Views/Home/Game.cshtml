@@ -109,7 +109,7 @@
 
 
 @* Battle block *@
-<div id="buttle_btn" style="display: none;">
+<div id="battle_btn" style="display: none;">
     <h2 id="header_buttle" style="margin-bottom: 50px; color: white; display: flex; justify-content: center;">ARE YOUR READY FOR A BATTLE?</h2>
     <div class="battle_block" style="display: flex; justify-content: center;">
     <button class="btl_btn" style="width: 120px; height:40px; background-color: greenyellow; border-radius: 5px; display: flex; justify-content: center; align-items: center;">Battle</button>
@@ -130,7 +130,7 @@
 <div class="outcome-block" style="display: none;">
     <h2 id="header_outcome" style="margin-top: 50px; color: white; display: flex; justify-content: center;"></h2>
     <div class="outcome" style="display: flex; justify-content: center;">
-        <button>Play again</button>
+        <button class="play-again">Play again</button>
     </div>
 </div>
 
@@ -168,7 +168,7 @@ $(document).ready(function() {
     
             console.log("Fighter1 button is clicked!");
 
-            fighter_Img1 = $(this).data("fighter-img"); // Get image URL from data attribute,#buttle_btn extracts the data-fighter-Img attribute value.
+            fighter_Img1 = $(this).data("fighter-img"); // Get image URL from data attribute,#battle_btn extracts the data-fighter-Img attribute value.
             fighter_Name1 = $(this).data("fighter-name"); // Get Name from data attribute
             fighter_Health1 = $(this).data("fighter-health"); // Get Health from data attribute
             fighter_Damage1 = $(this).data("fighter-damage"); // Get Damage from data attribute
@@ -240,7 +240,7 @@ $(document).ready(function() {
 
             $("#confirmFighterContainer2").append("<p>Figter 2 SELECTED!</p>");
 
-            $("#buttle_btn").delay(1000).show(500); // Show the battle button
+            $("#battle_btn").delay(1000).show(500); // Show the battle button
             
             @* alert("Fighter 1 and Fighter 2 are confirmed!"); *@
         });
@@ -251,7 +251,7 @@ $(document).ready(function() {
 
         audioSwords.play();
 
-        $(".vs-block").fadeIn(1000).fadeOut(1000);
+        $(".vs-block").fadeIn(900).fadeOut(500);
 
         setTimeout(function () {
             $(".image-container").fadeIn();
@@ -263,7 +263,7 @@ $(document).ready(function() {
         }, 2000);
 
        
-        $('section, h4, #buttle_btn').hide();
+        $('section, h4, #battle_btn').hide();
 
         console.log("Battle is started!");
 
@@ -299,7 +299,13 @@ $(document).ready(function() {
     fight(); // Start the fight
 });
 
+$(".play-again").click(function() {
+    location.reload(); // Reload the page
+
+
+});
 
   
-});
+}); 
+
 </script>

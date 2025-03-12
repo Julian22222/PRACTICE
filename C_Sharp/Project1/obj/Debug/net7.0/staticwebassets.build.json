@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7MRkzpWEmpFwf5IJagWkntbMnJ8ZUG319rZ3JWdGoyI=",
+  "Hash": "BSM2QBS1W/20PeU6JxMnjaGG7imazc+x4CuVH0cAMCY=",
   "Source": "Project1",
   "BasePath": "_content/Project1",
   "Mode": "Default",
@@ -391,21 +391,21 @@
       "OriginalItemSpec": "wwwroot/IMG/subzero.jpg"
     },
     {
-      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/Index.cshtml",
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/Index.html",
       "SourceId": "Project1",
       "SourceType": "Discovered",
       "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
       "BasePath": "_content/Project1",
-      "RelativePath": "Index.cshtml",
-      "AssetKind": "Build",
+      "RelativePath": "Index.html",
+      "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "wwwroot/Index.cshtml"
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Index.html"
     },
     {
       "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/js/site.js",

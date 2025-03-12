@@ -4,6 +4,7 @@
 - It is free libabray that compliments JavaScript and allow to work with HTML elements much easier. We eailly can work with DOM.
 - Using jQuery you can easily interact with any HTML element comparing with JavaScript
 - jQuery have the same logic as CSS when you interacting with HTML elements --> (id -> #myId, class -> .myclass, tag -> mytag, etc.)
+- short cut --> jq + Tab (write inside <script>)
 
 # Connect jQuery to your project
 
