@@ -6,12 +6,12 @@ namespace Project1.Models
     public class Contact
     {
         // to change different name for any of the fields( change Name to Nickname)
-        [Display(Name = "Nickname")]
+        [Display(Name = "First name")]
 
         // Validation (info checker)
         // this field will be obligatory to field
         // ErrorMessage="...." - allow to change error text to show to user
-        [Required(ErrorMessage ="Please insert your name" )]
+        [Required(ErrorMessage ="Please insert your Name" )]
 
         // to check inserted length, max length of this input is 15 ,then show msg
         [StringLength(15, ErrorMessage ="Your name must contain less than 15 symbols")]

@@ -6,19 +6,18 @@
     ViewData["Title"] = "Vending";
 
     var products = new List<Product>(){
-         new Product(1, "Bread", "https://cdn11.bigcommerce.com/s-slzx5y75ra/images/stencil/1280x1280/products/19754/1993/largecutloaf300__20984.1675695458.jpg?c=1", 0.95),
-         new Product(2, "Milk", "https://thumbs.dreamstime.com/b/chia-seed-milk-bottle-beige-background-plant-copy-space-raw-diet-meal-healthy-vegetarian-food-lifestyle-eco-267566014.jpg", 1.35),
-         new Product(3, "Apples", "https://st.depositphotos.com/1332662/4441/i/450/depositphotos_44414695-stock-photo-single-apple.jpg", 0.85),
-         new Product(4, "Eggs", "https://bakeitwithlove.com/wp-content/uploads/2023/01/calories-in-eggs-sq.jpg.webp", 1.79),
-         new Product(5, "Bananas", "https://mysupermarkets.uk/wp-content/uploads/2020/09/Bananas-Loose.jpg", 0.95),
-         new Product(6, "Lemon", "https://st.depositphotos.com/1000141/1994/i/600/depositphotos_19945941-stock-photo-juicy-lemon-with-leaf.jpg", 0.28),
-         new Product(7, "Roast Pork Loin ", "https://www.rockrecipes.com/wp-content/uploads/2017/01/Souvlaki-Roast-Pork-Loin-square-cropped-for-featured-image.jpg", 4.89),
-         new Product(8, "Potato", "https://tds-images.thedailystar.net/sites/default/files/customphp/photo/2010/06/05/2010-06-05__h06.jpg", 1.25),
-         new Product(9, "Carrot", "https://rrwbartlett.co.uk/wp-content/uploads/2015/10/CARROT-SQUARE.jpg", 0.75),
-         new Product(10, "Onion", "https://del.h-cdn.co/assets/17/51/2048x2048/square-1513715307-sunion.jpg", 0.65),
-         new Product(11, "Salmon", "https://static01.nyt.com/images/2016/04/13/dining/13PAIRING/13PAIRING-mediumSquareAt3X-v2.jpg", 2.95),
-         new Product(12, "Cheese", "https://www.millerfoodservice.co.uk/media/images/cache/catalog/category/500x500/sliced.jpeg", 3.89),
-
+         new Product(){Id = 1, Name = "Bread", Img = "/IMG/machine/bread.jpg", Price = 0.95},
+         new Product(){Id = 2, Name = "Milk", Img = "/IMG/machine/milk.png", Price = 1.35},
+         new Product(){Id = 3, Name = "Apples", Img = "/IMG/machine/apple.webp", Price = 0.85},
+         new Product(){Id = 4, Name = "Eggs", Img = "/IMG/machine/eggs.webp", Price = 1.79},
+         new Product(){Id = 5, Name = "Bananas", Img = "/IMG/machine/Bananas-Loose.jpg", Price = 0.95},
+         new Product(){Id = 6, Name = "Lemon", Img = "/IMG/machine/lemon.webp", Price = 0.28},
+         new Product(){Id = 7, Name = "Roast Pork Loin ", Img =  "/IMG/machine/Pork.jpg", Price = 4.89},
+         new Product(){Id = 8, Name = "Potato", Img = "/IMG/machine/potato.jpg", Price = 1.25},
+         new Product(){Id = 9, Name = "Carrot", Img = "/IMG/machine/CARROT.jpg", Price = 0.75},
+         new Product(){Id = 10, Name = "Onion", Img = "/IMG/machine/onion.jpg", Price = 0.65},
+         new Product(){Id = 11, Name = "Salmon", Img = "/IMG/machine/salmon.jpg", Price = 2.95},
+         new Product(){Id = 12, Name = "Cheese", Img = "/IMG/machine/cheese.jpg", Price = 3.89},
         };
 
 
@@ -35,6 +34,8 @@
         }
         
 }
+
+
 <h1>This is Vending machine</h1>
 
 <p></p>
@@ -44,37 +45,36 @@
 <h4 class="header-products">You have £15 in your pocket for groceries. Please choose products to buy.</h4>
 
 <section class="section-product">
-@foreach(var item in products){
-<button  class="card-btn" onclick="@addProduct(@item.Price)">
-    <div class="card-container-product">
+    @foreach(var item in products){
+        <button  class="card-btn" onclick="@addProduct(@item.Price)">
+            <div class="card-container-product">
 
-        <ul >
-            <li class="img-container">
-        
-                <p class="product-name"><b>
-                @item.Name
-                </b></p> 
+                <ul >
+                    <li class="img-container">
+                        <p class="product-name"><b>
+                            @item.Name
+                        </b></p> 
             
-              <img src="@item.Img" alt="Item logo" width="150" height="150"/>
-                <p>£ @item.Price</p>
+                        <img src="@item.Img" alt="Item logo" width="150" height="150"/>
+                        <p>£ @item.Price</p>
             
            
-            </li>
-        </ul>
-    </div>
-</button>
+                    </li>
+                </ul>
+            </div>
+        </button>
     }
-    </section>
-    <hr>
+</section>
+<hr>
 
-    <div class="pocket-container">
+  <div class="pocket-container">
     <h3 class="product-pocket">Money left in your pocket: £ @money</h3>
-    <button class="reset-btn">Reset</button>
+    <button class="reset-btn" onClick="Reset">Reset</button>
     </div>
     <h3>Products in your basket: </h3>
 
-    <button onclick="@changeName()">Change Name</button>
-    <p>@name</p>
+<button onclick="@changeName()">Change Name</button>
+<p>@name</p>
 
 
 @* <p> @Test.changeName()</p> *@

@@ -45,6 +45,50 @@
       "PackagePath": "staticwebassets/IMG/liukang.jpg"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/Bananas-Loose.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/Bananas-Loose.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/CARROT.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/CARROT.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/Pork.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/Pork.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/apple.webp",
+      "PackagePath": "staticwebassets/IMG/machine/apple.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/bread.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/bread.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/cheese.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/cheese.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/eggs.webp",
+      "PackagePath": "staticwebassets/IMG/machine/eggs.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/lemon.webp",
+      "PackagePath": "staticwebassets/IMG/machine/lemon.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/onion.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/onion.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/potato.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/potato.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/salmon.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/salmon.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/raiden.jpg",
       "PackagePath": "staticwebassets/IMG/raiden.jpg"
     },
@@ -323,6 +367,10 @@
     {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fight-deep-voice-172194.mp3",
       "PackagePath": "staticwebassets/sounds/fight-deep-voice-172194.mp3"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-selction.mp3",
+      "PackagePath": "staticwebassets/sounds/fighter-selction.mp3"
     },
     {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/sounds/swords-collide-230574.mp3",

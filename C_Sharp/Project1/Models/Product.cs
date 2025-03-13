@@ -11,12 +11,12 @@ namespace Project1.Models
 
 
         // constructor
-        public Product(int id, string name, string img, double price){
-            Id = id;
-            Name = name;
-            Img = img;
-            Price = price;
-        }
+        // public Product(int id, string name, string img, double price){
+        //     Id = id;
+        //     Name = name;
+        //     Img = img;
+        //     Price = price;
+        // }
 
         //method
         // public static void addProduct(double productPrice,float money){
