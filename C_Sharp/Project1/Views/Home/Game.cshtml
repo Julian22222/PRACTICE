@@ -249,6 +249,13 @@ $(document).ready(function() {
 
    $(".btl_btn").click(function() {
 
+        $('.empty_left_container').hide();
+        $('.empty_right_container').hide();
+        $('#confirmFighterContainer1 p').hide();
+        $('#confirmFighterContainer2 p').hide()
+        $('#confirmFighterContainer1').animate({'height': '130%','width':'130%', 'position':'absolute', 'left': '10%', 'top':'300px'}, 500);
+        $('#confirmFighterContainer2').animate({'height': '380','width':'380', 'position':'absolute', 'right': '10%', 'top':'300px'}, 500);
+
         audioSwords.play();
 
         $(".vs-block").fadeIn(900).fadeOut(500);

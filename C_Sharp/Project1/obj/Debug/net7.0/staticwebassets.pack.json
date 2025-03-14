@@ -17,6 +17,26 @@
       "PackagePath": "staticwebassets/IMG/dragon-logo.png"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/17601.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/17601.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/Wallpaper-House.com_74292.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/Wallpaper-House.com_74292.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/mortal-kombat-x-smertelnaya.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/mortal-kombat-x-smertelnaya.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/thumb-1920-1387572.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/thumb-1920-1387572.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/thumb-1920-573195.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/thumb-1920-573195.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/jade.jpg",
       "PackagePath": "staticwebassets/IMG/jade.jpg"
     },
@@ -75,6 +95,10 @@
     {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/lemon.webp",
       "PackagePath": "staticwebassets/IMG/machine/lemon.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/milk.png",
+      "PackagePath": "staticwebassets/IMG/machine/milk.png"
     },
     {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/onion.jpg",
