@@ -4,21 +4,21 @@
     ViewData["Title"] = "Game";
 
       var fighters = new List<Fighter>(){
-         new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/subzero.jpg", Health = 100, Damage = 15},
-         new Fighter(){Id = 2, Name = "Cyrax", Img = "/IMG/cybex.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 3, Name = "Jax", Img = "/IMG/jax.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 4, Name = "Johnny Cage", Img = "/IMG/jonny1.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 5, Name = "Kung Lao", Img = "/IMG/lao.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 6, Name = "Liu Kang", Img = "/IMG/liukang.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 7, Name = "Scorpion", Img = "/IMG/scorpion.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 8, Name = "Reptile", Img = "/IMG/reptile.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 9, Name = "Jade", Img = "/IMG/jade.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 10, Name = "Raiden", Img = "/IMG/raiden.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 11, Name = "Sonya", Img = "/IMG/sonya.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 12, Name = "Baraka", Img = "/IMG/baraka.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 13, Name = "Kitana", Img = "/IMG/kitana.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 14, Name = "Shao Kahn", Img = "/IMG/shaukan.jpg", Health = 120, Damage = 20},
-         new Fighter(){Id = 15, Name = "Shang Tsung", Img = "/IMG/shangsung1.jpg", Health = 120, Damage = 20},
+         new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/game/subzero.jpg", Health = 130, Damage = 25},
+         new Fighter(){Id = 2, Name = "Cyrax", Img = "/IMG/game/cybex.jpg", Health = 140, Damage = 25},
+         new Fighter(){Id = 3, Name = "Jax", Img = "/IMG/game/jax.jpg", Health = 150, Damage = 25},
+         new Fighter(){Id = 4, Name = "Johnny Cage", Img = "/IMG/game/jonny1.jpg", Health = 120, Damage = 23},
+         new Fighter(){Id = 5, Name = "Kung Lao", Img = "/IMG/game/lao.jpg", Health = 120, Damage = 24},
+         new Fighter(){Id = 6, Name = "Liu Kang", Img = "/IMG/game/liukang.jpg", Health = 120, Damage = 24},
+         new Fighter(){Id = 7, Name = "Scorpion", Img = "/IMG/game/scorpion.jpg", Health = 130, Damage = 25},
+         new Fighter(){Id = 8, Name = "Reptile", Img = "/IMG/game/reptile.jpg", Health = 130, Damage = 25},
+         new Fighter(){Id = 9, Name = "Jade", Img = "/IMG/game/jade.jpg", Health = 110, Damage = 22},
+         new Fighter(){Id = 10, Name = "Raiden", Img = "/IMG/game/raiden.jpg", Health = 140, Damage = 26},
+         new Fighter(){Id = 11, Name = "Sonya", Img = "/IMG/game/sonya.jpg", Health = 115, Damage = 22},
+         new Fighter(){Id = 12, Name = "Baraka", Img = "/IMG/game/baraka.jpg", Health = 120, Damage = 25},
+         new Fighter(){Id = 13, Name = "Kitana", Img = "/IMG/game/kitana.jpg", Health = 115, Damage = 21},
+         new Fighter(){Id = 14, Name = "Shao Kahn", Img = "/IMG/game/shaukan.jpg", Health = 150, Damage = 30},
+         new Fighter(){Id = 15, Name = "Shang Tsung", Img = "/IMG/game/shangsung1.jpg", Health = 130, Damage = 210},
          @* new Fighter(){Id = 1, Name = "Sub Zero", Img = "/IMG/subzero.jpg", Health = 100, Damage = 15, Armor = 5, Move = 1},
          new Fighter(){Id = 2, Name = "Cyrax", Img = "/IMG/cybex.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
          new Fighter(){Id = 3, Name = "Jax", Img = "/IMG/jax.jpg", Health = 120, Damage = 20, Armor = 10, Move = 1},
@@ -118,12 +118,12 @@
 </div>
 
 <div class="vs-block" style="display: none;">
-    <img class="vs-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png" alt="vs logo" width="150" height="150"/>
+    <img class="vs-logo" src="/IMG/game/vs_logo.png" alt="vs logo" width="150" height="150"/>
 </div>
 
 
 <div class="image-container" style="display: none;">
-        <img class="spin-image" src="/IMG/dragon-logo.png" alt="Front" width="200" height="200">
+        <img class="spin-image" src="/IMG/game/dragon-logo.png" alt="Front" width="200" height="200">
 </div>
 
 
@@ -143,6 +143,9 @@ $(document).ready(function() {
 
      var audioFight = new Audio('/sounds/fight-deep-voice-172194.mp3');
      var audioSwords = new Audio('/sounds/swords-collide-230574.mp3');
+     var audioFighterSelection = new Audio('/sounds/fighter-selection.mp3');    
+     var audioFighterSelection2 = new Audio('/sounds/fighter-selection.mp3');    arguments //the same sound for both fighters,#battle_btn different name top don'text interfare
+     //#confirmFighter1 is interfering with #confirmFighter2, it could be preventing the event from properly triggering. if we have the same name of sound .
 
 
     console.log("jQuery is working!");
@@ -192,6 +195,9 @@ $(document).ready(function() {
   
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////confirmFighter1 function
         $("#confirmFighter1").click(function() { 
+
+            audioFighterSelection.play();
+
           $("#figterContainer1").hide(); // Hide Fighter 1 selection container
 
             console.log("FROM confirm fighter 1", fighter_Name1);
@@ -227,6 +233,10 @@ $(document).ready(function() {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////confirm figter 2 
         $("#confirmFighter2").click(function() { 
+            console.log("Confirm Fighter 2 clicked");
+
+            audioFighterSelection2.play(); 
+
             $("#figterContainer2").hide(); // Hide the container
 
             @* let confirmedImg = $("#figterContainer2 img").attr("src"); // Get selected image src *@
@@ -253,8 +263,8 @@ $(document).ready(function() {
         $('.empty_right_container').hide();
         $('#confirmFighterContainer1 p').hide();
         $('#confirmFighterContainer2 p').hide()
-        $('#confirmFighterContainer1').animate({'height': '130%','width':'130%', 'position':'absolute', 'left': '10%', 'top':'300px'}, 500);
-        $('#confirmFighterContainer2').animate({'height': '380','width':'380', 'position':'absolute', 'right': '10%', 'top':'300px'}, 500);
+        $('#confirmFighterContainer1 img').animate({'height': '280px','width':'280px', 'position':'absolute', 'left': '10%', 'top':'300px'}, 500);
+        $('#confirmFighterContainer2 img').animate({'height': '280px','width':'280px', 'position':'absolute', 'right': '10%', 'top':'300px'}, 500);
 
         audioSwords.play();
 
@@ -293,12 +303,10 @@ $(document).ready(function() {
                 $("#header_outcome").text("Both fighters are dead!");
             } else if (fighter_Health1 <= 0) {
                 console.log("Fighter 1 is dead!");
-                $("#header_outcome").text("Fighter 1 is dead!");
-                $("#outcome").text("Fighter 2 wins!");
+                $("#header_outcome").text("Fighter 2 WON!");
             } else if (fighter_Health2 <= 0) {
                 console.log("Fighter 2 is dead!");
-                $("#header_outcome").text("Fighter 2 is dead!");
-                $("#outcome").text("Fighter 1 wins!");
+                $("#header_outcome").text("Fighter 1 WON!");
             }
         }
     }

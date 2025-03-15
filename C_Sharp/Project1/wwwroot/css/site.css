@@ -63,9 +63,15 @@ footer {
   height: 200px;
 }
 
-.vs-block {
+/* .vs-block {
   display: absolute;
   margin-left: 55%;
+  margin-top: 200px;
+} */
+
+.vs-block {
+  display: flex;
+  justify-content: center;
   margin-top: 200px;
 }
 
@@ -85,12 +91,6 @@ footer {
     transform: rotateY(360deg);
   }
 }
-
-/* .vs-block {
-  display: flex;
-  justify-content: center;
-  margin-top: 200px;
-} */
 
 .card-btn {
   margin: 1px;
@@ -161,11 +161,6 @@ footer {
   margin-bottom: 50px;
   background-color: rgb(158, 158, 230);
   border-radius: 10px;
-}
-
-.vs-logo {
-  position: absolute;
-  margin-left: -10%;
 }
 
 section {
