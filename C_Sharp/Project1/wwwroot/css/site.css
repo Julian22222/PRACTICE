@@ -63,12 +63,6 @@ footer {
   height: 200px;
 }
 
-/* .vs-block {
-  display: absolute;
-  margin-left: 55%;
-  margin-top: 200px;
-} */
-
 .vs-block {
   display: flex;
   justify-content: center;
