@@ -62,6 +62,12 @@ public class HomeController : Controller
     }
 
 
+      public IActionResult Gallery()
+    {
+        return View();
+    }
+
+
      // will show another page from Views -> Home -> Privacy (everithing we put there)
     public IActionResult Test()
     {
