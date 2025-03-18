@@ -242,7 +242,7 @@ section {
 }
 
 .big {
-  background-image: url("../IMG/gallery/loader.gif");
+  background-image: url("../IMG/gallery/load.gif");
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 500px;
