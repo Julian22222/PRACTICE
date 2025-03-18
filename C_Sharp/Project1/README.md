@@ -82,7 +82,7 @@ $(function(){
 </html>
 ```
 
-The most popular and traditional ways to add client-side functionality using <scripts> to a web page:
+The most popular and traditional ways to add client-side functionality (invoke functions by clicking on something and etc.) using <scripts> to a web page:
 
 is jQuery and JavaScript
 
