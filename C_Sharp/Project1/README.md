@@ -1,5 +1,7 @@
 # jQuery
 
+(--> jQuery <--)[https://www.w3schools.com/whatis/whatis_jquery.asp]
+
 - It is popular library that allow to interact with UI, can create any animation and animated menu blocks.
 - It is free libabray that compliments JavaScript and allow to work with HTML elements much easier. We eailly can work with DOM.
 - Using jQuery you can easily interact with any HTML element comparing with JavaScript
