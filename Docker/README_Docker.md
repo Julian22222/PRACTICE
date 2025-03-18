@@ -71,7 +71,7 @@ docker image prune  //<--delete all unused Images from the list
 
 //Every time when we run command  --> docker run ImageId, -It creates and runs new container from ImageId, and creates new ContainerId every time !!!!
 
-docker run ImageID //<-- will create and run container from ImageId that we indicated in ImageID
+docker run ImageID_or_ImageTag //<-- will create and run container from ImageId that we indicated in ImageID
 docker run ImageName // the same command
 docker run -it node //<-- run node with parametr, it -> means interactive, we get inside container and can insert and interact with Node how we want.
 // To check what Node version is installed in container --> inside container we write -> process.version
@@ -97,12 +97,12 @@ docker run -d -p 3000:3000 -v myvolume:/app/data --name myapp --rm imageID:image
 // -v <-- volumes parametr
 // myvolume: <-- any name, we give a volume name here
 //  /app/data  <-- the path to volume folder, should be the same what we indicated in Dockerfile -> VOLUMES [ "/app/data" ]
-
+///<-- this command creates and runs current container
 
 docker logs containerID_or_containerName //<-- will show all activity in current container, show what Docker container Port is used fro our running application etc.
 
 docker ps --help //<-- will show what this command does, and show description. use --> --help for any of the commands, don't need to memorise all the Docker commands
-docker ps //<-- show the list of all running/active containers
+docker ps //<-- show the list of all running/active containers, we can check if the container is running
 docker ps -a //<-- will show all containers on our local machine (will show running and inactive containers)
 
 
@@ -264,8 +264,9 @@ Docker can compare your previous code version and updated code version and take 
 
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
-//working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
+//working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files in the container
+//# Set the working directory in the container
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
 COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application.
 //or
@@ -352,12 +353,18 @@ We can use env varibales in Dockerfile.
 ```JS
 //Dockerfile instructions - EXAMPLE 4 (Correct version of instructions)
 
+
+//# Use official Node.js image as base
+//FROM node:16
+
 FROM node //<--we take node image, name of the Image that we want to use for our environment. We tell that our Image is based on Node JS. When Docker will read this line, Docker we check if we have installed this image localy and if we don't have this Image locally -> Docker will download it from Docker Hub.
 
-//working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files
-WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
-COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application.
+//working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files in the container
+//# Set the working directory in the container
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
+
+COPY package.json .  //<-- we copy package.json to work directory --> app folder (in this case) --> app, where we keep all application.
 //or
 COPY package.json /app  //<-- This command to use if copy to our app.js file
 
