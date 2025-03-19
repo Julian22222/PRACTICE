@@ -25,6 +25,18 @@
       "PackagePath": "staticwebassets/IMG/gallery/gal5.jpg"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/load.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/load.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/loader.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/loader.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/loading2.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/loading2.gif"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/baraka.jpg",
       "PackagePath": "staticwebassets/IMG/game/baraka.jpg"
     },

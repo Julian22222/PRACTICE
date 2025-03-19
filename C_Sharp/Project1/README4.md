@@ -1,36 +1,42 @@
 # AJAX
 
-(-->AJAX<--)[https://www.w3schools.com/whatis/whatis_ajax.asp]
+[-->AJAX<--](https://www.w3schools.com/whatis/whatis_ajax.asp)
+
+AJAX (Asynchronous JavaScript and XML), it allows you to communicate with the server without refreshing the web page. This provides a more dynamic and interactive user experience. To use XML is not mandatory and in majority applications it is not used.
+
+Ajax allow to make dynamic operations such as: searching, data loading, sending Form, geting the response from server and receiving responce from server for successful or failed responce. It makes process, searching and processing the data faster.
+
+Using Ajax we can send:
+
+- JSON
+- XML
+- HTML
+- text
+
+##### There are 2 common methods for making requests to DB in ASP.NET Core MVC:
+
+1. using JavaScript's fetch API
+2. jQuery's $.ajax method.
 
 ```C#
+//JavaScript's fetch API
+
 <button id="invokeButton">Invoke Function</button>
 
-
-
 <script>
-
     document.getElementById("invokeButton").addEventListener("click", function () {
-
         fetch("/ControllerName/ActionMethod", {
-
             method: "POST"
-
         })
-
         .then(response => response.json())
-
         .then(data => console.log(data))
-
         .catch(error => console.error('Error:', error));
-
     });
 
 </script>
 ```
 
-Sure! Let's dive deeper into AJAX (Asynchronous JavaScript and XML), which allows you to communicate with the server without refreshing the web page. This provides a more dynamic and interactive user experience. Specifically, we’ll look at two common methods for making AJAX requests in ASP.NET Core MVC: using JavaScript's fetch API and jQuery's $.ajax method.
-
-What is AJAX?
+# What is AJAX?
 
 AJAX is a technique that allows web pages to request small amounts of data from the server asynchronously (in the background), without the need to reload the whole page. This means that you can interact with the server, fetch data, and update parts of the web page without disturbing the user’s current activity.
 
@@ -51,41 +57,24 @@ Here’s how you can use fetch to make an AJAX request in your ASP.NET Core MVC 
 
 
 <script>
-
     document.getElementById("invokeButton").addEventListener("click", function () {
-
         // Make the AJAX request using fetch
 
         fetch("/Home/ActionMethod", {
-
             method: "POST", // Method type (GET, POST, etc.)
-
             headers: {
-
                 "Content-Type": "application/json" // Setting content type to JSON
-
             },
-
             body: JSON.stringify({ key: "value" }) // Request body, data you want to send
-
         })
-
         .then(response => response.json()) // Parse JSON response from the server
-
         .then(data => {
-
             // Handle the response data from the server
-
             console.log("Server Response:", data);
-
         })
-
         .catch(error => {
-
             console.error("Error:", error); // Handle any errors
-
         });
-
     });
 
 </script>
@@ -93,7 +82,7 @@ Here’s how you can use fetch to make an AJAX request in your ASP.NET Core MVC 
 
 ### Breakdown of the fetch options:
 
-- method: Specifies the type of request, like GET, POST, PUT, etc.
+- method: Specifies the type of request, like GET, POST, PUT, DELETE etc.
 - headers: Sets the request headers. For a JSON request, you typically set Content-Type: application/json.
 - body: The request payload. Here, we use JSON.stringify() to convert a JavaScript object to a JSON string.
 - then(response => response.json()): The response.json() method parses the JSON response from the server and returns it as a JavaScript object.
@@ -153,7 +142,7 @@ jQuery provides a simpler and more abstracted way of making AJAX requests using 
 # Breakdown of the $.ajax() options:
 
 - url: Specifies the URL for the action method on the server you want to call.
-- type: Specifies the request method (GET, POST, etc.).
+- type: Specifies the request method (GET, POST, PUT, DELETE etc.).
 - contentType: Defines the type of data you're sending. application/json is common when sending JSON data.
 - data: The data sent with the request. It's usually stringified (i.e., converting JavaScript objects to JSON format using JSON.stringify()).
 - success: A callback function that’s triggered if the request is successful. The response data is passed to this function.

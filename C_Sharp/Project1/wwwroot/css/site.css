@@ -262,6 +262,17 @@ section {
 }
 
 /* ////////////////////////////////////////////////////////////////// */
+/* Ajax */
+
+.ajax-container button {
+  color: tomato;
+  border: 2px solid tomato;
+  background: whitesmoke;
+  padding: 5px 15px;
+  border-radius: 4px;
+}
+
+/* ////////////////////////////////////////////////////////////////// */
 /* Contacts */
 
 main label {

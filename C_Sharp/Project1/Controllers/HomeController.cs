@@ -54,6 +54,10 @@ public class HomeController : Controller
     //     return View();
     // }
 
+    public IActionResult Ajax()
+    {
+        return View();
+    }
 
 
    public IActionResult Game()

@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "Ajax";
+
+}
+
+
+<div class="ajax-container">
+    <h1>Ajax Requests To Database</h1>
+
+    <button class="test">Test</button>
+    <button class="get">Get </button>
+
+    <div class="content"></div>
+
+    <h2></h2>
+
+    <h4></h4>
+
+    <p></p>
+
+    
+    
+    <button class="post">Post</button>
+   
+    <button class="put">Put</button>
+  
+    <button class="delete">Delete</button>
+</div>
+
+<script>
+$(document).ready(function(){
+
+    $(".test").click(function(){   //<-- this will handle the click event on the button with class test
+        $.ajax({    //<-- this is the ajax request, ajax is a method that performs an asynchronous HTTP request
+            url: "https://jsonplaceholder.typicode.com/posts/1",
+            @* async: false,  //<-- this will make the request synchronous *@
+            statusCode: {   //<-- this will handle the status codes of the response
+                404: function(){   //<-- if we receive status code 404
+                    alert("page not found");
+                }
+            },
+            success: function(result){  //<-- this will handle the success of the request, result parametr - is the result of the request
+                    console.log(result);  //<-- we are logging the result in the console
+
+                    //assign received data from DB to different tags, to display them on the page
+                    $("h2").text(result[0].id);  //<-- we are using the <p> tag to display the id of the first post
+                    $("h4").text(result[0].title);  //<-- we are using the <h2> tag to display the title of the first post
+                    $("p").text(result[0].body);  //<-- we are using the <h4> tag to display the body of the first post              
+            },
+            error: function(xhr){  //<-- this will handle the error of the request, parametr --> xhr is the XMLHttpRequest object- where we can get ->error status, error message
+                    alert(`Error: ${xhr.status}, Error text: ${xhr.statusText}`);
+                }
+            });
+    });
+      
+
+
+
+
+
+    $('.get').click(function(){
+        $.get(    //<-- method get
+            "https://jsonplaceholder.typicode.com/posts/1", function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parametrs - data, that we receive from the server and status of the request
+                console.log(status);  //<-- log the status in the console
+
+                //assign received data from DB to different tags, to display them on the page
+                $("h2").text(data[0].id);  //<-- we are using the <p> tag to display the id of the first post
+                $("h4").text(data[0].title);  //<-- we are using the <h2> tag to display the title of the first post
+                $("p").text(data[0].body);  //<-- we are using the <h4> tag to display the body of the first post   
+        });
+    });
+
+
+
+
+
+
+
+
+
+    $(".post").click(function(){
+        $.ajax({
+            url: "https://localhost:5001/api/contacts",
+            type: "POST",
+            data: {
+                Name: "Alex",
+                Age: 3,
+                Description: "Test"
+            },
+            success: function(data){
+                console.log(data);
+                $(".content").html(data);
+            }
+        });
+    });
+
+    $(".put").click(function(){
+        $.ajax({
+            url: "https://localhost:5001/api/contacts/1",
+            type: "PUT",
+            data: {
+                Name: "Alex",
+                Age: 3,
+                Description: "Test"
+            },
+            success: function(data){
+                console.log(data);
+                $(".content").html(data);
+            }
+        });
+    });
+
+    $(".delete").click(function(){
+        $.ajax({
+            url: "https://localhost:5001/api/contacts/1",
+            type: "DELETE",
+            success: function(data){
+                console.log(data);
+                $(".content").html(data);
+            }
+        });
+    });
+});
+
+</script>
