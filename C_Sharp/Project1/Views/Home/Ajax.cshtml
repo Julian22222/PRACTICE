@@ -7,6 +7,7 @@
 <div class="ajax-container">
     <h1>Ajax Requests To Database</h1>
 
+    <button class="get_all">Get all users</button>
     <button class="test">Ajax</button>
     <button class="get">Get </button>
     <button class="post">Post</button>
@@ -20,13 +21,63 @@
     <h4></h4>
 
     <p></p>
+    
+    <div class="list_container">
+        @* Container to hold the list of users *@
+        <ul id="userList"></ul>
+
+    </div>
 
 </div>
 
 <script>
 $(document).ready(function(){
 
+
+    $('.get_all').click(function(){  //<--  this will handle the click event on the button with class get
+
+            $("#userList").show();  //<-- this will show the list of users
+            $("h2 , h4, p").hide();  //<-- this will hide h2, h4, p tags
+            $(".content").hide();  //<-- this will hide context block
+
+            $.get(    //<-- method get
+
+            "https://jsonplaceholder.typicode.com/users", function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parameters - data, that we receive from the server and status of the request
+
+                console.log(status);  //<-- log the status in the console
+
+                // Empty the current list before appending new items
+                $('#userList').empty();
+
+                // Loop through each user in the received data and create a list item
+                $.each(data, function(index, user) {
+                    $('#userList').append(
+                         '<li>' +
+                            '<strong>' + user.name + '</strong><br>' +
+                            'Email: ' + user.email + '<br>' +
+                            'Username: ' + user.username +
+                        '</li><br>'
+                    );
+                });
+        });
+
+    });
+
+
+
+        $('.element').click(function(){
+            alert("You clicked on user");
+        })
+
+
+
+
+
     $(".test").click(function(){   //<-- this will handle the click event on the button with class test
+
+        $("h2 , h4, p").show();  //<-- this will show h2, h4, p tags
+        $(".content").hide();  //<-- this will hide context block
+        $("#userList").hide();  //<-- this will hide the list of users
 
         $.ajax({    //<-- this is the ajax request, ajax is a method that performs an asynchronous HTTP request
             url: "https://jsonplaceholder.typicode.com/users/1",
@@ -53,7 +104,14 @@ $(document).ready(function(){
 
 
 
+
+
     $('.get').click(function(){  //<-- this will handle the click event on the button with class get
+
+        $("h2 , h4, p").show();  //<-- this will show h2, h4, p tags
+        $(".content").hide();   //<-- this will hide context block
+        $("#userList").hide();  //<-- this will hide the list of users
+
 
         $.get(    //<-- method get
             "https://jsonplaceholder.typicode.com/users/2", function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parametrs - data, that we receive from the server and status of the request
@@ -70,7 +128,12 @@ $(document).ready(function(){
 
 
 
+
     $(".post").click(function(){   //<-- this will handle the click event on the button with class post
+
+        $(".content").show();  //<-- this will show content block
+        $("h2 , h4, p").hide();  //<-- this will hide h2, h4, p tags
+        $("#userList").hide();  //<-- this will hide the list of users
 
         $.post(              //<--post method receive 3 parameters: url address to send data, object -> data, and function
           "https://jsonplaceholder.typicode.com/users", {

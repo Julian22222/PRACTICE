@@ -272,6 +272,16 @@ section {
   border-radius: 4px;
 }
 
+#userList li {
+  list-style: none;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f4f4f4;
+  width: 300px;
+  border-radius: 10px;
+}
+
 /* ////////////////////////////////////////////////////////////////// */
 /* Contacts */
 
