@@ -1,12 +1,20 @@
 // main file, without this file none will work
 
+using Project1.Repository;
+
+
 // builder allow to create our app by small parts
 var builder = WebApplication.CreateBuilder(args);     // createBuilder -creating a host, is main in deployment of our app,
 
 // Add services to the container.
 // Services - method to connet all different services for our app, after dot
 // in here we adding services with name-> AddControllersWithViews
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+
+//Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
+builder.Services.AddScoped<CarRepository, CarRepository>();
+
 
 var app = builder.Build();  //creating our web app
 

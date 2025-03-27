@@ -12,7 +12,7 @@ build_property.RootNamespace = Project1
 build_property.ProjectDir = /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1
 build_property._RazorSourceGeneratorDebug = 
 
@@ -30,6 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/Views/Home/Calculator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9DYWxjdWxhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/Views/Home/Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/Views/Home/Gallery.cshtml]

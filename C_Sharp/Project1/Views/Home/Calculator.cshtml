@@ -1,255 +1,64 @@
 @{
     ViewData["Title"] = "Calculator";
-    var currentInput = "0"; // Initialize currentInput variable
 }
-<h1>This is Calculator</h1>
-
-<div class="counter">
-
-    <span id="display">@currentInput</span>
-
-</div>
-
- 
-
-@* Line for CE, C, Del, % *@
-<div class="line">
-    <button class="ce">CE</button>
-    <button class="c">C</button>
-    <button class="del">%</button>
-    <button class="divide">/</button>
-</div>
-
- 
-
-@* First line (7, 8, 9, x) *@
-<div class="first-line">
-    <button class="seven">7</button>
-    <button class="eight">8</button>
-    <button class="nine">9</button>
-    <button class="multiply">x</button>
-</div>
-
- 
-
-@* Second line (4, 5, 6, -) *@
-<div class="second-line">
-    <button class="four">4</button>
-    <button class="five">5</button>
-    <button class="six">6</button>
-    <button class="minus">-</button>
-</div>
-
- 
-
-@* Third line (1, 2, 3, +) *@
-<div class="third-line">
-    <button class="one">1</button>
-    <button class="two">2</button>
-    <button class="three">3</button>
-    <button class="plus">+</button>
-</div>
-
- 
-
-@* Fourth line (1, 0, ., =) *@
-<div class="fourth-line">
-    <button class="emty"></button>
-    <button class="zero">0</button>
-    <button class="dot">.</button>
-    <button class="equals">=</button>
-</div>
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-
-    let currentInput = "0"; // To store the current input
-
-    let operator = ""; // To store the selected operator
-
-    let previousInput = ""; // To store the previous value for operations
-
-    let resultDisplayed = false; // To track if a result is displayed
-
- 
-
-    // Function to update the display
-
-    function updateDisplay() {
-
-        $('#display').text(currentInput);
-
-    }
-
- 
-
-    // Function to handle number clicks
-
-    $('.number').on('click', function() {
-
-        let number = $(this).text();
-
-        if (resultDisplayed) {
-
-            currentInput = number;
-
-            resultDisplayed = false;
-
-        } else {
-
-            currentInput = currentInput === "0" ? number : currentInput + number;
-
-        }
-
-        updateDisplay();
-
-    });
-
- 
-
-    // Function to handle operator clicks
-
-    $('.operator').on('click', function() {
-
-        let op = $(this).text();
-
-        if (operator && !resultDisplayed) {
-
-            calculate();
-
-        }
-
-        previousInput = currentInput;
-
-        operator = op;
-
-        currentInput = "0";
-
-        updateDisplay();
-
-    });
-
- 
-
-    // Function to perform the calculation
-
-    function calculate() {
-
-        if (operator && previousInput !== "") {
-
-            let num1 = parseFloat(previousInput);
-
-            let num2 = parseFloat(currentInput);
-
-            switch (operator) {
-
-                case "+":
-
-                    currentInput = (num1 + num2).toString();
-
-                    break;
-
-                case "-":
-
-                    currentInput = (num1 - num2).toString();
-
-                    break;
-
-                case "x":
-
-                    currentInput = (num1 * num2).toString();
-
-                    break;
-
-                case "%":
-
-                    currentInput = ((num1 * num2) / 100).toString();
-
-                    break;
-
-                case "/":
-
-                    currentInput = (num1 / num2).toString();
-
-                    break;
-
-            }
-
-            operator = "";
-
-            previousInput = "";
-
-            resultDisplayed = true;
-
-            updateDisplay();
-
-        }
-
-    }
-
- 
-
-    // Function to handle decimal point
-
-    $('.dot').on('click', function() {
-
-        if (!currentInput.includes(".")) {
-
-            currentInput += ".";
-
-            updateDisplay();
-
-        }
-
-    });
-
- 
-
-    // Function to clear the display
-
-    $('.c').on('click', function() {
-
-        currentInput = "0";
-
-        previousInput = "";
-
-        operator = "";
-
-        updateDisplay();
-
-    });
-
- 
-
-    // Function to delete the last character
-
-    $('.del').on('click', function() {
-
-        if (currentInput.length > 1) {
-
-            currentInput = currentInput.slice(0, -1);
-
-        } else {
-
-            currentInput = "0";
-
-        }
-
-        updateDisplay();
-
-    });
-
- 
-
-    // Equals button click event
-
-    $('.equals').on('click', function() {
-
-        calculate();
-
-    });
-
-</script>
+<h1 style="display: flex; justify-content: center;">This is Calculator</h1>
+
+  <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="calculator_buttons">
+            <button class="del">CE</button>
+            <button class="clear">C</button>
+            <button class="operator">%</button>
+            <button class="operator">/</button>
+
+            <button class="num">7</button>
+            <button class="num">8</button>
+            <button class="num">9</button>
+            <button class="operator">*</button>
+
+            <button class="num">4</button>
+            <button class="num">5</button>
+            <button class="num">6</button>
+            <button class="operator">-</button>
+
+            <button class="num">1</button>
+            <button class="num">2</button>
+            <button class="num">3</button>
+            <button class="operator">+</button>
+
+             <button class="num">.</button>
+            <button class="num">0</button>
+            <button class="equals">=</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let display = $("#display");
+            let currentInput = "";
+
+            $("button").click(function () {
+                let value = $(this).text();
+
+                if (value === "CE") {
+                    currentInput = "";
+                }else if (value === "C") {
+                    currentInput = currentInput.slice(0, -1);
+                } else if (value === "%") {
+                    currentInput = currentInput / 100;
+                }else if (value === ".") {
+                    currentInput.split("+").pop().includes(".") ? currentInput : currentInput += value;
+                }else if (value === "=") {
+                    try {
+                        currentInput = eval(currentInput); // Evaluate expression
+                    } catch {
+                        currentInput = "Error";
+                    }
+                } else {
+                    currentInput += value;
+                }
+
+                display.val(currentInput);
+            });
+        });
+    </script>

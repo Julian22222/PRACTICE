@@ -1,6 +1,5 @@
 @* import Product class ,from Models folder*@
-@using Project1.Models 
-@using Project1.Controllers; //return changeName function ????
+@using Project1.Models
 
 @{
     ViewData["Title"] = "Vending";
@@ -40,11 +39,11 @@
 
 <p></p>
 
-<hr>
+<hr/>
 
 <h4 class="header-products">You have £15 in your pocket for groceries. Please choose products to buy.</h4>
 
-<section class="section-product">
+<section class="section-products">
     @foreach(var item in products){
         <button  class="card-btn" onclick="@addProduct(@item.Price)">
             <div class="card-container-product">

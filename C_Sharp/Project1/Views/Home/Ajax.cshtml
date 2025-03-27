@@ -22,11 +22,11 @@
 
     <p></p>
     
-    <div class="list_container">
-        @* Container to hold the list of users *@
-        <ul id="userList"></ul>
 
-    </div>
+    @* Container to hold the list of users *@
+    <ul id="userList"></ul>
+
+    
 
 </div>
 
@@ -52,11 +52,13 @@ $(document).ready(function(){
                 // Loop through each user in the received data and create a list item
                 $.each(data, function(index, user) {
                     $('#userList').append(
-                         '<li>' +
-                            '<strong>' + user.name + '</strong><br>' +
-                            'Email: ' + user.email + '<br>' +
-                            'Username: ' + user.username +
-                        '</li><br>'
+                        `<li style="position: relative;">
+                        <strong>${user.name}</strong><br>
+                        Email: ${user.email}<br>
+                        Username: ${user.username}<br>
+                        <button class="get_user_details" data-id="${user.id}" style="position: absolute; top: 0; right: 0;">Get Details</button>
+                        <div class="user-details" id="details-${user.id}" style="display:none;"></div>
+                        </li><br>`
                     );
                 });
         });
@@ -65,9 +67,38 @@ $(document).ready(function(){
 
 
 
-        $('.element').click(function(){
-            alert("You clicked on user");
-        })
+    // (document).on <-- Event delegation to handle dynamically added buttons
+    // .get_user_details <-- class of the button
+    // .on <-- used to bind the click event.
+    $(document).on('click', '.get_user_details', function(){
+
+        $('.user-details').text('Close');  //<-- Hides all user details <div>s
+
+
+        var userId = $(this).data('id');  //<-- $(this) refers to the button that was clicked. 
+        // .data('id') gets the data-id attribute from the clicked button --> <button class="get_user_details" data-id="${user.id}">Get Details</button>
+        var detailsContainer = $("#details-" + userId);  //<-- Creates a variable detailsContainer that refers to the <div> where user details will be shown.
+        var button = $(this);  //<-- Creates a variable button that refers to the clicked button.
+
+        //Fetch user details from the API
+        $.get("https://jsonplaceholder.typicode.com/users/" + userId, function(user){
+            //detailsContainer.html  <-- Fills the detailsContainer <div> with the received user data.
+            detailsContainer.html(`
+                <p><strong>Phone:</strong> ${user.phone}</p>
+                <p><strong>Website:</strong> ${user.website}</p>
+                <p><strong>Company:</strong> ${user.company.name}</p>
+                <p><strong>Address:</strong> ${user.address.street}, ${user.address.city}</p>
+            `).toggle();  // Toggle the visibility of user details
+        
+
+            // Toggle button text between "Get Details" and "Close"
+            if (detailsContainer.is(":visible")) {
+                button.text("Close");  //<-- check this variable -> var button = $(this);
+            } else {
+                button.text("Get Details");
+            }
+        });
+    });
 
 
 

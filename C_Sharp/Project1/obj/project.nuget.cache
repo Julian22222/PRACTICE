@@ -1,8 +1,26 @@
 {
   "version": 2,
-  "dgSpecHash": "DRO6PfRZ8d7ynXs3YwXU9LGXLhx79eSEw5S9w054onWzo/CnbmZkHWrSIRnnGJy63zp0baNYsa4QCdp5YiqkIg==",
+  "dgSpecHash": "vYDcQTkNRJHV2yXREJ7L/L4MQBiPBWJnMRsTaxxCcgfN+GC7a8WSIDGwimmYKgL8JC1xGEXDS0svAntqMvcZVA==",
   "success": true,
   "projectFilePath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/Project1.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/codenitro/.nuget/packages/microsoft.aspnetcore.mvc.razor.extensions/6.0.0/microsoft.aspnetcore.mvc.razor.extensions.6.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.aspnetcore.mvc.razor.runtimecompilation/7.0.0/microsoft.aspnetcore.mvc.razor.runtimecompilation.7.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.aspnetcore.razor.language/6.0.0/microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.2/microsoft.codeanalysis.analyzers.3.3.2.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.codeanalysis.common/4.0.0/microsoft.codeanalysis.common.4.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.codeanalysis.csharp/4.0.0/microsoft.codeanalysis.csharp.4.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.codeanalysis.razor/6.0.0/microsoft.codeanalysis.razor.6.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.extensions.dependencymodel/7.0.0/microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/microsoft.netcore.platforms/2.1.2/microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.reflection.metadata/5.0.0/system.reflection.metadata.5.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.text.encoding.codepages/4.5.1/system.text.encoding.codepages.4.5.1.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
+    "/home/codenitro/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+  ],
   "logs": []
 }

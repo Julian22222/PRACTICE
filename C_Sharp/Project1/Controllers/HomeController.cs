@@ -4,7 +4,8 @@ using System.Reflection;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Project1.Models;  //connection of error
-using Project1.Views.Home; //User class connection
+using System.Threading.Tasks; //User class connection
+using Project1.Repository;
 
 namespace Project1.Controllers;
 
@@ -16,26 +17,36 @@ public class HomeController : Controller
     private readonly IConfiguration Configuration;
     private readonly ILogger<HomeController> _logger;
 
+    private readonly CarRepository _carReository;
+
 
     // constructor
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, CarRepository carReository)
     {
         _logger = logger;
         //  Configuration -keep info from appsettings.json file
         Configuration = configuration;
+        _carReository = carReository;
     }
-
-
 
 
     // Methods
     // will show main page from Views -> Home -> Index (everithing we put there)
-    // [HttpGet]
-    public IActionResult Index()
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        // var adminName = Configuration.GetSection("Admin: Name");
-        return View();
+
+        ViewBag.List = false;
+
+        var data = await _carReository.GetAllCars();
+    
+        return View(data);
     }
+
+
+
+
+   
 
 
     // [HttpPost]
@@ -70,6 +81,13 @@ public class HomeController : Controller
     {
         return View();
     }
+
+
+   public IActionResult Form()
+    {
+        return View();
+    }
+
 
 
      // will show another page from Views -> Home -> Privacy (everithing we put there)

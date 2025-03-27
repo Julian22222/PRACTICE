@@ -143,13 +143,91 @@ $(document).ready(function(){
 
 
     $(document).ajaxStop(function(){   //<-- will run after completion of all requests on the page
-        alert("stop");
+        // alert("stop");
         $(".loading").hide(700);    //<-- hide element loading
     });
 
 
-    $(document).ajaxComplete();   //<-- this method run after ajaxSuccess or ajaxError methods, and before ajaxStop method
+    $(document).ajaxComplete(function){  //<-- this method run after ajaxSuccess or ajaxError methods, and before ajaxStop method
+        alert("completed");
+    });
+```
+
+# Data handling before sending the Data
+
+```C#
+$.param();  //<-- this method creates a string to send the Data from the object, converts the Data type from object to string
+
+//param() method receive Data in object type and convert it to string type
+
+//this method simplifies convertion before sending the Data
+```
+
+```C#
+//Example
+
+$(document).ready(function(){
+
+    let form = {
+        name: "User",
+        email: "test@gmail.com",
+        password: "123rty"
+    }
 
 
+$(".result").text($param(form))   //<-- we have <div> with class = result. Inside this <div> we will show the data, converting the object to string, using param() method
+
+//$(".result").text($param(form))  <-- this code will give -> name=User&email=test%40gmail.com&password=123rty
+
+//param() method receive Data in object type and convert it to string type
 });
+
+```
+
+# Ajax in ASP.NET Core MVC
+
+```C#
+// use in View, when send some data in Form
+
+//to use ajax form
+// <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook">
+// data-ajax="true"  <-- our form will work with ajax, (this is mandatory text to work with ajax) if in _Layout.cshtml we imported  all needed libraries
+// data-ajax-complete="myComplete" data-ajax-success="mySuccess"   <-- 3 different functions, the function logic is in the bottom of the file
+// data-ajax-loading="#myLoader" <-- use id="myLoader" in bootstrap piece of code, line 23-29, show loading picture when uploading
+
+<form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="AddNewBook">
+// enctype="multipart/form-data"   <- If you are dealing with the file(if we planning to uploading files in View) in your form then you use this attribute in Form tag
+// asp-controller="Book" asp-action="AddNewBook"  <-- we don't need to write this part, if in Controller (-->See BookController.cs) the View page-(form page) name has the same name as [HttpPost] method- (when we send the data) --> to AddNewBook <--is the same name for View page and [HttpPost] method
+
+Some coede here
+
+</form>
+
+
+
+@section scripts {
+//Here we can insert any scripts
+
+    <script>
+        function myComplete(data){ //<--name of the function is myComplete, to receive the data from your function we can pass some attributes--> (data)
+        //this code wil execute , doesn't metter if the request is successful or fail.
+            alert("I am from complete");
+        }
+
+        function mySuccess(data){  //<--name of the function is mySuccess
+
+        //this code wil execute if the request is successful
+            alert("I am from Success");
+        }
+
+        function myFailure(data){  //<--name of the function is myFailure
+
+        //this code wil execute if the request was failed
+            alert("I am from Failure");
+        }
+    </script>
+}
+
+// then we need to put -->   @await RenderSectionAsync("MyScripts", required: false)  in Layout.cshtml file
+//This allows to don't use <script> tag in every View page in your Project
 ```
