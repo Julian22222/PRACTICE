@@ -1,8 +1,8 @@
 # Avoid to make the same varibles when you connect to DB and to API server
 
-use DB before variables to connect to Database -->
-
 ```JS
+//use DB_... <--DB initials before actual key names to connect to Database
+
 DB_USERNAME = ********
 DB_PASSWORD = ********
 PGDATABASE = ******
@@ -10,13 +10,32 @@ DB_HOST = ********
 DB_PORT = ********
 ```
 
-and PORT variable --> for port connection to API server,
-
 ```JS
+//use PORT variable or API_PORT--> for port connection to API server,
+
 PORT = ****
+
+or
+
+API_PORT= ****
 ```
 
 to make different names for variables
+
+# Connection using Supabase + DBeaver
+
+### ​On Supabase's free plan, projects are paused after one week of inactivity.
+
+- create mew Project in Supabase.com (hosting website, to use PSQL DB), Here you--> fill DB name, password, DB location etc.
+- then you go to your created project and click --> Connect (step 1 on the pcs)
+
+![pic2](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/IMG/pic2.jpg)
+
+- check to be --> TYPE: URI (step 2 on the pcs)
+- then use SECOND OPTION - Transaction pooler (step 3 on the pcs) and click View parametrs (step 4 on the pcs)--> it will show, all details of DB --> host, port, database name, user name
+- this details you can fill to the DBeaver and connect to your Database.
+
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/IMG/pic3.jpg)
 
 # Connection using ElephantSQL + DBeaver
 
@@ -31,7 +50,7 @@ This is ElephantSQL settings -->
 
 - DBeaver needs all this Data from ElephantSQL to connect our DB
 - Insert Data from ElephantSQL to DBeaver-->
-  ![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/pic1.jpg)
+  ![pic1](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/IMG/pic1.jpg)
 
   1. Server(from ElephantSQL) === Host(from Dbeaver)
   2. User & Default database (from ElephantSQL) === Database and Username (from Dbeaver)
