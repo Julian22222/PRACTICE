@@ -18,15 +18,16 @@ PORT = ****
 or
 
 API_PORT= ****
-```
 
-to make different names for variables
+
+//This will help to make different names for DB and API server variables and don't confuse you
+```
 
 # Connection using Supabase + DBeaver
 
 ### ​On Supabase's free plan, projects are paused after one week of inactivity.
 
-- create mew Project in Supabase.com (hosting website, to use PSQL DB), Here you--> fill DB name, password, DB location etc.
+- go to supabase.com (it's a hosting website, to use PSQL DB) and create mew Project in Supabase.com. Here you--> create your DB name, password, DB location etc.
 - then you go to your created project and click --> Connect (step 1 on the pcs)
 
 ![pic2](https://github.com/Julian22222/PRACTICE/blob/main/MySQL-database/IMG/pic2.jpg)
