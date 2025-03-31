@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pLkZtAVHm8OA7G2C9UeNOTAI/yoenS1DezI5AsJ5v+k=",
+  "Hash": "p+PQK53dCckb31E4eJLotulsj1Sxzv7bT1Xtkf9AYt4=",
   "Source": "Project1",
   "BasePath": "_content/Project1",
   "Mode": "Default",
@@ -542,6 +542,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/IMG/game/vs_logo.png"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg"
     },
     {
       "Identity": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/apple.webp",

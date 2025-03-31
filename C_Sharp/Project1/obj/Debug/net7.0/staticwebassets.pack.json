@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets/Project1.bundle.scp.css"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal1.jpg",
       "PackagePath": "staticwebassets/IMG/gallery/gal1.jpg"
     },

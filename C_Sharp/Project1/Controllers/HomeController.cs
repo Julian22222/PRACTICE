@@ -38,14 +38,32 @@ public class HomeController : Controller
 
         ViewBag.List = false;
 
-        var data = await _carReository.GetAllCars();
+        // var data = await _carReository.GetAllCars();
     
-        return View(data);
+        return View();
     }
 
 
 
+//  public async Task<IActionResult> GetCar(int id)
+//     {
 
+//         var data = await _carReository.GetCarById(id);
+    
+//         return View(data);
+//     }
+
+     public IActionResult ShowCars()
+    {
+        List<Car> cars = new List<Car>
+        {
+            new Car { Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
+            new Car { Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
+            new Car { Name = "Ford", Price = 25000, Year = 2019, FuelType = "Electric" }
+        };
+
+        return PartialView("_CarListPartial", cars);
+    }
    
 
 
@@ -154,5 +172,9 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+
+
+
 }
 

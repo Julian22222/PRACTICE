@@ -1,0 +1,31 @@
+@model IEnumerable<Project1.Models.Car>
+
+@if (!Model.Any())
+{
+    <p>No cars available</p>
+}
+else
+{
+    <br />
+    <h1 style="display:flex; justify-content: center;">All Car list</h1>
+
+    <div class="car_container">
+        <div class="row">
+            @foreach (var car in Model)
+            {
+                <div class="card" style="width: 18rem; border:black 1px solid; margin: 5px; padding: 10px">
+                    <img src="/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg" class="card-img-top" alt="car image" style="width: 100px;height:100px">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">Name: @car.Name</h5>
+                        <h5 class="card-title">Price: @car.Price</h5>
+                        <p class="card-title">Year: @car.Year</p>
+                        <p class="card-title">Fuel: @car.FuelType</p>
+                        <br />
+                        <a href="#" class="btn btn-primary">More Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

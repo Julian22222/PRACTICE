@@ -6,6 +6,10 @@ AJAX (Asynchronous JavaScript and XML), it allows you to communicate with the se
 
 Ajax allow to make dynamic operations such as: searching, data loading, sending Form, geting the response from server and receiving responce from server for successful or failed responce. It makes process, searching and processing the data faster.
 
+AJAX is a technique that allows web pages to request small amounts of data from the server asynchronously (in the background), without the need to reload the whole page. This means that you can interact with the server, fetch data, and update parts of the web page without disturbing the user’s current activity.
+
+For example, when a user clicks a button or submits a form, an AJAX request can be triggered to call a specific action method in the server. The server can then send back data (like JSON), which can be used to dynamically update the page content.
+
 Using Ajax we can send:
 
 - JSON
