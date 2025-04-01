@@ -36,7 +36,7 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
 
-        ViewBag.List = false;
+        // ViewBag.List = false;
 
         // var data = await _carReository.GetAllCars();
     
@@ -45,26 +45,50 @@ public class HomeController : Controller
 
 
 
-//  public async Task<IActionResult> GetCar(int id)
-//     {
+ public async Task<IActionResult> GetCar(int id)
+    {
 
-//         var data = await _carReository.GetCarById(id);
+        var data = CarsList.Where(x => x.Id == id).FirstOrDefault();
+        
     
-//         return View(data);
-//     }
+        return View(data);
+    }
 
-     public IActionResult ShowCars()
+    private IEnumerable<object> Allcars()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IActionResult ShowCars()
     {
         List<Car> cars = new List<Car>
         {
-            new Car { Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
-            new Car { Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
-            new Car { Name = "Ford", Price = 25000, Year = 2019, FuelType = "Electric" }
+            new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
+            new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
+            new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
+            new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
+            new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
+            new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
+            new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
+            new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
         };
 
-        return PartialView("_CarListPartial", cars);
+     
+    return PartialView("_CarListPartial", cars);
     }
    
+
+     List<Car> CarsList = new List<Car>
+        {
+            new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
+            new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
+            new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
+            new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
+            new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
+            new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
+            new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
+            new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
+        };
 
 
     // [HttpPost]
