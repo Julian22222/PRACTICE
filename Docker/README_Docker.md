@@ -266,7 +266,7 @@ FROM node //<--we take node image, name of the Image that we want to use for our
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files in the container
 //# Set the working directory in the container
-WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is folder app), this folder already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
 COPY package.json .  //<-- we copy package.json to work directory or to our folder --> app, where we keep all application.
 //or
@@ -362,7 +362,7 @@ FROM node //<--we take node image, name of the Image that we want to use for our
 
 //working Directory where we keep our application. WORKDIR /app <-- means in folder /app , we have our application, where we have all our folders and files in the container
 //# Set the working directory in the container
-WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is file app.js), app.js file already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
+WORKDIR /app   ///identify Root directory/ working directory is -> /app (it is folder app), this app folder already exist in the project, if not existing -> it will create app folder in the container, where we have all request methods (GET, POST, DELETE, PUT) and app.listen code.listen code
 
 COPY package.json .  //<-- we copy package.json to work directory --> app folder (in this case) --> app, where we keep all application.
 //or
