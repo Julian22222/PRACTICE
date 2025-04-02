@@ -16,7 +16,7 @@
 
 -- CREATE TABLE users(
 --     email SERIAL PRIMARY KEY,
---     hashed_password VARCHAR(255)
+--     password VARCHAR(255)
 -- );
 
 -- INSERT INTO todos
@@ -24,7 +24,7 @@
 -- VALUES('julian@test.com', 'First todo', 10, 'Thu March 2 2023 19:15:35 GMT+0400 (Gulf Standard Time)');
 
 -- INSERT INTO users
--- ( hashed_password)
+-- (password)
 -- VALUES(123);
 
 SELECT * FROM todos;

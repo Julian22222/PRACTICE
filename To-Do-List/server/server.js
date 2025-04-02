@@ -99,7 +99,7 @@ app.post("/users", async (req, res) => {
 
   try {
     const signUp = await pool.query(
-      `INSERT INTO users (u_email,password) VALUES($1, $2)`,
+      `INSERT INTO users (email,password) VALUES($1, $2)`,
       [email, password]
     );
 
