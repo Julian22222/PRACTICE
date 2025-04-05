@@ -138,7 +138,7 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
           )}
           <div className="submit-btn-container">
             {/* ///////////////////////////////// */}
-            {/* if Login =true -> btn LogIn ,esle SignUp */}
+            {/* if Login =true -> btn LogIn ,else SignUp */}
             {isLogIn ? (
               <div>
                 <button

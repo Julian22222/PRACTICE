@@ -15,7 +15,7 @@
 -- );
 
 -- CREATE TABLE users(
---     email SERIAL PRIMARY KEY,
+--     u_email VARCHAR(50) PRIMARY KEY,
 --     password VARCHAR(255)
 -- );
 
@@ -24,7 +24,7 @@
 -- VALUES('julian@test.com', 'First todo', 10, 'Thu March 2 2023 19:15:35 GMT+0400 (Gulf Standard Time)');
 
 -- INSERT INTO users
--- (password)
--- VALUES(123);
+-- (u_email, password)
+-- VALUES('julian@test.com' ,123);
 
 SELECT * FROM todos;

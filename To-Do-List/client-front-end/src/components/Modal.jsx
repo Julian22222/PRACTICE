@@ -17,7 +17,7 @@ const Modal = ({ mode, setShowModal, getData, task, activeUser }) => {
   });
 
   const postData = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //prevent default action of the form, don't refreshe the page
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVERURL}/todos`, {
         method: "POST",
@@ -36,21 +36,21 @@ const Modal = ({ mode, setShowModal, getData, task, activeUser }) => {
   };
 
   const editData = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); //prevent default action of the form, don't refreshe the page
     try {
       const response = await fetch(
         `${process.env.REACT_APP_SERVERURL}/todos/${task.todo_id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          // JSON.stringify() <- use to send data to server,and database
+          // JSON.stringify() <- use to send data to server,and database in string format, converting object to string
           body: JSON.stringify(data),
         }
       );
 
       if (response.status === 200) {
-        setShowModal(false);
-        getData();
+        setShowModal(false); //close modal
+        getData(); //get new data from DB server
       }
     } catch (err) {
       console.error(err);
@@ -58,7 +58,7 @@ const Modal = ({ mode, setShowModal, getData, task, activeUser }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // destructuring variables
     setData((data) => ({
       ...data,
       [name]: value,
@@ -76,30 +76,32 @@ const Modal = ({ mode, setShowModal, getData, task, activeUser }) => {
 
         <form>
           <input
-            required
+            required //mandatory field
             maxLength={30}
             placeholder=" Your task goes here"
-            name="title"
+            name="title" //this name,must match with name from -->const [data, setData] = useState({..})
             value={data.title}
             onChange={handleChange}
           />
           {/* <br/> - break */}
           <br />
+
           <label for="range">Drag to select your current progeress</label>
+          {/* for="range and id="range"--> links this <label> tag with input with id="range"  */}
           <input
             type="range"
             id="range"
             required
             min="0"
             max="100"
-            name="progress"
+            name="progress" //this name,must match with name from -->const [data, setData] = useState({..})
             value={data.progress}
             onChange={handleChange}
           />
           <input
             className={mode}
             type="submit"
-            onClick={editMode ? editData : postData}
+            onClick={editMode ? editData : postData} // if editMode is true then invoke editData function else postData function
           />
         </form>
       </div>

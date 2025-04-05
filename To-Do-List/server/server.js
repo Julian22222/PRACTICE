@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+// const { v4: uuidv4 } = require("uuid"); //if i invoke this function it will generate a new random id --> uuidv4()
 
 // if process.env.PORT doesn't exist we will use Port 9090
 const PORT = process.env.PORT || 9090;

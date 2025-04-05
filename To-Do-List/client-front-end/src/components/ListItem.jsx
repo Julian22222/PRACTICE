@@ -16,7 +16,7 @@ const ListItem = ({ task, getData }) => {
       );
 
       if (response.status === 200) {
-        getData();
+        getData(); //get new data from DB server
       }
     } catch (err) {
       console.error(err);
