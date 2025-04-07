@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const Auth = ({ setShowAuth, setActiveUser }) => {
   // if you loged In - isLogin is true
   const [isLogIn, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // use email,password and confirm password to login and signup
   const [email, setEmail] = useState(null);
@@ -98,13 +99,15 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const findExistUser = allUsersList.find((el) => {
+    const findExistUser = await allUsersList.find((el) => {
       return el.u_email === email;
     });
 
     setActiveUser(findExistUser.u_email);
 
+    setLoading(false);
     setShowAuth(false);
     // console.log(showAuth);
   };
@@ -136,6 +139,9 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           )}
+
+          {loading && <div>Loading...</div>}
+
           <div className="submit-btn-container">
             {/* ///////////////////////////////// */}
             {/* if Login =true -> btn LogIn ,else SignUp */}
