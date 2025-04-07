@@ -5,6 +5,14 @@
 }
 
 <button id="showCarsBtn" class="btn btn-primary" style="display: flex">Show All Cars</button>
+<button class="addNewCarBtn" style="display: none">
+    <a class="btnLink_Addnewcar" asp-asp-controller="home" asp-action="AddNewCar" style="display: none">
+        <button class="btn btn-primary" >
+            Add New Car
+        </button>
+    </a>
+</button>
+<button id="returnBtn" class="btn btn-danger" style="display: none">Return</button>
 
 <div id="carListContainer"></div>
 
@@ -14,8 +22,21 @@
         $("#showCarsBtn").click(function () {
             $.get("/Home/ShowCars", function (data) {
                 $("#carListContainer").html(data);
+                $("#showCarsBtn").hide();
+                $("#returnBtn").show();
+                $(".btnLink_Addnewcar").show();
+                
             });
         });
+
+        $("#returnBtn").click(function () {
+            $("#carListContainer").empty();
+            $("#showCarsBtn").show();
+            $("#returnBtn").hide();
+            $(".btnLink_Addnewcar").hide();
+        });
+
+      
     });
 </script>
 

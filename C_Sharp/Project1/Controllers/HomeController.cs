@@ -35,10 +35,6 @@ public class HomeController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-
-        // ViewBag.List = false;
-
-        // var data = await _carReository.GetAllCars();
     
         return View();
     }
@@ -47,48 +43,79 @@ public class HomeController : Controller
 
  public async Task<IActionResult> GetCar(int id)
     {
-
-        var data = CarsList.Where(x => x.Id == id).FirstOrDefault();
+        var data = _carReository.GetCarById(id);
         
     
         return View(data);
     }
+
+    public IActionResult ShowCars()
+    {
+
+        var cars = _carReository.GetAllCars();
+
+        return PartialView("_CarListPartial", cars);
+    }
+
+
+    public IActionResult AddNewCar()
+    {
+        bool isSuccess = false;
+        int carId = 0;
+      
+      ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
+      ViewBag.IsSuccess = isSuccess;
+      ViewBag.CarId = carId;
+       
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult AddNewCar(Car car)
+    {
+        ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
+
+
+        if (ModelState.IsValid)
+        {
+            var carId = _carReository.AddCar(car);
+
+            // if (carId > 0)
+            // {
+            //     ViewBag.IsSuccess = true;
+            //     ViewBag.CarId = carId;
+            //     return RedirectToAction("ShowCars");
+            // }
+            // else
+            // {
+            //     ViewBag.IsSuccess = false;
+            //     ModelState.AddModelError("", "Car not added");
+            // }
+            return RedirectToAction("ShowCars");
+        }
+        return View(car);
+       
+    }
+
 
     private IEnumerable<object> Allcars()
     {
         throw new NotImplementedException();
     }
 
-    public IActionResult ShowCars()
-    {
-        List<Car> cars = new List<Car>
-        {
-            new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
-            new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
-            new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
-            new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
-            new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
-            new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
-            new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
-            new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
-        };
-
-     
-    return PartialView("_CarListPartial", cars);
-    }
    
 
-     List<Car> CarsList = new List<Car>
-        {
-            new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
-            new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
-            new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
-            new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
-            new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
-            new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
-            new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
-            new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
-        };
+    //  List<Car> CarsList = new List<Car>
+    //     {
+    //         new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
+    //         new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
+    //         new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
+    //         new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
+    //         new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
+    //         new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
+    //         new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
+    //         new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
+    //     };
 
 
     // [HttpPost]
