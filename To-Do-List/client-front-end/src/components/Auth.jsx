@@ -98,18 +98,54 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
   /////////////////////////////////////////////////////////Log In
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    // e.preventDefault();
+    // setLoading(true);
 
-    const findExistUser = await allUsersList.find((el) => {
-      return el.u_email === email;
-    });
+    // const findExistUser = await allUsersList.find((el) => {
+    //   return el.u_email === email;
+    // });
 
-    setActiveUser(findExistUser.u_email);
+    // setActiveUser(findExistUser.u_email);
 
-    setLoading(false);
-    setShowAuth(false);
+    // setLoading(false);
+    // setShowAuth(false);
     // console.log(showAuth);
+
+    e.preventDefault();
+
+    setLoading(true); // Start loading
+
+    try {
+      // Fetch the user from the server to check if email exists
+
+      const response = await fetch(`${process.env.REACT_APP_SERVERURL}/users`);
+
+      const allUsers = await response.json();
+
+      // Find the existing user based on the email
+
+      const findExistUser = allUsers.find((el) => el.u_email === email);
+
+      if (findExistUser) {
+        // Set the active user when found
+
+        setActiveUser(findExistUser.u_email);
+      } else {
+        // Handle the case when the user is not found
+
+        setError("User not found");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+
+      setError("An error occurred, please try again later.");
+    } finally {
+      setLoading(false); // Stop loading after the request is complete, whether successful or failed). This guarantees the loading state is updated properly after the async operation.
+    }
+
+    // Hide the authentication modal after a successful login
+
+    setShowAuth(false);
   };
 
   return (
@@ -140,8 +176,6 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
             />
           )}
 
-          {loading && <div>Loading...</div>}
-
           <div className="submit-btn-container">
             {/* ///////////////////////////////// */}
             {/* if Login =true -> btn LogIn ,else SignUp */}
@@ -167,6 +201,8 @@ const Auth = ({ setShowAuth, setActiveUser }) => {
               </div>
             )}
           </div>
+
+          {loading && <div>Loading...</div>}
 
           {/* if password not equal to confirmed password show error */}
           {error && <p style={{ color: "red" }}>{error}</p>}
