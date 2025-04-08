@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project1.Models;  //connection of error
 using System.Threading.Tasks; //User class connection
 using Project1.Repository;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Project1.Controllers;
 
@@ -63,7 +64,9 @@ public class HomeController : Controller
         bool isSuccess = false;
         int carId = 0;
       
-      ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
+      var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
+      ViewBag.Fuel = new SelectList(FuelList);
+
       ViewBag.IsSuccess = isSuccess;
       ViewBag.CarId = carId;
        
@@ -73,12 +76,29 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult AddNewCar(Car car)
     {
-        ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
+        // ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
+
+    var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
+      ViewBag.Fuel = new SelectList(FuelList);
 
 
+        Console.WriteLine(Json(car));
+
+        if (!ModelState.IsValid)
+        {
+            foreach (var modelState in ModelState.Values){
+                foreach (var error in modelState.Errors){
+                // Log or debug the error messages
+                Console.WriteLine(error.ErrorMessage);
+                }
+            }
+        }
+        
+        
         if (ModelState.IsValid)
         {
             var carId = _carReository.AddCar(car);
+             // Console.WriteLine(carId);
 
             // if (carId > 0)
             // {

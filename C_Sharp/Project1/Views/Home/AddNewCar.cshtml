@@ -2,7 +2,7 @@
 
 <h1>Add New Car</h1>
 
-<form asp-asp-controller="home" asp-action="AddNewCar" method="post">
+<form method="post" asp-asp-controller="home" asp-action="AddNewCar" >
 
     <div asp-validation-summary="All" class="text-danger"></div> 
 
@@ -22,7 +22,7 @@
         <span asp-validation-for="Year" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <select asp-for="FuelType" class="form-select" asp-items="new SelectList(ViewBag.Fuel)">
+        <select asp-for="FuelType" class="form-select" asp-items="ViewBag.Fuel">
             <option value="">Select Fuel Type</option>
         </select>
         <span asp-validation-for="FuelType" class="text-danger"></span>

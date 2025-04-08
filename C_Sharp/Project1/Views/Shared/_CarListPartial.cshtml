@@ -1,5 +1,10 @@
 @model IEnumerable<Project1.Models.Car>
 
+@{
+    ViewData["Title"] = "Car List";
+    @* Layout = "_Layout"; *@
+}
+
 @if (!Model.Any())
 {
     <p>No cars available</p>

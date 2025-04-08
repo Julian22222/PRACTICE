@@ -4,7 +4,8 @@ namespace Project1.Models{
 
 public class Car{
 
-[Key] //automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
+// [Key] //create a Primary Key
+//Database --> automaticaly add an id as an identity column,don;t need to pass the value, it will creare it automatically
 public int Id { get; set; }
 
 
@@ -17,7 +18,8 @@ public decimal Price { get; set; }
 
 [Required]
 [DataType(DataType.Date)]
-public string Year { get; set; }
+[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+public DateTime Year { get; set; }
 
 
 [Required]
