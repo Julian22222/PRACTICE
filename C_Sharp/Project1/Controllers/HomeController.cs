@@ -18,16 +18,16 @@ public class HomeController : Controller
     private readonly IConfiguration Configuration;
     private readonly ILogger<HomeController> _logger;
 
-    private readonly CarRepository _carReository;
+    private readonly ICarRepository _carRepository;
 
 
     // constructor
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, CarRepository carReository)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, ICarRepository carRepository)
     {
         _logger = logger;
         //  Configuration -keep info from appsettings.json file
         Configuration = configuration;
-        _carReository = carReository;
+        _carRepository = carRepository;
     }
 
 
@@ -44,16 +44,19 @@ public class HomeController : Controller
 
  public async Task<IActionResult> GetCar(int id)
     {
-        var data = _carReository.GetCarById(id);
+        var data = _carRepository.GetCarById(id);
         
     
         return View(data);
     }
 
+
+
+    //this method will show the all cars from the local database List in Index.cshtml
     public IActionResult ShowCars()
     {
 
-        var cars = _carReository.GetAllCars();
+        var cars = _carRepository.GetAllCars();
 
         return PartialView("_CarListPartial", cars);
     }
@@ -78,41 +81,53 @@ public class HomeController : Controller
     {
         // ViewBag.Fuel = new List<string>(){"Petrol","Diesel","Electric"};
 
-    var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
-      ViewBag.Fuel = new SelectList(FuelList);
+        var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
+        ViewBag.Fuel = new SelectList(FuelList);
 
 
-        Console.WriteLine(Json(car));
+        Console.WriteLine($"this is the new car from controller - {car.Name}");
+        Console.WriteLine($"Car added with ID: {car.Id}");
 
-        if (!ModelState.IsValid)
+          if (ModelState.IsValid)
+
         {
-            foreach (var modelState in ModelState.Values){
-                foreach (var error in modelState.Errors){
-                // Log or debug the error messages
-                Console.WriteLine(error.ErrorMessage);
-                }
-            }
+            Console.WriteLine($"Adding car: {car.Name}, {car.Price}, {car.Year}, {car.FuelType}");
+
+            var carId = _carRepository.AddCar(car);
+
+            return RedirectToAction("ShowCars");    // Redirect to the car list view
+
         }
+
+        // if (!ModelState.IsValid)
+        // {
+        //     foreach (var modelState in ModelState.Values){
+        //         foreach (var error in modelState.Errors){
+        //         // Log or debug the error messages
+        //         Console.WriteLine(error.ErrorMessage);
+        //         }
+        //     }
+        // }
         
         
-        if (ModelState.IsValid)
-        {
-            var carId = _carReository.AddCar(car);
-             // Console.WriteLine(carId);
+        // if (ModelState.IsValid)
+        // {
+        //     var carId = _carRepository.AddCar(car);
+        //      // Console.WriteLine(carId);
 
-            // if (carId > 0)
-            // {
-            //     ViewBag.IsSuccess = true;
-            //     ViewBag.CarId = carId;
-            //     return RedirectToAction("ShowCars");
-            // }
-            // else
-            // {
-            //     ViewBag.IsSuccess = false;
-            //     ModelState.AddModelError("", "Car not added");
-            // }
-            return RedirectToAction("ShowCars");
-        }
+        //     // if (carId > 0)
+        //     // {
+        //     //     ViewBag.IsSuccess = true;
+        //     //     ViewBag.CarId = carId;
+        //     //     return RedirectToAction("ShowCars");
+        //     // }
+        //     // else
+        //     // {
+        //     //     ViewBag.IsSuccess = false;
+        //     //     ModelState.AddModelError("", "Car not added");
+        //     // }
+        //     return RedirectToAction("ShowCars");
+        // }
         return View(car);
        
     }

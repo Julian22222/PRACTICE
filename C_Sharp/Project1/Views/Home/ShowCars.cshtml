@@ -1,0 +1,14 @@
+@model IEnumerable<Project1.Models.Car>
+
+@{
+    ViewData["Title"] = "Show Cars";
+    Layout = "_Layout";
+}
+
+@* @using Project1.Models;
+@model IEnumerable<Car> *@
+
+
+<h1>All Cars</h1>
+
+<partial name="_CarListPartial" model="Model"/>

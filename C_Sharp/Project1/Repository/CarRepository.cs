@@ -4,7 +4,7 @@ using Project1.Models;
 
 namespace Project1.Repository
 {
-    public class CarRepository 
+    public class CarRepository  : ICarRepository  //inherit from ICarRepository (interface)
     {
         
         // public async Task<List<Car>> GetAllCars(){
@@ -37,6 +37,7 @@ namespace Project1.Repository
         // }
 
     public List<Car> GetAllCars()
+    // public IEnumerable<Car> GetAllCars()
     {
         return carList;
     }
@@ -60,7 +61,13 @@ namespace Project1.Repository
         return car.Id;
     }
 
-    private List <Car> carList = new List<Car>(){
+
+    //If you're using an in-memory list (carList), it's important to inject the CarRepository properly so that the list persists across requests
+    //Notice that carList is a static field in this case. This ensures that the data persists throughout the application's lifetime, meaning that the cars added in one request will be available in subsequent requests.
+    // Use a static list so the data persists across requests.
+     //static list (not recommended for production but useful for testing)
+     //If you're using an in-memory list for testing, try making carList static in your repository temporarily to make sure the data persists across requests:
+    private static List <Car> carList = new List<Car>(){
 
         new Car(){Id=1,Name="Toyota",Price=10000,Year= new DateTime(2020,5,20), FuelType="Petrol"},
         new Car(){Id=2,Name="Honda",Price=20000,Year=new DateTime(2021,7,20), FuelType="Diesel"},

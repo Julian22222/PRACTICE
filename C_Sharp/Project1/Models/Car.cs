@@ -10,7 +10,7 @@ public int Id { get; set; }
 
 
 [Required][Display(Name ="Brand of the car")]
-public string Name { get; set; } = "null";
+public string Name { get; set; } = "";
 
 [Required][Range(0, 99999.99, ErrorMessage = "Price Should be between 0 and 99999.99")]
 public decimal Price { get; set; }
@@ -24,8 +24,12 @@ public DateTime Year { get; set; }
 
 [Required]
 //When applied to a Name property, the error message created by the preceding code would be "Name length must be between 6 and 8."
-public string FuelType { get; set; } = "null";
+public string FuelType { get; set; } = "";
 
-}
+        internal object ToJson()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

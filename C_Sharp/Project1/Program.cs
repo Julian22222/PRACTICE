@@ -13,7 +13,9 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
 //Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
-builder.Services.AddScoped<CarRepository, CarRepository>();
+//AddSingleton: This ensures that the CarRepository is only instantiated once during the lifetime of the application and is shared across requests.
+//AddSingleton keeps the new data in local memory, only while the app is running, when the app is closed, the data will be lost. It keeps only original data = 10 cars in the local memory 
+builder.Services.AddSingleton <ICarRepository, CarRepository>();
 
 
 var app = builder.Build();  //creating our web app
