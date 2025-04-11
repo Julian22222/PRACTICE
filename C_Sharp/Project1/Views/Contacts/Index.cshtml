@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Contacts";
 }
-<h1>Add new member to your Contacts</h1>
+<h1>Contacts us</h1>
 
 @* <form method="post" action="/contacts/check"> *@
 <form method="post" asp-controller="Contacts" asp-action="Check">
@@ -22,9 +22,13 @@
 <input asp-for="Surname"/>
 <span asp-validation-for="Surname"></span>
 
-<label asp-for="Age"></label>
-<input asp-for="Age"/>
-<span asp-validation-for="Age"></span>
+<label asp-for="PhoneNr"></label>
+<input asp-for="PhoneNr"/>
+<span asp-validation-for="PhoneNr"></span>
+
+<label asp-for="Date"></label>
+<input asp-for="Date"/>
+<span asp-validation-for="Date"></span>
 
 <label asp-for="Email"></label>
 <input asp-for="Email"/>

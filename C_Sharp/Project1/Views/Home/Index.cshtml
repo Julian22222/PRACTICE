@@ -1,12 +1,50 @@
 ﻿@using Project1.Models;
+@using Microsoft.Extensions.Configuration 
+@inject IConfiguration _configuration
+
+
 
 @{
     ViewData["Title"] = "Home";
 }
 
+<img src="/IMG/Home/main_header.jpg" alt="main logo" style="width: 100%;">
+
+<br/>
+<br/>
+<br/>
+
 <div style="display: flex; justify-content: center;">
-<button id="showCarsBtn" class="btn btn-primary" style="padding: 5px;">Show All Cars</button>
+    <div class="mainPage_btn-container" style="width: 400px; display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: center;">
+        <button id="showCarsBtn" class="btn btn-primary" style="padding: 15px;">Show All Cars</button>
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <a class="btnLink_Addnewcar" asp-controller="Contacts" asp-action="Index">
+                <button id="showCarsBtn" class="btn btn-primary" style="padding: 15px;">Book Test Drive</button>
+            </a>
+        </div>
+    </div>    
 </div>
+
+<br/>
+<br/>
+<br/>
+
+
+<div class="second_mainPage-container" style="display: flex; justify-content: space-between; width: 100%;">
+    <div style="width: 45%; padding: 20px;">
+        <h3>@_configuration["MainPage_text"]</h3>
+    </div>
+
+    <div style="width: 45%; padding: 20px;">
+        <img src="/IMG/Home/slide1.jpg" alt="slider" style="width:  100%;">
+    </div>
+
+</div>
+
+
 <button class="addNewCarBtn" style="display: none">
     <a class="btnLink_Addnewcar" asp-asp-controller="home" asp-action="AddNewCar" style="display: none">
         <button class="btn btn-primary" style="padding: 5px;">
@@ -14,9 +52,11 @@
         </button>
     </a>
 </button>
-<button id="returnBtn" class="btn btn-danger" style="padding: 5px; display: none">Return</button>
+<button id="returnBtn" class="btn btn-danger" style="padding: 5px; display: none">Close</button>
 
 <div id="carListContainer"></div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
