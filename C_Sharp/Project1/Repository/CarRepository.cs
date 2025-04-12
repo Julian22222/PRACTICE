@@ -61,6 +61,19 @@ namespace Project1.Repository
         return car.Id;
     }
 
+    public void DeleteCar(int id)
+    {
+        var car = carList.FirstOrDefault(c => c.Id == id);
+        if (car != null)
+        {
+            carList.Remove(car);
+        }else
+        {
+            // Handle the case when the car is not found
+            throw new Exception("Car not found");
+        }
+    }
+
 
     //If you're using an in-memory list (carList), it's important to inject the CarRepository properly so that the list persists across requests
     //Notice that carList is a static field in this case. This ensures that the data persists throughout the application's lifetime, meaning that the cars added in one request will be available in subsequent requests.

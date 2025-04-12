@@ -53,12 +53,22 @@ public class HomeController : Controller
 
 
     //this method will show the all cars from the local database List in Index.cshtml
-    public IActionResult ShowCars()
+    public IActionResult ShowCarsData()
     {
 
         var cars = _carRepository.GetAllCars();
 
         return PartialView("_CarListPartial", cars);
+    }
+
+
+
+     public IActionResult ShowCars()
+    {
+
+        var AllcarList = _carRepository.GetAllCars();
+
+        return View(AllcarList);
     }
 
 
@@ -130,6 +140,30 @@ public class HomeController : Controller
         // }
         return View(car);
        
+    }
+
+
+    public IActionResult DeleteCar(int id)
+    {
+
+        var car = _carRepository.GetCarById(id);
+        if (car != null)
+        {
+            // Remove the car from the list
+            _carRepository.DeleteCar(id);
+
+            ViewBag.Message = "Car Deleted Successfully";
+
+            // Redirect to the car list view
+            return RedirectToAction("ShowCars", "Home");
+        }
+        else
+        {
+            // Handle the case when the car is not found
+            ModelState.AddModelError("", "Car not found");
+        }
+    
+        return RedirectToAction("Index", "Home");
     }
 
 

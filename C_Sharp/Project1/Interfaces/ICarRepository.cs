@@ -5,4 +5,5 @@ public interface ICarRepository
     List<Car> GetAllCars();
     Car GetCarById(int id);
     int AddCar(Car car);
+    void DeleteCar(int id);
 }

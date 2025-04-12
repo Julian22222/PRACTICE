@@ -17,16 +17,21 @@ else
         <div class="row">
             @foreach (var car in Model)
             {
-                <div class="card" style="width: 230px; border:black 1px solid; margin: 5px 2px; padding: 2px">
-                    <img src="/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg" class="card-img-top" alt="car image" style="width: 100px;height:100px">
+                <div class="card" style="width: 300px; border:black 1px solid; margin: 5px; padding: 5px; position:relative;">
+                    <img src="/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg" class="card-img-top" alt="car image" style="width: 120px;height:120px; position: absolute; left: 5px">
                     
-                    <div class="card-body">
-                        <h5 class="card-title">Id: @car.Id</h5>
+                    <div class="card-body" style="margin-left: 100px;">
                         <h5 class="card-title">Name: @car.Name</h5>
-                        <h5 class="card-title">Price: @car.Price</h5>
+                        <h5 class="card-title">Price: £ @car.Price</h5>
                     
                         <br />
                         <a href="/home/GetCar/@car.Id" class="btn btn-primary">More Details</a>
+                        <br/>
+                        <br/>
+                        <button class="btn btn-primary" asp-controller="home" asp-action="EditCar" asp-route-id="@car.Id" style="padding: 5px;">Edit</button>
+                        
+                        <button class="btn btn-primary" asp-controller="home" asp-action="DeleteCar" asp-route-id="@car.Id" style="padding: 5px;">Delete</button>
+                        
                     </div>
                 </div>
             }
