@@ -43,7 +43,7 @@ namespace Project1.Models
 
           [DataType(DataType.DateTime)]
           [Display(Name = "Date amd time (if required)")]
-          public DataType Date { get; set; }
+          public DateTime Date { get; set; }
 
 
           [Required(ErrorMessage ="Please insert your message" )]

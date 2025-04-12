@@ -28,9 +28,17 @@ else
                         <a href="/home/GetCar/@car.Id" class="btn btn-primary">More Details</a>
                         <br/>
                         <br/>
-                        <button class="btn btn-primary" asp-controller="home" asp-action="EditCar" asp-route-id="@car.Id" style="padding: 5px;">Edit</button>
+                        @* <form asp-controller="Home" asp-action="EditCar" asp-route-id="@car.Id" method="post" style="display:inline;"> *@
+                        <a class="btn btn-primary" asp-controller="Home" asp-action="EditCar" asp-route-id="@car.Id">
+                            <button class="btn btn-primary" style="padding: 5px;">Edit</button>
+                        </a>
+                        @* </form> *@
                         
-                        <button class="btn btn-primary" asp-controller="home" asp-action="DeleteCar" asp-route-id="@car.Id" style="padding: 5px;">Delete</button>
+                        @* This is to work with real DB -> <button class="btn btn-primary" asp-controller="home" asp-action="DeleteCar" asp-route-id="@car.Id">Delete</button>*@
+                        @* When use local inmemory database (carList) - example from above does not generate a proper link or form submission — it just renders a <button> tag. That won’t send any request unless it's wrapped in a form, using method="post" *@
+                        <form asp-controller="Home" asp-action="DeleteCar" asp-route-id="@car.Id" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this car?');">
+                            <button type="submit" class="btn btn-danger" style="padding: 5px">Delete</button>
+                        </form>
                         
                     </div>
                 </div>

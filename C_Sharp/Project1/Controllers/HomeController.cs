@@ -138,11 +138,63 @@ public class HomeController : Controller
         //     // }
         //     return RedirectToAction("ShowCars");
         // }
-        return View(car);
-       
+        return View(car);  
+    }
+
+    
+    public IActionResult EditCar(int id)
+    {
+        var car = _carRepository.GetCarById(id);
+
+        var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
+        ViewBag.Fuel = new SelectList(FuelList);
+
+        if (car != null)
+        {
+            // Pass the car object to the view for editing
+            return View(car);
+        }
+        else
+        {
+            // Handle the case when the car is not found
+            ModelState.AddModelError("", "Car not found");
+        }
+    
+        return RedirectToAction("Index", "Home");
     }
 
 
+    [HttpPost]
+     public IActionResult EditCar(Car car, int id){ // car <--new edited car info, id <-- id of the car we want to edit
+        var data = _carRepository.GetCarById(id);
+        if(data == null)
+        {
+            // Handle the case when the car is not found
+            ModelState.AddModelError("", "Car not found");
+            // return RedirectToAction("Index", "Home");
+        }
+
+        var FuelList = new List<string>(){"Petrol","Diesel","Electric"};
+        ViewBag.Fuel = new SelectList(FuelList);
+
+        if(ModelState.IsValid)
+        {
+            ViewBag.Message = "Data updated successfully";
+            _carRepository.EditCar(id,car);
+
+            return RedirectToAction("ShowCars");
+        }
+        else
+        {
+            ViewBag.Message = "Internal Error. Not able to update data";
+            ModelState.AddModelError("", "Not able to update data");
+            return RedirectToAction("Index", "Home");
+        }
+     }
+
+
+
+    [HttpPost]
     public IActionResult DeleteCar(int id)
     {
 

@@ -61,6 +61,31 @@ namespace Project1.Repository
         return car.Id;
     }
 
+
+
+    public Car EditCar(int id, Car Newcar) // Newcar <--new edited car info, id <-- id of the car we want to edit
+    {
+        var car = carList.FirstOrDefault(c => c.Id == id);
+        if (car != null)
+        {
+
+            // Update the car properties as needed
+            car.Name = Newcar.Name;
+            car.Price = Newcar.Price;
+            car.Year = Newcar.Year;
+            car.FuelType = Newcar.FuelType;
+            return car;
+        }
+        else
+        {
+            // Handle the case when the car is not found
+            throw new Exception("Car not found");
+        }
+    }
+
+
+
+
     public void DeleteCar(int id)
     {
         var car = carList.FirstOrDefault(c => c.Id == id);
