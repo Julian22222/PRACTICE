@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/bin/Debug/net7.0/LessonTOP1_string_converting
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/bin/Debug/net7.0/LessonTOP1_string_converting.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/bin/Debug/net7.0/LessonTOP1_string_converting.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/bin/Debug/net7.0/LessonTOP1_string_converting.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/bin/Debug/net7.0/LessonTOP1_string_converting.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/refint/LessonTOP1_string_converting.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/LessonTOP1_string_converting.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP1_string_converting/obj/Debug/net7.0/ref/LessonTOP1_string_converting.dll

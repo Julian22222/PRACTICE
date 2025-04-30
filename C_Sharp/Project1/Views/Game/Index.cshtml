@@ -1,0 +1,75 @@
+@* import Fighter class
+@using Project1.Views.Home  
+
+@{
+    ViewData["Title"] = "Game";
+
+      var fighters = new List<Fighter>(){
+         new Fighter(1, "Sub Zero", "https://avatarfiles.alphacoders.com/342/342681.png", 100, 15, 5, 1),
+         new Fighter(2, "Cyrax", "https://i.pinimg.com/736x/ae/7f/d9/ae7fd946a9226f41ee51f4406535fca4.jpg", 120, 20, 10, 1),
+         new Fighter(3, "Jax", "https://wiki.supercombo.gg/images/thumb/9/93/Mk11-jax-splash.png/300px-Mk11-jax-splash.png", 120, 20, 10, 1),
+         new Fighter(4, "Johnny Cage", "https://realleathergarments.co.uk/wp-content/uploads/2022/10/mortal-kombat-11-johnny-cage-leather-jackets.jpg", 120, 20, 10, 1),
+         new Fighter(5, "Kung Lao", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ea37168f-58bf-43ec-b98d-f15c62f681dd/dejxak9-1ffe21e4-be80-4daf-af83-c79200197322.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2VhMzcxNjhmLTU4YmYtNDNlYy1iOThkLWYxNWM2MmY2ODFkZFwvZGVqeGFrOS0xZmZlMjFlNC1iZTgwLTRkYWYtYWY4My1jNzkyMDAxOTczMjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ASR_eQtVUQxJhi6bbVPiqez-auVFpE0jf6opjjBNzIU", 120, 20, 10, 1),
+         new Fighter(6, "Liu Kang", "https://i2-prod.mirror.co.uk/gaming/article30056626.ece/ALTERNATES/s1200c/0_MK1.jpg", 120, 20, 10, 1),
+         new Fighter(7, "Scorpion", "https://www.sideshow.com/storage/product-images/9029351/scorpion-hellfire-mkx_mortal-kombat_square.jpg", 120, 20, 10, 1),
+         new Fighter(8, "Reptile", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0GSyAA4NBy1Ax2pw6Ji4GmdrY5XF7bI8Wqg&usqp=CAU", 120, 20, 10, 1),
+         new Fighter(9, "Jade", "https://assetsio.reedpopcdn.com/mortal-kombat-11-jade.png?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp", 120, 20, 10, 1),
+         new Fighter(10, "Raiden", "https://www.sideshow.com/storage/product-images/907661/raiden_mortal-kombat_square.jpg", 120, 20, 10, 1),
+         new Fighter(11, "Sonya", "https://www.sideshow.com/storage/product-images/911183/sonya-blade_mortal-kombat_square.jpg", 120, 20, 10, 1),
+         new Fighter(12, "Shang Tsung", "https://assetsio.reedpopcdn.com/i-love-mortal-kombat-11-but-it-has-a-serious-custom-variations-problem-1561035900240.jpg?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp", 120, 20, 10, 1),
+
+        };
+}
+<h1 class="header">Mortal Combat</h1>
+<hr>
+
+<h4 >SELECT YOUR FIGHTER</h4>
+
+<section>
+@foreach(var fighter in fighters){
+<button class="card-btn">
+    <div class="card-container">
+
+        <ul >
+            <li class="img-container">
+        
+                <p class="fighter-name"><b>
+                @fighter.Name
+                </b></p> 
+        
+             
+            
+              <img src="@fighter.Img" alt="Fighter logo" width="150" height="150"/>
+            
+           
+            </li>
+        </ul>
+    </div>
+</button>
+    }
+    </section>
+
+<div class="figters-container">
+
+    <div class="fighter1-container">
+        <strong class="header-figter1">Choose your fighter</strong>
+        <hr class="line-figter1">
+        <button class="btn-figter1-select">Select</button>
+        <button class="btn-figter1">Lucky card</button>
+    </div>
+
+    <div class="fighter2-container">
+         <strong class="header-figter1">Choose opponent fighter</strong>
+        <hr class="line-figter2">
+         <button class="btn-figter2-select">Select</button>
+        <button class="btn-figter2">Lucky card</button>
+    </div>
+
+</div>
+
+<button class="btn-fight">Fight</button>
+
+<img class="vs-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png" alt="vs logo" width="150" height="150"/>
+ *@
+
+@* after fight show picture and msg - you won or you lost *@

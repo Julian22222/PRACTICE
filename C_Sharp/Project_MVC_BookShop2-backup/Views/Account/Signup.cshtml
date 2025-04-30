@@ -1,0 +1,98 @@
+@model Project_MVC_BookShop2.Models.SignUpUserModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+
+    Layout = null;  //<--don't use _layout template
+    //if we don't use _layout --> we need to put -->
+    //<!DOCTYPE html>
+//<html lang="en">
+//<head> .....bootstrap connection
+//<body>
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* because we are not using _Layout file for this View page, therefore we need to add Bootstrap connections to this file in the head tag *@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* @ViewData["Title"] shows the title for each Page, The title showed and related to current page *@
+    <title>@ViewData["Title"]</title>
+    @* if Sign Up does't use common Layout (In the layout we have bootstrap links), then we need to import bootsrap links to this page *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    	
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+     @* asp-append-version="true" <--(tag helper) will help to clear the cache in browser , and if we change the css it will change on browser as well. Browser will not take old CSS content from cache memory*@
+
+
+</head>
+<body>
+
+<div class="container">
+<h4>Sign Up</h4>
+<hr/>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-lebel"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+        <br/>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="col-md-8">
+        <img src="~/img/signup2.png" alt="Sign-Up logo" class="img-fluid"/>
+    </div>
+
+</div>
+
+<br/>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">
+    Back to List</a>
+</div>
+
+</div>
+</body>
+</html>

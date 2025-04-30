@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/bin/Debug/net7.0/LessonTOP23_FUNCTION
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/bin/Debug/net7.0/LessonTOP23_FUNCTION.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/bin/Debug/net7.0/LessonTOP23_FUNCTION.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/bin/Debug/net7.0/LessonTOP23_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/bin/Debug/net7.0/LessonTOP23_FUNCTION.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/refint/LessonTOP23_FUNCTION.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/LessonTOP23_FUNCTION.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP23_FUNCTION/obj/Debug/net7.0/ref/LessonTOP23_FUNCTION.dll

@@ -1,0 +1,149 @@
+@* import Product class ,from Models folder*@
+@using Project_MVC.Models 
+@* @using Project1.Controllers; //return changeName function ???? *@
+
+@{
+    ViewData["Title"] = "Vending";  //Showing this title on the top of the Web brouser
+
+@* Layout = null; *@
+
+
+dynamic data = ViewBag.Data;
+
+var bookInfo = ViewData["book"] as Book;  //we give data type as Book (ViewData using Model)
+
+    ViewData["ViewDataName"] = 0;
+
+    var products = new List<Product>(){
+         new Product(1, "Bread", "https://cdn11.bigcommerce.com/s-slzx5y75ra/images/stencil/1280x1280/products/19754/1993/largecutloaf300__20984.1675695458.jpg?c=1", 0.95),
+         new Product(2, "Milk", "https://thumbs.dreamstime.com/b/chia-seed-milk-bottle-beige-background-plant-copy-space-raw-diet-meal-healthy-vegetarian-food-lifestyle-eco-267566014.jpg", 1.35),
+         new Product(3, "Apples", "https://st.depositphotos.com/1332662/4441/i/450/depositphotos_44414695-stock-photo-single-apple.jpg", 0.85),
+         new Product(4, "Eggs", "https://bakeitwithlove.com/wp-content/uploads/2023/01/calories-in-eggs-sq.jpg.webp", 1.79),
+         new Product(5, "Bananas", "https://mysupermarkets.uk/wp-content/uploads/2020/09/Bananas-Loose.jpg", 0.95),
+         new Product(6, "Lemon", "https://st.depositphotos.com/1000141/1994/i/600/depositphotos_19945941-stock-photo-juicy-lemon-with-leaf.jpg", 0.28),
+         new Product(7, "Roast Pork Loin ", "https://www.rockrecipes.com/wp-content/uploads/2017/01/Souvlaki-Roast-Pork-Loin-square-cropped-for-featured-image.jpg", 4.89),
+         new Product(8, "Potato", "https://tds-images.thedailystar.net/sites/default/files/customphp/photo/2010/06/05/2010-06-05__h06.jpg", 1.25),
+         new Product(9, "Carrot", "https://rrwbartlett.co.uk/wp-content/uploads/2015/10/CARROT-SQUARE.jpg", 0.75),
+         new Product(10, "Onion", "https://del.h-cdn.co/assets/17/51/2048x2048/square-1513715307-sunion.jpg", 0.65),
+         new Product(11, "Salmon", "https://static01.nyt.com/images/2016/04/13/dining/13PAIRING/13PAIRING-mediumSquareAt3X-v2.jpg", 2.95),
+         new Product(12, "Cheese", "https://www.millerfoodservice.co.uk/media/images/cache/catalog/category/500x500/sliced.jpeg", 3.89),
+
+        };
+
+
+        float money = 15;
+        string name = "Jack";
+
+
+        double addProduct(double productPrice){       
+         return @money-productPrice;
+        };
+
+        void changeName(){
+           name = "Felex";
+        }
+
+      
+        
+
+
+}
+<h1>This is Vending machine</h1>
+
+<p></p>
+
+<hr>
+
+<h4 class="header-products">You have £15 in your pocket for groceries. Please choose products to buy.</h4>
+
+<section class="section-product">
+@foreach(var item in products){
+<button  class="card-btn" onclick="@addProduct(@item.Price)">
+    <div class="card-container-product">
+
+        <ul >
+            <li class="img-container">
+        
+                <p class="product-name"><b>
+                @item.Name
+                </b></p> 
+            
+              <img src="@item.Img" alt="Item logo" width="150" height="150"/>
+                <p>£ @item.Price</p>
+            
+           
+            </li>
+        </ul>
+    </div>
+</button>
+    }
+    </section>
+    <hr>
+
+    <div class="pocket-container">
+    <h3 class="product-pocket">Money left in your pocket: £ @money</h3>
+    <button class="reset-btn" onClick="Reset">Reset</button>
+    </div>
+    <h3>Products in your basket: </h3>
+
+
+<form>
+  <button name="button" value="Suka"  asp-action="changeName">Change Name</button>
+</form>
+    <div>
+        @* show result from method click *@
+        @TempData["changeN"]
+    </div>
+
+<br/>
+<p>@ViewData["Title"]</p>
+<br/>
+
+<br/>
+<p>@ViewData["ViewDataName"]</p>
+<br/>
+
+ <form>  
+        @* asp-action="click"  --> call method click *@
+        @* value="first" --> pass "first" to the click method *@
+    <button name="button" value="Hello"  asp-action="add"> Increment +1 </button>
+    @* <button name="button" value="second"  asp-action="click">Second</button> *@
+    </form> 
+
+
+      <form>  
+        @* asp-action="click"  --> call method click *@
+        @* value="first" --> pass "first" to the click method *@
+    <button name="button" value="first"  asp-action="click">First</button>
+    <button name="button" value="second"  asp-action="click">Second</button>
+    </form>  
+    <div>
+        @* show result from method click *@
+        @TempData["buttonval"]
+    </div>
+
+<br/>
+<h3>Data from viewBag</h3>
+<p>@ViewBag.Number</p>
+<p>@ViewBag.Name</p>
+<p>@data.Id</p>
+<p>@data.Name</p>
+
+<br/>
+<h3>Data from Book Model -ViewBag</h3>
+<p>@ViewBag.Type.Id</p>
+<p>@ViewBag.Type.Title</p>
+<p>@ViewBag.Type.Author</p>
+@* <p> @Test.changeName()</p> *@
+
+<br/>
+<h3>ViewData</h3>
+<p>@ViewData["Property1"]</p>
+<br/>
+<h3>Data from Book Model -ViewData</h3>
+<p>@bookInfo.Id</p>
+<p>@bookInfo.Author</p>
+
+<br/>
+<h3>ViewData Attribute</h3>
+<p>@ViewData["CustomProperty"]</p> 

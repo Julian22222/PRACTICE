@@ -1,0 +1,52 @@
+@model Contact //can use Contact class in here, connect Contact class
+@* @using Project1.Models   //connect Clients class ,new *@
+@* @model Clients  //connect with Clients class  *@
+@* @using Project1.Views.Home  *@
+ @* //clients class old *@
+
+@* //connect class errors  *@
+@using Project1.Models;
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "Home Page";
+}
+
+
+@* <div> *@
+@* HTML helpers *@
+@* @Html.Label(expression:"Name",labelText: "Insert your name: ")<br/>
+@Html.TextBox(expression:"Name")
+@Html.TextArea(expression:"text", null, rows:5, columns:50,new { @class = "form-control" })<br/><br/>
+</div> *@
+
+
+
+<div>
+@* we need to choose correct controller where exists method PostFormMethodToDatabase ,which will post all our data from form to the database *@
+@* <form action ="./Index"> *@
+<form  asp-controller="Contacts" asp-action="Index" method="post"> 
+<div asp-validation-summary="All" style="font-size:23px; font-family:Impact">
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" placeholder="insert your name" style="font-size:20px; width: 30%"/>
+        @* asp-for="Name *@
+    </div>
+
+    <div>
+        <label>Age</label>
+        <input type="text" name="Age" placeholder="insert your age" style="font-size:20px; width: 30%"/>
+        @* asp-for="Age" the same as name="Age"*@
+    </div>
+
+     <div>
+        <label>Description</label>
+        <textarea type="text" name="Description" placeholder="insert your description" style="font-size:20px; width: 30%; height: 150px; border-radius: 5px;"></textarea>
+        @* asp-for="Age" the same as name="Age"*@
+    </div>
+
+    </div>
+<div>
+        <button type="submit" style="margin-top: 30px; padding: 5px; margin-left: 28%; background-color: greenyellow; border-radius: 5px;">Send</button>
+    </div>
+</form>
+</div>

@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/bin/Debug/net7.0/LessonTOP39_Interfaces
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/bin/Debug/net7.0/LessonTOP39_Interfaces.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/bin/Debug/net7.0/LessonTOP39_Interfaces.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/bin/Debug/net7.0/LessonTOP39_Interfaces.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/bin/Debug/net7.0/LessonTOP39_Interfaces.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/refint/LessonTOP39_Interfaces.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/LessonTOP39_Interfaces.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP39_Interfaces/obj/Debug/net7.0/ref/LessonTOP39_Interfaces.dll

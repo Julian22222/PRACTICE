@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/bin/Debug/net7.0/Practice1
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/bin/Debug/net7.0/Practice1.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/bin/Debug/net7.0/Practice1.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/bin/Debug/net7.0/Practice1.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/bin/Debug/net7.0/Practice1.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/refint/Practice1.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/Practice1.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Practice1/obj/Debug/net7.0/ref/Practice1.dll

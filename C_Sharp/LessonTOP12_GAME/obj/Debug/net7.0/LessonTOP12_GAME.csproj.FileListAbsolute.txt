@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/bin/Debug/net7.0/LessonTOP12_GAME
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/bin/Debug/net7.0/LessonTOP12_GAME.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/bin/Debug/net7.0/LessonTOP12_GAME.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/bin/Debug/net7.0/LessonTOP12_GAME.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/bin/Debug/net7.0/LessonTOP12_GAME.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/refint/LessonTOP12_GAME.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/LessonTOP12_GAME.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP12_GAME/obj/Debug/net7.0/ref/LessonTOP12_GAME.dll

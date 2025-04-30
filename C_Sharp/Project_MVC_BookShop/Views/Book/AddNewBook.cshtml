@@ -1,0 +1,108 @@
+@model Book   //import Book Model
+
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "Add new book";
+}
+
+<div class="container">
+
+    <h3 class="display-4">Add new book</h3>
+    <hr/>
+@if(ViewBag.IsSuccess == true){
+
+@* bootstrap alert icon *@
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Congratulations</strong> You have added new book successfully. <br/>
+  Click <a asp-controller="Book" asp-action="GetBook" asp-route-id="@ViewBag.BookId">here</a> to view the details
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+}
+
+
+
+
+    <form method="post" asp-controller="Book" asp-action="AddNewBook">
+
+        @* common input -->
+    <input type="text"/> *@
+
+@* validation-summary showing all error messages on the top of the form  *@
+@* works only in div tag *@
+@* use only one value from 3 options *@
+<div asp-validation-summary="All" class="text-danger"></div>
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div asp-validation-summary="None" class="text-danger"></div> *@
+
+
+        @* <div class="form-group">
+            <label asp-for="MyField"></label>
+            <input asp-for="MyField" class="form-control"/>
+             <span asp-validation-for="MyField" class="text-danger"></span> 
+        </div> *@
+
+
+
+         <div class="form-group">
+            <label asp-for="Language"></label>
+            @* dropdown -> using select and option tag *@
+            @* required - use for client side validation (UI)*@
+            <select asp-for="Language" class="form-control" required> 
+                <option value="">Please choose book language</option>
+                @* (value="") will return a null, other option return their values *@
+                <option value="English" >English (Global language)</option>
+                 <option>Spanish</option>
+                  <option>Franch</option>
+                   <option>Dutch</option>
+            </select>
+             <span asp-validation-for="Language" class="text-danger"></span> 
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Category" class="control-lebel"></label>
+            <select asp-for="Category" class="form-control" asp-items="new SelectList(ViewBag.Category)">
+                <option value="">Please choose category</option>
+            </select>
+             <span asp-validation-for="Category" class="text-danger"></span> 
+        </div>
+
+
+        <div class="form-group">
+            @* asp-for="Title"  input element for Title property for our Book Model  *@
+            <label asp-for="Title" class="control-lebel"></label>
+            <input asp-for="Title" class="form-control"/>
+
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+            <span asp-validation-for="Title" class="text-danger"></span> 
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Author" class="control-lebel"></label>
+            <input asp-for="Author" class="form-control"/>
+             <span asp-validation-for="Author" class="text-danger"></span> 
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-lebel"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+              <span asp-validation-for="Description" class="text-danger"></span> 
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="TotalPages" class="control-lebel"></label>
+            <input asp-for="TotalPages" class="form-control" />
+             <span asp-validation-for="TotalPages" class="text-danger"></span> 
+        </div>
+        
+        <br/>
+
+        <div class="form-group">
+            <input type="submit" value="Add book" class="btn btn-primary" />
+        </div>
+
+      
+        
+</form>
+</div>

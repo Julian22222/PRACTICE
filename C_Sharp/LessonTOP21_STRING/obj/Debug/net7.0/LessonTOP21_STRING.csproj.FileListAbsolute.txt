@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/bin/Debug/net7.0/LessonTOP21_STRING
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/bin/Debug/net7.0/LessonTOP21_STRING.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/bin/Debug/net7.0/LessonTOP21_STRING.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/bin/Debug/net7.0/LessonTOP21_STRING.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/bin/Debug/net7.0/LessonTOP21_STRING.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/refint/LessonTOP21_STRING.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/LessonTOP21_STRING.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP21_STRING/obj/Debug/net7.0/ref/LessonTOP21_STRING.dll

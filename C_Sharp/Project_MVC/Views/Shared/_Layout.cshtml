@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+
+@* if environment variable = Development -> do this code in the brackets *@
+<environment include="Development">
+       <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+       
+          <link href="http://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="" 
+          crossorigin="anonymous">
+
+
+</environment>
+
+<environment exclude="Development">
+       <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</environment>
+
+
+ 
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Project1.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+     <span class="logo">ASP.NET CORE </span>
+     <a class="navbar-brand" href="/">
+  @* asp-append-version="true" - make a cache key in the browser memory, 
+    when update the same picture with the same name it will change it in the View from server, 
+    not from cache memory, Image tag helpers can use only from own server- static files folder, not images from URL *@
+        <img src="~/images/Cat.png" alt="cat logo" width="70" height="70" asp-append-version="true" />
+     </a>
+    <nav>
+        <a href="/">Home</a>
+        <a asp-controller="home" asp-action="BookStoreTest">Books store</a>
+        <a href="/book/GetAllBooks">All Books</a>
+          <a href="/book/AddNewBook">Add new book</a>
+        @* <a href="/testing/">Testing</a> *@
+        @* <a href="/testing/Test1">Test1</a>
+        <a href="/testing/Test2">Test2</a>
+        <a href="/testing/Test3">Test3</a> *@
+        <a href="/home/Test">Test</a>
+        @* <a href="/home/Calculator">Calculator</a> *@
+        <a href="/home/Vending">Machine</a>
+        <a href="/Game">Game</a>
+        <a href="/Contacts">Contacts</a>
+        <a asp-protocol="http" asp-host="google.com" asp-controller="" asp-action="">Google.com</a>
+    </nav>
+
+    <div >
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="btn btn-outline-primary" href="#">Login</a>
+<a class="btn btn-primary" href="#">Register</a>
+</li>
+</ul>
+    </div>
+
+    </header>
+    <div class="container">
+        <main>
+            @* all content from other View pages goes here *@
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+       2023 - ASP.Net Project, Copyright &copy; ASP.NET @DateTime.Now.Year
+    </footer>
+
+@* jquery connection *@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> *@
+
+@* bootstrap connection, to use carousel from -https://getbootstrap.com/docs/5.3/components/carousel/ *@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>

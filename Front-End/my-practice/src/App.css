@@ -1,0 +1,227 @@
+.App {
+  /* text-align: center; */
+  background-color: #282c34;
+  height: 100vh;
+}
+
+body {
+  background-color: #282c34;
+}
+
+.Basket {
+  /* text-align: center; */
+  background-color: #282c34;
+  height: 100vh;
+}
+
+.Requests {
+  height: 100vh;
+}
+
+.RequestForm {
+  /* padding: 0;
+  margin: 0; */
+  /* color: #1a1f36; */
+  box-sizing: border-box;
+}
+
+.TotalBasket {
+  text-align: left;
+}
+
+.RemoveItem {
+  height: 30px;
+  width: 100px;
+  text-align: center;
+  margin-top: 15em;
+  margin-left: 5em;
+}
+
+.basketItems {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 4px 0 rgba(248, 239, 239, 0.2);
+  transition: 0.3s;
+  margin: 10px;
+  width: 30em;
+  height: 15em;
+}
+
+.SingleCard {
+  text-align: center;
+  flex-direction: row;
+  box-shadow: 0 4px 4px 0 rgba(248, 239, 239, 0.2);
+  transition: 0.3s;
+  margin-top: 20em;
+  margin: 20px;
+  width: 70vh;
+  height: 20em;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.SingleCardMsgBasket {
+  position: absolute;
+  bottom: 400px;
+  left: 40em;
+  color: red;
+  /* font-size: 10px; */
+}
+
+.LikeDislikeBtn {
+  position: absolute;
+  bottom: 190px;
+  left: 28em;
+  color: red;
+  width: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.RequestCard {
+  box-shadow: 0 4px 4px 0 rgba(248, 239, 239, 0.2);
+  transition: 0.3s;
+  padding: 5px;
+  margin-right: 20px;
+}
+
+.SubmissionForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.RequestListArea {
+  text-align: center;
+  color: lime;
+  margin-top: 50px;
+}
+
+.TextArea {
+  width: 210px;
+  height: 150px;
+}
+
+.RequestsBtn {
+  width: 100px;
+  margin-top: 10px;
+  margin-left: 110px;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} */
+
+.Card {
+  /* box-shadow: 0 4px 4px 0 rgba(26, 24, 24, 0.2); */
+  transition: 0.3s;
+  margin: 10px;
+  /* text-align: center; */
+  width: 15em;
+  height: 10em;
+  padding: 5px;
+  /* margin-right: 10%;
+  margin-left: 10%; */
+  /* background-color: rgba(91, 192, 219, 0.61); */
+}
+
+.MsgOrderHasBeenSent {
+  color: red;
+  font-size: 20px;
+  text-align: center;
+}
+
+.ClassImage {
+  text-align: left;
+}
+
+.CardBorder {
+  margin: 5px;
+  background-color: rgb(180, 180, 235);
+}
+
+.OrderBtn {
+  margin-left: 50em;
+  width: 150px;
+  border: 2px solid black;
+  background-color: white;
+  color: red;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Border {
+  margin: 10px;
+  margin-bottom: 5px;
+  list-style: none outside none;
+}
+
+.Sample {
+  margin-bottom: 10px;
+}
+
+.NavBar {
+  margin-top: 1em;
+  color: white;
+}
+
+.NaviBar {
+  position: absolute;
+  top: 70px;
+  right: 60px;
+  font-size: 18px;
+}
+
+.SearchBar {
+  margin-bottom: 5em;
+  margin-left: 100px;
+}
+
+.RequestContactUS {
+  margin-top: 40px;
+}
+
+.ButtonForCard {
+  margin-bottom: 50em;
+  margin-left: 5em;
+}
+
+.MsgRequest {
+  color: red;
+}
+
+.Header-colour {
+  text-align: center;
+  color: red;
+}
+
+.Header {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  /* min-height: 100vh; */
+  /* display: flex;
+  flex-direction: column; */
+  /* text-align: center; */
+  /* justify-content: center; */
+  /* /* font-size: calc(10px + 2vmin); */
+  color: white;
+}
+
+/* .App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */

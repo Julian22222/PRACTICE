@@ -1,0 +1,148 @@
+﻿@{
+    var disableBootstrap = ViewData["DisableBootstrap"] as bool? ?? false;
+    @* If ViewData["DisableBootstrap"] not present or not a valid bool?, it defaults to false *@
+    @* Game and Galley pages won't use Bootstrap, you can absolutely exclude Bootstrap from certain pages, even if it's included globally by default. *@
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/Project1.styles.css" asp-append-version="true" /> *@
+    
+    
+    @* bootstrap.css - responsible for styling, like layout, colors, typography, buttons, carousel structure, etc. *@
+    @if (!disableBootstrap)  //Game page won't use Bootstrap, you can absolutely exclude Bootstrap from certain pages, even if it's included globally by default.
+    {
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    }
+
+    
+
+    @* to use jQuery in View files i use line below *@
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <header class="w-100 p-3">
+        <span class="logo">ASP.NET CORE Projects </span>
+
+         @* button section for the phone -placing your content of navbar automatically on the phene, to make your app responsive*@
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+@* 
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item ">
+                    <a class="nav-link text-dark fw-bold" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Game">Game</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Gallery">Gallery</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Ajax">Ajax</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Calculator">Calculator</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Vending">Machine</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/Contacts">Contacts</a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="/home/Test">Test</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" asp-controller="home" asp-action="Form">Form</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" asp-protocol="http" asp-host="google.com" asp-controller="" asp-action="">Google.com</a>
+                </li>
+            </ul>
+        </div> *@
+
+
+
+
+
+        @* ///////////////////////////////////////////////////////////////////// *@
+
+        <nav >
+            <a href="/">Home</a>
+            <a href="/home/Game">Game</a>
+            <a href="/home/Gallery">Gallery</a>
+            <a href="/home/Ajax">Ajax</a>
+            <a href="/home/Calculator">Calculator</a>
+            <a href="/home/Vending">Machine</a>
+            <a href="/Contacts">Contacts</a>
+            <a href="/my-draft">Draft</a>
+            <a href="/home/Sketch">Sketch</a>
+            <a asp-controller="home" asp-action="Form">Form</a>
+            <a asp-protocol="http" asp-host="google.com" asp-controller="" asp-action="">Google.com</a>
+        </nav>
+
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+       Copyright &copy; ASP.NET @DateTime.Now.Year  
+       
+    </footer>
+
+
+    @* to work with client side validation we need these 3 libraries, this will helpto unable the lient side validation automatically from server side validation *@
+    @* THE ORDER OF LIBRARIES IS IMPORTANT!!!!! *@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+    @* Needs for slide show to work using bootstrap  4.0.0 *@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+    crossorigin="anonymous"></script>
+
+
+    @* Bootstrap Not working with this link ????*@
+    @* bootstrap connection, to use carousel from -https://getbootstrap.com/docs/5.3/components/carousel/ , (this method is -how you can access the library using CDN network)*@
+    @* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" 
+integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" 
+crossorigin="anonymous"></script> *@
+
+
+
+    @* bootstrap.bundle.min.js - responsible for Interactivity, Adds dynamic behaviors like: Carousel sliding, Dropdowns opening, Modal windows, Collapse/accordion behavior, Tooltips/popovers *@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+    @* scripts are located not on every View page *@
+    @await RenderSectionAsync("Scripts", required: false) 
+
+</body>
+</html>

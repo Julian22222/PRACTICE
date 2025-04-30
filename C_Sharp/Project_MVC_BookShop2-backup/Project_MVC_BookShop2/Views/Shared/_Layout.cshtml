@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* @ViewData["Title"] shows the title for each Page, The title showed and related to current page *@
+    <title>@ViewData["Title"]</title>
+    @* link to bootstrap can be in each View file but it is better to put it in Layout file, to apply for all View files *@
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" /> *@
+    	
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />  *@
+    @* asp-append-version="true" <--(tag helper) will help to clear the cache in browser , and if we change the css it will change on browser as well. Browser will not take old CSS content from cache memory*@
+
+ 
+
+@* for development environment we use normal files for Production environment we use min version files*@
+<environment include="Development">
+ <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />  
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+
+  @* connect Font Awesome to our project  --> See header.cshtml file line 37, bookThumnail.cshtml line 31*@
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css' rel="stylesheet" />
+</environment>
+
+<environment exclude="Development">
+ <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />  
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+
+@* connect Font Awesome to our project  --> See header.cshtml file line 37, bookThumnail.cshtml line 31*@
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css' rel="stylesheet" />
+</environment>
+
+</head>
+<body>
+   
+
+   @* using Partial view, inserting code here from _header.cshtml file *@
+   <partial name="_header" />  
+
+    <div class="container">
+        <main role="main" class="pb-3">
+              @* all content from other View pages goes here *@
+              @* This Render method provides space for other View files, We can have only 1 RenderBody() method inside 1 layout file *@
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            @* @DataTime.UtcNow - globaly showing time, local time *@
+            Copyright &copy; ASP.NET @DateTime.Now.Year  
+            @* @DataTime.UtcNow *@
+        </div>
+       
+    </footer>
+
+
+    @* <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script> *@
+    @* jquery connection, to use jquery library, (this method is -how you can access the library from your own application)*@
+    @* <script src="~/lib/jquery/dist/jquery.js"></script> *@
+
+    @* connection with cdn -->  https://cdnjs.com/libraries*@
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> *@
+
+
+    @* usibg these two jquery links (from local libraries)-makes client side validation(client side validation will work automatically taking all validations from server side validation), not hiting server side validation, the order of libraries is important *@
+    @* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" ></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" ></script> *@
+
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script> *@
+
+
+
+@* to work with client side validation we need these 3 libraries, this will helpto unable the lient side validation automatically from server side validation *@
+@* THE ORDER OF LIBRARIES IS IMPORTANT!!!!! *@
+<environment include="Development"> 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</environment>
+
+@* this min version will be used in Production,Staging,Testing environments *@
+<environment exclude="Development"> 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</environment>
+
+
+    @* jquery.unobtrusive-ajax library connection, link from -(https://cdnjs.com/libraries/jquery-ajax-unobtrusive) (this method is -how you can access the library using CDN network) *@
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" 
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+    crossorigin="anonymous"></script>
+    @* cdn link for all bootstrap packages *@
+
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+@* to don't use JS code on each View page, and to organise the JS code better we use jQuery here *@
+    @* RenderSectionAsync("Scripts") we use in _Layout file
+    JS code or jquery file or code are always placed in the bottom of the View page
+    but you code is at the top. So your code will not work. We need to use  -> @RenderSectionAsync and @Section
+    (the code can be read in the body because it is placed in the bottom.)
+    Therefore we use -> @RenderSectionAsync (in _Layout file) and @Section( with the same name in Home/Index View, or any other Views) 
+    This allow to read JS library code or jquery code before the programm will get to the bottom (in our case -in Home/Index.cshtml)*@
+@* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
+    @* Also, to use this code we need to register jquery -->  <script src="~/lib/jquery/dist/jquery.js"></script> *@
+    @await RenderSectionAsync("Scripts", required: false) 
+@* required: false) <-- make the section in different View files optional, you don't need to have -->@section directive in each View file, In our case we have section only in Index.cshtml*@
+@* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
+@* Section and RenderSection can be used with any code if you need to send your code from View file to _Layout file *@
+
+
+@*/// libraries will be applied only on certain environment *@
+@* <environment include="Development">
+    <script src=""></script>
+</environment> *@
+
+
+
+
+@* bootstrap connection, to use carousel from -https://getbootstrap.com/docs/5.3/components/carousel/ , (this method is -how you can access the library using CDN network)*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" 
+integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" 
+crossorigin="anonymous"></script>
+</body>
+</html>

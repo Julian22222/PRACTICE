@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/bin/Debug/net7.0/LessonTOP24_HEALTHBAR
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/bin/Debug/net7.0/LessonTOP24_HEALTHBAR.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/bin/Debug/net7.0/LessonTOP24_HEALTHBAR.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/bin/Debug/net7.0/LessonTOP24_HEALTHBAR.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/bin/Debug/net7.0/LessonTOP24_HEALTHBAR.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/refint/LessonTOP24_HEALTHBAR.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/LessonTOP24_HEALTHBAR.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP24_HEALTHBAR/obj/Debug/net7.0/ref/LessonTOP24_HEALTHBAR.dll

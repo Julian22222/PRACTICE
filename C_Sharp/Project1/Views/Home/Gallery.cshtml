@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Gallery";
+}
+<h1>This is Gallery</h1>
+
+<div class="container my-5 border border-dark" id="gallery">
+    <div class="row mt-3">
+        <!-- Big Image -->
+        <div class="col-12 mb-4 text-center" id="big">
+            <img id="mainImage" src="/IMG/gallery/gal2.jpg" alt="start" class="img-fluid rounded shadow" style="max-height: 650px; object-fit: cover;" />
+        </div>
+
+        <!-- Small Thumbnails -->
+        <div class="col-12 d-flex flex-wrap justify-content-center gap-3" id="small">
+            <img src="/IMG/gallery/gal1.jpg" href="/IMG/gallery/gal1.jpg" alt="pic 1" class="img-thumbnail" style="width: 150px; cursor: pointer;" onclick="changeImage(this)" />
+            <img src="/IMG/gallery/gal2.jpg" href="/IMG/gallery/gal2.jpg" alt="pic 2" class="img-thumbnail" style="width: 150px; cursor: pointer;" onclick="changeImage(this)" />
+            <img src="/IMG/gallery/gal3.jpg" href="/IMG/gallery/gal3.jpg" alt="pic 3" class="img-thumbnail" style="width: 150px; cursor: pointer;" onclick="changeImage(this)" />
+            <img src="/IMG/gallery/gal4.jpg" href="/IMG/gallery/gal4.jpg" alt="pic 4" class="img-thumbnail" style="width: 150px; cursor: pointer;" onclick="changeImage(this)" />
+            <img src="/IMG/gallery/gal5.jpg" href="/IMG/gallery/gal5.jpg" alt="pic 5" class="img-thumbnail" style="width: 150px; cursor: pointer;" onclick="changeImage(this)" />
+        </div>
+    </div>
+</div>
+
+<script>
+//JQuery option to handle all functions
+    $(document).ready(function() {
+
+        $('#small img').click(function(e) {
+            if($('#big img').attr('src') != $(this).attr('href')){  //if big image is not the same as clicked image
+            $('#big img').hide().attr('src', $(this).attr('href')).fadeIn(1000);  //hide image and change src on big image
+           }
+            e.preventDefault();  //blocking default action of <a> tag
+        });
+
+
+        $('#small img').click(function() {
+
+            $('#small img').fadeTo(500, 1).css({
+                'border': 'none',
+            });  //fade all images to 100% opacity
+
+            $(this).fadeTo(500, 0.5).css({
+                'border': '1px solid red',
+            });  //fade image to 50% opacity
+        });
+
+    });
+
+
+    //JS option to handle all functions
+      @* function changeImage(thumbnail) {
+        const mainImage = document.getElementById("mainImage");
+        mainImage.src = thumbnail.src;
+        mainImage.alt = thumbnail.alt;
+    } *@
+
+</script>

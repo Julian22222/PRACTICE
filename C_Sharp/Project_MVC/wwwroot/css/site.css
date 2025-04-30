@@ -1,0 +1,410 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin-bottom: 60px;
+  background: silver;
+  font-family: "Montserrat", sans-serif;
+}
+
+.jumbotron {
+  background: none;
+}
+
+header {
+  width: 100%;
+  padding: 15px 15px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  border-bottom: 2px solid #000;
+}
+
+header .logo {
+  font-weight: 600;
+  font-size: 25px;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  /* width: 80%; */
+  /* padding: 15px 10%; */
+  margin: 30px 0;
+}
+
+footer {
+  margin-top: 100%;
+  text-align: center;
+  width: 100%;
+  padding: 25px 0;
+  color: #fff;
+  background: #333;
+  border-top: 2px solid #000;
+}
+
+/* ///////////////////////////////////////// */
+/* Game */
+
+section {
+  width: 70%;
+  text-align: center;
+}
+
+.card-btn {
+  margin: 1px;
+  margin-bottom: 4px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-container img {
+  border-radius: 5px;
+  padding: 10px 10px 25px 10px;
+}
+
+.card-container:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.img-container {
+  /* display: flex;
+  flex-wrap: wrap; */
+  box-shadow: 0 0.2 1px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  list-style-type: none;
+  background: rgb(158, 158, 230);
+}
+
+.img-container button {
+  border-radius: 10px;
+  margin: 10px;
+  border: solid #000 2px;
+}
+
+.fighter-name {
+  position: absolute;
+  margin-left: 15px;
+  margin-top: 160px;
+  color: black;
+  font-size: 20px;
+}
+
+.figters-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fighter1-container {
+  margin-top: 20px;
+}
+
+.fighter2-container {
+  margin-top: 20px;
+  margin-right: 500px;
+}
+
+.btn-fight {
+  margin-top: 170px;
+  padding: 15px 30px;
+  margin-left: 30%;
+  margin-bottom: 50px;
+  background-color: rgb(158, 158, 230);
+  border-radius: 10px;
+}
+
+.vs-logo {
+  position: absolute;
+  margin-left: -10%;
+}
+
+/* ////////////////////////////////////////////////////////////////// */
+/* Contacts */
+
+main label {
+  width: 100%;
+  margin-top: 10px;
+  display: block;
+}
+
+/* apply this style to all inputs , apart from submit */
+main input:not([type="submit"]) {
+  width: 90%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid silver;
+  outline: none;
+  margin-top: 7px;
+}
+
+main input:not([type="submit"]):focus {
+  border: 1px solid #ff0000;
+}
+
+/* apply css styles to input button -submit */
+main input[type="submit"] {
+  width: 40%;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 0;
+  margin-top: 7px;
+  background: #ff6a00;
+  font-weight: bold;
+  color: #833904;
+  cursor: pointer;
+}
+
+main input[type="submit"]:hover {
+  background: #d96614;
+}
+
+main form span {
+  color: #ff0000;
+  font-weight: bold;
+  display: block;
+  margin: 5px 0;
+}
+
+/* ////////////////////////////////////////////////////// */
+/* ////////Calculator */
+
+.counter {
+  width: 20%;
+  height: 40px;
+  display: grid;
+  grid-template-columns: 20%;
+  border: 1px solid black;
+}
+
+/* line */
+
+.line {
+  display: grid;
+  grid-template-columns: 5% 5% 5% 5%;
+}
+
+.line div.ce {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.line div.c {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.line div.del {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.line div.divide {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+/* ////line 1 */
+
+.first-line {
+  display: grid;
+  grid-template-columns: 5% 5% 5% 5%;
+}
+
+.first-line div {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.first-line div.eight {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.first-line div.nine {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.first-line div.light3 {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+/* line2 */
+
+.second-line {
+  display: grid;
+  grid-template-columns: 5% 5% 5% 5%;
+}
+
+.second-line div.four {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.second-line div.five {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.second-line div.six {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.second-line div.minus {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+/* line3 */
+
+.third-line {
+  display: grid;
+  grid-template-columns: 5% 5% 5% 5%;
+}
+
+.third-line div.one {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.third-line div.two {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.third-line div.three {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.third-line div.plus {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+/* line 4  */
+
+.fourth-line {
+  display: grid;
+  grid-template-columns: 5% 5% 5% 5%;
+}
+
+.fourth-line div.one {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.fourth-line div.null {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.fourth-line div.dot {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.fourth-line div.enter {
+  padding: 1em;
+  border: 1px solid black;
+}
+
+/* ////////////////////////////////////////////////////// */
+/* ////////Machine */
+
+.header-products {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.section-product {
+  width: 90%;
+  text-align: center;
+}
+
+.card-btn {
+  margin: 1px;
+  margin-bottom: 4px;
+}
+
+.card-container-product {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-container-product img {
+  border-radius: 5px;
+  padding: 10px 10px 25px 10px;
+}
+
+.card-container-product:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.img-container {
+  /* display: flex;
+  flex-wrap: wrap; */
+  box-shadow: 0 0.2 1px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  list-style-type: none;
+  background: rgb(158, 230, 162);
+}
+
+.img-container button {
+  border-radius: 10px;
+  margin: 10px;
+  border: solid #000 2px;
+}
+
+.product-name {
+  position: absolute;
+  margin-left: 15px;
+  margin-top: 160px;
+  color: black;
+  font-size: 20px;
+}
+
+.product-pocket {
+  margin-top: 20px;
+}
+
+.pocket-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.reset-btn {
+  background: rgb(223, 230, 158);
+  border-radius: 10px;
+  padding: 5px 10px;
+}

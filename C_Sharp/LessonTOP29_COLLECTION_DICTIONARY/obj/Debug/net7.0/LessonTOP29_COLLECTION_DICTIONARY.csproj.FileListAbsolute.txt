@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/bin/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/bin/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/bin/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/bin/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/bin/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/refint/LessonTOP29_COLLECTION_DICTIONARY.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/LessonTOP29_COLLECTION_DICTIONARY.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP29_COLLECTION_DICTIONARY/obj/Debug/net7.0/ref/LessonTOP29_COLLECTION_DICTIONARY.dll

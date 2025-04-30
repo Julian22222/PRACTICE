@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="card">
+        <!-- work with styles, not dynamic styles -->
+        <!-- <h1 style="color: darkred">{{ title }}</h1> -->
+        <!-- <h1 :style="{color: 'red'}">{{ title }}</h1>  -->
+        <!-- //////////////////////////////////// -->
+        <!-- work with styles dynamicly -->
+        <h1
+          :style="{
+          color: inputValue.length < 5 ? 'darkred' : 'darkblue',
+          fontSize: inputValue.length < 4 ? '2rem' : '2.5rem'
+        }"
+        >
+          {{ title }}
+        </h1>
+
+        <div class="form-control">
+          <!-- v-bind,v-on, v-for <-- all these are called derectives -->
+          <!--use  v-bind:..... <- need to bind any atributes in HTML(in our case placeholder) to our variable in app.js -->
+          <!-- :placeholder="placeholderString" is the same as v-bind:placeholder="placeholderString"-->
+          <!-- //////////////////////////////////////////// -->
+          <!-- <input
+          type="text"
+          :placeholder="placeholderString"
+          :value="inputValue"
+          @input="inputChangeHandler"
+          v-on:keypress.enter="addNewNote"
+        /> -->
+          <!-- //////////////////////////////////////////// -->
+          <!-- we use v-model , instead -> @input="inputChangeHandler" and :value="inputValue"-->
+          <input
+            type="text"
+            :placeholder="placeholderString"
+            v-model="inputValue"
+            v-on:keypress.enter="addNewNote"
+          />
+          <!-- v-on:keypress.enter="addNewNote" -  when you press enter key it will call addNewNote function -->
+        </div>
+
+        <button class="btn" @click="addNewNote">Add</button>
+        <!-- @click="addNewNote" is the same as- v-on:click="addNewNote" -->
+        <hr />
+        <!-- v-if="statement to be true to show" <-- vue.js ,similar to if else statement -->
+        <ul class="list" v-if="notes.length !==0">
+          <!-- v-for <- make iteration for full array , where myNote is one item in the array -->
+          <!-- index -> index of each element in the array -->
+          <li class="list-item" v-for="(myNote,index) in notes">
+            <!--1st example- <span :class="myNote.length > 5 ? 'primary' : 'bold'"> -->
+            <!-- 2-nd example <span
+              :class="{
+              'primary': true,
+              'bold' : myNote.length > 5
+            }"
+            > -->
+            <span :class="['bold',{'primary': myNote.lenght >5}]">
+              <!-- work with classes dynamicly -->
+              ({{ index }}){{ toUpperCase(myNote) }}
+            </span>
+            <!-- passing index of the element to the removeNote function -->
+            <!-- toUpperCase function from app.js takes each element from notes array and make it Uppercase -->
+            <button class="btn danger" @click="removeNote(index)">
+              Delete
+            </button>
+          </li>
+          <hr />
+          <strong>Total number of Notes: {{ notes.length }}</strong>
+        </ul>
+        <!-- similar to - if else statement -->
+        <!-- v-if="" , v-else-if="" , v-else="" <--3 different statements to use, similar to if else statement -->
+        <div v-else="notes.length === 0">There is no Notes at the moment.</div>
+      </div>
+    </div>
+
+    <!-- vue library connection to our project -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- /// -->
+    <!-- connect our app.js file to the project -->
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+﻿@* it is a place where we keep all common directives that we are going to use inside our app we can write in this file *@
+
+@* The scope of _ViewImports applied to cut=rrent folder (in which
+_ViewImports file is placed) and to all the sub folders*@
+
+@* All directives that we can use in this file: *@
+@* @addTagHelper
+@removeTagHelper
+@tagHelperPrefix
+@using
+@model
+@inherits
+@inject *@
+
+
+@* this will import Models to all our Views, don't need to import ->@using Project_MVC  and 
+ @using Project_MVC.Models , in each View file *@
+@using Project_MVC
+@using Project_MVC.Models
+
+
+@* allow to use all Tag Helpers in entire application *@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

@@ -1,0 +1,127 @@
+@* import Product class ,from Models folder*@
+@using Project1.Models
+
+@{
+    ViewData["Title"] = "Vending";
+
+    var products = new List<Product>(){
+        new Product(){Id = 1, Name = "Bread", Img = "/IMG/machine/bread.jpg", Price = 0.95},
+        new Product(){Id = 2, Name = "Milk", Img = "/IMG/machine/milk.png", Price = 1.35},
+        new Product(){Id = 3, Name = "Apples", Img = "/IMG/machine/apple.webp", Price = 0.85},
+        new Product(){Id = 4, Name = "Eggs", Img = "/IMG/machine/eggs.webp", Price = 1.79},
+        new Product(){Id = 5, Name = "Bananas", Img = "/IMG/machine/Bananas-Loose.jpg", Price = 0.95},
+        new Product(){Id = 6, Name = "Lemon", Img = "/IMG/machine/lemon.webp", Price = 0.28},
+        new Product(){Id = 7, Name = "Roast Pork Loin", Img = "/IMG/machine/Pork.jpg", Price = 4.89},
+        new Product(){Id = 8, Name = "Potato", Img = "/IMG/machine/potato.jpg", Price = 1.25},
+        new Product(){Id = 9, Name = "Carrot", Img = "/IMG/machine/CARROT.jpg", Price = 0.75},
+        new Product(){Id = 10, Name = "Onion", Img = "/IMG/machine/onion.jpg", Price = 0.65},
+        new Product(){Id = 11, Name = "Salmon", Img = "/IMG/machine/salmon.jpg", Price = 2.95},
+        new Product(){Id = 12, Name = "Cheese", Img = "/IMG/machine/cheese.jpg", Price = 3.89},
+    };
+}
+
+<h1 class="mb-4">🧃 Vending Machine</h1>
+
+<div class="alert alert-info">
+    You have <strong>£<span id="wallet">15.00</span></strong> in your pocket. Choose your groceries!
+</div>
+
+<div class="row">
+    @foreach (var item in products)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="@item.Img" class="card-img-top" alt="@item.Name" height="200" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">£@item.Price</p>
+                    <button class="btn btn-primary w-100 buy-btn" data-name="@item.Name" data-price="@item.Price">Buy</button>
+                    @* data-name="@item.Name": This is a custom data-* attribute. It stores the name of the item (using the Name property of the item) so that it can be accessed later (usually by JavaScript). *@
+                    @* w-100: This class makes the button width 100% of its parent container's width (it will stretch to fit the full width of the card). *@
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div class="bg-light p-3 rounded shadow-sm">
+    <h4>🪙 Money left: £<span id="money-left">15.00</span></h4>
+    <button class="btn btn-warning mt-2" id="reset-btn">🔁 Reset</button>
+</div>
+
+<hr />
+
+<div class="mt-4">
+    <h4>🛒 Basket</h4>
+    <ul id="basket" class="list-group">
+        <!-- Items will be added here -->
+    </ul>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        let money = 15.00;
+
+        function updateWallet() {
+            $('#wallet').text(money.toFixed(2));
+            @* “money” is presumably a variable that holds a numerical value (e.g., a floating-point number representing an amount of money). *@
+            @* toFixed(2) is a method used on a number to format it as a string with exactly 2 decimal places. So if money is something like 12.3456, calling money.toFixed(2) will return "12.35". If money is already a whole number like 12, it will return "12.00". *@
+            $('#money-left').text(money.toFixed(2));
+        }
+
+        function addToBasket(name, price) {
+            const listItem = $(`
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name} - £${price.toFixed(2)}
+                    <button class="btn btn-sm btn-danger cancel-btn" data-price="${price}">Cancel</button>
+                </li>
+            `);
+
+            $('#basket').append(listItem);
+        }
+
+        $(document).ready(function () {
+            $('.buy-btn').click(function () {
+                const name = $(this).data('name');
+                @* const name = $(this).data('name');  //we use data from:  data-name="@item.Name" *@
+                const price = parseFloat($(this).data('price'));
+
+                if (money >= price) {
+                    money -= price;
+                    updateWallet();
+                    addToBasket(name, price);
+                } else {
+                    alert('Not enough money to buy ' + name);
+                }
+            });
+
+            $('#basket').on('click', '.cancel-btn', function () {
+                const price = parseFloat($(this).data('price'));
+                @* parseFloat(): Converts the value from the data-price attribute (which is probably a string) into a floating-point number. *@
+                money += price;
+                updateWallet();
+                $(this).closest('li').remove();
+                @* $(this): Refers again to the clicked .cancel-btn *@
+                @* .closest('li'): This method finds the closest ancestor <li> element (list item) relative to the clicked button. It’s assuming the structure is a list where each item has a cancel button inside it. *@
+                @* The closest() method is useful to find the parent element you want to manipulate in cases like this*@
+                @* .remove()- This removes the closest <li> element from the DOM. When you click the cancel button, the entire list item (which presumably contains details like the product name, price, etc.) will be removed from the basket. *@
+                @* When the user clicks a .cancel-btn inside #basket, the price of the item associated with that button is retrieved, and the entire list item (the <li>) containing that button is removed from the basket *@
+            });
+
+            $('#reset-btn').click(function () {
+                money = 15.00;
+                updateWallet();
+                $('#basket').empty();
+            });
+        });
+    </script>
+}
+
+
+
+@* <p> @Test.changeName()</p> *@
+

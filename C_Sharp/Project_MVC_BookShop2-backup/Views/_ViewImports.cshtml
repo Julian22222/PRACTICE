@@ -1,0 +1,34 @@
+﻿@* all common directives that we are going to use inside our app we can write in this file *@
+
+@* All directives that we can use in this file: *@
+@* @addTagHelper
+@removeTagHelper
+@tagHelperPrefix
+@using
+@model
+@inherits
+@inject *@
+
+@* Here we can include all namespaces that we are using in View files, to do not wrirte it in each View file *@
+@* As example, we have access to --> Project_MVC_BookShop2.Models , and we don't need to write this line in any View file  *@
+@using Project_MVC_BookShop2
+@using Project_MVC_BookShop2.Models
+
+
+
+@* Tyepes of Tag Helpers - Anchor Tag Helpers -> (asp-action='', asp-controller=""), 
+Image tag Helpers -> (asp-append-version="true"), 
+Environment Tag Helpers -> (<environment names="Development></environment>"), 
+Link Tag helpers -> if CDN not working use buil in file, 
+Form Tag Helpers -> ( asp-for="")*@
+
+
+
+@* we can TagHelper declaration in each View file where we use them, but it is better to put them here in a common file for all Views *@
+@* Microsoft.AspNetCore.Mvc.TagHelpers  <-- it is assembly or namespace from which we can get TagHelpers *@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers  <-- this line will allow to use all tag helpers in my entire app, (Tag helpers -->starts with asp- ..., asp-controller, asp-action, asp-route-id,asp-area) *@
+
+@* To use View Component tag --> <vc:top-books></vc:top-books>  in Views/Home/Index *@
+@addTagHelper *, Project_MVC_BookShop2
+@addTagHelper *, Project_MVC_BookShop2.Components

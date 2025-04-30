@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/bin/Debug/net7.0/LessonTOP13_RANDOM
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/bin/Debug/net7.0/LessonTOP13_RANDOM.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/bin/Debug/net7.0/LessonTOP13_RANDOM.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/bin/Debug/net7.0/LessonTOP13_RANDOM.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/bin/Debug/net7.0/LessonTOP13_RANDOM.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/refint/LessonTOP13_RANDOM.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/LessonTOP13_RANDOM.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP13_RANDOM/obj/Debug/net7.0/ref/LessonTOP13_RANDOM.dll
