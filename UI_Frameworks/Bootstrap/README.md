@@ -354,6 +354,61 @@ form.classList.add(‘was-validated’)
 <button class=”btn btn-primary btn-sm”  > Test </button>  //make small button
 ```
 
+```C#
+<div class=”btn-group”> //will join all components inside this div together, usually used for buttons
+    <button class=”btn btn-primary active” >Test1</Button>
+    <button class=”btn btn-primary active” >Test2</Button>
+</div>
+
+
+
+
+<div class=”btn-group-vertical”> …</div>  // will join all components inside this div and vertical
+```
+
+# Different attributes
+
+```C#
+data-bs-toggle=”button”  // toggle between active state and off state for a button
+
+//example
+<button class=”btn btn-primary” data-bs-toggle=”button”>Test</Button>
+
+
+//If you want to start with active state toggle button , give class of active , and an area-pressed attribute = true. It will active button state by default and then you can toggle between 2 states
+<button class=”btn btn-primary active” data-bs-toggle=”button” aria-pressed=”true”>Test</Button>
+```
+
+```C#
+// data-bs-“something” Attribute
+
+You will notice a lot of Bootstrap components have this –> data-bs-“something” , that you can add. It is just a custom data attribute prefixed with “bs” , It allows you to hook this up to the JS portion of Bootstrap, to make this button toggle between these 2 states.
+```
+
+```C#
+// role="alert" attribute
+//Role attribute - it's critical for ensuring that users with disabilities, particularly those using screen readers, can properly understand and respond to the alert message. Screen readers can announce the content of the alert when it appears, helping users who rely on these tools.
+
+<div class="alert alert-success" role="alert">Alert</div>
+```
+
+```C#
+// class=”btn-close” – will style and add “X” to close this div
+
+// data-bs-dismiss=”alert” – tells bootstrap what to close when we click this “X” button.  Adds functionality to the button. It tells Bootstrap's JavaScript to remove the alert element from the DOM when the button is clicked. By clicking this “X” button it will remove/close alert div
+
+//aria-label="close" - attribute is used for accessibility purposes, It provides a label for screen readers, that help users with disabilities
+
+//Example:
+<button class=”btn-close” aria-label=”close” data-bs-dismiss=”alert” ></button>
+```
+
+# Links
+
+```C#
+<a hre=”#” class=”alert-link”> something</a>  //style link
+```
+
 # Alerts
 
 ```C#
@@ -365,4 +420,75 @@ form.classList.add(‘was-validated’)
 </div>
 ```
 
+```C#
+<div class=”alert fade show”>  //make sure you add fade and show, to your class
+```
+
 # Cards
+
+```C#
+//Examples to style cards
+
+class=”card-group”  //join cards together inside this div
+class=”card”
+class=”card-header”
+class=”card-footer”
+class=”card-img-top”
+class=”card-img-bottom”
+class=”card-img-overlay”  //text is overlaying over the image on the cards
+class=”card-body”
+class=”card-title”
+class=”card-subtitle”
+class=”card-text”
+```
+
+# Modal
+
+```C#
+//main structure of Modal
+<div class=”container”>
+    <div class=”modal”>
+           <div class=”modal-dialog”>
+                 <div class=”modal-content”>
+
+                </div>
+           </div>
+    </div>
+</div>
+```
+
+```C#
+//you need these 3 different nested modal classes inside of each other, to make a Modal
+//By its own it will not be shown, it needs a button to open the modal
+
+<div class=”container”>
+    <button class=”btn btn-primary” data-bs-toggle=”modal” data-bs-target=”#modal” >Open </button>   // data-bs-toggle=”modal” -saying I am toggling a modal to open and close it., data-bs-target=”#modal” – is a selector for our modal, it data-bs-target=”#modal” matches with the id attribute in   -  <div class=”modal” id=”modal”>
+    <div class=”modal fade modal-sm” id=”modal” >   //fade - adds fade in and fade out effect, modal-sm – will make small modal window, can be modal-lg or modal-xl,
+           <div class=”modal-dialog modal-dialog-centered modal-dialog-scrollable” >  // modal-dialog-centered – modal placed in page centre, modal-dialog-scrollable – will be scrollable if there is a lot info inside this modal section –in modal-body, class=”modal fade modal-fullscreen”  - modal will have full screen size, don’t need to indicate any modal-xl (as example) in <div> above, modal-fullscreen-md-down  -it uses full screen modal on screens below medium screen
+            <div class=”modal-content”>
+                <div class=”modal-header”>
+                    Header
+                    <button class=”btn-close” data-bs-dismiss=”modal”></button>
+                </div>   //styling Modal
+                <div class=”modal-body”> Body</div>
+                <div class=”modal-footer”> Footer
+                    <button class=”btn btn-primary” data-bs-dismiss=”modal”>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+# Collapse (drop down section)
+
+```C#
+<div class=”container”>
+    <button class=”btn btn-primary” data-bs-toggle=”collapse” data-bs-target=”#row” aria-expanded=”false” aria-controls=”row”>Toggle< /button>   // data-bs-toggle=”collapse” – for dropdown, data-bs-target=”#row” – targeting the thing we want to collapse, it this case it is block with – id=”row”, aria-expanded=”false” – startup position for dropdown section, aria-controls=”row” should match or  id=”row” in section below
+    <div class=”row collapse” id=”row”>  // collapse -add for dropdown
+        <div class=”col”>
+            <div class=”box”>< /div>
+        </div>
+    </div>
+</div>
+```
