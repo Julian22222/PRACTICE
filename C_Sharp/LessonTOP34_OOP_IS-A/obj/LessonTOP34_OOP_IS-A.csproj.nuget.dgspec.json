@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj",
         "projectName": "LessonTOP34_OOP_IS-A",
-        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/LessonTOP34_OOP_IS-A.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP34_OOP_IS-A/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"

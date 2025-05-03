@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj",
         "projectName": "LessonTOP9_CURRENCY",
-        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/LessonTOP9_CURRENCY.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP9_CURRENCY/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"

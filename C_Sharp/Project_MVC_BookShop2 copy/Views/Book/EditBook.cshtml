@@ -1,0 +1,243 @@
+@model Book   //to use Book Model in our Form, to bind it to the form --> in asp-for="LanguageId", asp-validation-for="Author"  and other properties from Book Model , assign data type- Book, 
+
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "Edit book";
+}
+
+<div class="container">
+
+    <h3 class="display-4 text-center">Edit book</h3>
+    <hr/>
+@if(ViewBag.IsSuccess == true){
+
+@* bootstrap alert icon, when form is submitted successfully *@
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Congratulations</strong> You have edit the book successfully. <br/>
+        Click <a asp-controller="Book" asp-action="GetBook" asp-route-id="@ViewBag.BookId">here</a> to view the details
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+@* Bootstrap loding spinners, in form tag we put -> data-ajax-loading="#myLoader" *@
+@* style="display:none" --> not showing this code all the time, showing loading animation only when uploading new book *@
+@* instead of id="myLoader"  we can use class <-- class="myLoader" , then we will use --> data-ajax-loading=".myLoader" in form tag*@
+<div class="d-flex justify-content-center" >
+  <div class="spinner-border" role="status" id="myLoader" style="display:none" >  
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+@ViewBag.Message
+
+@* to use ajax form*@
+    @* <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-failure="myFailure" data-ajax-loading="#myLoader" asp-controller="Book" asp-action="AddNewBook"> *@
+@* data-ajax="true"  <-- our form will work with ajax, (this is mandatory text to work with ajax) if in _Layout.cshtml we imported  all needed libraries*@
+@* ata-ajax-complete="myComplete" data-ajax-success="mySuccess"   <-- 3 different functions, the function logic is in the bottom of the file *@
+@* data-ajax-loading="#myLoader" <-- use id="myLoader" in bootstrap piece of code, line 23-29, show loading picture when uploading*@
+
+<form method="post" data-ajax="true" data-ajax-loading="#myLoader" enctype="multipart/form-data" asp-controller="Book" asp-action="EditBook">
+@* enctype="multipart/form-data"   <- If you are dealing with the file(if we planning to uploading files in View) in your form then you use this attribute in Form tag*@
+@* asp-controller="Book" asp-action="AddNewBook"  <-- we don't need to write this part, if in Controller (-->See BookController.cs) the View page-(form page) name has the same name as [HttpPost] method- (when we send the data) -->
+AddNewBook <--is the same name for View page and [HttpPost] method
+
+public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){.....}
+
+[HttpPost]
+public async Task<IActionResult> AddNewBook(Book book){....}
+ *@
+
+
+
+
+
+        @* common input -->
+    <input type="text"/> *@
+
+@* validation-summary showing all error messages on the top of the form ( custom and server side validation msges) *@
+@* works only in div tag *@
+@* use only one value from 3 options *@
+<div asp-validation-summary="All" class="text-danger"></div> 
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div>  <-- Will show only custom msges that we created in BookController, line 169,170
+<div asp-validation-summary="None" class="text-danger"></div>  <-- will not show any errors on the top of the file *@
+
+
+        @* <div class="form-group">
+            <label asp-for="MyField"></label>
+            <input asp-for="MyField" class="form-control"/>
+             <span asp-validation-for="MyField" class="text-danger"></span> 
+        </div> *@
+
+          <div class="form-group mb-3">
+         <label asp-for="Id"></label>
+         <input class="form-control-plaintext" value="@Model.Id" readonly/>
+          </div>
+
+
+         <div class="form-group mb-3">
+            <label asp-for="BookTypeId"></label>
+            @* dropdown -> using select and option tag *@
+            <select asp-for="BookTypeId" class="form-select" asp-items="ViewBag.TypeName" required> 
+                <option value="">Please choose book language</option>
+                @* <select asp-formaction="LanguageId" multiple ></select>   <--multiple , allow to choose multiple options from dropdown *@
+                @* required - use for client side validation (UI)*@
+                @* <option> English </option> <-- will give the value for it automatically*@
+                @* <option value="1"> English </option> <-- will give the value 1*@
+                @* <option selected> Dutch </option>  <-- selected make This Dutch language selected by default when you open AddnewBook View *@
+            </select>
+             @* use only span tag and asp-validation-for --> to show an eeror msg for LanguageId Input if it is wrong *@
+             <span asp-validation-for="BookTypeId" class="text-danger"></span>  
+        </div>
+
+        @* to make group options in dropdown -->
+        <select>
+            <optgroup label="Group A">
+                <option value="1"> Apple </option>
+                <option value="2"> banana </option>
+            </optgroup>
+             <optgroup label="Group B">
+                <option value="3"> Tomato </option>
+                <option value="4" disabled> Cucamber </option>    <--disabled , will disabled this option from dropdown
+            </optgroup>
+        </select>
+        
+         *@
+
+
+            @* mb-3  <-- margin bottom =3 px*@
+        <div class="form-group mb-3">
+            <label asp-for="Category" class="col-sm-4 col-form-label"></label>
+            <select asp-for="Category" class="form-select" asp-items="new SelectList(ViewBag.Category)">
+                <option value="">Please choose category</option>
+            </select>
+             <span asp-validation-for="Category" class="text-danger"></span> 
+        </div>
+
+
+        <div class="form-group mb-3">
+            @* asp-for="Title"  input element for Title property for our Book Model  *@
+            <label asp-for="Title" class="control-lebel"></label>
+            <input asp-for="Title" class="form-control"/>
+
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+            <span asp-validation-for="Title" class="text-danger"></span> 
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Author" class="control-lebel"></label>
+            <input asp-for="Author" class="form-control"/>
+             <span asp-validation-for="Author" class="text-danger"></span> 
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="control-lebel"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+              <span asp-validation-for="Description" class="text-danger"></span> 
+        </div>
+
+
+        <div class="form-group mb-3">
+            <label asp-for="TotalPages" class="control-lebel"></label>
+            <input asp-for="TotalPages" class="form-control" />
+             <span asp-validation-for="TotalPages" class="text-danger"></span> 
+        </div>
+
+        <br/>
+
+        @if(!string.IsNullOrEmpty(Model.CoverImageUrl)){  //<--if we have a path in the CoverImageUrl (When Edit the Book), then -->show pcs
+        <img style="inline-size: 200px;" src="@Model.CoverImageUrl" alt="book Image"/>
+        }
+
+
+        <div class="form-group mb-3">
+            @* asp-for="Title"  input element for Title property for our Book Model  *@
+            <label asp-for="CoverPhoto" class="control-lebel"></label>
+
+         @* code block from bootstrap , (4 lines) *@
+        <div class="custom-file">
+        <input asp-for="CoverPhoto" class="form-control" id="customFile">  
+        <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+
+
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+            <span asp-validation-for="CoverPhoto" class="text-danger"></span> 
+        </div>
+
+
+
+
+        <div class="form-group mb-3">
+        <label asp-for="BookPdf" class="control-lebel"></label>
+        <div class="custom-file">
+        <input asp-for="BookPdf" class="form-control" id="customFile">
+        @* <label class="form-control-label" for="customFile">Choose file</label> *@
+        </div>
+            @* to show an error msg when field in the form is not valid (use only--> span tag ) *@
+        <span asp-validation-for="BookPdf" class="text-danger"></span> 
+        </div>
+
+
+         <div class="form-group">
+            <label asp-for="Price" class="control-lebel"></label>
+            <input asp-for="Price" class="form-control" />
+             <span asp-validation-for="Price" class="text-danger"></span> 
+        </div>
+        
+        <br/>
+
+
+        <div class="row">
+
+            @* <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>   *@
+
+            <div class="offset-sm-4 col-sm-4 d-grid">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div> 
+        
+            <div class="col-sm-4 d-grid">
+                <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Index" role="button">Cancel</a>
+            </div>
+
+        </div>
+     
+
+      
+        
+</form>
+</div>
+
+@section scripts {
+@* Here we can insert any scripts*@
+
+    <script>
+        @* function myComplete(data){ //<--name of the function is myComplete, to receive the data from your function we can pass some attributes--> (data) 
+        //this code wil execute , doesn't metter if the request is successful or fail.
+            alert("I am from complete");
+        }
+
+        function mySuccess(data){  //<--name of the function is mySuccess
+
+        //this code wil execute if the request is successful
+            alert("I am from Success");
+        } *@
+
+        function myFailure(data){  //<--name of the function is myFailure
+
+        //this code wil execute if the request was failed
+            alert("I am from Failure");
+        }
+    </script>
+}
+
+@* @section MyScripts { 
+//client side validation scripts can  ce inserted here, but it is better to keep them in the common Layout.cshtml file --> line 71-73 
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> 
+} *@
+
+@* and then we need to put -->   @await RenderSectionAsync("MyScripts", required: false)  in Layout.cshtml file*@

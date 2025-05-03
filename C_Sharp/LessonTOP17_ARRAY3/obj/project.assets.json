@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/LessonTOP17_ARRAY3.csproj",
+      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/LessonTOP17_ARRAY3.csproj",
       "projectName": "LessonTOP17_ARRAY3",
-      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/LessonTOP17_ARRAY3.csproj",
+      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/LessonTOP17_ARRAY3.csproj",
       "packagesPath": "/home/codenitro/.nuget/packages/",
-      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/obj/",
+      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP17_ARRAY3/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codenitro/.nuget/NuGet/NuGet.Config"

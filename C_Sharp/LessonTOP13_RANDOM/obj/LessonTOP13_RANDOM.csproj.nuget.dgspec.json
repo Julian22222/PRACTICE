@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj",
         "projectName": "LessonTOP13_RANDOM",
-        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP13_RANDOM/LessonTOP13_RANDOM.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP13_RANDOM/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP13_RANDOM/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"

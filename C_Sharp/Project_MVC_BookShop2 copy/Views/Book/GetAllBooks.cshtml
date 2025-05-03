@@ -1,0 +1,98 @@
+@inject Project_MVC_BookShop2.Repository.IBookTypeRepository _bookTypeRepository  //inject Interface
+
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "All books";
+}
+
+@* Book model class import connection , to use Book Model in --> @model IEnumerable<Book>  *@
+@using Project_MVC_BookShop2.Models
+@model IEnumerable<Book>  // using @model directive we import data from controller, that we pass in controller,(here we assign a data type to imported Model data from controller).
+@* It can be any data type -IEnumerable (this is universal), List, Collection *@
+@* <Book> <-- is a type of our model *@
+
+
+<div class="container">
+    <h1 class="d-flex justify-content-center">📖 All books</h1>
+    <label for="search" class="form-label">Search by Book type</label>
+    <select class="form-select mb-3" aria-label="Default select example">
+
+        <option selected value="">Sort books by type</option>
+        @foreach( var item in await _bookTypeRepository.GetBookTypes()){
+        <option value="@item.TypeName">@item.TypeName</option> //all book types come from database
+        }
+    </select>    
+
+
+    <hr class="mb-5"/>
+
+    @if(Model.Any()) //checking if we have any data in our model
+    {
+        <div class="row">
+            @foreach(var book in Model){  //looping through imported data model(IEnumerable<Book> <--data type for imported Model) from controller
+            <div class="col-md-4">
+                <partial name="_bookThumbnail" model="book"/>  
+            </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            We don't have any books in our books shop for now, add first book.
+        </div>
+    }
+
+
+
+
+
+
+
+
+
+    @* <div class="row">
+        @foreach(var book in Model){  //looping through imported data model(IEnumerable<Book> <--data type for imported Model) from controller
+        <div class="col-md-4">
+            <partial name="_bookThumbnail" model="book"/>   *@
+            @* passing data to our partial View file --> model="book" *@
+            @* model attribute helps to pass the data *@
+
+
+
+            @* #IF WE DONT USE PARTIAL VIEW , WE WRITE THIS CODE --> *@
+            @* <div class="card mb-4 shadow-sm">
+
+            #this example for one image for all books -->
+            <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo">
+
+
+
+            #this example --> image will be diffrent, photo from uploaded image
+            <img src="@book.CoverImageUrl" alt="image logo" class="img-thumbnail" />
+            <div class="card-body">
+
+
+            #accessing book title-->
+            <h3 class="card-title">@book.Title</h3>
+
+
+            #accessing book Description-->
+            <p class="card-text">@book.Description</p>
+
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    #accessing book Id by clicking on each card -->
+                    <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a>   or other option to write-->
+                    <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+                </div>
+                #accessing book Author -->
+                <small class="text-muted">@book.Author</small>
+                </div>
+                </div>
+            </div> *@
+        @* </div>
+        }
+    </div> *@
+</div>

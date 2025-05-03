@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP30_OOP/LessonTOP30_OOP.csproj",
+      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP30_OOP/LessonTOP30_OOP.csproj",
       "projectName": "LessonTOP30_OOP",
-      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP30_OOP/LessonTOP30_OOP.csproj",
+      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP30_OOP/LessonTOP30_OOP.csproj",
       "packagesPath": "/home/codenitro/.nuget/packages/",
-      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP30_OOP/obj/",
+      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP30_OOP/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codenitro/.nuget/NuGet/NuGet.Config"

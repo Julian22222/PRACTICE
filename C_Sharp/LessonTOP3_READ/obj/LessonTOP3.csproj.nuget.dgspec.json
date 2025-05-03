@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
         "projectName": "LessonTOP3",
-        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP3_READ/LessonTOP3.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP3_READ/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP3_READ/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"

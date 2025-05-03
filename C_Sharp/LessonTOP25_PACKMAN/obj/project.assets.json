@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/LessonTOP25_PACKMAN.csproj",
+      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/LessonTOP25_PACKMAN.csproj",
       "projectName": "LessonTOP25_PACKMAN",
-      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/LessonTOP25_PACKMAN.csproj",
+      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/LessonTOP25_PACKMAN.csproj",
       "packagesPath": "/home/codenitro/.nuget/packages/",
-      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/obj/",
+      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP25_PACKMAN/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codenitro/.nuget/NuGet/NuGet.Config"

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP20_BOOKS/LessonTOP20_BOOKS.csproj",
+      "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP20_BOOKS/LessonTOP20_BOOKS.csproj",
       "projectName": "LessonTOP20_BOOKS",
-      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP20_BOOKS/LessonTOP20_BOOKS.csproj",
+      "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP20_BOOKS/LessonTOP20_BOOKS.csproj",
       "packagesPath": "/home/codenitro/.nuget/packages/",
-      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP20_BOOKS/obj/",
+      "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP20_BOOKS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codenitro/.nuget/NuGet/NuGet.Config"

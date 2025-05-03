@@ -1,0 +1,30 @@
+@* @using Project_MVC_BookShop2.Models  *@
+@* @using Project_MVC_BookShop2.Repository *@
+
+@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList //<--inject Interface, _basketList <--get data from BasketRepository
+
+
+<h2>Basket</h2>
+
+<div class="container">
+    <div class="row">
+        @if((await _basketList.GetBasketItems()).Any()) //checking if we have any data in our model
+        {
+            var basketItems = await _basketList.GetBasketItems();
+            
+            foreach (var book in basketItems)
+            {
+                <div class="col-md-4">
+                    <partial name="_bookThumbnail" model="book" />
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                Your basket is empty.
+            </div>
+        }
+    </div>
+
+

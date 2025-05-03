@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj": {}
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj": {}
   },
   "projects": {
-    "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj": {
+    "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj",
+        "projectUniqueName": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj",
         "projectName": "LessonTOP27_COLLECTION_QUEUE",
-        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj",
+        "projectPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/LessonTOP27_COLLECTION_QUEUE.csproj",
         "packagesPath": "/home/codenitro/.nuget/packages/",
-        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/",
+        "outputPath": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/codenitro/.nuget/NuGet/NuGet.Config"
