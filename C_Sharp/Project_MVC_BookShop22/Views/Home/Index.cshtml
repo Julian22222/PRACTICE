@@ -1,0 +1,136 @@
+﻿@using Project_MVC_BookShop2.Models 
+@using Microsoft.AspNetCore.Mvc.Rendering
+@* @using Project_MVC_BookShop2.Components *@
+@using Project_MVC_BookShop2.Repository
+
+@{
+    ViewData["Title"] = "Books store";
+
+   @* Layout = null;  //<--this View wont use common Layout for all the pages from Views/Shared/_Layout.cshtml*@
+   @* Layout = "_Layout"; <--can use any Layout name here, buy default it takes _Layout file*@
+}
+
+
+
+<section class="jumbotron text-center" data-ajax="true" >
+    <div class="container">
+        <h1>Welcome to Bookstore</h1>
+
+        @* if environment variable = Development ->it will show everithing inside environment tag *@
+        @* environment tag helpers can have different attributes *@
+        @* <environment names="Development">, <environment include="Development"> and <environment exclude="Development"> *@
+        @* environment variables located in-> Proporties -> launchSettings.json *@
+        <environment names="Development">
+            <h3>Development...</h3>
+        </environment>
+
+        <environment names="Production">
+            <h3>Production..</h3>
+        </environment>
+    
+
+        <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti accusamus repudiandae aliquam suscipit ullam? Inventore, blanditiis sit. Autem iusto optio suscipit quasi ipsa architecto perferendis repudiandae, quam recusandae excepturi odit.</p>
+        <p>
+            @* <a href="#" class="btn btn-primary my-2">Search books</a> *@
+            <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">Search bookss</a>
+        </p>
+    </div>
+</section>
+
+
+<partial name="_VideoBlock1" />
+
+
+
+@* mx-auto <-- colimn displayed in the centre of the page, p-3 <- padding =3px, mb -4 <- margin bottom*@
+<div class="py-5 bg-light mx-auto rounded border p-3">
+
+    @* to render my View components *@
+    @* 1st option how to render View component *@
+    @* InvokeAsync <-- method in Componets/TestBooksViewComponent.cs *@
+    @* Component.InvokeAsync("TestBooks"  <--we passing here the name of our component , ignoring ViewComponent part in TestBooksViewComponent) *@
+    @* Component.InvokeAsync("TestBooks", new {bookId =4, isSort =true}) <-- also we can pass all parametrs that are required in View component *@
+    @await Component.InvokeAsync("TestBooks")
+
+
+    @* 2nd option how to render View component, using tag helpers *@
+    @* not passing any parametrs in this view component, use small letters in View component name *@
+    @* <vc: test-books book-id="2" is-sort="false"></vc: test-books>  <--- also we can pass all parametrs that are required in View component  *@
+    @* To use this 2nd option, you need to add --> (@addTagHelper *, Project_MVC_BookShop2 , @addTagHelper *, Project_MVC_BookShop2.Components ) in Views/_ViewImports.cshtml *@
+    <vc:test-books></vc:test-books>  
+
+
+
+
+    <div class="container border border-dark">
+
+        <div class="row">
+            @* View Component -TopBooks *@
+            @await Component.InvokeAsync("TopBooks" ) 
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+
+                @await Component.InvokeAsync("WeekBook")     
+            
+            </div>
+        </div>
+
+        
+
+
+        <div class="container">
+
+            <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
+            <div class="row">
+
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />      
+                </div>
+
+                <div class="col-md-3" >
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />
+                </div>
+
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />  
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <partial name="_additionalBlock" />
+
+</div>
+
+<a asp-area="Admin" asp-controller="Home" asp-action="Index">Click here to use AREAS</a>
+
+
+
+@* @section directive - we use in View file with the name -Scripts,
+Scripts -can be any name that is the same with (created name(unique name) from RenderSectionAsync("Scripts")) , in _Layot.cshtml *@
+
+@* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
+@* You can create @section at any place in the View file. You not required that you have to create the @section derective in the bottom of your View *@
+
+@section Scripts{
+
+@* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
+   <script>
+    @* $(function(){
+        $(".loader-div").show();
+    } *@
+    
+    $(document).ready(function (){
+        alert("document is ready, Click Ok");
+    })
+</script> 
+
+}

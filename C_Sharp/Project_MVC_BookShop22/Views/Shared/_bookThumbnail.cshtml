@@ -1,0 +1,50 @@
+ @* This is Partial view file, this code can be used in different places, 
+ without writing the same code few times, we can use this component any place in this application *@
+
+ @model Book;  //receiving Book model in this file as we passing --> model="book" in partial tag
+ @* if we use Book model -->( @model IEnumerable<Book>) in  GetAllBooks View, then we use Book model in partial View as well *@
+
+
+@{
+    var extraParam = ViewData["ExtraParam"] as bool?; //can be null or true
+    //receive data that we passed from Components/WeekBook/Default.cshtml file
+    //if extraParam = true, then picture will be bigger, if extraParam = null, then picture will be smaller,as we set in CSS 
+}
+
+
+ <div class="card mb-4 shadow-sm">
+                @* one image for all books *@
+                 @* <img src="https://img-b.udemycdn.com/course/750x422/4715176_8391.jpg" alt="logo"> *@
+
+                @* image will be diffrent, photo from uploaded image *@
+                @* string.IsNullOrEmpty(Model.CoverImageUrl) <-- if Model.CoverImageUrl is null or empty then show --> "/img/340719-200.png" else -> Model.CoverImageUrl*@
+                @* To access passed data we put --> Model. + their property but not book. + their property *@
+                <div class="d-flex justify-content-center">
+                    @* class="same-size - make all uploaded picture in the same size, in CSS give certain properties-  *@
+                    <img src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/340719-200.png" : Model.CoverImageUrl)" alt="image logo" class="@(extraParam.HasValue && extraParam.Value ? "col" : "same-size mt-2")" />
+                </div>
+                <div class="card-body">
+
+                        @* accessing book title  *@
+                        <h3 class="card-title">@(string.IsNullOrEmpty(Model.Title) ? "Name is not available" : Model.Title)</h3>
+
+                        @* accessing book Description  *@
+                        <p class="card-text">@(string.IsNullOrEmpty(Model.Description) ? "Description is not available" : Model.Description)</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                              @* accessing book Id by clicking on each card  *@
+                            @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
+                            @* asp-route-{value} <--any value occupying the {value} placeholder is interpreted as a potential route parameter *@
+                            @* We can put few asp-routes --> asp-route-id="@Model.Id" asp-route-Name="@Model.Name" <-- all this will be shown in the URL, by clicking on this link *@
+                             <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">ℹ️ Info</a>
+                             <a asp-controller="book" asp-action="editbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">Edit 
+                                 @* Font Awesome *@
+                                 <i class="fa fa-marker fa-_lg"></i> 
+                             </a>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm"><strong>+</strong>🧺</button>
+                        @* accessing book Author  *@
+                        <small class="text-muted">@(string.IsNullOrEmpty(Model.Author) ? "Author is not available" : Model.Author)</small>
+                    </div>
+                 </div>
+                </div>

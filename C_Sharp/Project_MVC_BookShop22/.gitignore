@@ -1,0 +1,4 @@
+.env
+.env*
+# /Project_MVC_BookShop2/obj
+# /Project_MVC_BookShop2/bin/Debug/net7.0
