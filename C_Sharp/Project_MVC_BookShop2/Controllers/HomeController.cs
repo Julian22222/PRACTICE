@@ -11,6 +11,7 @@ using DotNetEnv;
 using Project_MVC_BookShop2.Service;    //needs to use Service/UserService.cs class
 using System.Dynamic;
 using Microsoft.AspNetCore.Diagnostics;
+using Project_MVC_BookShop2.Repository;
 
 namespace Project_MVC_BookShop2.Controllers;
 
@@ -30,6 +31,10 @@ public class HomeController : Controller
 
     public readonly UserService _userService;
 
+    public readonly BookRepository _bookRepository;
+
+    public readonly IBasketRepository _basketRepository;
+
     // public HomeController(IConfiguration _configuration) //assign configuration to use it in ContactUs page
     // {
     //     configuration = _configuration;
@@ -40,12 +45,17 @@ public class HomeController : Controller
 
 
 // constructor
-    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env, UserService userService) //IConfiguration to read appsettings.json file
+    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env, UserService userService, BookRepository bookRepository, IBasketRepository basketRepository) //IConfiguration to read appsettings.json file
     {
         _logger = logger;
          configuration = _configuration;  //now using configuration --> we can read the appsetings data
         _env = env;  //<-- dependency injection to check the Environment Variable 
         _userService = userService;
+        _basketRepository = basketRepository;  //<-- create instance of BasketRepository class
+        _bookRepository = bookRepository;  //<-- create instance of BookRepository class
+    
+    
+        Console.WriteLine("HomeController constructor called");
     }
 
     public IActionResult Index()
@@ -75,10 +85,72 @@ public class HomeController : Controller
     }
 
     
-    public IActionResult Basket()
+    [HttpGet]
+    public async Task <IActionResult> Basket()
     {
-        return View();
+        var basketItems = await _basketRepository.GetBasketItems();
+
+        return View(basketItems);
     }
+
+
+    [HttpPost]
+    // public JsonResult Basket([FromBody] Book book){/...}
+    // public JsonResult Basket(int id){..}
+
+    public async Task <JsonResult> Basket(int id){
+
+    try{    //Start a try block to catch any exceptions (errors) that might happen during this process, so the app doesn’t crash and can return a helpful message.
+        var presentBook = await _bookRepository.GetBookById(id);
+
+            if(presentBook == null)
+            {
+                return Json(new { success = false, message = "Book not found" }); //If no book was found for the given ID, return a JSON response saying so. This prevents trying to add a null book to the basket.
+            }
+
+
+
+            // Check if already in basket
+            var items = await _basketRepository.GetBasketItems(); //can't add .Any here, because GetBasketItems() returns a Task<List<Book>>, not a List<Book>, should be awaited first
+            // var alreadyInBasket = _basketRepository.GetBasketItems().Result.Any(b => b.Id == id);
+            //Why we use .Result - To get the actual List<Book>, you must use - await (in async code) or use .Result (in sync code). We have locally created a Task<List<Book>> in the repository, so we need to use .Result to get the actual list of books.
+            //Also, GetBasketItems() returns a Task<List<Book>>, not a List<Book>
+            //You cannot call .Any() directly on a Task<T>
+            //'IEnumerable<Book>' does not contain a definition for 'Any'
+
+            var alreadyInBasket = items.Any(b => b.Id == id); //Get the list of books in the basket
+
+
+            if(alreadyInBasket) //Check if the book is already in the basket. If it is, return a message saying so.
+            {
+                return Json(new { success = false, message = "Book already in basket" }); // return a message telling the user it's already there — no duplicates.
+            }
+
+
+            _basketRepository.AddToBasket(presentBook);
+            return Json(new { success = true, message = "Book added to basket" });  // It returns JSON (e.g. { success: true, message: "..." }) back to the browser. return a successful JSON response to the browser to let the user know the item was added.
+            // success = true or false, is not mandatory fild, can be skipped, but it is a good practice to use it, so the frontend can know if the operation was successful or not. success property is your own custom field — it's not built-in or required by ASP.NET.
+    }catch (Exception ex)  //If something goes wrong, like the database is down or the code has a bug, it catches the error and returns a JSON response with an error message. This way, the app doesn't crash and the user gets feedback. If any error occurs (e.g., null reference, repository not working), catch the exception. Log the error to the server console. Return a JSON error response so the frontend knows something went wrong.
+    {
+        Console.WriteLine("ERROR IN Basket POST: " + ex.Message);
+        return Json(new { success = false, message = "Server error: " + ex.Message });
+    }   
+   
+
+
+    // if(presentBook.Id == book.Id)
+    // {
+    //      _basketRepository.AddToBasket(book);
+
+    //     return Json(new { success = false, message = "Book already in basket" });
+    // }
+
+    // // return Json(new { success = true, message = "Book added to basket" });
+
+    // // return Ok();
+    // // return Ok(new { success = true, message = "Book added to basket" });
+    }
+
 
 
 //first option of managing error page, declaration of this use Status code in-> Program.cs file line 175

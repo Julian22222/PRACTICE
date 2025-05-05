@@ -3,6 +3,8 @@
 @* @using Project_MVC_BookShop2.Components *@
 @using Project_MVC_BookShop2.Repository
 
+@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList 
+
 @{
     ViewData["Title"] = "Books store";
 
@@ -112,6 +114,9 @@
 
 <a asp-area="Admin" asp-controller="Home" asp-action="Index">Click here to use AREAS</a>
 
+<br/>
+<br/>
+
 
 
 @* @section directive - we use in View file with the name -Scripts,
@@ -131,6 +136,29 @@ Scripts -can be any name that is the same with (created name(unique name) from R
     $(document).ready(function (){
         alert("document is ready, Click Ok");
     })
+
+
+    @* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
+    @* Don't put skript block inside partial View, it will not work (_bookThumbnail.cshtml)  *@
+
+    $(document).ready(function () {
+        $(".add-to-basket").click(function () {
+            var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+            $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                type: "POST",
+                url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                    alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                },
+                error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                    alert("Error adding book to basket.");
+                }
+            });
+        });
+    });
+
 </script> 
 
 }

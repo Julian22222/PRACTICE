@@ -15,6 +15,7 @@ using System.IO;  // to use Path.Combine function
 using Microsoft.AspNetCore.Authorization; // to use [Authorize] Attribute, only loged In users can access this action method
 using NuGet.Protocol;
 using Project_MVC_BookShop2.Data;
+using System.Diagnostics;
 
 
 // using System.Web.Mvc; 
@@ -120,6 +121,8 @@ ViewBag.Category = new List<string>(){
   // always use data return type -> Task with async methods 
 [HttpPost] //this method works by clicking -->add book (posting new book) , POST method (attribute)
 public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data coming from AddNewBook.cshtml filled form
+
+    // Debugger.Break();  //this line will stop the execution of the code and open the debugger, we can see all variables and their values
 
     Console.WriteLine($"this is the posted book from controller - {book.ToJson()}");
 
@@ -281,6 +284,7 @@ public async Task <IActionResult> EditBook(int id) {
 
 [HttpPost]
 public async Task <IActionResult> EditBook(int id, Book book) {  //takes id from URL, and book from post method
+    // Debugger.Break();  //this line will stop the execution of the code and open the debugger, we can see all variables and their values
 
     ViewBag.IsSuccess = true;
 

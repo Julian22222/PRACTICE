@@ -1,6 +1,6 @@
 @* @using Project_MVC_BookShop2.Models  *@
 @* @using Project_MVC_BookShop2.Repository *@
-
+@* 
 @inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList //<--inject Interface, _basketList <--get data from BasketRepository
 
 
@@ -25,6 +25,25 @@
                 Your basket is empty.
             </div>
         }
+    </div> *@
+
+
+
+@* option getting bookList from Controller *@
+@model List<Book>
+
+@if (Model.Any())
+{
+    foreach (var book in Model)
+    {
+        <div class="col-md-4">
+            <partial name="_bookThumbnail" model="book" />
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Your basket is empty.
     </div>
-
-
+}

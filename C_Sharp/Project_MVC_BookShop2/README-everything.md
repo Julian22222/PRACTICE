@@ -448,6 +448,89 @@ success: function(response) {
 }
 ```
 
+# Controller [HttpPost]
+
+```C#
+//example
+
+[HttpPost]
+public async Task<JsonResult> Basket(int id) { ... }
+
+//explanation of this code below
+```
+
+- [HttpPost] attribute handles HTTP POST requests only (from form submits or AJAX).
+- async - This allows using await inside the method for asynchronous operations (e.g. await \_repo.GetItems()).
+- Task<...> - always is used with async
+- JsonResult - The action returns a JSON response, not a view
+- (int id) - The method expects a parameter named id in the request.
+
+#### Use JsonResult when:
+
+- You're returning structured data (usually to an AJAX call).
+  You're sending data to the server using AJAX (like your jQuery .ajax() call)
+- You want the client (browser) to receive and process the data in JavaScript
+- You do not return a Razor view. You want to return a JSON response back to the browser, not a View or HTML
+
+When use AJAX call to post something, This AJAX call expects a JSON object in return. So your controller should respond with:
+
+```C#
+return Json(new { success = true, message = "Book added to basket" });
+```
+
+```C#
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    data: { id: 3 },
+    success: function (response) {
+        alert(response.message); // this is coming from JsonResult
+    }
+});
+
+
+//The server handles it in:
+return Json(new { success = true, message = "Book added to basket." });
+
+
+//This sends a JSON response like:
+{
+  "success": true,
+  "message": "Book added to basket."
+}
+
+//No full-page reload, no HTML rendered — just clean data.
+```
+
+#### When not to use JsonResult?
+
+If you're returning a view, not JSON, use IActionResult or ViewResult
+
+```C#
+public IActionResult Basket()
+{
+    var items = _basketRepo.GetBasketItems();
+    return View(items); // not JSON
+}
+
+```
+
+#### return Json
+
+```C#
+// what is difference between this two lines, what success is responsible for
+ return Json(new { success = false, message = "...." });
+// and
+ return Json(new { success = true, message = "...." });
+
+// success = true or false, is not mandatory fild, can be skipped. but it is a good practice to use it, so the frontend can know if the operation was successful or not. success property is your own custom field — it's not built-in or required by ASP.NET.
+```
+
+Both lines are returning a JSON object from your controller to the JavaScript frontend (usually an AJAX call).
+
+The success property is your own custom field — it's not built-in or required by ASP.NET.
+You’re using it to communicate the result of the operation to the frontend.
+
 # Environment variables
 
 - in View files we use (and in \_Layout.cshtml file as well) -->

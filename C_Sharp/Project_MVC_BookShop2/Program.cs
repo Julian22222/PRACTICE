@@ -97,6 +97,7 @@ builder.Services.AddScoped<IBookTypeRepository, BookTypeRepository>();  //to wor
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();  //to work with dependency injections
 builder.Services.AddScoped<AccountRepository, AccountRepository>();  //to work with dependency injections. this allow us to use Identity framework, use usernames, passwords, etc.
 builder.Services.AddScoped<UserService,UserService>();  //to work with UserService class, to get Logge-in User Id in any controller or service
+builder.Services.AddSingleton<IBasketRepository, BasketRepository>();  //to work with dependency injections
 //in Dependency Injection we can use Interfaces or classes
 
 //we can define the same connection string (insted of puting string in BookStoreContect.cs we put it here) and removing -> protected override void OnConfiguring metod from BookStoreContect Class
