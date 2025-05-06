@@ -56,3 +56,11 @@ body {
   right: 0;
   margin: auto;
 }
+
+/* _bookThumbnail.cshtnl */
+/*  */
+.same-size {
+  width: 380px; /* These properties set the size of the images to 380px by 380px, regardless of their original size.  */
+  height: 380px;
+  object-fit: cover; /* Ensures the image fills the area without distortion and stretching.  It crops the image if necessary to maintain the aspect ratio, so the images don’t get distorted. */
+}

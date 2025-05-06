@@ -184,6 +184,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
  dotnet ef migrations add (AnyMigrationsName) //to add changes to database + add migrations folder to the project
 
 dotnet ef migrations add init   //<--Example
+
+//init <--name of migration file, this name should be different for DEVELOPMENT -when we create Database name, adding folders with properties and for PRODUCTION environment
 ```
 
 ```C#
