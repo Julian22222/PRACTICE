@@ -546,3 +546,32 @@ class=”card-text”
     </div>
 </nav>
 ```
+
+# Screen readers attribute difference
+
+- role="" — What the element is
+  Purpose: Defines what type of UI element the HTML element represents (e.g., a button, dialog, banner).
+  Helps screen readers understand the purpose or behavior of the element.
+  If the native HTML tag already has a semantic role (like <button>, <nav>, etc.), you often don’t need role
+
+  ```C#
+    <div class=”alert alert-success alert-dismissible fade show” role=”alert” >  // role=”alert” – will allow to close alert block, fade show- allow to alert fade in and fade out
+        Alert
+        <button class=”btn-close” aria-label=”close” data-bs-dismiss=”alert”  ></button>   // data-bs-dismiss=”alert”   - tells to bootstrap what to close when we click the “X” button
+    </div>
+  ```
+
+- aria-label="" — What the element is called  
+   Purpose: Provides a text label for screen readers when there’s no visible label.
+  It does not define what the element is, only how it's announced.
+
+```C#
+<button class=”navbar-toggler” data-bs-toggle=”collapse” data-bs-target=”#nav” aria-controls=”nav” aria-label=”Expand Navigation”>
+...
+</button>
+```
+
+Rule of Thumb:
+
+Use role when the HTML element doesn't describe its purpose clearly.
+Use aria-label when the element needs a name for screen readers but doesn’t have visible text.
