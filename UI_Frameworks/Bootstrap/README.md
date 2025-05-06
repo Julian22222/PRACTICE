@@ -565,11 +565,11 @@ class=”card-text”
    Purpose: Provides a text label for screen readers when there’s no visible label.
   It does not define what the element is, only how it's announced.
 
-```C#
-<button class=”navbar-toggler” data-bs-toggle=”collapse” data-bs-target=”#nav” aria-controls=”nav” aria-label=”Expand Navigation”>
-...
-</button>
-```
+  ```C#
+  <button class=”navbar-toggler” data-bs-toggle=”collapse” data-bs-target=”#nav” aria-controls=”nav” aria-label=”Expand Navigation”>
+  ...
+  </button>
+  ```
 
 Rule of Thumb:
 
