@@ -484,11 +484,65 @@ class=”card-text”
 
 ```C#
 <div class=”container”>
-    <button class=”btn btn-primary” data-bs-toggle=”collapse” data-bs-target=”#row” aria-expanded=”false” aria-controls=”row”>Toggle< /button>   // data-bs-toggle=”collapse” – for dropdown, data-bs-target=”#row” – targeting the thing we want to collapse, it this case it is block with – id=”row”, aria-expanded=”false” – startup position for dropdown section, aria-controls=”row” should match or  id=”row” in section below
+    <button class=”btn btn-primary” data-bs-toggle=”collapse” data-bs-target=”#row” aria-expanded=”false” aria-controls=”row”>Toggle< /button>   // data-bs-toggle=”collapse” – for dropdown, data-bs-target=”#row” – targeting the thing we want to collapse, it this case it is block with -> id=”row”, aria-expanded=”false” – startup position for dropdown section (closed dropdown), aria-controls=”row” should match with id=”row” in section below, aria-controls will not work with multiple elements in dropdown, because you can specify only one id in here, in our case with multiple elements drop together 2 elements
+
+    //one element in collapse
     <div class=”row collapse” id=”row”>  // collapse -add for dropdown
         <div class=”col”>
-            <div class=”box”>< /div>
+            <div class=”box”>Section 1< /div>
         </div>
     </div>
+
+    //can hav multiple elements
+     <div class=”row collapse” id=”row”>  // collapse -add for dropdown
+        <div class=”col”>
+            <div class=”box”>Section 2< /div>
+        </div>
+    </div>
+
 </div>
+```
+
+# NavBar
+
+```C#
+//Example 1
+<nav=”navbar navbar-expand navbar-dark bg-dark”>   // navbar-dark – dark navbar line, navbar-expand – make navbar horizontal
+    <div class=”container”>
+        <a href=”#” class=”navbar-brand”>BRAND</a>  //can be replaced with Brand Icon
+        <ul class=”navbar-nav”>
+                <li class=”nav-item”>
+                <a href=”#” class=”nav-link active” aria-current=”page” >Home</a>  //active - Home button will be slightly darker colour,
+                </li>
+
+                <li class=”nav-item”>
+                <a href=”#” class=”nav-link”>Store</a>
+                </li>
+        </ul>
+        <div class=”navbar-text”>Test</div> //can add section to right side of the NavBar section, but Navbar menu section will be shifted in the middle
+    </div>
+</nav>
+```
+
+```C#
+//Example 2 – dropdown menu
+<nav=”navbar navbar-expand-md navbar-dark bg-dark”>   // navbar-expand-md – make navbar horizontal on medium screen and higher, otherwise navbar will be vertically stacked
+    <div class=”container”>
+        <a href=”#” class=”navbar-brand”>BRAND</a>
+        <button class=”navbar-toggler” data-bs-toggle=”collapse” data-bs-target=”#nav” aria-controls=”nav” aria-label=”Expand Navigation”>
+            <div class=”navbar-toggler-icon”></div>    // class=”navbar-toggler-icon – create burger menu icon
+        </button>   // data-bs-target=”#nav”-/targeting id=nav, aria-controls=”nav”></ - for screen readers, disable people- it points that id=”nav”
+        <div class=”collapse nav-collapse” id=”nav”>
+            <ul class=”navbar-nav”>
+                <li class=”nav-item”>
+                    <a href=”#” class=”nav-link active” aria-current=”page” >Home</a>
+                </li>
+
+                <li class=”nav-item”>
+                    <a href=”#” class=”nav-link”>Store</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 ```
