@@ -53,8 +53,8 @@ Also, Everithing you change in Classes in Data folder (Database) --> we need to 
 - BookType dropdown menu <-- is coming from database, (they not hardcoded in the View) - types: children, fiction, non-fiction, mystery, biography, fantasy
 - Category dropdown menu <-- is coming from Controller (See --> BookController.cs) <--hardcoded options
 
-- We create new class for dropdown -->Language ,in Data folder and in Models folder
-- We Create connection, relationship between two tables - Books table and language table in Data folder--> (--> See Data/Language.cs file)
+- We create new class for dropdown -->BookType, in Data folder and in Models folder
+- We Create connection, relationship between two tables - Books table and BookType table in Data folder--> (--> See Data/Language.cs file)
 
 In Books class we use property-->
 
@@ -181,15 +181,24 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 - Then in terminal we put
 
 ```C#
- dotnet ef migrations add (AnyMigrationsName) //to add changes to database + add migrations folder to the project
+dotnet ef migrations add (AnyMigrationsName) //to add changes to database + add migrations folder to the project
 
 dotnet ef migrations add init   //<--Example
 
-//init <--name of migration file, this name should be different for DEVELOPMENT -when we create Database name, adding folders with properties and for PRODUCTION environment
+//init <--name of migration file, this name should be different for DEVELOPMENT -when we create local Database, adding folders with properties and for PRODUCTION environment- when connecting to Cloud (AZURE PORTAL)
+
+//when we want to create Mirgations folder:
+  //- for loacal database, we write -> dotnet ef migrations add init, and then dotnet ef database update
+  //- if we want to crate/ add migration files for for Cloud (AZURE PORTAL), we write different name ->  dotnet ef migrations add init2 (For example) and then dotnet ef database update
+
+  //These migration file names must be different for local and cloud DB, the will be located in Migrations folder.
+
+
+//firts time when we put these 2 commands above we create database name as well
 ```
 
 ```C#
-      dotnet ef database update  //to update database
+dotnet ef database update  //to update database
 ```
 
 - Once we added all needed tables and properties to the Web DB ,Then we can put KEY VAULT option back for Production environment,as it is
@@ -215,9 +224,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 - To deploy new app or deploy new changes, go to correct folder of our app write in terminal-->
 
-```C#
-   dotnet publish -c Release -o ./bin/Publish
-```
+  ```C#
+  dotnet publish -c Release -o ./bin/Publish
+  ```
 
 - In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
 
@@ -256,16 +265,16 @@ As example:
    -->//Uninstall all .NET package
 
 2. ```C#
-   sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+    sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
    ```
 
--->///Remove the Microsoft repository
+   -->///Remove the Microsoft repository
 
 3. ```C#
-   sudo apt install dotnet-sdk-7.0
+    sudo apt install dotnet-sdk-7.0
    ```
 
--->///Install .NET (which should pull down the SDK and the runtime from the Ubuntu repository)
+   -->///Install .NET (which should pull down the SDK and the runtime from the Ubuntu repository)
 
 - Also,you can install multiple versions of .Net SDK using dotnet binary packages
 - ```C#
@@ -346,7 +355,7 @@ dotnet add package (PackageName)
 # Main Locations in different folder
 
 - Data folder --> we keep all data for database here.
-- Data/ Model classes --> if we use optional proporties in these classes, if there is no data in that property it will == null (As example: public string? Language { get; set; })
+- Data/ Model classes --> if we use optional proporties in these classes, if there is no data in that property it will == null (As example: public string? BookType { get; set; })
 - Data / BookStoreContext --> this class allow to interact with database, set up for connection to database. Also, here we create tables in databse.
   BookStoreContext ////BookStore <--can be any name, this is a name of our database
   BookStoreContext ////Context <--must be always in the end of name of our class
@@ -354,17 +363,17 @@ dotnet add package (PackageName)
 - Repository --> Class where we keep all logic.
   Connecting with database through ->
 
-```c#
-_context.Books......
+  ```c#
+  _context.Books......
 
-_context  // <-- database connection
+  _context  // <-- database connection
 
-.Books // <--table name in our database
+  .Books // <--table name in our database
 
-```
+  ```
 
-Repository is a place where you can get, post, edit, delete the data in database.
-We use Repository class methods in BookController
+  Repository is a place where you can get, post, edit, delete the data in database.
+  We use Repository class methods in BookController
 
 - In View , when we fill the Form (it is completing through Model class -from Models folder) , then in BookRepository we convert Model data to Database Model(Model class from Data folder)
 
@@ -401,12 +410,12 @@ We use Repository class methods in BookController
 - Views/Shared / \_Layout.cshtml --> Here we put common code for all pages. Provides common structure to other Views. (It is a template, basic layout - these elements will be shown on all pages.). We need let View know that we are using some certain layout-->\_Layout.cshtml file, therefore we need to write in each View file on the top, or indicate it in the Views/\_ViewStart.cshtml file -->
 
 ```C#
-@{
-  Layout = "NameOfTheLayout";
+  @{
+    Layout = "NameOfTheLayout";
 
-  //or
-  Layout = "~/Views/Shared/_Layout.cshtml"
-  }
+    //or
+    Layout = "~/Views/Shared/_Layout.cshtml"
+    }
 ```
 
 Aslo, here we have all meta tags, css links, bootstrap, js links connections.
@@ -417,7 +426,8 @@ Generaly if you are creating any View that is common to our app we start the nam
 - Views / \_ViewImports.cshtml --> here we can connect additional libraries and tag helpers which will be added to all View pages. Also, we can add namespaces here and all View files will have access to this namespaces, therefore we don't need to write them in each View file (example --> @using Project_MVC_BookShop2.Models )
 
 - Views /\_ViewStart.cshtml -->We need let the View know what is the Layout file name. if you are planning to create common View layout inside our application usually we use underscore before the View name. this is a common file. To don't write the same code in each View file we -> we put this code here -->template for all View files.
-- \_ViewStart.cshtml View file is executed before other Views
+
+\_ViewStart.cshtml View file is executed before other Views
 
 ```C#
 @{
@@ -427,13 +437,24 @@ Generaly if you are creating any View that is common to our app we start the nam
 
 - Migrations folder appears only after
 
-```C#
-dotnet ef migrations add (AnyMigrationsName) //<-- this command create Migrations folder in the App and add changes to database whern update the properties or tables in DB,
+  ```C#
+  dotnet ef migrations add (AnyMigrationsName) //<-- this command create Migrations folder in the App and add changes to database whern update the properties or tables in DB,
 
-dotnet ef database update  //<-- this command update database. Using connection string in the APP--> creates tables / updates data in SSMS
-```
+  dotnet ef database update  //<-- this command update database. Using connection string in the APP--> creates tables / updates data in SSMS
+  ```
 
-Migrations use Entity Framework to add tables and its properties to DB, which we indicated in Data folder/DB context file (MyBookStoreWebContext.cs) and Data/Models.
+  Migrations use Entity Framework to add tables and its properties to DB, which we indicated in Data folder/DB context file (MyBookStoreWebContext.cs) and Data/Models.
+
+  init <--name of migration file, this name should be different for DEVELOPMENT -when we create local Database, adding folders with properties and for PRODUCTION environment- when connecting to Cloud (AZURE PORTAL)
+
+  when we want to create Mirgations folder:
+
+  - for loacal database, we write -> dotnet ef migrations add init, and then dotnet ef database update
+  - if we want to crate/ add migration files for for Cloud (AZURE PORTAL), we write different name -> dotnet ef migrations add init2 (For example) and then dotnet ef database update
+
+These migration file names must be different for local and cloud DB, the will be located in Migrations folder.
+
+firts time when we put these 2 commands above we create database name as well
 
 - Area folder -use to separate Controllers, views from main Controllers and Views folders
 

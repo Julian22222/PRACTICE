@@ -1,5 +1,7 @@
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -16,18 +18,26 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
+/* html {
   position: relative;
   min-height: 100%;
-}
+} */
 
 body {
+  background-color: rgb(187, 179, 179);
   margin-bottom: 60px;
+  margin: 0;
+}
+
+video {
+  display: block;
+  width: 100vw;
+  height: auto;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
   width: 100%;
   white-space: nowrap;
   line-height: 60px;

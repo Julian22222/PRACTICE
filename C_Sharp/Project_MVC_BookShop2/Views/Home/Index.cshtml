@@ -31,10 +31,10 @@
         </environment>
     
 
-        <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti accusamus repudiandae aliquam suscipit ullam? Inventore, blanditiis sit. Autem iusto optio suscipit quasi ipsa architecto perferendis repudiandae, quam recusandae excepturi odit.</p>
+        <h4 class="lead text-muted">Discover Your Next Great Read — Thousands of Books at Your Fingertips. From Bestsellers to Hidden Gems — Start Your Literary Journey Today.</h4>
         <p>
             @* <a href="#" class="btn btn-primary my-2">Search books</a> *@
-            <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">Search bookss</a>
+            <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">Search books</a>
         </p>
     </div>
 </section>
@@ -80,33 +80,35 @@
             </div>
         </div>
 
+    </div>
         
 
+    <img src="/img/bookshelf1.jpg" alt="logo" class="img-fluid mt-5 mb-5" />
 
-        <div class="container">
 
-            <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
-            <div class="row">
+    <div class="container">
 
-                <div class="col-md-3">
-                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                    <partial name="_bookThumbnail" model="new Book()" />      
-                </div>
+        <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
+        <div class="row">
 
-                <div class="col-md-3" >
-                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                    <partial name="_bookThumbnail" model="new Book()" />
-                </div>
-
-                <div class="col-md-3">
-                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                    <partial name="_bookThumbnail" model="new Book()" />  
-                </div>
+            <div class="col-md-3">
+                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                <partial name="_bookThumbnail" model="new Book()" />      
             </div>
 
+            <div class="col-md-3" >
+                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                <partial name="_bookThumbnail" model="new Book()" />
+            </div>
+
+            <div class="col-md-3">
+                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                <partial name="_bookThumbnail" model="new Book()" />  
+            </div>
         </div>
 
     </div>
+
 
     <partial name="_additionalBlock" />
 

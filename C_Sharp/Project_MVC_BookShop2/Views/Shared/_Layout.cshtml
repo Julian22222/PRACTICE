@@ -37,13 +37,13 @@
    @* using Partial view, inserting code here from _header.cshtml file *@
    <partial name="_header" />  
 
-    <div class="container">
+    @* <div class="container"> *@
         <main role="main" class="pb-3">
               @* all content from other View pages goes here *@
               @* This Render method provides space for other View files, We can have only 1 RenderBody() method inside 1 layout file *@
             @RenderBody()
         </main>
-    </div>
+    @* </div> *@
 
     <footer class="border-top footer text-muted text-center">
         <div class="container">
