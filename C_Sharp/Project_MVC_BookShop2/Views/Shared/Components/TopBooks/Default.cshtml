@@ -1,7 +1,7 @@
-@model IEnumerable<Book>  //receive data (List of 2 books) from Components/TopBooksViewComponent.cs, that we passed in TopBooksViewComponent.cs,(here we assign a data type to imported Model).It can be any data type -IEnumerable (this is universal), List, Collection
+@model IEnumerable<Book>  //receive data (List of 3 books) from Components/TopBooksViewComponent.cs, that we passed in TopBooksViewComponent.cs,(here we assign a data type to imported Model).It can be any data type -IEnumerable (this is universal), List, Collection
 @* receiving <Book> model  from Components/TopBooksViewComponent.cs*@
 
-<h3 class="mt-5 text-decoration-underline">3 Top Books from database</h3>
+<h3 class="mt-5 mb-2 text-decoration-underline d-flex justify-content-center">Top 3 Books of our Bookshop</h3>
 
 @if(!Model.Any()) //if there is no books in the database
 {

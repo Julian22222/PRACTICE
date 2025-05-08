@@ -177,8 +177,32 @@
       "PackagePath": "staticwebassets/img/book3.jpeg"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/bookshelf1.jpg",
+      "PackagePath": "staticwebassets/img/bookshelf1.jpg"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/login.webp",
       "PackagePath": "staticwebassets/img/login.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/media/facebook.png",
+      "PackagePath": "staticwebassets/img/media/facebook.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/media/instagram.png",
+      "PackagePath": "staticwebassets/img/media/instagram.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/media/tik-tok.png",
+      "PackagePath": "staticwebassets/img/media/tik-tok.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/media/x.png",
+      "PackagePath": "staticwebassets/img/media/x.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/media/youtube.png",
+      "PackagePath": "staticwebassets/img/media/youtube.png"
     },
     {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/signup2.png",

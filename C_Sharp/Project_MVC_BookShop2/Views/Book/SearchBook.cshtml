@@ -10,7 +10,7 @@
 <div class="container">
     <h2 class="text-center mb-5">Search books</h2>
 
-        <form asp-controller="Book" asp-action="SearchBook">
+        <form class="mb-3" asp-controller="Book" asp-action="SearchBook">
             <div class="input-group md-form form-sm form-2 pl-0">
                 <input name="SearchTitle" class="form-control my-0 py-1 red-border" type="text" placeholder="Search" area-label="Search"/>
                 @* anything typed in input area will be assign to --> name="SearchTitle" *@
@@ -26,10 +26,7 @@
 
         </form>
 
-    
-
-
-    <a class="mb-5" asp-controller="Book" asp-action="AddNewBook">Add New Book</a>
+    <a type="button" class="btn btn-success mb-5" asp-controller="Book" asp-action="AddNewBook">Add New Book</a>
 
 
     <br/>

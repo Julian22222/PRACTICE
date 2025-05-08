@@ -136,7 +136,7 @@ return newBook.Id;
                     CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
                     Price = book.Price,
                     CreatedAt = book.CreatedAt
-            }).Take(2).ToListAsync();  //Take(2) <--taking only 2 Books from the database Books2 table
+            }).Take(3).ToListAsync();  //Take(3) <--taking only 2 Books from the database Books2 table
         }
 
         public async Task<Book?> GetWeekBook (){   //These method can return null, so we put ? after Book or Book model
