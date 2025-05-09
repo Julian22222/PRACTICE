@@ -256,6 +256,23 @@ public async Task<IActionResult> SearchBook(string SearchTitle){ //here we recei
 }
 
 
+
+
+public IActionResult SortList(int sortOption){
+    
+    var items = _bookRepository.SortedBooks(sortOption); // Get the items from the database
+
+    // Apply sorting based on the selected option
+
+    
+    // Return the partial view with the sorted items
+    return PartialView("_SortedItems", items);
+}
+
+
+
+
+
 public async Task <IActionResult> EditBook(int id) {
 
     ViewBag.IsSuccess = false;

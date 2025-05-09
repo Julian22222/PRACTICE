@@ -21,7 +21,9 @@
      @* Hello @User.FindFirst("UserFirstname").Value <-- here we use Claims *@
      @* @User <-- we use the same User class to access all the Claims *@
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a>
+            <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>Logout
+            </a>
             <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword">Change password</a>
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
@@ -32,9 +34,13 @@ else
 { 
 //if user not loged In show this code -->
     <li class="nav-item">
-        <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@Context.Request.Path">Login</a>
+        <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@Context.Request.Path">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+        </a>
         <a class="btn btn-primary" asp-controller="Account" asp-action="Signup">Register</a>
-        <a class="btn btn-lg" asp-controller="Home" asp-action="Basket">🧺</a>
+        <a class="btn btn-lg" asp-controller="Home" asp-action="Basket">
+            <i class="fa-solid fa-basket-shopping"></i>
+        </a>
     </li>
 
 }

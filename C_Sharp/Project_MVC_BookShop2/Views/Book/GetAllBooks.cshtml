@@ -15,11 +15,11 @@
 <div class="container">
     <h1 class="d-flex justify-content-center">📖 All books</h1>
     <label for="search" class="form-label">Search by Book type</label>
-    <select class="form-select mb-3" aria-label="Default select example">
+    <select  id="sortOptions" class="form-select mb-3" aria-label="Default select example">
 
         <option selected value="">Sort books by type</option>
         @foreach( var item in await _bookTypeRepository.GetBookTypes()){
-        <option value="@item.TypeName">@item.TypeName</option> //all book types come from database
+        <option value="@item.Id">@item.TypeName</option> //all book types come from database
         }
     </select>    
 
@@ -28,7 +28,7 @@
 
     @if(Model.Any()) //checking if we have any data in our model
     {
-        <div class="row">
+        <div id="BookList" class="row">
             @foreach(var book in Model){  //looping through imported data model(IEnumerable<Book> <--data type for imported Model) from controller
             <div class="col-md-4">
                 <partial name="_bookThumbnail" model="book"/>  
@@ -96,3 +96,32 @@
         }
     </div> *@
 </div>
+
+
+@section Scripts{
+<script>
+
+    //Now you need to add a jQuery function that listens for a change on the dropdown and triggers a request to the controller to sort the list accordingly.
+    $(document).ready(function () {
+        $('#sortOptions').change(function () {
+        var selectedOption = $(this).val(); // Get selected option value
+
+
+         // Trigger an AJAX call to the controller with the selected option
+        $.ajax({
+            url: '@Url.Action("SortList", "Home")', // Change "Home" to your controller name
+            type: 'GET',
+            data: { sortOption: selectedOption },
+            success: function (data) {
+                // Update your table with the sorted data (e.g. replace book list content)
+                $('#BookList').html(data);
+            },
+            error: function (xhr, status, error) {
+                alert("Error during sorting elements.");
+            }
+        });
+        });
+    });
+
+</script>
+}

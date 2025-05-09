@@ -205,6 +205,38 @@
       "PackagePath": "staticwebassets/img/media/youtube.png"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing1.png",
+      "PackagePath": "staticwebassets/img/pngwing1.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing10.png",
+      "PackagePath": "staticwebassets/img/pngwing10.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing11.png",
+      "PackagePath": "staticwebassets/img/pngwing11.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing2.png",
+      "PackagePath": "staticwebassets/img/pngwing2.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing3.png",
+      "PackagePath": "staticwebassets/img/pngwing3.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing4.png",
+      "PackagePath": "staticwebassets/img/pngwing4.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing7.png",
+      "PackagePath": "staticwebassets/img/pngwing7.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/pngwing9.png",
+      "PackagePath": "staticwebassets/img/pngwing9.png"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/signup2.png",
       "PackagePath": "staticwebassets/img/signup2.png"
     },
