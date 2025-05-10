@@ -64,9 +64,9 @@ _context = context;
 
  // always use data return type -> Task with async methods 
 public async Task<IActionResult> GetAllBooks(){  //using IActionReult we can return any datatype from this action method, ViewResult - can return only View()
+    
     var data = await _bookRepository.GetAllBooks();
-
-    return View(data); //passing the data to the View
+    return View(data);
 }
 
 
@@ -105,7 +105,7 @@ var model = new Book(){
 ViewBag.Booktype = new SelectList(await _typeRepository.GetBookTypes(), "Id","TypeName");  //under the hood --> Id- value property(in our case =1), TypeName - Text property(in our case =children)  -> <option value="1" > Children </option>
 
 ViewBag.Category = new List<string>(){
-"programming","animals", "technology", "sports"
+"programming","literature", "technology", "sports"
 };
 
     // by default we passing isSuccess = false to the View page --> AddNewBook
@@ -137,7 +137,7 @@ public async Task<IActionResult> AddNewBook(Book book){ //book <--is the data co
 
 
     ViewBag.Category = new List<string>(){
-        "programming","animals", "technology", "sports"
+        "programming","literature", "technology", "sports"
     };
 
     // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
@@ -258,16 +258,13 @@ public async Task<IActionResult> SearchBook(string SearchTitle){ //here we recei
 
 
 
-public IActionResult SortList(int sortOption){
-    
-    var items = _bookRepository.SortedBooks(sortOption); // Get the items from the database
 
-    // Apply sorting based on the selected option
-
-    
-    // Return the partial view with the sorted items
-    return PartialView("_SortedItems", items);
+public async Task<IActionResult> GetSortedBooksPartial(int sortOption) //sortOption - parametr that we receive from the ajax call, from GetAllBooks.cshtml
+{
+    var data = await _bookRepository.SortedBooks(sortOption);
+    return PartialView("_BookListPartial", data); //return new sorted data to the partial view
 }
+
 
 
 
@@ -282,7 +279,7 @@ public async Task <IActionResult> EditBook(int id) {
 
 
     ViewBag.Category = new List<string>(){
-    "programming","animals", "technology", "sports"
+    "programming","literature", "technology", "sports"
     };
 
     // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database
@@ -312,7 +309,7 @@ public async Task <IActionResult> EditBook(int id, Book book) {  //takes id from
     }
 
     ViewBag.Category = new List<string>(){
-    "programming","animals", "technology", "sports"
+    "programming","literature", "technology", "sports"
     };
 
     // ViewBag.Language = new SelectList(new List<string>(){"Spanish", "Chinese", "Dutch"}); <--hardcoded List, not from database

@@ -74,3 +74,9 @@ video {
   height: 380px;
   object-fit: cover; /* Ensures the image fills the area without distortion and stretching.  It crops the image if necessary to maintain the aspect ratio, so the images don’t get distorted. */
 }
+
+.Mainlogo {
+  margin-top: -100px;
+  margin-bottom: -80px;
+  width: 300px;
+}

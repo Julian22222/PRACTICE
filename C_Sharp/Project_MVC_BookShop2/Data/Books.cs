@@ -36,8 +36,8 @@ namespace Project_MVC_BookShop2.Data
 
          public DateTime CreatedAt { get; set; }
 
-// first Language ->data type
-//second Language ->Name of property
+        // first BookType ->data type
+        //second BookType ->Name of property
         public BookType BookType { get; set; } //we create relationship between Books2 table and BookType table
 
     }

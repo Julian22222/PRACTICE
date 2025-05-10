@@ -722,6 +722,56 @@ Object Relational Mapping (ORM) is a technique used in creating a "bridge" betwe
 
 You can see the ORM as the layer that connects object oriented programming (OOP) to relational databases.
 
+# How script functions work with AJAX
+
+```C#
+//in View file
+
+//when click this button it will call --> addToBasket(1, 'The Hobbit', 'J.R.R. Tolkien')
+<button onclick="addToBasket(1, 'The Hobbit', 'J.R.R. Tolkien')">Add to Basket</button>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function addToBasket(bookId, title, author) {
+        var book = {
+            Id: bookId,
+            Title: title,
+            Author: author
+            // Add other fields if needed
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '/YourControllerName/Basket',
+            data: JSON.stringify(book),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message); // Or update a part of your page dynamically
+                }
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+</script>
+
+
+
+
+//In Controller
+[HttpPost]
+public JsonResult Basket([FromBody] Book book) //receive a book that we sent from ajax call(view file)
+{
+    _basketRepository.AddToBasket(book);
+    return Json(new { success = true, message = "Book added to basket" });
+}
+
+```
+
 ## What is an ORM Tool?
 
 An ORM tool is software designed to help OOP developers interact with relational databases. So instead of creating your own ORM software from scratch, you can make use of these tools
@@ -737,6 +787,44 @@ An ORM tool is software designed to help OOP developers interact with relational
 So the code above does the same as the SQL query. Note that every ORM tool is built differently so the methods are never the same, but the general purpose is similar.
 
 Most OOP languages have a variety of ORM tools that you can choose from.
+
+# Differences when you send a data to controller
+
+Differences between method in Controller
+
+```C#
+[HttpPost]
+public IActionResult Basket([FromBody] Book book){..}
+//and
+
+[HttpPost]
+public async Task<IActionResult> AddNewBook(Book book){ ..}
+```
+
+1.
+
+```C#
+[HttpPost]
+public IActionResult Basket([FromBody] Book book){..}
+
+//This is a synchronous action method.
+//It processes the request and returns a response in a blocking way
+//Suitable for simple, fast operations (e.g., updating in-memory lists, minimal logic, etc.).
+//[FromBody] tells ASP.NET Core to bind the incoming data from the request body (usually JSON in AJAX).- used when Data send via AJAX
+//Only required when using application/json and model binding is ambiguous or from non-form sources.
+```
+
+2.
+
+```C#
+[HttpPost]
+public async Task<IActionResult> AddNewBook(Book book){ ..}
+
+//This is an asynchronous action method.
+//It allows non-blocking I/O operations, such as database access, API calls, or file handling.
+//Returns a Task<IActionResult> which enables await inside the method.
+//This method is used when data is submitted via a FORM
+```
 
 ## Popular ORM Tools for .NET
 
