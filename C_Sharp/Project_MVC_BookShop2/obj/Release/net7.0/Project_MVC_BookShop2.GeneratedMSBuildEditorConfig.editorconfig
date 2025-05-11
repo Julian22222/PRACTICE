@@ -96,6 +96,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19ib29rTGluZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_BookListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Cb29rTGlzdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_bookThumbnail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19ib29rVGh1bWJuYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

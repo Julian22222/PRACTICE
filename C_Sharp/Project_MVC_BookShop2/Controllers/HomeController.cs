@@ -152,6 +152,29 @@ public class HomeController : Controller
     }
 
 
+public async Task<IActionResult> RemoveFromBasket(int id)
+{
+    try
+    {
+        var presentBook = await _bookRepository.GetBookById(id);
+
+        if (presentBook == null)
+        {
+            return Json(new { success = false, message = "Book not found" });
+        }
+
+        _basketRepository.RemoveFromBasket(presentBook.Id);
+        // return Json(new { success = true, message = "Book removed from basket" });
+        return RedirectToAction("Basket"); //Redirect to the Basket action after removing the book
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("ERROR IN RemoveFromBasket POST: " + ex.Message);
+        return Json(new { success = false, message = "Server error: " + ex.Message });
+    }
+}
+
+
 
 //first option of managing error page, declaration of this use Status code in-> Program.cs file line 175
     // [Route("/StatusCodeError/{statusCode}")]

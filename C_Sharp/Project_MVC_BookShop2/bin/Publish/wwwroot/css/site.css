@@ -67,7 +67,7 @@ video {
   margin: auto;
 }
 
-/* _bookThumbnail.cshtnl */
+/* _bookThumbnail.cshtnl, to make same size image, without straching */
 /*  */
 .same-size {
   width: 380px; /* These properties set the size of the images to 380px by 380px, regardless of their original size.  */

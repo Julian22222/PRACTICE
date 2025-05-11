@@ -206,21 +206,21 @@ public async Task <List<Book>> SortedBooks (int booktypeId){
 
     // var book = await _context.Books2.FindAsync(id);  <--another way how to find correct book by Id
 
-        return await _context.Books2.Where(x=>x.BookTypeId ==booktypeId).Select(book => new Book(){
-                        Id = book.Id,
-                        Title = book.Title,
-                        Author = book.Author,
-                        Category = book.Category,
-                        Description = book.Description,
-                        BookTypeId = book.BookTypeId,
-                        BookTypeModel = book.BookType.TypeName, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get). 
-                        //F-End has BookTypeModel property in Book class, B-End has BookType property(which is connection between Books2 table and BookType table) in Books class
-                        TotalPages = book.TotalPages,
-                        CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
-                        BookPdfUrl = book.BookPdfUrl,
-                        Price = book.Price,
-                        CreatedAt = book.CreatedAt
-            }).ToListAsync();
+    return await _context.Books2.Where(x=>x.BookTypeId ==booktypeId).Select(book => new Book(){
+        Id = book.Id,
+        Title = book.Title,
+        Author = book.Author,
+        Category = book.Category,
+        Description = book.Description,
+        BookTypeId = book.BookTypeId,
+        BookTypeModel = book.BookType.TypeName, //you can Use JOINT or if you created relationship, then we can use navigation property(we can get). 
+        //F-End has BookTypeModel property in Book class, B-End has BookType property(which is connection between Books2 table and BookType table) in Books class
+        TotalPages = book.TotalPages,
+        CoverImageUrl = book.CoverImageUrl,  //full path to uploaded img folder -->(wwwroot/books/cover)
+        BookPdfUrl = book.BookPdfUrl,
+        Price = book.Price,
+        CreatedAt = book.CreatedAt
+    }).ToListAsync();
 }
       
 

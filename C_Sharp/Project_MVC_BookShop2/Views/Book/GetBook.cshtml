@@ -80,17 +80,17 @@
 
             <div class="row">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <div >
-                        @* target="blank"  <--open pdf file in new web page *@
-                        <a class="btn btn-outline-primary" href="@Model.BookPdfUrl" target="blank">
-                            Read now
-                        </a>
-                    </div>
-                    <div >
-                        <a class="btn btn-outline-primary" href="/home/basket">
-                            Download
-                        </a>
-                    </div>
+                   
+                    @* target="blank"  <--open pdf file in new web page *@
+                    <a type="button" class="btn btn-outline-primary" href="@Model.BookPdfUrl" target="blank">
+                        Read now
+                    </a>
+                    <a type="button" class="btn btn-outline-primary" href="/home/basket">
+                        Download
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm add-to-basket" data-id="@Model.Id">
+                        <strong>+</strong><i class="fa-solid fa-basket-shopping"></i>
+                    </button>
                 </div>
             </div>
 
@@ -140,3 +140,26 @@
  </div>
 
 </div>
+
+
+@section Scripts{
+    <script>
+           $(document).ready(function () {
+        $(".add-to-basket").click(function () {
+            var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+            $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                type: "POST",
+                url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                    alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                },
+                error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                    alert("Error adding book to basket.");
+                }
+            });
+        });
+    });
+    </script>
+}

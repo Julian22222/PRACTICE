@@ -7,5 +7,7 @@ namespace Project_MVC_BookShop2.Repository
     Task<List<Book?>> GetBasketItems();
     int AddToBasket(Book book);
 
+    int RemoveFromBasket(int bookId);
+
 }
 }

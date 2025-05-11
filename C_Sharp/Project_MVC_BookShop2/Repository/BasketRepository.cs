@@ -28,6 +28,22 @@ namespace Project_MVC_BookShop2.Repository
         return book.Id;
     }
 
+    public int RemoveFromBasket(int bookId)
+    {
+        var book = basketItems.FirstOrDefault(b => b.Id == bookId);
+        if (book != null)
+        {
+            basketItems.Remove(book);
+            Console.WriteLine($"Removed book {bookId} - basket now has {basketItems.Count} items");
+            return bookId;
+        }
+        else
+        {
+            Console.WriteLine($"Book {bookId} not found in basket");
+            return -1;
+        }
+    }
+
 
    
 
