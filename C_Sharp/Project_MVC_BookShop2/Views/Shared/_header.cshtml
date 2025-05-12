@@ -46,10 +46,19 @@
                         
     @* testing bollean data type from appsettings.json, if DisplayNewBookAlert = true ---> show message *@
     @if(_configuration.GetValue<bool>("DisplayNewBookAlert")){       
-    <div class="alert alert-info" role="alert">
-        This is our message
+    <div id="scrollingMessage" class="alert alert-info scrolling-message" role="alert">
+        Free UK delivery on orders over £25, otherwise £2.99
     </div>
     }
                
        
 </header>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        var speed = 10000; // Change the scrolling speed (milliseconds),animation-duration controls how fast the message moves.
+        $('#scrollingMessage').css('animation-duration', speed + 'ms');
+        });
+    </script>
+}

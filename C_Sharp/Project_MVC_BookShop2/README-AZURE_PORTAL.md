@@ -185,7 +185,7 @@ Tick Step 4 and SAVE
 
 [Microsoft Azure](https://portal.azure.com/#home)
 
-1. Subscriptions (Azure subscription) // all Projects can go under one subscription (--> Azure subscription 1, in our case)
+1. Subscriptions (Azure subscription) // each Project should go under separate Subscription, it will ease to find more datails regarding each Project (such as biling of each Project and etc.)
 
 - What package you use and how mach you pay for using Azure services
 
