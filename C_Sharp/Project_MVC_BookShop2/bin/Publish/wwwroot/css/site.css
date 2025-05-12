@@ -80,3 +80,25 @@ video {
   margin-bottom: -80px;
   width: 300px;
 }
+
+/* scrolling-message on each Page */
+/* The white-space: nowrap; ensures the text doesn’t break into multiple lines */
+.scrolling-message {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%; /* Full width */
+  display: inline-block;
+  position: absolute;
+  animation: scroll-left 10s linear infinite;
+}
+
+/* The @keyframes creates the animation that moves the text from right to left. */
+/* The transform: translateX(100%) starts the message off-screen to the right, and transform: translateX(-100%) moves it off-screen to the left. */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
