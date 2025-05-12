@@ -379,200 +379,229 @@ Convert.ToBoolean(Value to convert to bool goes here)
 
 # Other / mini file and normal file version of libraries
 
-- In wwwroot / lib we have normal version and mini file version of files
-  Example: bootstrap-grid.css(normal, non mini file version) and bootstrap-grid.min.css (mini file verison)
-- If we use mini file version in the app --> then we won't be able to debug our application in the browser, because an entire code is less than in normal version.
-- If we use normal or non mini file version in the app --> the size of the file is larger than mini file version, then it can give a performance issues in the production environment
-- Both files have thair avantages and disadvantages, that means we should render these file based on the environment.
-- In Development environment we should render ( we should use) --> normal or non mini file version, in case we want to debug our app.
-- In Non Development environment (Staging, Production,testing environment) we should use mini file version , to increase the performance of our app.
+    - In wwwroot / lib we have normal version and mini file version of files
+    Example: bootstrap-grid.css(normal, non mini file version) and bootstrap-grid.min.css (mini file verison)
+    - If we use mini file version in the app --> then we won't be able to debug our application in the browser, because an entire code is less than in normal version.
+    - If we use normal or non mini file version in the app --> the size of the file is larger than mini file version, then it can give a performance issues in the production environment
+    - Both files have thair avantages and disadvantages, that means we should render these file based on the environment.
+    - In Development environment we should render ( we should use) --> normal or non mini file version, in case we want to debug our app.
+    - In Non Development environment (Staging, Production,testing environment) we should use mini file version , to increase the performance of our app.
+
+# When constructor is called?
+
+    In ASP.NET Core MVC with C#, the constructor of a class is called when an instance of the class is created. In the context of an MVC application, constructors are called in different scenarios depending on the type of class:
+
+    - Controller Constructor is called every time when we requesting any of its methods (for example: HomeController method) . When an HTTP request is made to a specific URL (e.g., /Home/Index), the ASP.NET Core MVC framework will attempt to route the request to a controller action (e.g., Index action in the HomeController. The constructor is called for each incoming request of corresponding Controller)
+    - ASP.NET Core uses dependency injection (DI), The constructor is called when the service is requested. If the controller has dependencies that are registered in the Dependency Injection (DI) container (e.g., services, repositories), they are passed into the constructor automatically by the DI system.
+    - For models (classes representing data), the constructor is typically called when a new instance of the model is created
+
+    ### Why is the Constructor Called Every Time?
+
+    This is because, by default, ASP.NET Core MVC creates a new instance of the controller for each request, which ensures that the controller is stateless. Each request gets its own fresh instance of the controller, and its constructor is called each time.
+
+    However, the dependencies (services injected into the controller) may have different lifetimes:
+
+    - Transient: A new instance of the service is created every time it’s requested.
+    - Scoped: A new instance of the service is created for each HTTP request, but the same instance is reused within the scope of that request.
+    - Singleton: A single instance of the service is used throughout the entire application's lifetime
+
+
+    Even though the constructor is called for each request, services injected into the controller will be resolved according to their lifetimes in the DI container.
+
+    -  When you request /Home/Index, the HomeController constructor is called first.
+
+    -  If you then request /Home/About, the HomeController constructor will be called again to create a new instance of the controller.
+
+    ### Alternative: Controller Lifecycle with DI
+    If you want to avoid creating a new controller instance per request (which is uncommon and not recommended for most scenarios), you could technically make the controller itself a singleton, but that would introduce issues like shared state between requests, which goes against the principles of statelessness in web applications.
+
+    To summarize: Yes, the constructor is called every time an action on the HomeController is requested, because the controller is created fresh for each HTTP request.
 
 # return RedirectToAction
 
-- AJAX or JavaScript when submitting the form can cause redirection issues
+    - AJAX or JavaScript when submitting the form can cause redirection issues
 
-```C#
-// Normally if we don't use AJAX;
-// What happens:
-// The browser sends a POST request to the server.
-// The server responds with a 302 Redirect (from RedirectToAction(...)).
-// The browser automatically follows the redirect to the GET version of AddNewBook.
-// This works without any JavaScript.
-```
+    ```C#
+    // Normally if we don't use AJAX;
+    // What happens:
+    // The browser sends a POST request to the server.
+    // The server responds with a 302 Redirect (from RedirectToAction(...)).
+    // The browser automatically follows the redirect to the GET version of AddNewBook.
+    // This works without any JavaScript.
+    ```
 
-- What happens in an AJAX form submission?
-  AJAX (Asynchronous JavaScript and XML) uses JavaScript to send the form data without refreshing the page. Example:
+    - What happens in an AJAX form submission?
+    AJAX (Asynchronous JavaScript and XML) uses JavaScript to send the form data without refreshing the page. Example:
 
-```C#
-$('#bookForm').submit(function(e) {
-    e.preventDefault(); // stop the form from submitting the normal way
+    ```C#
+    $('#bookForm').submit(function(e) {
+        e.preventDefault(); // stop the form from submitting the normal way
 
-    $.ajax({
-        url: '/Book/AddNewBook',
-        method: 'POST',
-        data: $(this).serialize(),
-        success: function(response) {
-            console.log("Server responded:", response);
-        }
+        $.ajax({
+            url: '/Book/AddNewBook',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                console.log("Server responded:", response);
+            }
+        });
     });
-});
-```
+    ```
 
-- Why this breaks the redirect:
+    - Why this breaks the redirect:
 
-AJAX captures the response within JavaScript.
+    AJAX captures the response within JavaScript.
 
-Normally your controller returns RedirectToAction(...), it's a 302 redirect, but AJAX does not follow redirects like a browser would.
+    Normally your controller returns RedirectToAction(...), it's a 302 redirect, but AJAX does not follow redirects like a browser would.
 
-Instead, the AJAX call just receives the raw response, and your JavaScript needs to decide what to do next.
+    Instead, the AJAX call just receives the raw response, and your JavaScript needs to decide what to do next.
 
-So instead of navigating to the new page, nothing happens — unless you explicitly do it.
+    So instead of navigating to the new page, nothing happens — unless you explicitly do it.
 
-- How to handle redirection in AJAX?
+    - How to handle redirection in AJAX?
 
-If you're using AJAX, and still want to redirect the user after success, you must do it manually in JavaScript:
+    If you're using AJAX, and still want to redirect the user after success, you must do it manually in JavaScript:
 
-```C#
-// Server side:
-// Return a JSON object with a redirect URL instead of RedirectToAction:
-return Json(new { redirectUrl = Url.Action("AddNewBook", new { isSuccess = true, bookId = id }) });
-
+    ```C#
+    // Server side:
+    // Return a JSON object with a redirect URL instead of RedirectToAction:
+    return Json(new { redirectUrl = Url.Action("AddNewBook", new { isSuccess = true, bookId = id }) });
 
 
-// Client side:
-// In your JavaScript:
-success: function(response) {
-    if (response.redirectUrl) {
-        window.location.href = response.redirectUrl; // manually redirect
+
+    // Client side:
+    // In your JavaScript:
+    success: function(response) {
+        if (response.redirectUrl) {
+            window.location.href = response.redirectUrl; // manually redirect
+        }
     }
-}
-```
+    ```
 
 # Controller [HttpPost]
 
-```C#
-//example
+    ```C#
+    //example
 
-[HttpPost]
-public async Task<JsonResult> Basket(int id) { ... }
+    [HttpPost]
+    public async Task<JsonResult> Basket(int id) { ... }
 
-//explanation of this code below
-```
+    //explanation of this code below
+    ```
 
-- [HttpPost] attribute handles HTTP POST requests only (from form submits or AJAX).
-- async - This allows using await inside the method for asynchronous operations (e.g. await \_repo.GetItems()).
-- Task<...> - always is used with async
-- JsonResult - The action returns a JSON response, not a view
-- (int id) - The method expects a parameter named id in the request.
+    - [HttpPost] attribute handles HTTP POST requests only (from form submits or AJAX).
+    - async - This allows using await inside the method for asynchronous operations (e.g. await \_repo.GetItems()).
+    - Task<...> - always is used with async
+    - JsonResult - The action returns a JSON response, not a view
+    - (int id) - The method expects a parameter named id in the request.
 
-#### Use JsonResult when:
+    #### Use JsonResult when:
 
-- You're returning structured data (usually to an AJAX call).
-  You're sending data to the server using AJAX (like your jQuery .ajax() call)
-- You want the client (browser) to receive and process the data in JavaScript
-- You do not return a Razor view. You want to return a JSON response back to the browser, not a View or HTML
+    - You're returning structured data (usually to an AJAX call).
+    You're sending data to the server using AJAX (like your jQuery .ajax() call)
+    - You want the client (browser) to receive and process the data in JavaScript
+    - You do not return a Razor view. You want to return a JSON response back to the browser, not a View or HTML
 
-When use AJAX call to post something, This AJAX call expects a JSON object in return. So your controller should respond with:
+    When use AJAX call to post something, This AJAX call expects a JSON object in return. So your controller should respond with:
 
-```C#
-return Json(new { success = true, message = "Book added to basket" });
-```
+    ```C#
+    return Json(new { success = true, message = "Book added to basket" });
+    ```
 
-```C#
-$.ajax({
-    type: "POST",
-    url: "/Home/Basket",
-    data: { id: 3 },
-    success: function (response) {
-        alert(response.message); // this is coming from JsonResult
+    ```C#
+    $.ajax({
+        type: "POST",
+        url: "/Home/Basket",
+        data: { id: 3 },
+        success: function (response) {
+            alert(response.message); // this is coming from JsonResult
+        }
+    });
+
+
+    //The server handles it in:
+    return Json(new { success = true, message = "Book added to basket." });
+
+
+    //This sends a JSON response like:
+    {
+    "success": true,
+    "message": "Book added to basket."
     }
-});
 
+    //No full-page reload, no HTML rendered — just clean data.
+    ```
 
-//The server handles it in:
-return Json(new { success = true, message = "Book added to basket." });
+    #### When not to use JsonResult?
 
+    If you're returning a view, not JSON, use IActionResult or ViewResult
 
-//This sends a JSON response like:
-{
-  "success": true,
-  "message": "Book added to basket."
-}
+    ```C#
+    public IActionResult Basket()
+    {
+        var items = _basketRepo.GetBasketItems();
+        return View(items); // not JSON
+    }
+    ```
 
-//No full-page reload, no HTML rendered — just clean data.
-```
+    #### return Json
 
-#### When not to use JsonResult?
+    ```C#
+    // what is difference between this two lines, what success is responsible for
+    return Json(new { success = false, message = "...." });
+    // and
+    return Json(new { success = true, message = "...." });
 
-If you're returning a view, not JSON, use IActionResult or ViewResult
+    // success = true or false, is not mandatory fild, can be skipped. but it is a good practice to use it, so the frontend can know if the operation was successful or not. success property is your own custom field — it's not built-in or required by ASP.NET.
+    ```
 
-```C#
-public IActionResult Basket()
-{
-    var items = _basketRepo.GetBasketItems();
-    return View(items); // not JSON
-}
+    Both lines are returning a JSON object from your controller to the JavaScript frontend (usually an AJAX call).
 
-```
-
-#### return Json
-
-```C#
-// what is difference between this two lines, what success is responsible for
- return Json(new { success = false, message = "...." });
-// and
- return Json(new { success = true, message = "...." });
-
-// success = true or false, is not mandatory fild, can be skipped. but it is a good practice to use it, so the frontend can know if the operation was successful or not. success property is your own custom field — it's not built-in or required by ASP.NET.
-```
-
-Both lines are returning a JSON object from your controller to the JavaScript frontend (usually an AJAX call).
-
-The success property is your own custom field — it's not built-in or required by ASP.NET.
-You’re using it to communicate the result of the operation to the frontend.
+    The success property is your own custom field — it's not built-in or required by ASP.NET.
+    You’re using it to communicate the result of the operation to the frontend.
 
 # Environment variables
 
-- in View files we use (and in \_Layout.cshtml file as well) -->
-- environment tag helpers can have different attributes
+    - in View files we use (and in \_Layout.cshtml file as well) -->
+    - environment tag helpers can have different attributes
 
-```C#
-<environment include="Production">
-<h2>Production<.h2>
-</environment>
-```
+    ```C#
+    <environment include="Production">
+    <h2>Production<.h2>
+    </environment>
+    ```
 
-or
+    or
 
-```C#
-<environment names="Production,Staging">
-    <h3>Production and Staging.</h3>
-</environment>
-```
+    ```C#
+    <environment names="Production,Staging">
+        <h3>Production and Staging.</h3>
+    </environment>
+    ```
 
-or
+    or
 
-```C#
-<environment exclude="Develoment">
-    <h3>Production..</h3>
-</environment>
-```
+    ```C#
+    <environment exclude="Develoment">
+        <h3>Production..</h3>
+    </environment>
+    ```
 
-- In Classes or Controllers we use -->
+    - In Classes or Controllers we use -->
 
-```C#
-private readonly IWebHostEnvironment _webHostEnvironment;
+    ```C#
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-//constructor
-public BookController(IWebHostEnvironment webHostEnvironment){
-_webHostEnvironment = webHostEnvironment;
-}
+    //constructor
+    public BookController(IWebHostEnvironment webHostEnvironment){
+    _webHostEnvironment = webHostEnvironment;
+    }
 
-//in action method
-if(_webHostEnvironment.IsDevelopment){
-  // some code
-} <-- if it envionment Development do some code
-```
+    //in action method
+    if(_webHostEnvironment.IsDevelopment){
+    // some code
+    } <-- if it envionment Development do some code
+    ```
 
 # Different Tag Helpers
 

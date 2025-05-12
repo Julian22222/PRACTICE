@@ -1,0 +1,137 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Project_MVC_BookShop2
+build_property.RootNamespace = Project_MVC_BookShop2
+build_property.ProjectDir = /home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = /home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2
+build_property._RazorSourceGeneratorDebug = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Areas/Admin/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Areas/Admin/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9DaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Account/Signup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9TaWdudXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Book/AddNewBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9BZGROZXdCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Book/EditBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9FZGl0Qm9vay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Book/GetAllBooks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9HZXRBbGxCb29rcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Book/GetBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9HZXRCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Book/SearchBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9TZWFyY2hCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Home/Basket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9CYXNrZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Home/MyCustomError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9NeUN1c3RvbUVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/Components/TestBooks/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0NvbXBvbmVudHMvVGVzdEJvb2tzL0RlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/Components/TopBooks/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0NvbXBvbmVudHMvVG9wQm9va3MvRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/Components/WeekBook/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0NvbXBvbmVudHMvV2Vla0Jvb2svRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_additionalBlock.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19hZGRpdGlvbmFsQmxvY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_bookBasketPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19ib29rQmFza2V0UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_bookLine.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19ib29rTGluZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_BookListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Cb29rTGlzdFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_bookThumbnail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19ib29rVGh1bWJuYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19oZWFkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_LoginInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpbkluZm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_VideoBlock1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WaWRlb0Jsb2NrMS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project_MVC_BookShop2/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-e8qpg7xu84

@@ -148,6 +148,7 @@ Scripts -can be any name that is the same with (created name(unique name) from R
     @* Don't put skript block inside partial View, it will not work (_bookThumbnail.cshtml)  *@
 
     $(document).ready(function () {
+        //jquery for _bookThambnail.cshtml file (Partial View)
         $(".add-to-basket").click(function () {
             var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
 
