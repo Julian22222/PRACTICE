@@ -735,3 +735,26 @@ Here are some of the advantages of using an ORM tool:
 - Learning how to use ORM tools can be time consuming.
 - They are likely not going to perform better when very complex queries are involved.
 - ORMs are generally slower than using SQL.
+
+# How to add Awesome icons In ASP.NET core MVC
+
+[--> Awesome Icons <--](https://fontawesome.com/search?ic=free)
+
+1. You can use CDN link
+
+```C#
+//add this link to _Layout.cshtml into <head> tag
+
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css' rel="stylesheet" />
+```
+
+Then you can insert Awesome Icons code anywhere in HTML
+
+2. Using NuGet: Install the FontAwesome NuGet package into your project.
+
+- Directly: Download the Font Awesome CSS file (e.g., all.min.css) and place it in your wwwroot/lib/font-awesome/css directory.
+
+```C#
+// If using NuGet or downloaded directly, add the following to your _Layout.cshtml or other layout file:
+<link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+```

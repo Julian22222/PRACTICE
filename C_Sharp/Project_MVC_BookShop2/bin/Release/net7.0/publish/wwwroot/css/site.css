@@ -85,11 +85,11 @@ video {
 /* The white-space: nowrap; ensures the text doesn’t break into multiple lines */
 .scrolling-message {
   white-space: nowrap;
-  overflow: hidden;
-  width: 100%; /* Full width */
-  display: inline-block;
+  /* overflow: hidden; */
+  /* width: 100%;  */
+  /* display: inline-block; */
   position: absolute;
-  animation: scroll-left 10s linear infinite;
+  animation: scroll-left 30s linear infinite; /* The animation scrolls the text from right to left. */
 }
 
 /* The @keyframes creates the animation that moves the text from right to left. */

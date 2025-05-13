@@ -511,11 +511,14 @@ The concept of the ClaimPrincipal is almost like a valet, like Authentication va
 # ViewBag (--> See BookController and AddNewBook.cshtml)
 
 - ViewBag is a type object
-- ViewBag is used to pass any data from action method to View and we can display this data on View
+- ViewBag is limited to the current request only.
+- ViewBag is used to pass any temporary data from action method to the View(with the same name only!!!) and we can display this data on View
+- ViewBag is valid only between the controller and the view that it returns — it does not persist/not working across redirects or RedirectToAction.
+- ViewBag is typically used for passing non-critical, display-related data (e.g., dropdown list items, status messages).
 - This type of data binding is known as loosely binding. If you passing the data by using Viewbag and we using that data in the View (data binding with the View)<--it is loosly binding
 - Strongly binding is in controller when we pass the data with --> return View(data); to View. Located in controller action method
 - We can pass any type of data in ViewBag
-- ViewBag use dynamic property (because Razor renders any data type automatically when we use ViewBag, ether it is int or string or anything else)
+- ViewBag use dynamic property (because Razor renders any data type automatically when we use ViewBag, ether it is int or string or anything else) to pass temporary data from a controller to a view during a single request-response cycle.
 - Disadvantage of this method --> we will not get any errors if we misspell the ViewBag property in the View file --> (Example if we put in View file --> @Viewbag.Numm)
 - First we need to create a new property in ViewBag and then assign some data to it:
 
@@ -584,9 +587,103 @@ dynamic data = ViewBag.Data
 }
 ```
 
+# Viewbag scope and limitations
+
+When you use RedirectToAction, Redirect, or other redirect methods:
+
+- The framework starts a new request, which means the original ViewBag data is lost.
+- This is because ViewBag data is not stored in TempData, session, or cookies, so it doesn’t persist beyond the current request.
+
+##### If you need to preserve/pass data across a redirect, use one of the following:
+
+1. TempData – persists for one additional request (ideal for redirects).
+
+```C#
+TempData["Message"] = "Data carried over after redirect.";
+
+return RedirectToAction("OtherAction");
+```
+
+2. Query String / Route Values – pass small amounts of data explicitly via the URL.
+
+```C#
+//1. Example of passing Data with Query String
+//A query string allows you to pass small pieces of data through the URL. It's easy to use, but keep in mind that it’s visible to the user and has length limitations.
+
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        // Passing data via query string
+        return RedirectToAction("Details", new { id = 1, message = "Hello from query string!" });
+    }
+
+
+
+    public IActionResult Details(int id, string message)
+    {
+        // Receiving data from the query string
+        ViewBag.Message = message;
+        return View();
+    }
+}
+
+
+
+//Generated URL Example:
+//When you call the RedirectToAction in the Index action, the URL will look like:
+/Home/Details?id=1&message=Hello%20from%20query%20string%21
+
+
+//In the Details View (e.g., Details.cshtml):
+<h2>Details View</h2>
+<p>Message: @ViewBag.Message</p>
+```
+
+```C#
+//2. Example of Passing Data with Route Values
+//Route values allow you to include data as part of the URL path, instead of as a query string. It's cleaner and often used in RESTful routing.
+
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        // Passing data via route values
+        return RedirectToAction("Details", new { id = 123, message = "Hello from route values!" });
+    }
+
+
+
+    public IActionResult Details(int id, string message)
+    {
+        // Receiving data from route values
+        ViewBag.Message = message;
+        return View();
+    }
+}
+
+
+//Route Configuration
+//If you're using default routing ({controller=Home}/{action=Index}/{id?}), this will work without extra configuration. But, you can configure custom routes in Startup.cs or Program.cs.
+
+//In the Details View (e.g., Details.cshtml):
+<h2>Details View</h2>
+<p>Message: @ViewBag.Message</p>
+
+// Example URL with Route Values:
+/Home/Details/123/Hello%20from%20route%20values%21
+```
+
+Summary:
+
+- Query String: The data is passed after the ? in the URL. You can see the data in the URL itself. Example: /Home/Details?id=1&message=Hello
+- Route Values: Data is passed as part of the URL path. Example: /Home/Details/123/Hello
+
+Both methods allow you to pass data without using ViewBag or TempData. Just remember that query strings are visible and should not be used for sensitive data, and route values often look cleaner but are also exposed in the URL.
+
 ..............................................................................................................
 
-# ViewData
+# ViewData (very similar to ViewBag but has different features)
 
 - ViewData use ViewDataDictionary type
 - is server side code
