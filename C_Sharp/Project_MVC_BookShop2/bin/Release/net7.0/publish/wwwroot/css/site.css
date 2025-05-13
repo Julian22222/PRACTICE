@@ -81,7 +81,7 @@ video {
   width: 300px;
 }
 
-/* scrolling-message on each Page */
+/* scrolling-message on the top of each Page */
 /* The white-space: nowrap; ensures the text doesn’t break into multiple lines */
 .scrolling-message {
   white-space: nowrap;
