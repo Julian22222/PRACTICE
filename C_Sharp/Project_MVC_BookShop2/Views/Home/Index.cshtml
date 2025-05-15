@@ -34,7 +34,6 @@
     
 
         <h4 class="lead text-muted">Discover Your Next Great Read — Thousands of Books at Your Fingertips. From Bestsellers to Hidden Gems — Start Your Literary Journey Today.</h4>
-            @* <a href="#" class="btn btn-primary my-2">Search books</a> *@
         <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">
             <i class="fa-solid fa-magnifying-glass"></i> Search books
         </a>
@@ -89,30 +88,28 @@
 
     <img src="/img/bookshelf1.jpg" alt="logo" class="img-fluid mt-5 mb-5" />
 
+    <div style="background-color: rgb(139, 127, 127);">
+        <div class="container">
+            <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
+            <div class="row">
 
-    <div class="container">
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />      
+                </div>
 
-        <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
-        <div class="row">
+                <div class="col-md-3" >
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />
+                </div>
 
-            <div class="col-md-3">
-                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                <partial name="_bookThumbnail" model="new Book()" />      
-            </div>
-
-            <div class="col-md-3" >
-                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                <partial name="_bookThumbnail" model="new Book()" />
-            </div>
-
-            <div class="col-md-3">
-                @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                <partial name="_bookThumbnail" model="new Book()" />  
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />  
+                </div>
             </div>
         </div>
-
     </div>
-
 
     <partial name="_additionalBlock" />
 
@@ -135,9 +132,6 @@ Scripts -can be any name that is the same with (created name(unique name) from R
 
 @* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
    <script>
-    @* $(function(){
-        $(".loader-div").show();
-    } *@
     
     $(document).ready(function (){
         alert("document is ready, Click Ok");
@@ -146,7 +140,6 @@ Scripts -can be any name that is the same with (created name(unique name) from R
 
     @* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
     @* Don't put skript block inside partial View, it will not work (_bookThumbnail.cshtml)  *@
-
     $(document).ready(function () {
         //jquery for _bookThambnail.cshtml file (Partial View)
         $(".add-to-basket").click(function () {
@@ -171,9 +164,9 @@ Scripts -can be any name that is the same with (created name(unique name) from R
 }
 
 
-//$.ajax({
-//type: "POST",
-//url: "/Book/Basket",
-//data: JSON.stringify(book),
-//contentType: "application/json"
-//});
+@* $.ajax({
+type: "POST",
+url: "/Book/Basket",
+data: JSON.stringify(book),
+contentType: "application/json"
+}); *@

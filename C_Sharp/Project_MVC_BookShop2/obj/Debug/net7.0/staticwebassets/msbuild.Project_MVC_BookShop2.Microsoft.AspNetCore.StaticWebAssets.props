@@ -16,6 +16,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\cover\1e9ecc85-d30d-4777-9422-d7aa347dce07_books-4812032_960_720.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\cover\48776d01-cdba-4677-847f-c3698191c8f9_pic05.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>Project_MVC_BookShop2</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Project_MVC_BookShop2</BasePath>
+      <RelativePath>books/cover/48776d01-cdba-4677-847f-c3698191c8f9_pic05.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\cover\48776d01-cdba-4677-847f-c3698191c8f9_pic05.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\cover\4f1b938a-5baa-469d-833a-8fe44b03ea50_books-4812032_960_720.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Project_MVC_BookShop2</SourceId>
@@ -175,6 +191,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\pdf\637c6e88-1b35-44ce-b00e-b17e001cc700_2.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\pdf\7d16c72e-7e3d-4fa5-801c-a984960c338a_1.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Project_MVC_BookShop2</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Project_MVC_BookShop2</BasePath>
+      <RelativePath>books/pdf/7d16c72e-7e3d-4fa5-801c-a984960c338a_1.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\pdf\7d16c72e-7e3d-4fa5-801c-a984960c338a_1.pdf))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\books\pdf\7d97dc30-cc7e-480c-a2d2-7ae9c18fbc8a_2.pdf))">
       <SourceType>Package</SourceType>
