@@ -532,7 +532,7 @@ class=”card-text”
         <button class=”navbar-toggler” data-bs-toggle=”collapse” data-bs-target=”#nav” aria-controls=”nav” aria-label=”Expand Navigation”>
             <div class=”navbar-toggler-icon”></div>    // class=”navbar-toggler-icon – create burger menu icon
         </button>   // data-bs-target=”#nav”-/targeting id=nav, aria-controls=”nav”></ - for screen readers, disable people- it points that id=”nav”
-        <div class=”collapse nav-collapse” id=”nav”>
+        <div class=”collapse navbar-collapse” id=”nav”>
             <ul class=”navbar-nav”>
                 <li class=”nav-item”>
                     <a href=”#” class=”nav-link active” aria-current=”page” >Home</a>
@@ -575,3 +575,137 @@ Rule of Thumb:
 
 Use role when the HTML element doesn't describe its purpose clearly.
 Use aria-label when the element needs a name for screen readers but doesn’t have visible text.
+
+# Other things
+
+```C#
+//Background
+<div class="card bg-dark">  //make backgroung dark colour, but the text is black as well, (can't see text on black background)
+Hello
+</div>
+
+//to make text show on black background
+<div class="card bg-dark text-white">  //or text-light
+Hello
+</div>
+
+//or
+
+<div class="card text-bg-dark"> //automatically give text correct colour depending from background colour
+Hello
+</div>
+```
+
+```C#
+//Opacity
+<div class="card bg-primary bg-opacity-25 text-opacity-50"> //will give 25% background apacity, text-opacity-50%
+Hello
+</div>
+```
+
+```C#
+//make different colour of anker tag
+<a href="#" class="link-danger"> Hi </a>  //will be in red colour
+```
+
+```C#
+//Stack elements
+
+//automatically elements will be verically stacked on top of each other
+<div class="card-body">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+</div>
+
+
+//elements will be horizontally stacked up next to each other
+<div class="card-body">
+    <div class="hstack gap-3">  //horizontal stack, with gap 3 between elements
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+    </div>
+</div>
+
+
+//elements will be verically stacked on top of each other
+<div class="card-body">
+    <div class="vstack">  //vertical stack
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+        <div class="box" style="width:100%"></div>
+    </div>
+</div>
+```
+
+```C#
+//borders
+
+<div class="card border border-3 border-primary rounded-3 p-2 m-5">
+    Hello
+</div>
+
+//border-primary - colour of the border,
+//border-3 - width of the border,
+//rounded-3 - round border corners,
+//border - allow to add border class, to see other changes within border,
+//rounded-pill - will make pill shape on ages,
+//rounded-circle - will make circle or oval,
+//rounded-top, rounded-bottom - rounding only top or bottom side,
+//border-start - will give a border only on left side,
+//border-opacity-50
+//p-2 -padding
+//p-0 - no padding
+//pt-2 -top padding, pb - bottom
+//ps-2 padding on the left side, pe- right side
+//m-5 margin, mt, mb, ms, me - margin start, margin bottom, margin top, margin bottom
+//m-lg-5 on large screen sizes and above margin 5
+//m-auto
+//p-auto
+```
+
+```C#
+//Display property for elements
+
+<div class="d-flex"> //flex box container
+Hello
+</div>
+
+//d-none - will hide this element
+//d-block - show element
+
+
+<div class="d-block d-lg-none"> //hide this element on large screen size and above, but show on screen sizes smaller than large screen size
+Hello
+</div>
+
+
+<div class="d-lg-block d-none"> //visible only on large and above screens
+Hello
+</div>
+```
+
+```C#
+//Flexbox
+
+
+<div class="d-flex justify-content-center"> //flex box container , justify-content-cnter - make all element in the center
+    <div class="box" style="width:100px"></div>
+    <div class="box" style="width:100px"></div>
+    <div class="box" style="width:100px"></div>
+    <div class="box" style="width:100px"></div>
+</div>
+
+//justify-content-end
+//justify-content-start
+//justify-content-between
+//justify-content-around
+//align-items-center
+//flex-wrap
+//flex-nowrap
+//flex-column
+```
