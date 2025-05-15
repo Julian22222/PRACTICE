@@ -4,6 +4,7 @@
 @* @using Microsoft.Extensions.Configuration <-- using this link we can use GetValue method *@
 @* this 2 lines are the same as top line, but this example we use with GetValue method *@
 @using Microsoft.Extensions.Configuration 
+@using Project_MVC_BookShop2.Models
 @inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
 
 @model bool
@@ -24,6 +25,7 @@
 
 <p>@_configuration["Name"]</p>
 
+    using Project_MVC_BookShop2.Models;
 <p>@_configuration["infoObj:key1"]</p> 
 <p>@_configuration["infoObj:key3:key 3 obj 1"]</p>
 
