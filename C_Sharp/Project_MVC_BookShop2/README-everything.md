@@ -758,3 +758,85 @@ Then you can insert Awesome Icons code anywhere in HTML
 // If using NuGet or downloaded directly, add the following to your _Layout.cshtml or other layout file:
 <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
 ```
+
+# You can change appsettings.json from controller
+
+In ASP.NET Core MVC, you can modify appsettings.json properties at runtime, but there are a few things to keep in mind.
+
+1. Read-Only Nature: The appsettings.json file is typically read at application startup and is usually considered read-only during runtime. If you want to modify values dynamically, you would need to update the file itself or use another approach like storing the configuration in a database, an external configuration service, or in-memory.
+2. Approach 1: Modifying the Configuration in Memory
+   You can modify in-memory configuration settings using IConfiguration and IConfigurationRoot. However, it won't change the actual appsettings.json file on disk.
+   Here's an example of how to update the configuration in memory:
+
+```C#
+public class HomeController : Controller
+{
+    private readonly IConfigurationRoot _configuration;
+
+    public HomeController(IConfiguration configuration){
+        _configuration = (IConfigurationRoot)configuration;
+    }
+
+
+    public IActionResult ChangeSetting(){
+
+        // Update a setting in memory (will not affect appsettings.json on disk)
+        _configuration["AppSettings:MySetting"] = "NewValue";
+
+        // If you want to use the updated value, you can fetch it like so:
+        var updatedValue = _configuration["AppSettings:MySetting"];
+        ViewData["UpdatedValue"] = updatedValue;
+
+        return View();
+    }
+}
+```
+
+3. Approach 2: Modifying the appsettings.json File Directly
+   If you want to modify the actual appsettings.json file on disk (i.e., persist changes between restarts), you can read the JSON file, modify it, and save it back. However, this is less common, as it might interfere with the application's initial configuration on startup.
+   Here's an example:
+
+```C#
+using System.IO;
+using Newtonsoft.Json.Linq;
+
+
+public class HomeController : Controller
+{
+    private readonly IWebHostEnvironment _environment;
+
+    public HomeController(IWebHostEnvironment environment){
+        _environment = environment;
+    }
+
+    public IActionResult ChangeSetting(){
+
+        string filePath = Path.Combine(_environment.ContentRootPath, "appsettings.json");
+
+        // Read the appsettings.json file
+        var json = JObject.Parse(System.IO.File.ReadAllText(filePath));
+
+        // Modify the value
+        json["AppSettings"]?["MySetting"] = "NewValue";
+
+        // Save it back to the file
+        System.IO.File.WriteAllText(filePath, json.ToString());
+
+        return View();
+    }
+}
+```
+
+Important considerations:
+
+Thread Safety: Modifying the appsettings.json file at runtime might lead to issues with multiple instances or concurrent requests. Be cautious about potential race conditions.
+Application Restart: Changes to appsettings.json might not take effect immediately unless you manually trigger a restart or reload the configuration. In ASP.NET Core, the configuration is usually reloaded when the app restarts.
+File Permissions: Make sure the application has write permissions to the appsettings.json file, especially if you're running in a production environment.
+Alternative Approaches
+
+If you need to change configurations at runtime frequently, it might be a better idea to:
+
+Store the configuration in a database and fetch it as needed.
+Use a distributed configuration service like Azure App Configuration or Consul.
+Use in-memory storage with dependency injection.
+These approaches offer greater flexibility and control compared to modifying appsettings.json directly.
