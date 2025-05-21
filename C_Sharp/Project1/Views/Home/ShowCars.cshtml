@@ -8,6 +8,12 @@
 @* @using Project1.Models;
 @model IEnumerable<Car> *@
 
-<p>@ViewBag.Message</p>
+@if(@ViewBag.Message != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
 
 <partial name="_CarListPartial" model="Model"/>

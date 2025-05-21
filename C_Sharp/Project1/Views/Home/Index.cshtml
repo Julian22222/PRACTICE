@@ -16,6 +16,12 @@
 <br/>
 <br/>
 
+@if(@ViewBag.Message != null){
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
 <div style="display: flex; justify-content: center;">
     <div class="mainPage_btn-container" style="width: 400px; display: flex; justify-content: space-between;">
         <div style="display: flex; justify-content: center;">

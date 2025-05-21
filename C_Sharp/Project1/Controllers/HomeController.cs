@@ -43,8 +43,9 @@ public class HomeController : Controller
     // Methods
     // will show main page from Views -> Home -> Index (everithing we put there)
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? message)
     {
+        ViewBag.Message = message; //assigning received message to ViewBag.Message
     
         return View();
     }
@@ -72,8 +73,9 @@ public class HomeController : Controller
 
 
 
-     public IActionResult ShowCars()
+     public IActionResult ShowCars(string? message) //receive message from AddNewCar method -Redirection method
     {
+        ViewBag.Message = message; //assigning received message to ViewBag.Message
 
         var AllcarList = _carRepository.GetAllCars();
 
@@ -107,15 +109,13 @@ public class HomeController : Controller
         Console.WriteLine($"this is the new car from controller - {car.Name}");
         Console.WriteLine($"Car added with ID: {car.Id}");
 
-          if (ModelState.IsValid)
-
-        {
+        if (ModelState.IsValid){
             Console.WriteLine($"Adding car: {car.Name}, {car.Price}, {car.Year}, {car.FuelType}");
 
             var carId = _carRepository.AddCar(car);
-
-            return RedirectToAction("ShowCars");    // Redirect to the car list view
-
+            Console.WriteLine(carId);
+            
+            return RedirectToAction("ShowCars", new { message = "Car was added Successfully" });    // Redirect to the car list view
         }
 
         // if (!ModelState.IsValid)
@@ -191,13 +191,12 @@ public class HomeController : Controller
             ViewBag.Message = "Data updated successfully";
             _carRepository.EditCar(id,car);
 
-            return RedirectToAction("ShowCars");
+            return RedirectToAction("ShowCars", new { message="Car was updated Successfully"});    // sending message to ShowCars method in URL
         }
         else
         {
-            ViewBag.Message = "Internal Error. Not able to update data";
-            ModelState.AddModelError("", "Not able to update data");
-            return RedirectToAction("Index", "Home");
+            // Handle the case when the car is not found
+            return RedirectToAction("Index", "Home", new { message = "Not able to update data" }); //sending message to ShowCars method in URL
         }
      }
 
@@ -216,7 +215,7 @@ public class HomeController : Controller
             ViewBag.Message = "Car Deleted Successfully";
 
             // Redirect to the car list view
-            return RedirectToAction("ShowCars", "Home");
+            return RedirectToAction("ShowCars", "Home", new { message = "Car was deleted successfully" }); //sending message to ShowCars method in URL
         }
         else
         {
@@ -235,34 +234,7 @@ public class HomeController : Controller
 
    
 
-    //  List<Car> CarsList = new List<Car>
-    //     {
-    //         new Car { Id = 1, Name = "Toyota", Price = 20000, Year = 2020, FuelType = "Petrol" },
-    //         new Car { Id = 2, Name = "Honda", Price = 22000, Year = 2021, FuelType = "Diesel" },
-    //         new Car { Id = 3, Name = "Ford", Price = 25000, Year = 2019, FuelType = "Petrol" },
-    //         new Car { Id = 4, Name = "Suzuki", Price = 25000, Year = 2019, FuelType = "Diesel" },
-    //         new Car { Id = 5, Name = "BMW", Price = 25000, Year = 2019, FuelType = "Petrol" },
-    //         new Car { Id = 6, Name = "Audi", Price = 25000, Year = 2019, FuelType = "Electric" },
-    //         new Car { Id = 7, Name = "Mercedes", Price = 25000, Year = 2019, FuelType = "Electric" },
-    //         new Car { Id = 8, Name = "Chevrolet", Price = 25000, Year = 2019, FuelType = "Petrol" },
-    //     };
-
-
-    // [HttpPost]
-    //   public async Task<IActionResult> PostFormMethodToDatabase( string name, string age, string description)
-    // {
-
-    //     var product = new Product(){
-
-    //         Name = name,
-    //         Age = age,
-    //         Description = description,
-    //     };
-
-    //     await _productRepository.Insert(product);
-
-    //     return View();
-    // }
+    
 
     public IActionResult Ajax()
     {
