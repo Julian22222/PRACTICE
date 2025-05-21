@@ -512,8 +512,9 @@ The concept of the ClaimPrincipal is almost like a valet, like Authentication va
 
 - ViewBag is a type object
 - ViewBag is limited to the current request only.
-- ViewBag is used to pass any temporary data from action method to the View(with the same name only!!!) and we can display this data on View
+- ViewBag is used to pass any temporary data from action method to the View and we can display this data on View
 - ViewBag is valid only between the controller and the view that it returns — it does not persist/not working across redirects or RedirectToAction.
+- ViewBag, ViewData, and ModelState only persist within the same request, but a Redirect option triggers a new HTTP request, which wipes ViewBag, ViewData, and ModelState out.
 - ViewBag is typically used for passing non-critical, display-related data (e.g., dropdown list items, status messages).
 - This type of data binding is known as loosely binding. If you passing the data by using Viewbag and we using that data in the View (data binding with the View)<--it is loosly binding
 - Strongly binding is in controller when we pass the data with --> return View(data); to View. Located in controller action method
@@ -591,6 +592,8 @@ dynamic data = ViewBag.Data
 
 When you use RedirectToAction, Redirect, or other redirect methods:
 
+- ViewBag, ViewData, and ModelState can be passed only with – return View() option.
+  If use RedirectToAction("ShowCars", "Home"); - This starts a new request, which means all that per-request data (ViewBag, ViewData, ModelState) is lost unless you persist it some other way.
 - The framework starts a new request, which means the original ViewBag data is lost.
 - This is because ViewBag data is not stored in TempData, session, or cookies, so it doesn’t persist beyond the current request.
 
@@ -599,12 +602,31 @@ When you use RedirectToAction, Redirect, or other redirect methods:
 1. TempData – persists for one additional request (ideal for redirects).
 
 ```C#
-TempData["Message"] = "Data carried over after redirect.";
+TempData["Message"] = "Car Deleted Successfully";
 
-return RedirectToAction("OtherAction");
+return RedirectToAction("ShowCars", "Home");
 ```
 
-2. Query String / Route Values – pass small amounts of data explicitly via the URL.
+```C#
+//Then in your ShowCars view (or controller action), you can retrieve it like this:
+//In the View (Razor):
+
+@if (TempData["Message"] != null){
+  <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+//OR in the controller (if needed):
+var message = TempData["Message"] as string;
+```
+
+2. Query String / Route Values – pass small amounts of data explicitly via the URL. (not recommended for sensitive info)
+
+```C#
+return RedirectToAction("ShowCars", "Home", new { message = "Car Deleted Successfully" });
+//Then read Request.Query["message"] in the target action/view. But TempData is cleaner and safer for most cases.
+```
+
+Example 1
 
 ```C#
 //1. Example of passing Data with Query String
@@ -639,6 +661,8 @@ public class HomeController : Controller
 <h2>Details View</h2>
 <p>Message: @ViewBag.Message</p>
 ```
+
+Example 2
 
 ```C#
 //2. Example of Passing Data with Route Values
