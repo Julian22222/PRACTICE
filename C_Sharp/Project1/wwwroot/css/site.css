@@ -54,18 +54,24 @@ footer {
 /* ///////////////////////////////////////// */
 /* Home */
 
-.row {
+/* .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
   padding-bottom: 5%;
   margin-top: 20px;
-}
+} */
 
 .card {
   display: flex;
   justify-content: center;
+  /* height: 100%; */
+  padding: 2px;
+}
+
+.card:hover .card-text {
+  color: red;
 }
 
 .card-img-top {
@@ -77,8 +83,8 @@ footer {
 
 .image-container {
   display: absolute;
-  margin-left: 45%;
-  margin-top: 200px;
+  /* margin-left: 45%; */
+  margin-top: 120px;
   perspective: 1000px; /* Adds 3D effect */
   width: 200px;
   height: 200px;
@@ -188,10 +194,10 @@ section {
   z-index: 1;
 }
 
-.empty_left_container {
+.empty-left-container {
   position: absolute;
   top: 300px;
-  left: 100px;
+  left: 10px;
   border: black 1px solid;
   width: 200px;
   height: 300px;
