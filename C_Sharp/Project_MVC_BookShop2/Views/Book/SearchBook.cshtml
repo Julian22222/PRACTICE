@@ -73,15 +73,34 @@
 
     
 
-
+@* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
+@* Can use script block inside partial View, or in parent element - script for ->(_bookLine.cshtml)  *@
 @* by using jQuery function it picks up id property --> "search-text1" and then we can do what ever we want *@
-    @section scripts{
-        <script>
-            $(document).ready( //It is good practice to wait for the document/page to be fully loaded and ready before working with it.
-                function (){
-                $("#search-text1").click(function(){  //by clicking the Search btn, the form will be submited to BookController amd Search action method (<--this path we identicated in  <form asp-controller="Book" asp-action="SearchBook">  -line 13 )
-                    $("Form").submit();  //we submit our form with input to BookController amd Search method, passing the typed input to Search method,
-                })
+@section scripts{
+    <script>
+        $(document).ready( //It is good practice to wait for the document/page to be fully loaded and ready before working with it.
+            function (){
+            $("#search-text1").click(function(){  //by clicking the Search btn, the form will be submited to BookController amd Search action method (<--this path we identicated in  <form asp-controller="Book" asp-action="SearchBook">  -line 13 )
+                $("Form").submit();  //we submit our form with input to BookController amd Search method, passing the typed input to Search method,
+            })
+
+
+             //jquery for _bookLine.cshtml file (Partial View)
+            $(".add-to-basket").click(function () {
+                var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+                $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                    type: "POST",
+                    url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                    data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                    success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                        alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                    },
+                    error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                        alert("Error adding book to basket.");
+                    }
+                });
             });
-        </script>
-    }
+        });
+    </script>
+}
