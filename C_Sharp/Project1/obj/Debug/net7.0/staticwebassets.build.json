@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Tel7FE1frz6szDB7cPu2nRGE6Z/WX8sk5Z6/nuoF6KE=",
+  "Hash": "Arqy/CrHfsz+xCEVmTjeSYl36y/6x/3EQi1/uK3+RfY=",
   "Source": "Project1",
   "BasePath": "_content/Project1",
   "Mode": "Default",
@@ -2140,6 +2140,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/sounds/fight-deep-voice-172194.mp3"
+    },
+    {
+      "Identity": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-hover2.mp3",
+      "SourceId": "Project1",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/",
+      "BasePath": "_content/Project1",
+      "RelativePath": "sounds/fighter-hover2.mp3",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/sounds/fighter-hover2.mp3"
     },
     {
       "Identity": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-selection.mp3",

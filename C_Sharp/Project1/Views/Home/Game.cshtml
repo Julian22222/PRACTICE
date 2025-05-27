@@ -69,35 +69,35 @@
     </div>
 </section>
 
-<div id="empty-left-container" class="position-absolute" style="top: 280px; left: 50px; width: 200px; height: 300px; border: 1px solid black;"></div>
-<div id="empty-right-container" class="position-absolute" style="top: 280px; right: 50px; width: 200px; height: 300px; border: 1px solid black;"></div>
+<div id="empty-left-container" class="position-absolute" style="top: 280px; left: 30px; width: 200px; height: 300px; border: 1px solid black;"></div>
+<div id="empty-right-container" class="position-absolute" style="top: 280px; right: 30px; width: 200px; height: 300px; border: 1px solid black;"></div>
 
 <!-- Fighter 1 Selection -->
-<div id="figterContainer1" class="text-center" style="display: none; position: absolute; top: 300px; left: 65px;">
+<div id="figterContainer1" class="text-center" style="display: none; position: absolute; top: 300px; left: 45px; z-index: 50;">
     <img alt="fighter1 logo" style="width: 170px; height: 170px;" class="img-fluid mb-2" />
     <div class="d-grid gap-2">
-        <button id="confirmFighter1" class="btn btn-success shadow" style="z-index: 1000;">Confirm Fighter</button>
-        <button id="cancelFighter1" class="btn btn-danger shadow" style="z-index: 1000;">Return</button>
+        <button id="confirmFighter1" class="btn btn-success shadow">Confirm Fighter</button>
+        <button id="cancelFighter1" class="btn btn-danger shadow">Return</button>
     </div>
 </div>
 
 <!-- Fighter 1 Confirmed -->
-<div id="confirmFighterContainer1" style="display: none; position: absolute; top: 300px; left: 65px;">
+<div id="confirmFighterContainer1" style="display: none; position: absolute; top: 300px; left: 45px; ">
     <h3 id="headerofConfirmedFighetr1"></h3>
     <img alt="fighter1 logo" style="width: 170px; height: 170px;" class="img-fluid" />
 </div>
 
 <!-- Fighter 2 Selection -->
-<div id="figterContainer2" class="text-center" style="display: none; position: absolute; top: 300px; right: 65px;">
+<div id="figterContainer2" class="text-center" style="display: none; position: absolute; top: 300px; right: 45px; z-index: 50;">
     <img alt="fighter2 logo" style="width: 170px; height: 170px;" class="img-fluid mb-2" />
     <div class="d-grid gap-2">
-        <button id="confirmFighter2" class="btn btn-success shadow" style="z-index: 1000;">Confirm Fighter</button>
-        <button id="cancelFighter2" class="btn btn-danger shadow" style="z-index: 1000;">Return</button>
+        <button id="confirmFighter2" class="btn btn-success shadow">Confirm Fighter</button>
+        <button id="cancelFighter2" class="btn btn-danger shadow" >Return</button>
     </div>
 </div>
 
 <!-- Fighter 2 Confirmed -->
-<div id="confirmFighterContainer2" style="display: none; position: absolute; top: 300px; right: 65px;">
+<div id="confirmFighterContainer2" style="display: none; position: absolute; top: 300px; right: 45px;">
     <h3 id="headerofConfirmedFighetr2" ></h3>
     <img alt="fighter2 logo" style="width: 170px; height: 170px;" class="img-fluid" />
 </div>
@@ -258,8 +258,8 @@ $(document).ready(function() {
         $('#confirmFighterContainer2 p').hide()
         $('#confirmFighterContainer1 img').animate({'height': '280px','width':'280px', 'position':'absolute', 'left': '10%', 'top':'300px'}, 500);
         $('#confirmFighterContainer2 img').animate({'height': '280px','width':'280px', 'position':'absolute', 'right': '10%', 'top':'300px'}, 500);
-        $('#empty-left-container').animate({'top':'280', 'left':'55px', 'height': '345px','width':'0px', 'border':'1px solid black'}, 700).fadeOut(500);
-        $('#empty-right-container').animate({'top':'280', 'right':'55px', 'height': '345px','width':'0px', 'border':'1px solid black'}, 700).fadeOut(500);
+        $('#empty-left-container').animate({'top':'280', 'left':'30px', 'height': '345px','width':'0px', 'border':'1px solid black'}, 700).fadeOut(500);
+        $('#empty-right-container').animate({'top':'280', 'right':'30px', 'height': '345px','width':'0px', 'border':'1px solid black'}, 700).fadeOut(500);
 
 
         audioSwords.play();

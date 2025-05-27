@@ -497,6 +497,10 @@
       "PackagePath": "staticwebassets/sounds/fight-deep-voice-172194.mp3"
     },
     {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-hover2.mp3",
+      "PackagePath": "staticwebassets/sounds/fighter-hover2.mp3"
+    },
+    {
       "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-selection.mp3",
       "PackagePath": "staticwebassets/sounds/fighter-selection.mp3"
     },
