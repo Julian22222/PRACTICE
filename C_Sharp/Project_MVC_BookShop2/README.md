@@ -2,10 +2,21 @@
 
 [ASP.net docs](https://www.csharpschool.com/blog?tag=asp.net+core+2.2)
 
+[--> Install VSCode or VS to work with ASP.NET <--](https://www.youtube.com/watch?v=qBTe6uHJS_Y&t=9s)
+
 To work with in ASP.NET MVC Core with C# we need VS Code extensions:
 
 - C# Dev Kit (by Microsoft)
 - C# Extensions (by JosKreativ)
+- and others from picture below.
+
+![pic2](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic2.jpg)
+
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic3.jpg)
+
+![pic4](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic4.jpg)
+
+![pic5](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic5.jpg)
 
 Before you start your project - install all needed nuget packages
 

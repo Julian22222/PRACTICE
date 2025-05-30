@@ -2,16 +2,24 @@
 
 - Download NuGet Gallery //<--by pcisco , from VS Code extensions
 
+![pic6](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic6.jpg)
+
 #### USE Nuget Gallery-->
 
 - In Command Palette put (ctr + shift + p )-->
 
 ```bash
+//put this command in the Command Palette
+
 NuGet:Open NuGet Gallery
 ```
 
-- add in serch nuget package that you want to download
-- add your .NET version for a package and press "+" in api.csproj section
+![pic7](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic7.jpg)
+
+- go to nuget section (step 1)
+- add in serch nuget package that you want to download (step 2)
+- find needed package from the list (step 3)
+- add your .NET version for a package and press "+" in api.csproj section (step 4 and step 5) - your .Net version is end of your root project folder -> Project_MVC_BookShop2.csproj
 - to delete some packages we can press "-" in api.csproj section
 
 #### Another option how to download Nuget packages

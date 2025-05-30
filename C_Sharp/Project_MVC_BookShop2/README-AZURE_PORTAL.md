@@ -158,7 +158,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 1. bin\Publish folder and select Deploy to Web App -->
    [Click HERE](https://stackoverflow.com/questions/73800499/how-to-update-changes-to-azure-app-service-after-its-deployed-from-cli)
 
-2. Or we can go to AZURE PORTL -> App Service --> Deployment center (on he right side) <-- Deploy from GitHub
+2. Or we can go to AZURE PORTAL -> App Service --> Deployment center (on he right side) <-- Deploy from GitHub
 
 -
 
@@ -278,6 +278,8 @@ Tick Step 4 and SAVE
 - we can create Ajax-form - we add ajax methods to form tag -->
 
 ```C#
+//From Views/Book/AddNewBook.cshtml ->line 35, and line 216-232
+
  <form method="post" data-ajax="true" data-ajax-complete="myComplete" data-ajax-success="mySuccess" data-ajax-loading="#myLoader" ...>
 ```
 
