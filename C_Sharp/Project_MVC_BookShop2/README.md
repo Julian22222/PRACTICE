@@ -1657,7 +1657,9 @@ To keep sensative data - User Id, Passwords, ConnectionString etc.
 Microsoft.Extensions.Configuration.UserSecrets
 ```
 
-2. Then right click on (ProjectName).csproj file of your project(<--located in very bottom of the list of all files of our Project) --> then click Manage user secrets
+2. Then right click on (ProjectName).csproj file of your project(<--located in very bottom of the list of all files of our Project)-(step 1 from the pic below) --> then click Manage user secrets (step 2)
+
+![pic10](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic10.jpg)
 
 #### secret.json (file contains)
 

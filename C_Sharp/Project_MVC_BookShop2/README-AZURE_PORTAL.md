@@ -14,9 +14,13 @@
    dotnet publish -c Release -o ./bin/Publish
 ```
 
-- In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App...
+- In VS Code our app, Right click the bin\Publish folder and select Deploy to Web App... (pic below)
 
-- Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there
+![pic8](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic8.jpg)
+
+- Then automatically Comand Palette will appear (Terminal Search bar on the top ) --> Choose your Project name there (pic below)
+
+![pic9](https://github.com/Julian22222/PRACTICE/blob/main/C_Sharp/Project_MVC_BookShop2/IMG/pic9.jpg)
 
 - first time in Comand Palette --> LogIn through Comand Palette
 
