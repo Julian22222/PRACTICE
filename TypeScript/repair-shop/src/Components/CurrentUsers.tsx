@@ -35,17 +35,31 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
       <div className="container-home">
         <div className="left-flexbox-container">
           <h5>Cars That Are Currently in the Repair Shop</h5>
+          <button style={{ marginBottom: "30px", padding: "10px" }}>
+            Add a car to garage
+          </button>
 
-          <div>
-            {customers.map((customer) => (
-              <Link
-                to={`/current-user/${customer.car_id}`}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <CurrentUser_Item key={customer.car_id} customer={customer} />
-              </Link>
-            ))}
-          </div>
+          {customers.length === 0 ? (
+            <div>
+              <img
+                src="/IMG/arrow.gif"
+                alt="loading gif"
+                style={{ width: "70%" }}
+              />
+              <p>Loading...</p>
+            </div>
+          ) : (
+            <div>
+              {customers.map((customer) => (
+                <Link
+                  to={`/current-user/${customer.car_id}`}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <CurrentUser_Item key={customer.car_id} customer={customer} />
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         <div className="right-flexbox-container">
           {/* <h5>Mechanics of our Garage</h5>
@@ -58,11 +72,11 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
             {/* <p>
             Our team of mechanics is dedicated to providing top-notch service
             and ensuring that your vehicle is in the best condition possible.
-          </p>
-          <p>
+            </p>
+            <p>
             If you have any questions or need assistance, feel free to contact
             us.
-          </p> */}
+            </p> */}
 
             <p>Meet Our Team</p>
             <p>We are here to help you with your car repairs!</p>

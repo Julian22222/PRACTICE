@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Styles/App.css";
 import "./Styles/CurrentUsers.css";
+import "./Styles/WaitingUser.css";
 import Card, { CardVariant } from "./Components/Card";
 import { ICurrentUsers, IWaitingList } from "./Types/types";
 import WaitingList from "./Components/WaitingList";

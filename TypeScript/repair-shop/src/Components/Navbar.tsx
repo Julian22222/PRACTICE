@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar: FC = () => {
-  const NavbarList: string[] = ["Home", "Waiting List", "Contact", "Services"];
+  const NavbarList: string[] = ["Home", "Waiting List", "Services", "Chat"];
 
   return (
     <div>

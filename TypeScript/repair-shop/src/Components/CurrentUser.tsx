@@ -25,7 +25,7 @@ const CurrentUser: FC = () => {
       <p>Car Id: {currentgUser?.car_id}</p>
       <p>Name: {currentgUser?.brand}</p>
       <p>Seats: {currentgUser?.seats}</p>
-      <p>Year: {currentgUser?.year}</p>
+      <p>Year: {currentgUser?.date}</p>
       <p>Fuel typ:{currentgUser?.fuel}</p>
     </div>
   );

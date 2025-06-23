@@ -21,7 +21,7 @@ const WaitingUser: FC = () => {
   };
 
   return (
-    <div>
+    <div className="eachCard-waitingUser">
       <p>User Id: {waitingUser?.id}</p>
       <p>User Name: {waitingUser?.name}</p>
       <p>Username: {waitingUser?.username}</p>
