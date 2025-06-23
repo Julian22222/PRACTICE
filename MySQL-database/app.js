@@ -17,15 +17,18 @@ app.use(express.json()); //to be able to send json body in POST and PUT methods 
 app.get("/", async (req, res, next) => {
   try {
     // await pool.query((err) => {
-    await pool.query("SELECT * FROM cars", (err, result, fields) => {
-      // result -is our query (data from database), err - any error while connecting to our database
-      if (err) {
-        res.send(err);
+    await pool.query(
+      "SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id",
+      (err, result, fields) => {
+        // result -is our query (data from database), err - any error while connecting to our database
+        if (err) {
+          res.send(err);
+        }
+        if (result) {
+          res.send(result);
+        }
       }
-      if (result) {
-        res.send(result);
-      }
-    });
+    );
     // });
   } catch (err) {
     next(err);
