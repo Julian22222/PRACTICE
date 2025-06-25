@@ -62,7 +62,11 @@ app.get("/:carId", async (req, res, next) => {
     // find if the ID exists in the database
     // const item = await pool.query((err) => {
     await pool.query(
-      `SELECT * FROM cars WHERE car_id ='` + carId + "'",
+      `SELECT cars.car_id,cars.brand,cars.seats,cars.date,cars.fuel,
+      cars.created_at,cars.serviceCheck,cars.involved,cars.notes,phoneNumbers.phone 
+      FROM cars INNER JOIN phoneNumbers ON ph_id = car_id WHERE car_id ='` +
+        carId +
+        "'",
       // "SELECT * FROM cars WHERE car_id = $1",
       // [carId],
       (err, result, fields) => {
@@ -107,8 +111,8 @@ app.post("/", async (req, res, next) => {
       //   }
 
       pool.query(
-        `INSERT INTO cars(brand,seats, year, fuel) VALUES
-        ('${req.body.brand}','${req.body.seats}','${req.body.year}','${req.body.fuel}')
+        `INSERT INTO cars(brand,seats, date, fuel, serviceCheck, involved, notes) VALUES
+        ('${req.body.brand}','${req.body.seats}','${req.body.date}','${req.body.fuel}, ${req.body.serviceCheck}, ${req.body.involved}, '${req.body.notes}')
         `,
         (err, result, fields) => {
           if (err) {
