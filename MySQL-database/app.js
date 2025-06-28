@@ -16,8 +16,13 @@ app.use(express.json()); //to be able to send json body in POST and PUT methods 
 
 app.get("/", async (req, res, next) => {
   try {
-    // await pool.query((err) => {
-    await pool.query(
+    //const [rows] = await db.query("SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id");
+    //  if (rows.length === 0) {
+    //   return res.status(404).json({ message: "Users not found" });
+    // }
+    // const users = rows[0]
+
+    pool.query(
       "SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id",
       (err, result, fields) => {
         // result -is our query (data from database), err - any error while connecting to our database
@@ -25,11 +30,18 @@ app.get("/", async (req, res, next) => {
           res.send(err);
         }
         if (result) {
-          res.send(result);
+          //converting database -serviceCheck property from 1/0 to true/false
+          //MySQL, SQLite, SQL Server, Oracle stores boolean values as 1 (true) and 0 (false) under the hood.
+          const formattedResult = result.map((row) => ({
+            ...row,
+            serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
+          }));
+
+          res.send(formattedResult);
+          // res.json(formattedResult);
         }
       }
     );
-    // });
   } catch (err) {
     next(err);
   }
@@ -61,7 +73,7 @@ app.get("/:carId", async (req, res, next) => {
 
     // find if the ID exists in the database
     // const item = await pool.query((err) => {
-    await pool.query(
+    pool.query(
       `SELECT cars.car_id,cars.brand,cars.seats,cars.date,cars.fuel,
       cars.created_at,cars.serviceCheck,cars.involved,cars.notes,phoneNumbers.phone 
       FROM cars INNER JOIN phoneNumbers ON ph_id = car_id WHERE car_id ='` +
@@ -84,7 +96,15 @@ app.get("/:carId", async (req, res, next) => {
         }
 
         if (result.length > 0) {
-          res.send(result);
+          // res.send(result);
+
+          //converting database -serviceCheck property from 1/0 to true/false
+          const formattedResult = result.map((row) => ({
+            ...row,
+            serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
+          }));
+
+          res.json(formattedResult);
         }
       }
     );
