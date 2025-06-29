@@ -104,7 +104,9 @@ app.get("/:carId", async (req, res, next) => {
             serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
           }));
 
-          res.json(formattedResult);
+          // console.log(formattedResult[0]);
+
+          res.json(formattedResult[0]); // send only one object, not an array
         }
       }
     );
