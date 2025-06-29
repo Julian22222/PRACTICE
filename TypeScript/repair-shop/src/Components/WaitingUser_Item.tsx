@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { IWaitingList } from "../Types/types";
+import { IWaitingUser } from "../Types/types";
 
 interface IWaitingListProps {
-  user: IWaitingList;
+  user: IWaitingUser;
 }
 
 const WaitingUser_Item: FC<IWaitingListProps> = ({ user }) => {
   return (
-    <div key={user.id} style={{ padding: 15, border: "1px solid gray" }}>
+    <div style={{ padding: 15, border: "1px solid gray" }}>
       {user.id} {user.name} {user.phone}
     </div>
   );

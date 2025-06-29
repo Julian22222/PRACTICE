@@ -1,0 +1,54 @@
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-header {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.modal-close {
+  color: aliceblue;
+  background-color: transparent;
+  font-size: 24px;
+  border: none;
+}
+
+.form-container {
+  margin-top: 20px;
+}
+
+.label-modal {
+  color: aliceblue;
+  font-size: 20px;
+  margin-right: 50px;
+  /* margin-bottom: 5px; */
+}
+
+.label-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-btn {
+  margin-top: 20px;
+}
+
+.modal-area {
+  width: 50%;
+  height: 100px;
+}
+
+.modal-fuel {
+  width: 53%;
+}

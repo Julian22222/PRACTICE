@@ -5,7 +5,7 @@ export interface IAddress {
   zipcode: string;
 }
 
-export interface IWaitingList {
+export interface IWaitingUser {
   id: number;
   name: string;
   username: string;
@@ -16,10 +16,15 @@ export interface IWaitingList {
 
 ////////////////////////////////////////
 
-export interface ICurrentUsers {
+export interface ICurrentUser {
   car_id: number;
   brand: string;
   seats: number;
   date: string;
   fuel: string;
+  created_at: string;
+  serviceCheck: boolean;
+  involved: string | string[];
+  notes: string;
+  phone: string;
 }

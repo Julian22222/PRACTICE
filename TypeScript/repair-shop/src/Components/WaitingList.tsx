@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import "../Styles/App.css";
-import { IWaitingList } from "../Types/types";
+import { IWaitingUser } from "../Types/types";
 import WaitingUser_Item from "./WaitingUser_Item";
 import { Link } from "react-router-dom";
 
 interface WaitingListProps {
   // Define any props you want to pass to UserList
-  users: IWaitingList[]; // imported interface - Array of users
+  users: IWaitingUser[]; // imported interface - Array of users
 }
 
 const WaitingList: FC<WaitingListProps> = ({ users }) => {
@@ -22,12 +22,14 @@ const WaitingList: FC<WaitingListProps> = ({ users }) => {
         // </div>
         <Link
           to={`/waiting-list/${user.id}`}
-          style={{ textDecoration: "none", color: "black" }}
+          style={{ textDecoration: "none" }}
         >
           <WaitingUser_Item key={user.id} user={user} />
         </Link>
       ))}
-      <button style={{ padding: "5px", marginTop: "50px" }}>
+      <button
+        style={{ padding: "5px", marginTop: "50px", marginBottom: "100px" }}
+      >
         Check the status of the cars that are currently in the repair shop
       </button>
     </div>

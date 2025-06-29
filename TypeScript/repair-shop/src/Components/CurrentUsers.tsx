@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import CurrentUser_Item from "../Components/CurrentUser_Item";
-import { ICurrentUsers } from "../Types/types";
+import { ICurrentUser } from "../Types/types";
 import {
   DndContext,
   closestCenter,
@@ -11,6 +11,8 @@ import {
 import DraggableImage from "./DraggableImage";
 import DragAndDropSchedule from "./DraggableImage";
 import { Link } from "react-router-dom";
+import Modal from "./Modal";
+import { ModalContext } from "../context/ModalContext";
 
 const emplPictures: Picture[] = [
   { id: "pic1", url: "/IMG/Emp/emp1.jpg", name: "John Doe" },
@@ -20,22 +22,29 @@ const emplPictures: Picture[] = [
 ];
 
 interface CurrentUsersProps {
-  customers: ICurrentUsers[]; // Array of delivery list items
+  customers: ICurrentUser[]; // Array of delivery list items
 }
 
 type Picture = { id: string; url: string; name: string };
 
 const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
-  const dropFunc = (event: DragEndEvent) => {
-    console.log("Dropped item:", event.active.id);
-  };
+  // const [modal, setModal] = useState<boolean>(false); // state for modal
+  const { modal, openModal, closeModal } = useContext(ModalContext); //destructuring modal state and functions from ModalContext
+
+  // const dropFunc = (event: DragEndEvent) => {
+  //   console.log("Dropped item:", event.active.id);
+  // };
 
   return (
     <div>
       <div className="container-home">
         <div className="left-flexbox-container">
           <h5>Cars That Are Currently in the Repair Shop</h5>
-          <button style={{ marginBottom: "30px", padding: "10px" }}>
+          <button
+            style={{ marginBottom: "30px", padding: "10px" }}
+            // onClick={() => setModal(true)}
+            onClick={() => openModal()}
+          >
             Add a car to garage
           </button>
 
@@ -53,7 +62,7 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
               {customers.map((customer) => (
                 <Link
                   to={`/current-user/${customer.car_id}`}
-                  style={{ textDecoration: "none", color: "black" }}
+                  style={{ textDecoration: "none" }}
                 >
                   <CurrentUser_Item key={customer.car_id} customer={customer} />
                 </Link>
@@ -133,6 +142,10 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
       {/* ///////////////////////// */}
 
       <DragAndDropSchedule />
+      <br />
+      <br />
+
+      {modal && <Modal setModal={closeModal} header="Add new car" />}
     </div>
   );
 };

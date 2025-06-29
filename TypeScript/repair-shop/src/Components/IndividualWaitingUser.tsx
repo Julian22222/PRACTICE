@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IWaitingList } from "../Types/types";
+import { IWaitingUser } from "../Types/types";
 
-const WaitingUser: FC = () => {
-  const [waitingUser, setWaitingUser] = useState<IWaitingList>();
+const IndividualWaitingUser: FC = () => {
+  const [waitingUser, setWaitingUser] = useState<IWaitingUser>();
 
   const { id } = useParams<{ id: string }>();
 
@@ -34,4 +34,4 @@ const WaitingUser: FC = () => {
   );
 };
 
-export default WaitingUser;
+export default IndividualWaitingUser;
