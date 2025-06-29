@@ -120,38 +120,47 @@ app.post("/", async (req, res, next) => {
   // console.log(req.body);
 
   try {
+    const { brand, seats, date, fuel, serviceCheck, involved, notes, phone } =
+      req.body;
+
     // error handling, when posting but brand or /and seats field is empty
     if (req.body.brand === undefined) {
       res.status(400).send("Wrong Brand Input");
     } else if (req.body.seats === undefined) {
       res.send("Wrong Seats Input");
-    } else {
-      // if all field correctly ,send a req to database
-      // await pool.query((err) => {
-      //   if (err) {
-      //     res.send(err);
-      //   }
-
-      pool.query(
-        `INSERT INTO cars(brand,seats, date, fuel, serviceCheck, involved, notes) VALUES
-        ('${req.body.brand}','${req.body.seats}','${req.body.date}','${req.body.fuel}, ${req.body.serviceCheck}, ${req.body.involved}, '${req.body.notes}')
-        `,
-        (err, result, fields) => {
-          if (err) {
-            res.send(err);
-          }
-
-          if (result) {
-            res.status(201).send("Data Inserted Successfully");
-          }
-
-          if (fields) {
-            console.log(fields);
-          }
-        }
-      );
-      // });
     }
+    // else {
+    // if all field correctly ,send a req to database
+    // await pool.query((err) => {
+    //   if (err) {
+    //     res.send(err);
+    //   }
+
+    pool.query(
+      `INSERT INTO cars(brand,seats, date, fuel, serviceCheck, involved, notes) VALUES
+        (?, ?, ?, ?, ?, ?, ?)`, /// Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
+      [brand, seats, date, fuel, serviceCheck, involved, notes],
+      (err1, result1) => {
+        if (err1) {
+          return res.status(500).send(err1);
+        }
+
+        const car_id = result1.insertId; // Get the inserted car_id from result1, if the query was successful
+
+        pool.query(
+          `INSERT INTO phoneNumbers (ph_id, phone) VALUES
+            (?, ?)`, // Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
+          [car_id, phone],
+          (err2, result2) => {
+            if (err2) {
+              return res.status(500).send(err2);
+            }
+
+            res.status(201).send("Data inserted into both tables successfully");
+          }
+        );
+      }
+    );
   } catch (err) {
     next(err);
   }
@@ -294,3 +303,41 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+app.post("/", async (req, res, next) => {
+  try {
+    // Insert into cars table
+    const carInsertQuery = `
+      INSERT INTO cars(brand, seats, date, fuel, created_at, serviceCheck, involved, notes)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    pool.query(
+      carInsertQuery,
+      [brand, seats, date, fuel, created_at, serviceCheck, involved, notes],
+      (err, result) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+
+        const car_id = result.insertId;
+
+        // Insert into phoneNumbers table
+        const phoneInsertQuery = `
+          INSERT INTO phoneNumbers(phone, ph_id)
+          VALUES (?, ?)
+        `;
+
+        pool.query(phoneInsertQuery, [phone, car_id], (err2, result2) => {
+          if (err2) {
+            return res.status(500).send(err2);
+          }
+
+          res.status(201).send("Data inserted into both tables successfully");
+        });
+      }
+    );
+  } catch (err) {
+    next(err);
+  }
+});
