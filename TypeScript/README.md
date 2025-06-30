@@ -1,6 +1,13 @@
 # Common Hotkeys to Create React Component Template
 
 ```JS
+npx create-react-app my-react-ts --template typescript    // my-react-ts  <- name of the React project folder
+
+cd my-react-ts
+npm start
+```
+
+```JS
 rfc + Tab  - React Functional Component template
 
 rafce + Tab - React Arrow Function Component with export
@@ -823,6 +830,53 @@ class User<T, K extends number> {  //restrictions for generic Type - K, can be o
 
 # Decorators
 
+- Decorators - Ability of TypeScript to add annotations and meta program syntax for declaring classes and functions
+
+- Decorator - is an ordinary function, it can be attached to a class declaration, an accessor method, a property or a parameter.
+
+- Decorators wrap the decorated entity and modify its behavior.
+
+```JS
+class User {
+    constructor( public name: string, public age: number){}
+
+    public getPass(): string {
+        return `${this.name}${this.age}`
+    }
+}
+```
+
+```JS
+//Base structure of Decorator
+
+const logClass = () => ();
+```
+
+```JS
+//There is one simple rule- as the only argument the class decorator function must accept the constructor of the decorated entity
+
+//Class Decorator
+const logClass = (constructor: Function) => {  //this logClass decorator recives constructor and return everything into console
+    console.log(constructor);   //Result of call: Class User{}
+}
+
+@logClass   //<--If you want to Use or Apply decorator for class
+class User{
+    constructor( public name: string, public age: number){}
+
+    public getPass(): string {
+        return `${this.name}${this.age}`
+    }
+}
+```
+
+In general there are 4 main Decorator types:
+
+- Class
+- Property
+- Method
+- Accessor
+
 ////////////////////////////////////////////////////////////////////////////
 
 ```JS
@@ -894,3 +948,5 @@ function greet(person: string, date: Date) {
 }
 greet("Maddison", new Date());
 ```
+
+[--> Video <--](https://www.youtube.com/watch?v=MtO76yEYbxA&list=PLNkWIWHIRwMEm1FgiLjHqSky27x5rXvQa&index=2)
