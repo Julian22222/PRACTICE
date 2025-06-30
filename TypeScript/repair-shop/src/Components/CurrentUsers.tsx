@@ -1,14 +1,6 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import CurrentUser_Item from "../Components/CurrentUser_Item";
 import { ICurrentUser } from "../Types/types";
-import {
-  DndContext,
-  closestCenter,
-  useDraggable,
-  useDroppable,
-  DragEndEvent,
-} from "@dnd-kit/core";
-import DraggableImage from "./DraggableImage";
 import DragAndDropSchedule from "./DraggableImage";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
@@ -61,6 +53,7 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
             <div>
               {customers.map((customer) => (
                 <Link
+                  key={customer.car_id}
                   to={`/current-user/${customer.car_id}`}
                   style={{ textDecoration: "none" }}
                 >

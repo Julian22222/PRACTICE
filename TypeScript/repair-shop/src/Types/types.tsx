@@ -17,12 +17,12 @@ export interface IWaitingUser {
 ////////////////////////////////////////
 
 export interface ICurrentUser {
-  car_id: number;
+  car_id?: number;
   brand: string;
   seats: number;
   date: string;
   fuel: string;
-  created_at: string;
+  created_at?: string;
   serviceCheck: boolean;
   involved: string | string[];
   notes: string;

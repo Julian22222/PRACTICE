@@ -64,11 +64,11 @@ const IndividualCurrentUser: FC = () => {
 
       let res: ICurrentUser = response.data;
 
-      const formattedDate = `${res.created_at
+      const formattedDate = `${(res.created_at ?? "")
         .slice(0, 10)
         .split("-")
         .reverse()
-        .join("/")} at ${res.created_at.slice(11, 16)}`; // Format date from YYYY-MM-DD to DD/MM/YYYY at HH:MM
+        .join("/")} at ${(res.created_at ?? "").slice(11, 16)}`; // Format date from YYYY-MM-DD to DD/MM/YYYY at HH:MM
 
       setCurrentUser({ ...res, created_at: formattedDate }); // Format date from YYYY-MM-DD to DD/MM/YYYY
       console.log("currentUser", currentUser);

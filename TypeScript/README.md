@@ -1,3 +1,16 @@
+# Common Hotkeys to Create React Component Template
+
+```JS
+rfc + Tab  - React Functional Component template
+
+rafce + Tab - React Arrow Function Component with export
+
+rcc + Tab - React Class Component
+
+rfce + Tab - React Functional Component with export
+
+```
+
 # Basic Data Types
 
 JS is a language with dynamic types, can change variable types
@@ -576,7 +589,7 @@ printCoord({ x: 100, y: 100 });
 
 - Type aliases and interfaces are very similar, the key distinction is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
 
-![pic1](https://github.com/Julian22222/PRACTICE/blob/main/TypeScript/IMG/pic1.jpg)
+![pic1](https://github.com/Julian22222/PRACTICE/blob/main/TypeScript/IMG/pic1.JPG)
 
 ```JS
 //here we use interface and type to describe object structure
