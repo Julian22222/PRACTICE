@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/Project_MVC_BookShop2.props" />
-</Project>
