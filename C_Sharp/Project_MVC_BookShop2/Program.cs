@@ -162,8 +162,13 @@ var app = builder.Build();  //creating our web app
 
 if (!app.Environment.IsDevelopment())  //if our environment = not development do  -->this code . Environment variables located in-> launchSettings.json (isProduction(), isStaging())
 {
-    app.UseExceptionHandler("/Home/Error");  // <-- will show this page in productions for common users, in case of any errors (except 404,400,500 etc.)
+    app.UseDeveloperExceptionPage();  // <-- will show this page in development mode, if we have any errors, it will show detailed error page with all the info about error
+    // app.UseExceptionHandler("/Home/Error");  // <-- will show this page in productions for common users, in case of any errors (except 404,400,500 etc.)
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // app.UseHsts();
+}else{
+    //you should not enable Developer mode in production, but it's crucial for debugging locally.
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 

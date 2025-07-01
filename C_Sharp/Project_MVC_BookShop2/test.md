@@ -1,9 +1,10 @@
-﻿@using Project_MVC_BookShop2.Models 
+```C#
+@using Project_MVC_BookShop2.Models
 @using Microsoft.AspNetCore.Mvc.Rendering
 @* @using Project_MVC_BookShop2.Components *@
 @using Project_MVC_BookShop2.Repository
 
-@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList 
+@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList
 
 @{
     ViewData["Title"] = "Books store";
@@ -31,15 +32,15 @@
         <environment names="Production">
             <h3>Production..</h3>
         </environment>
-    
+
 
         <h4 class="lead text-muted">Discover Your Next Great Read — Thousands of Books at Your Fingertips. From Bestsellers to Hidden Gems — Start Your Literary Journey Today.</h4>
         <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">
             <i class="fa-solid fa-magnifying-glass"></i> Search books
         </a>
-        
+
     </div>
-    
+
 </section>
 
 
@@ -62,7 +63,7 @@
     @* not passing any parametrs in this view component, use small letters in View component name *@
     @* <vc: test-books book-id="2" is-sort="false"></vc: test-books>  <--- also we can pass all parametrs that are required in View component  *@
     @* To use this 2nd option, you need to add --> (@addTagHelper *, Project_MVC_BookShop2 , @addTagHelper *, Project_MVC_BookShop2.Components ) in Views/_ViewImports.cshtml *@
-    <vc:test-books></vc:test-books>  
+    <vc:test-books></vc:test-books>
 
 
 
@@ -71,22 +72,20 @@
 
         <div class="row">
             @* View Component -TopBooks *@
-            @* @await Component.InvokeAsync("TopBooks" )   //not loading on first load, in FREE TIER *@
-            <div id="top-books-container">Loading Top Books...</div>
+            @await Component.InvokeAsync("TopBooks" )
         </div>
         <hr/>
 
         <div class="container">
             <div class="row">
 
-                @* @await Component.InvokeAsync("WeekBook")     //not loading on first load, in FREE TIER  *@
-                <div id="week-book-container">Loading Week Book...</div> 
-            
+                @await Component.InvokeAsync("WeekBook")
+
             </div>
         </div>
 
     </div>
-        
+
 
     <img src="/img/bookshelf1.jpg" alt="logo" class="img-fluid mt-5 mb-5" />
 
@@ -97,7 +96,7 @@
 
                 <div class="col-md-3">
                     @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                    <partial name="_bookThumbnail" model="new Book()" />      
+                    <partial name="_bookThumbnail" model="new Book()" />
                 </div>
 
                 <div class="col-md-3" >
@@ -107,7 +106,7 @@
 
                 <div class="col-md-3">
                     @* use the same code from Partial view - from _bookThumbnail.cshtml *@
-                    <partial name="_bookThumbnail" model="new Book()" />  
+                    <partial name="_bookThumbnail" model="new Book()" />
                 </div>
             </div>
         </div>
@@ -134,26 +133,6 @@ Scripts -can be any name that is the same with (created name(unique name) from R
 @* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
    <script>
 
-
-//Helps with first load of the page, if the data is not loaded, it will show a spinner and retry loading the data
-    function loadWithRetry(containerId, url, attempts = 3) {
-    $(containerId).html('<div class="mt-5 mb-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>Please wait, loading data...<div>');  //Show this block while waiting for data.
-
-    function tryLoad(remaining) {    //this function sends the request to the server.
-        $(containerId).load(url, function (response, status, xhr) {
-            if (status == "error" && remaining > 0) {
-                setTimeout(() => tryLoad(remaining - 1), 3000); // Retry after 3 seconds
-            } else if (status == "error") {
-                $(containerId).html("<div class='alert alert-danger'>Failed to load data. Please refresh the page.</div>");
-            }
-        });
-    }
-
-    tryLoad(attempts);
-}
-
-
-    
     $(document).ready(function (){
         alert("document is ready, Click Ok");
     })
@@ -162,13 +141,6 @@ Scripts -can be any name that is the same with (created name(unique name) from R
     @* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
     @* Can use script block inside partial View, or in parent element - here we have a script for->(_bookThumbnail.cshtml) *@
     $(document).ready(function () {
-
-        loadWithRetry("#top-books-container", '@Url.Action("LoadTopBooks", "Home")');  //call function loadWithRetry to load TopBooks
-        loadWithRetry("#week-book-container", '@Url.Action("LoadWeekBook", "Home")');  //call function loadWithRetry to load WeekBook
-
-
-
-
 
         //jquery for _bookThambnail.cshtml file (Partial View)
         $(".add-to-basket").click(function () {
@@ -188,7 +160,7 @@ Scripts -can be any name that is the same with (created name(unique name) from R
         });
     });
 
-</script> 
+</script>
 
 }
 
@@ -199,3 +171,6 @@ url: "/Book/Basket",
 data: JSON.stringify(book),
 contentType: "application/json"
 }); *@
+
+
+```

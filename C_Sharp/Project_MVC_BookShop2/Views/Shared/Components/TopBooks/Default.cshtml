@@ -11,13 +11,15 @@
 }
 else
 {
-    @foreach(var book in Model){
-    <div class="col-md-4"> <!-- col-md-4 - 3 columns in a row, 4 columns in a row for each book -->
+    <div class="row">
+        @foreach(var book in Model){
+        <div class="col-md-4"> <!-- col-md-4 - 3 columns in a row, 4 columns in a row for each book -->
 
-        @* here we loop the IEnumerable(list of books that we received from TopBooksViewComponent.cs) and passing each book to Partial View *@
-        <partial name="_bookThumbnail" model="book" />  
+            @* here we loop the IEnumerable(list of books that we received from TopBooksViewComponent.cs) and passing each book to Partial View *@
+            <partial name="_bookThumbnail" model="book" />  
+        </div>
+        }
     </div>
-    }
      
 }
 

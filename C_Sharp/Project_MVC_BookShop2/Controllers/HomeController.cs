@@ -12,6 +12,12 @@ using Project_MVC_BookShop2.Service;    //needs to use Service/UserService.cs cl
 using System.Dynamic;
 using Microsoft.AspNetCore.Diagnostics;
 using Project_MVC_BookShop2.Repository;
+using Project_MVC_BookShop2.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using Project_MVC_BookShop2.Components;
 
 namespace Project_MVC_BookShop2.Controllers;
 
@@ -42,21 +48,45 @@ public class HomeController : Controller
 
 
     private readonly ILogger<HomeController> _logger;
+    private readonly MyBookStoreWebDbContext _context = null; //create instance of MyBookStoreWebDbContext class, to use it in ConnectDatabase action, needed to check if it is able to connect to the database if not - show message Loading
 
 
 // constructor
-    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env, UserService userService, BookRepository bookRepository, IBasketRepository basketRepository) //IConfiguration to read appsettings.json file
+    public HomeController(ILogger<HomeController> logger, IConfiguration _configuration, IWebHostEnvironment env, UserService userService, BookRepository bookRepository, IBasketRepository basketRepository, MyBookStoreWebDbContext context) //IConfiguration to read appsettings.json file
     {
         _logger = logger;
-         configuration = _configuration;  //now using configuration --> we can read the appsetings data
+        configuration = _configuration;  //now using configuration --> we can read the appsetings data
         _env = env;  //<-- dependency injection to check the Environment Variable 
         _userService = userService;
         _basketRepository = basketRepository;  //<-- create instance of BasketRepository class
         _bookRepository = bookRepository;  //<-- create instance of BookRepository class
-    
-    
+        _context = context;  //<-- create instance of MyBookStoreWebDbContext class, to use it in ConnectDatabase action, needed to check if it is able to connect to the database if not - show message Loading
         Console.WriteLine("HomeController constructor called");
     }
+
+
+
+
+    [HttpGet]
+    public IActionResult LoadTopBooks(){  //this method return ViewComponent
+
+        //You don't need to use async/await in the Controller. The ViewComponent() method handles it, even if your InvokeAsync() inside the View Component is asynchronous.
+        return ViewComponent("TopBooks");
+
+    }
+
+
+
+    [HttpGet]  //this method return ViewComponent
+    public  IActionResult LoadWeekBook(){
+    
+        return ViewComponent("WeekBook");
+
+    }
+
+
+
+
 
     public IActionResult Index()
     {
