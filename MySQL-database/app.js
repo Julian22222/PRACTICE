@@ -16,89 +16,73 @@ app.use(express.json()); //to be able to send json body in POST and PUT methods 
 
 app.get("/", async (req, res) => {
   try {
-    pool.query(
-      "SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id",
-      (err, result, fields) => {
-        // result -is our query (data from database), err - any error while connecting to our database
-        if (err) {
-          res.send(err);
-        }
-        if (!result || result.length === 0) {
-          res.send("No data found in database");
-        }
-
-        if (result) {
-          //converting database -serviceCheck property from 1/0 to true/false
-          //MySQL, SQLite, SQL Server, Oracle stores boolean values as 1 (true) and 0 (false) under the hood.
-          const formattedResult = result.map((row) => ({
-            ...row,
-            serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
-          }));
-
-          res.send(formattedResult);
-          // res.json(formattedResult);
-        }
-      }
+    const [rows] = await pool.query(
+      `
+      SELECT cars.*, phoneNumbers.phone
+      FROM cars
+      LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id`
     );
+
+    console.log(rows);
+
+    if (!rows.length) {
+      return res.status(404).send("No data found in database");
+    }
+
+    // Convert serviceCheck to boolean
+    const formattedRows = rows.map((row) => ({
+      //converting database -serviceCheck property from 1/0 to true/false
+      //MySQL, SQLite, SQL Server, Oracle stores boolean values as 1 (true) and 0 (false) under the hood.
+      ...row,
+      serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
+    }));
+
+    res.json(formattedRows);
+    // res.json(formattedRows);
   } catch (err) {
-    console.log("error:", err);
+    console.error(err);
+    res.status(500).send("Server error");
   }
 });
 
 ////////////////////////////////////////////////////////////////////////////GET ID
 
 app.get("/:carId", async (req, res) => {
-  try {
-    //get ID from request body, always comes as a string
-    const { carId } = req.params;
+  //get ID from request body, always comes as a string
+  const { carId } = req.params;
+  // find if the ID exists in the database
 
-    console.log(carId);
-    console.log(typeof carId);
-    //isNaN checks if the value is Not-a-Number, automatically convert the string to a number
-    // If carId is NaN, then isNaN(carId) returns true
-    if (isNaN(carId)) {
-      return res.status(400).send("Wrong card Id has been inserted.");
+  //isNaN checks if the value is Not-a-Number, automatically convert the string to a number
+  // If carId is NaN, then isNaN(carId) returns true
+  if (isNaN(carId)) {
+    return res.status(400).send("Wrong card Id has been inserted.");
+  }
+
+  try {
+    const [rows] = await pool.query(
+      `SELECT cars.*, phoneNumbers.phone
+       FROM cars
+       LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id
+       WHERE cars.car_id = ?`, //// Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
+      [carId]
+    );
+
+    //if carId doesn't exist in database -> the result.length === 0
+    if (!rows.length) {
+      return res.status(404).send("Car Id Not Found");
     }
 
-    // find if the ID exists in the database
-    pool.query(
-      `SELECT cars.car_id,cars.brand,cars.seats,cars.date,cars.fuel,
-      cars.created_at,cars.serviceCheck,cars.involved,cars.notes,phoneNumbers.phone 
-      FROM cars INNER JOIN phoneNumbers ON ph_id = car_id WHERE car_id ='` +
-        carId +
-        "'",
-      // "SELECT * FROM cars WHERE car_id = $1",[carId],
-      (err, result) => {
-        // result -is our query, err - if can't connect to our database
-        if (err) {
-          res.status(500).send("error", err.message);
-        }
+    const car = {
+      //converting database -serviceCheck property from 1/0 to true/false
+      ...rows[0],
+      serviceCheck: Boolean(rows[0].serviceCheck), // Convert 1/0 to true/false
+    };
 
-        // console.log(result);
-
-        //if carId doesn't exist in database -> the result.length === 0
-        if (result.length === 0) {
-          res.status(404).send("Car Id Not Found");
-        }
-
-        if (result.length > 0) {
-          // res.send(result);
-
-          //converting database -serviceCheck property from 1/0 to true/false
-          const formattedResult = result.map((row) => ({
-            ...row,
-            serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
-          }));
-
-          // console.log(formattedResult[0]);
-
-          res.json(formattedResult[0]); // send only one object, not an array
-        }
-      }
-    );
-    // });
+    res.json(car);
   } catch (err) {
-    console.log("error:", err);
+    //err - if can't connect to our database
+    console.log(err);
+    res.status(500).send("Server error");
   }
 });
 
@@ -112,87 +96,104 @@ app.post("/", async (req, res) => {
       req.body;
 
     // error handling, when posting but brand or /and seats field is empty
-    if (req.body.brand === undefined) {
-      res.status(400).send("Wrong Brand Input");
-    } else if (req.body.seats === undefined) {
-      res.send("Wrong Seats Input");
+    if (!brand === undefined) {
+      return res.status(400).send("Brand is required");
+    } else if (!seats || isNaN(seats)) {
+      return res.status(400).send("Seats must be a number");
     }
 
-    pool.query(
-      `INSERT INTO cars(brand,seats, date, fuel, serviceCheck, involved, notes) VALUES
-        (?, ?, ?, ?, ?, ?, ?)`, /// Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
-      [brand, seats, date, fuel, serviceCheck, involved, notes],
-      (err1, result1) => {
-        console.log("result1", result1);
-        if (err1) {
-          return res.status(500).send(err1);
-        }
-
-        const car_id = result1.insertId; // Get the inserted car_id from result1, if the query was successful
-
-        pool.query(
-          `INSERT INTO phoneNumbers (ph_id, phone) VALUES
-            (?, ?)`, // Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
-          [car_id, phone],
-          (err2, result2) => {
-            if (err2) {
-              return res.status(500).send(err2);
-            }
-
-            res.status(201).send("Data inserted into both tables successfully");
-          }
-        );
-      }
+    // Insert into cars
+    const [result] = await pool.query(
+      //destructuring the result to get the insertId
+      `INSERT INTO cars (brand, seats, date, fuel, serviceCheck, involved, notes) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        brand,
+        seats,
+        date || null,
+        fuel || null,
+        serviceCheck,
+        involved || null,
+        notes || null,
+      ]
+      //If date, fuel, involved, or notes are empty or undefined, they will be saved as null in the database.
     );
+
+    const carId = result.insertId; // Get the inserted car_id from result, if the query was successful
+    //The insertId (the ID of the new row if it's auto-incremented).
+
+    if (phone) {
+      // Insert phone
+      await pool.query(
+        `INSERT INTO phoneNumbers (ph_id, phone) VALUES (?, ?)`,
+        [carId, phone]
+      );
+    }
+
+    res.status(201).send(`Car created with ID: ${carId}`);
   } catch (err) {
-    console.log("error:", err);
+    console.log(err);
+    res.status(500).send("Server error"); //if there is an error connecting to the database
   }
 });
 ////////////////////////////////////////////////////////////////////////UPDATE
 app.put("/:carId", async (req, res) => {
+  // Get ID from request body
+  const { carId } = req.params;
+  const { brand, seats, date, fuel, serviceCheck, involved, notes } = req.body;
+
+  if (isNaN(carId)) {
+    return res.status(400).send("Invalid car ID");
+  }
+
   try {
-    // Get ID from request body
-    const { carId } = req.params;
-    const { brand, seats, year, fuel } = req.body;
+    // Check if car exists
+    const [existing] = await pool.query("SELECT * FROM cars WHERE car_id = ?", [
+      carId,
+    ]);
 
-    //  Find if the ID exists in the database
-    const item = await pool.query((err) => {
-      pool.query(
-        `SELECT * FROM cars WHERE car_id ='` + carId + "'",
-        // if carId doesn't exist -< err
-        (err, result) => {
-          if (err) {
-            res.status(500).json("error", err.message);
-          }
+    if (!existing.length) {
+      return res.status(404).send("Car ID not found");
+    }
 
-          //   if cardID exists we can make an update
-          if (result && result.length) {
-            pool.query(
-              `UPDATE cars SET brand = '${brand}', seats = '${seats}', year = '${year}', fuel = '${fuel}' WHERE car_id ='` +
-                carId +
-                "'",
-              (err1, result1, fields1) => {
-                if (err1) {
-                  res.send(err1);
-                }
+    // Update cars table
+    await pool.query(
+      `UPDATE cars SET brand = ?, seats = ?, date = ?, fuel = ?, serviceCheck = ?, involved = ?, notes = ? WHERE car_id = ?`,
+      [
+        brand || existing[0].brand,
+        seats || existing[0].seats,
+        date || existing[0].date,
+        fuel || existing[0].fuel,
+        serviceCheck !== undefined ? serviceCheck : existing[0].serviceCheck,
+        involved || existing[0].involved,
+        notes || existing[0].notes,
+        carId,
+      ]
+    );
 
-                if (result1) {
-                  res.status(204).send("Data Updated Successfully");
-                }
-
-                if (fields1) {
-                  console.log(fields1);
-                }
-              }
-            );
-          } else {
-            res.send("Record not found.");
-          }
-        }
+    if (phone) {
+      // Update or insert phone number for this car
+      const [phoneExists] = await pool.query(
+        "SELECT * FROM phoneNumbers WHERE ph_id = ?",
+        [carId]
       );
-    });
+
+      if (phoneExists.length) {
+        await pool.query("UPDATE phoneNumbers SET phone = ? WHERE ph_id = ?", [
+          phone,
+          carId,
+        ]);
+      } else {
+        await pool.query(
+          "INSERT INTO phoneNumbers (ph_id, phone) VALUES (?, ?)",
+          [carId, phone]
+        );
+      }
+    }
+
+    res.status(200).send("Car updated successfully");
   } catch (error) {
-    console.log("error:", err);
+    console.log(err);
+    res.status(500).send("Server error"); //if there is an error connecting to the database
   }
 });
 
@@ -200,90 +201,51 @@ app.put("/:carId", async (req, res) => {
 
 app.delete("/:carId", async (req, res) => {
   const { carId } = req.params;
-  console.log(carId);
 
-  pool.query(
-    `DELETE FROM phoneNumbers WHERE ph_id = ${carId}`,
-    (err1, result1) => {
-      // console.log("result1", result1);
-      if (err1) return res.status(500).json({ error: err1.message });
-      if (result1.affectedRows > 0) {
-        console.log("Phone number deleted successfully");
-      } else {
-        console.log("No phone number found for this car ID");
-      }
-    }
-  );
+  if (isNaN(carId)) {
+    return res.status(400).send("Invalid car ID");
+  }
 
-  pool.query(`DELETE FROM cars WHERE car_id = ${carId}`, (err2, result2) => {
-    if (err2) return res.status(500).json("error:", err2.message);
-    if (result2.affectedRows > 0) {
-      console.log("Car deleted successfully");
-      return res.status(204).send("Data Deleted Successfully from both tables");
+  try {
+    // Delete phone number first
+    await pool.query("DELETE FROM phoneNumbers WHERE ph_id = ?", [carId]);
+
+    // Delete car
+    const [result] = await pool.query("DELETE FROM cars WHERE car_id = ?", [
+      carId,
+    ]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send("Car ID not found");
     }
-    if (!result2 || result2.length === 0) {
-      return res.status(404).send("Car Id not found");
-    }
-  });
+
+    res.status(204).send("Car deleted Successfully");
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).send("Server error"); //if there is an error connecting to the database
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////
 });
 
 // Error handler
-app.use((err, req, res, next) => {
-  if (err.status && err.msg) {
-    res.status(err.status).send({ message: err.msg });
-  } else {
-    next(err);
-  }
-
-  console.log(err.stack);
-  console.log(err.name);
-  console.log(err.code);
-});
-
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    message: "Something went wrong",
-  });
-});
-
-module.exports = app;
-
-// app.post("/", async (req, res, next) => {
-//   try {
-//     // Insert into cars table
-//     const carInsertQuery = `
-//       INSERT INTO cars(brand, seats, date, fuel, created_at, serviceCheck, involved, notes)
-//       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-//     `;
-
-//     pool.query(
-//       carInsertQuery,
-//       [brand, seats, date, fuel, created_at, serviceCheck, involved, notes],
-//       (err, result) => {
-//         if (err) {
-//           return res.status(500).send(err);
-//         }
-
-//         const car_id = result.insertId;
-
-//         // Insert into phoneNumbers table
-//         const phoneInsertQuery = `
-//           INSERT INTO phoneNumbers(phone, ph_id)
-//           VALUES (?, ?)
-//         `;
-
-//         pool.query(phoneInsertQuery, [phone, car_id], (err2, result2) => {
-//           if (err2) {
-//             return res.status(500).send(err2);
-//           }
-
-//           res.status(201).send("Data inserted into both tables successfully");
-//         });
-//       }
-//     );
-//   } catch (err) {
+// app.use((err, req, res, next) => {
+//   if (err.status && err.msg) {
+//     res.status(err.status).send({ message: err.msg });
+//   } else {
 //     next(err);
 //   }
+
+//   console.log(err.stack);
+//   console.log(err.name);
+//   console.log(err.code);
 // });
+
+// app.use((err, req, res, next) => {
+//   res.status(500).json({
+//     message: "Something went wrong",
+//   });
+// });
+
+module.exports = app;
