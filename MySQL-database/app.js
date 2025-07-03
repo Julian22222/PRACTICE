@@ -14,14 +14,8 @@ app.use(express.json()); //to be able to send json body in POST and PUT methods 
 
 ///////////////////////////////////////////////////////////////////////GET
 
-app.get("/", async (req, res, next) => {
+app.get("/", async (req, res) => {
   try {
-    //const [rows] = await db.query("SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id");
-    //  if (rows.length === 0) {
-    //   return res.status(404).json({ message: "Users not found" });
-    // }
-    // const users = rows[0]
-
     pool.query(
       "SELECT * FROM cars INNER JOIN phoneNumbers ON ph_id = car_id",
       (err, result, fields) => {
@@ -29,6 +23,10 @@ app.get("/", async (req, res, next) => {
         if (err) {
           res.send(err);
         }
+        if (!result || result.length === 0) {
+          res.send("No data found in database");
+        }
+
         if (result) {
           //converting database -serviceCheck property from 1/0 to true/false
           //MySQL, SQLite, SQL Server, Oracle stores boolean values as 1 (true) and 0 (false) under the hood.
@@ -43,56 +41,44 @@ app.get("/", async (req, res, next) => {
       }
     );
   } catch (err) {
-    next(err);
+    console.log("error:", err);
   }
 });
 
 ////////////////////////////////////////////////////////////////////////////GET ID
 
-app.get("/:carId", async (req, res, next) => {
+app.get("/:carId", async (req, res) => {
   try {
-    //get ID from request body
+    //get ID from request body, always comes as a string
     const { carId } = req.params;
 
-    // console.log(carId);
-    // console.log(typeof carId);
-
-    // console.log(!isNaN(carId));
-
-    if (!isNaN(carId) === false) {
+    console.log(carId);
+    console.log(typeof carId);
+    //isNaN checks if the value is Not-a-Number, automatically convert the string to a number
+    // If carId is NaN, then isNaN(carId) returns true
+    if (isNaN(carId)) {
       return res.status(400).send("Wrong card Id has been inserted.");
     }
 
-    // if (Number(carId) === NaN) {
-    //   // return Promise.reject({
-    //   //   status: 400,
-    //   //   message: "Wrong card Id has been inserted.",
-    //   // });
-    //   res.status(400).send("Wrong card Id has been inserted.");
-    // }
-
     // find if the ID exists in the database
-    // const item = await pool.query((err) => {
     pool.query(
       `SELECT cars.car_id,cars.brand,cars.seats,cars.date,cars.fuel,
       cars.created_at,cars.serviceCheck,cars.involved,cars.notes,phoneNumbers.phone 
       FROM cars INNER JOIN phoneNumbers ON ph_id = car_id WHERE car_id ='` +
         carId +
         "'",
-      // "SELECT * FROM cars WHERE car_id = $1",
-      // [carId],
-      (err, result, fields) => {
+      // "SELECT * FROM cars WHERE car_id = $1",[carId],
+      (err, result) => {
         // result -is our query, err - if can't connect to our database
         if (err) {
-          res.status(400).send(err);
+          res.status(500).send("error", err.message);
         }
 
         // console.log(result);
 
-        //   if carId doesn't exist in database -> the result.length === 0
+        //if carId doesn't exist in database -> the result.length === 0
         if (result.length === 0) {
           res.status(404).send("Car Id Not Found");
-          // return Promise.reject({ status: 404, msg: "Id not found" });
         }
 
         if (result.length > 0) {
@@ -112,11 +98,13 @@ app.get("/:carId", async (req, res, next) => {
     );
     // });
   } catch (err) {
-    next(err);
+    console.log("error:", err);
   }
 });
+
 ////////////////////////////////////////////////////////////////POST
-app.post("/", async (req, res, next) => {
+
+app.post("/", async (req, res) => {
   // console.log(req.body);
 
   try {
@@ -129,18 +117,13 @@ app.post("/", async (req, res, next) => {
     } else if (req.body.seats === undefined) {
       res.send("Wrong Seats Input");
     }
-    // else {
-    // if all field correctly ,send a req to database
-    // await pool.query((err) => {
-    //   if (err) {
-    //     res.send(err);
-    //   }
 
     pool.query(
       `INSERT INTO cars(brand,seats, date, fuel, serviceCheck, involved, notes) VALUES
         (?, ?, ?, ?, ?, ?, ?)`, /// Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
       [brand, seats, date, fuel, serviceCheck, involved, notes],
       (err1, result1) => {
+        console.log("result1", result1);
         if (err1) {
           return res.status(500).send(err1);
         }
@@ -162,29 +145,30 @@ app.post("/", async (req, res, next) => {
       }
     );
   } catch (err) {
-    next(err);
+    console.log("error:", err);
   }
 });
 ////////////////////////////////////////////////////////////////////////UPDATE
-app.put("/:carId", async (req, res, next) => {
+app.put("/:carId", async (req, res) => {
   try {
     // Get ID from request body
     const { carId } = req.params;
+    const { brand, seats, year, fuel } = req.body;
 
     //  Find if the ID exists in the database
     const item = await pool.query((err) => {
       pool.query(
         `SELECT * FROM cars WHERE car_id ='` + carId + "'",
         // if carId doesn't exist -< err
-        (err, result, fields) => {
+        (err, result) => {
           if (err) {
-            res.send(err);
+            res.status(500).json("error", err.message);
           }
 
           //   if cardID exists we can make an update
           if (result && result.length) {
             pool.query(
-              `UPDATE cars SET brand = '${req.body.brand}', seats = '${req.body.seats}', year = '${req.body.year}', fuel = '${req.body.fuel}' WHERE car_id ='` +
+              `UPDATE cars SET brand = '${brand}', seats = '${seats}', year = '${year}', fuel = '${fuel}' WHERE car_id ='` +
                 carId +
                 "'",
               (err1, result1, fields1) => {
@@ -208,79 +192,41 @@ app.put("/:carId", async (req, res, next) => {
       );
     });
   } catch (error) {
-    next(error);
+    console.log("error:", err);
   }
 });
 
 ////////////////////////////////////////////////////////////////////////DELETE
 
-app.delete("/:carId", async (req, res, next) => {
-  // try {
-  // Get ID from request body
+app.delete("/:carId", async (req, res) => {
   const { carId } = req.params;
-
-  //  Find if the ID exists in the database or not
-  // const item = await pool.query((err) => {
-  // pool.query(
-  //   `SELECT * FROM cars WHERE car_id = '` + carId + "'",
-  //   (err, result, fields) => {
-  //     if (err) {
-  //       res.send(err);
-  //     }
-
-  //   if ID exists in database
-  // if (result && result.length) {
-
-  /////////////////////////////////////////////////////////////////////////
-  // pool.query(
-  //   `DELETE FROM cars WHERE car_id = '${carId}'`,
-  //   (err1, result1, fields1) => {
-  //     if (err1) {
-  //       res.send(err1);
-  //     }
-
-  //     if (result1.length === 0) {
-  //       res.status(400).send("Wrong card Id has been inserted.");
-  //     }
-
-  //     if (result1.length > 0) {
-  //       res.status(204).send("Data Deleted Successfully");
-  //     }
-
-  //     if (fields1) {
-  //       console.log(fields1);
-  //     }
-  //   }
-  // );
-
   console.log(carId);
 
-  await pool.query(
-    `DELETE FROM cars WHERE car_id = '${carId}'`,
-    (err, result, fields) => {
-      // console.log("Console from app.js", result.affectedRows);
-
-      if (result.affectedRows > 0) {
-        return res.status(204).send();
+  pool.query(
+    `DELETE FROM phoneNumbers WHERE ph_id = ${carId}`,
+    (err1, result1) => {
+      // console.log("result1", result1);
+      if (err1) return res.status(500).json({ error: err1.message });
+      if (result1.affectedRows > 0) {
+        console.log("Phone number deleted successfully");
+      } else {
+        console.log("No phone number found for this car ID");
       }
-
-      return res.status(404).send("Car Id not found");
     }
   );
 
+  pool.query(`DELETE FROM cars WHERE car_id = ${carId}`, (err2, result2) => {
+    if (err2) return res.status(500).json("error:", err2.message);
+    if (result2.affectedRows > 0) {
+      console.log("Car deleted successfully");
+      return res.status(204).send("Data Deleted Successfully from both tables");
+    }
+    if (!result2 || result2.length === 0) {
+      return res.status(404).send("Car Id not found");
+    }
+  });
+
   //////////////////////////////////////////////////////////////////////////////////////////
-
-  // }
-
-  // else {
-  //   res.send("Record not found.");
-  // }
-  // }
-  // );
-  // });
-  // } catch (error) {
-  //   next(error);
-  // }
 });
 
 // Error handler
@@ -304,40 +250,40 @@ app.use((err, req, res, next) => {
 
 module.exports = app;
 
-app.post("/", async (req, res, next) => {
-  try {
-    // Insert into cars table
-    const carInsertQuery = `
-      INSERT INTO cars(brand, seats, date, fuel, created_at, serviceCheck, involved, notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+// app.post("/", async (req, res, next) => {
+//   try {
+//     // Insert into cars table
+//     const carInsertQuery = `
+//       INSERT INTO cars(brand, seats, date, fuel, created_at, serviceCheck, involved, notes)
+//       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+//     `;
 
-    pool.query(
-      carInsertQuery,
-      [brand, seats, date, fuel, created_at, serviceCheck, involved, notes],
-      (err, result) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
+//     pool.query(
+//       carInsertQuery,
+//       [brand, seats, date, fuel, created_at, serviceCheck, involved, notes],
+//       (err, result) => {
+//         if (err) {
+//           return res.status(500).send(err);
+//         }
 
-        const car_id = result.insertId;
+//         const car_id = result.insertId;
 
-        // Insert into phoneNumbers table
-        const phoneInsertQuery = `
-          INSERT INTO phoneNumbers(phone, ph_id)
-          VALUES (?, ?)
-        `;
+//         // Insert into phoneNumbers table
+//         const phoneInsertQuery = `
+//           INSERT INTO phoneNumbers(phone, ph_id)
+//           VALUES (?, ?)
+//         `;
 
-        pool.query(phoneInsertQuery, [phone, car_id], (err2, result2) => {
-          if (err2) {
-            return res.status(500).send(err2);
-          }
+//         pool.query(phoneInsertQuery, [phone, car_id], (err2, result2) => {
+//           if (err2) {
+//             return res.status(500).send(err2);
+//           }
 
-          res.status(201).send("Data inserted into both tables successfully");
-        });
-      }
-    );
-  } catch (err) {
-    next(err);
-  }
-});
+//           res.status(201).send("Data inserted into both tables successfully");
+//         });
+//       }
+//     );
+//   } catch (err) {
+//     next(err);
+//   }
+// });
