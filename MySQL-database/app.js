@@ -1,24 +1,19 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
-const cors = require("cors");
 
 // import our database connection
 const pool = require("./db");
-const { Console } = require("console");
 
 app.use(cors());
 app.use(express.json()); //to be able to send json body in POST and PUT methods to database
 
-// const PORT = 9080;
-
 ///////////////////////////////////////////////////////////////////////GET
-
 app.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query(
-      `
-      SELECT cars.*, phoneNumbers.phone
+      `SELECT cars.*, phoneNumbers.phone
       FROM cars
       LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id`
     );
@@ -38,7 +33,7 @@ app.get("/", async (req, res) => {
     }));
 
     res.json(formattedRows);
-    // res.json(formattedRows);
+    // res.send(formattedRows);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -91,17 +86,17 @@ app.get("/:carId", async (req, res) => {
 app.post("/", async (req, res) => {
   // console.log(req.body);
 
+  const { brand, seats, date, fuel, serviceCheck, involved, notes, phone } =
+    req.body;
+
+  // error handling, when posting but brand or /and seats field is empty
+  if (!brand) {
+    return res.status(400).send("Brand is required");
+  } else if (!seats || isNaN(seats)) {
+    return res.status(400).send("Seats must be a number");
+  }
+
   try {
-    const { brand, seats, date, fuel, serviceCheck, involved, notes, phone } =
-      req.body;
-
-    // error handling, when posting but brand or /and seats field is empty
-    if (!brand === undefined) {
-      return res.status(400).send("Brand is required");
-    } else if (!seats || isNaN(seats)) {
-      return res.status(400).send("Seats must be a number");
-    }
-
     // Insert into cars
     const [result] = await pool.query(
       //destructuring the result to get the insertId
@@ -225,27 +220,6 @@ app.delete("/:carId", async (req, res) => {
 
     res.status(500).send("Server error"); //if there is an error connecting to the database
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////
 });
-
-// Error handler
-// app.use((err, req, res, next) => {
-//   if (err.status && err.msg) {
-//     res.status(err.status).send({ message: err.msg });
-//   } else {
-//     next(err);
-//   }
-
-//   console.log(err.stack);
-//   console.log(err.name);
-//   console.log(err.code);
-// });
-
-// app.use((err, req, res, next) => {
-//   res.status(500).json({
-//     message: "Something went wrong",
-//   });
-// });
 
 module.exports = app;

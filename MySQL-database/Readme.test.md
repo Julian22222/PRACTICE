@@ -251,3 +251,24 @@ app.use((err, req, res, next) => {
 
 module.exports = app;
 ```
+
+```JS
+Error handler
+app.use((err, req, res, next) => {
+  if (err.status && err.msg) {
+    res.status(err.status).send({ message: err.msg });
+  } else {
+    next(err);
+  }
+
+  console.log(err.stack);
+  console.log(err.name);
+  console.log(err.code);
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    message: "Something went wrong",
+  });
+});
+```
