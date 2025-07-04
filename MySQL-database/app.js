@@ -134,7 +134,8 @@ app.post("/", async (req, res) => {
 app.put("/:carId", async (req, res) => {
   // Get ID from request body
   const { carId } = req.params;
-  const { brand, seats, date, fuel, serviceCheck, involved, notes } = req.body;
+  const { brand, seats, date, fuel, serviceCheck, involved, notes, phone } =
+    req.body;
 
   if (isNaN(carId)) {
     return res.status(400).send("Invalid car ID");
