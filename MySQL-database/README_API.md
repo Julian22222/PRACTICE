@@ -34,7 +34,10 @@ pool.query(
 # Best Practice to use async/await with Promises instead of using callbacks for async flow.
 
 - async/await with Promises is better than using callbacks
+- try/catch it is working with async/await!!!
 - Promises that lets you write asynchronous code like synchronous code, making it easier to read and maintain.
+- If you use try/catch it won't catch the .then() or .catch() errors because .then() returns a Promise. For try/catch to work, you need async/await.
+- Don't use try/catch and Promise (.then()) together
 
 Use async/await over callbacks:
 
