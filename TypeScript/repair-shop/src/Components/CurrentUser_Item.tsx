@@ -9,7 +9,7 @@ const CurrentUser_Item: FC<ICurentUser_ItemProps> = ({ customer }) => {
   return (
     <div
       style={{
-        padding: 15,
+        padding: "10px",
         border: "1px solid gray",
         marginLeft: "5%",
         marginRight: "5%",

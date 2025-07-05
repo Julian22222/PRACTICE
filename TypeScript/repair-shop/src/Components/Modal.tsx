@@ -1,6 +1,6 @@
-import { create } from "domain";
 import { FC, useState } from "react";
 import { ICurrentUser } from "../Types/types";
+import { useNavigate } from "react-router-dom"; // Importing useNavigate for navigation after deletion
 
 interface IModalProps {
   setModal: (value: boolean) => void; // function to set modal visibility
@@ -12,6 +12,8 @@ interface IModalProps {
 
 const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
   const editMode = header === "Edit Car" ? true : false; // check if the modal is in edit mode based on the header text
+
+  const navigate = useNavigate(); // Navigate to main page after deletion
 
   const [data, setData] = useState({
     brand: editMode ? currentUser?.brand : "",
@@ -31,20 +33,33 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
 
   const createData = async (e: { preventDefault: () => void }) => {
     e.preventDefault(); // prevent default form submission behavior
+
+    // console.log("Data in UseState:", data); // log the data being sent
+
     try {
       const response = await fetch("https://car-shop-back-end.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, involved: data.involved.join(", ") }), // send data as JSON, Convert array back to string before sending
+        body: JSON.stringify({
+          ...data,
+          seats: Number(data.seats), // ensure seats is a number
+          involved:
+            data.involved.length > 1
+              ? data.involved.join(", ")
+              : data.involved.toString(), // Convert array to string before sending, if more than one person involved, join them with a comma
+        }), // send data as JSON, Convert array back to string before sending
       });
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const result = await response.json();
-      console.log("Data created successfully:", result);
+
+      console.log("result", response);
+
       setModal(false); // close modal after successful creation
+      navigate("/"); // navigate to home page after successful creation
     } catch (error) {
       console.error("Error creating data:", error);
     }
@@ -54,9 +69,19 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
   const editData = async (e: React.FormEvent) => {
     //React.KeyboardEvent - if it is keyboard event, React.MouseEvent - if it is mouse event
     e.preventDefault(); // prevent default form submission behavior
+
+    console.log("Edit function triggered");
+
+    if (!currentUser?.car_id) {
+      console.error("Car ID is not available for editing.");
+      return; // exit if car_id is not available
+    }
+
+    console.log("Sending update request for Car ID:", currentUser.car_id);
+
     try {
       const response = await fetch(
-        `https://car-shop-back-end.onrender.com/${currentUser?.car_id}`,
+        `https://car-shop-back-end.onrender.com/${currentUser.car_id}`,
         {
           method: "PUT",
           headers: {
@@ -65,20 +90,45 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
           body: JSON.stringify({ ...data, involved: data.involved.join(", ") }), // send updated data as JSON, Convert array back to string before sending
         }
       );
+
+      console.log("Raw response status:", response.status);
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const errorText = await response.text();
+        throw new Error(`Network response was not ok: ${errorText}`);
       }
-      const result = await response.json();
-      console.log("Data updated successfully:", result);
+
+      console.log("Data updated successfully:", response);
+
       setModal(false); // close modal after successful update
+
+      navigate("/"); // navigate to home page after successful update
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // prevent default form submission behavior
+
+    if (editMode) {
+      editData(e); // call editData function if in edit mode
+    } else {
+      createData(e); // call appropriate function based on edit mode
+    }
+  };
+
   return (
     <div className="modal-container">
-      <div className="modal">
+      <div
+        className="modal"
+        style={{
+          border: "whitesmoke 1px solid",
+          padding: "0px 20px",
+          paddingBottom: "20px",
+          boxShadow: "2px 2px 6px white",
+        }}
+      >
         <div className="modal-header">
           <h3>{header}</h3>
           <button className="modal-close" onClick={() => setModal(false)}>
@@ -86,7 +136,7 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
           </button>
         </div>
 
-        <form className="form-container">
+        <form className="form-container" onSubmit={handleSubmit}>
           <div className="label-input">
             <label htmlFor="brand" className="label-modal">
               Car Brand
@@ -225,7 +275,9 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
                     ...data,
                     involved: checked
                       ? [...data.involved, value]
-                      : data.involved.filter((person) => person !== value),
+                      : data.involved.filter(
+                          (person: string) => person !== value
+                        ),
                   });
                 }}
               />
@@ -246,7 +298,9 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
                     ...data,
                     involved: checked
                       ? [...data.involved, value]
-                      : data.involved.filter((person) => person !== value),
+                      : data.involved.filter(
+                          (person: string) => person !== value
+                        ),
                   });
                 }}
               />
@@ -270,7 +324,9 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
                     ...data,
                     involved: checked // if the checkbox is ticked(true), it adds "Chris Brown" to the data.involved array, If checkbox is unticked(false), it removes "Chris Brown" from the data.involved array.
                       ? [...data.involved, value]
-                      : data.involved.filter((person) => person !== value),
+                      : data.involved.filter(
+                          (person: string) => person !== value
+                        ),
                   });
                 }}
               />
@@ -291,22 +347,19 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
             <label htmlFor="notes" className="label-modal">
               Notes
             </label>
-            <input
+            <textarea
               id="notes" // links this <label> tag with input with id="notes"
               className="modal-area"
               required
-              type="area"
               placeholder="Add your Notes..."
               value={data.notes} // bind value to state
               onChange={(e) => setData({ ...data, notes: e.target.value })} // update state on change
             />
           </div>
 
-          <input
-            className="submit-btn"
-            type="submit"
-            onClick={editMode ? editData : createData} // call appropriate function based on edit mode
-          />
+          <button className="submit-btn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>

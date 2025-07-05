@@ -65,20 +65,20 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
         </div>
         <div className="right-flexbox-container">
           {/* <h5>Mechanics of our Garage</h5>
-       
-        <p>
-          Each customer is identified by their car ID, brand, number of seats,
-          year of manufacture, and fuel type.
-        </p> */}
+        
+            <p>
+            Each customer is identified by their car ID, brand, number of seats,
+            year of manufacture, and fuel type.
+            </p> */}
           <div className="emp-container">
             {/* <p>
-            Our team of mechanics is dedicated to providing top-notch service
-            and ensuring that your vehicle is in the best condition possible.
-            </p>
-            <p>
-            If you have any questions or need assistance, feel free to contact
-            us.
-            </p> */}
+              Our team of mechanics is dedicated to providing top-notch service
+              and ensuring that your vehicle is in the best condition possible.
+              </p>
+              <p>
+              If you have any questions or need assistance, feel free to contact
+              us.
+              </p> */}
 
             <p>Meet Our Team</p>
             <p>We are here to help you with your car repairs!</p>
@@ -106,25 +106,25 @@ const CurrentUsers: FC<CurrentUsersProps> = ({ customers }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ paddingRight: "30px" }}>
-                    <td>John Doe</td>
+                  <tr>
+                    <td style={{ paddingRight: "60px" }}>John Doe</td>
                     <td>Lead Mechanic</td>
-                    <td>10 years</td>
-                  </tr>
-                  <tr style={{ paddingRight: "30px" }}>
-                    <td>Tom Smith</td>
-                    <td>Assistant Mechanic</td>
-                    <td>5 years</td>
-                  </tr>
-                  <tr style={{ paddingRight: "30px" }}>
-                    <td>Mike Johnson</td>
-                    <td>Tire Specialist,Brake Technician</td>
-                    <td>3 years</td>
+                    <td style={{ paddingLeft: "60px" }}>10 years</td>
                   </tr>
                   <tr>
-                    <td>Chris Brown</td>
+                    <td style={{ paddingRight: "60px" }}>Tom Smith</td>
+                    <td>Assistant Mechanic</td>
+                    <td style={{ paddingLeft: "60px" }}>5 years</td>
+                  </tr>
+                  <tr>
+                    <td style={{ paddingRight: "60px" }}>Mike Johnson</td>
+                    <td>Tire Specialist,Brake Technician</td>
+                    <td style={{ paddingLeft: "60px" }}>3 years</td>
+                  </tr>
+                  <tr>
+                    <td style={{ paddingRight: "60px" }}>Chris Brown</td>
                     <td>Electrical Specialist</td>
-                    <td>6 years</td>
+                    <td style={{ paddingLeft: "60px" }}>6 years</td>
                   </tr>
                 </tbody>
               </table>

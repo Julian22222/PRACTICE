@@ -3,6 +3,7 @@ import "./Styles/CurrentUsers.css";
 import "./Styles/IndividualWaitingUser.css";
 import "./Styles/IndividualCurrentUser.css";
 import "./Styles/Modal.css";
+import "./Styles/Chat.css";
 import WaitingList from "./Components/WaitingList";
 import Currentusers from "./Components/CurrentUsers";
 import Header from "./Components/Header";

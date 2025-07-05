@@ -28,3 +28,11 @@ export interface ICurrentUser {
   notes: string;
   phone: string;
 }
+
+///////////////////////////
+
+export interface IMessage {
+  sender: string;
+  content: string;
+  timestamp: string;
+}

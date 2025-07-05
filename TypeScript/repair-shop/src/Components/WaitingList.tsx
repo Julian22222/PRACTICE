@@ -21,17 +21,32 @@ const WaitingList: FC<WaitingListProps> = ({ users }) => {
         //   {user.id}. {user.name}
         // </div>
         <Link
+          key={user.id}
           to={`/waiting-list/${user.id}`}
           style={{ textDecoration: "none" }}
         >
           <WaitingUser_Item key={user.id} user={user} />
         </Link>
       ))}
-      <button
-        style={{ padding: "5px", marginTop: "50px", marginBottom: "100px" }}
+      <a
+        href="/"
+        style={{
+          marginTop: "50px",
+          marginBottom: "100px",
+          display: "inline-block",
+          padding: "10px 20px",
+          backgroundColor: "#007BFF",
+          color: "white",
+          textAlign: "center",
+          textDecoration: "none",
+          borderRadius: "4px",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "16px",
+        }}
       >
         Check the status of the cars that are currently in the repair shop
-      </button>
+      </a>
     </div>
   );
 };

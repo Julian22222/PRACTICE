@@ -7,6 +7,17 @@ import {
   DragEndEvent,
 } from "@dnd-kit/core";
 
+const LOCAL_STORAGE_KEY = "employee-assignments";
+
+const saveToLocalStorage = (data: any) => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+};
+
+const loadFromLocalStorage = (): { [day: string]: Picture[] } => {
+  const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+  return data ? JSON.parse(data) : {};
+};
+
 type Picture = { id: string; url: string; name: string };
 
 const emplPictures: Picture[] = [
@@ -38,7 +49,13 @@ const DraggableImage = ({ picture }: { picture: Picture }) => {
       {...attributes}
       src={picture.url}
       alt={picture.name}
-      style={{ width: "80px", cursor: "grab", margin: "5px" }}
+      style={{
+        width: "80px",
+        cursor: "grab",
+        margin: "5px",
+        borderRadius: "8px",
+        border: "2px solid #ccc",
+      }}
     />
   );
 };
@@ -47,9 +64,11 @@ const DraggableImage = ({ picture }: { picture: Picture }) => {
 const DroppableCell = ({
   day, // The name of the day (like "Mon", "Tue", etc.)
   assignedPictures, //A list of pictures that are already assigned to this day
+  onRemove,
 }: {
-  day: string;
+  day: string; //TypeScript type checking for day, which is a string representing the day of the week.
   assignedPictures: Picture[]; //TypesScript type checking for assignedPictures, which is an array of Picture objects.
+  onRemove: (day: string, pictureId: string) => void; //Function to handle removing a picture from the day cell
 }) => {
   const { isOver, setNodeRef } = useDroppable({
     //useDroppable hook from @dnd-kit/core, This component is a drop zone. You can drop something onto it.
@@ -65,15 +84,43 @@ const DroppableCell = ({
       style={{
         border: "1px solid white",
         height: "150px",
-        backgroundColor: isOver ? "#282c34;" : "white;",
+        backgroundColor: isOver ? "#282c34;" : "white",
         verticalAlign: "top",
       }}
     >
-      <div style={{ padding: "4px" }}>
-        {assignedPictures.map((pic) => (
-          <div key={pic.id}>{pic.name}</div>
-        ))}
-      </div>
+      {assignedPictures.map((pic) => (
+        <div>
+          <div
+            key={pic.id}
+            style={{
+              color: "black",
+              display: "inline-block",
+              marginRight: "10px",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "5px",
+              padding: "4px",
+              borderRadius: "4px",
+            }}
+          >
+            {pic.name}
+          </div>
+          <button
+            onClick={() => onRemove(day, pic.id)}
+            style={{
+              display: "inline-block",
+              cursor: "pointer",
+              background: "red",
+              color: "white",
+              border: "none",
+              borderRadius: "3px",
+              padding: "2px 6px",
+            }}
+          >
+            X
+          </button>
+        </div>
+      ))}
     </td>
   );
 };
@@ -81,7 +128,7 @@ const DroppableCell = ({
 //Another Component
 const DragAndDropSchedule: FC = () => {
   const [assignments, setAssignments] = useState<{ [day: string]: Picture[] }>(
-    {}
+    loadFromLocalStorage()
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -90,23 +137,45 @@ const DragAndDropSchedule: FC = () => {
       const day = over.id as string;
       const picture = emplPictures.find((pic) => pic.id === active.id);
       if (picture) {
-        setAssignments((prev) => ({
-          ...prev,
-          [day]: prev[day] ? [...prev[day], picture] : [picture],
-        }));
+        setAssignments((prev) => {
+          const alreadyAssigned = prev[day]?.some((p) => p.id === picture.id);
+          if (alreadyAssigned) {
+            return prev; // Prevent duplicate
+          }
+
+          const updated = {
+            ...prev,
+            [day]: prev[day] ? [...prev[day], picture] : [picture],
+          };
+          saveToLocalStorage(updated);
+
+          return updated;
+        });
       }
     }
   };
 
+  const handleRemove = (day: string, pictureId: string) => {
+    setAssignments((prev) => {
+      const updated = {
+        ...prev,
+        [day]: prev[day]?.filter((pic) => pic.id !== pictureId) || [],
+      };
+      saveToLocalStorage(updated);
+      return updated;
+    });
+  };
+
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <p>Drag and Drop Shift Schedule for all week</p>
       <div style={{ display: "flex", marginBottom: "20px" }}>
         {emplPictures.map((pic) => (
           <DraggableImage key={pic.id} picture={pic} />
         ))}
       </div>
 
-      <table style={{ width: "100%" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
             {days.map((day) => (
@@ -121,6 +190,7 @@ const DragAndDropSchedule: FC = () => {
                 key={day}
                 day={day}
                 assignedPictures={assignments[day] || []}
+                onRemove={handleRemove}
               />
             ))}
           </tr>

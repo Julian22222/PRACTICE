@@ -13,7 +13,7 @@ export function useUsers() {
     fetchUsers();
 
     fetchCurrentList();
-  }, []);
+  }, [currentCustomers]);
 
   const fetchUsers = async () => {
     try {
