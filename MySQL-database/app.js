@@ -21,7 +21,7 @@ app.get("/", async (req, res) => {
     console.log(rows);
 
     if (!rows.length) {
-      return res.status(404).send("No data found in database");
+      return res.status(404).json({ message: "No data found in database" });
     }
 
     // Convert serviceCheck to boolean
@@ -32,11 +32,12 @@ app.get("/", async (req, res) => {
       serviceCheck: Boolean(row.serviceCheck), // Convert 1/0 to true/false
     }));
 
+    //is better use res.json(formattedRows) instead of res.send(formattedRows), can handle JSON objects better
     res.json(formattedRows);
     // res.send(formattedRows);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error");
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -50,7 +51,9 @@ app.get("/:carId", async (req, res) => {
   //isNaN checks if the value is Not-a-Number, automatically convert the string to a number
   // If carId is NaN, then isNaN(carId) returns true
   if (isNaN(carId)) {
-    return res.status(400).send("Wrong card Id has been inserted.");
+    return res
+      .status(400)
+      .json({ message: "Wrong card Id has been inserted." });
   }
 
   try {
@@ -64,7 +67,7 @@ app.get("/:carId", async (req, res) => {
 
     //if carId doesn't exist in database -> the result.length === 0
     if (!rows.length) {
-      return res.status(404).send("Car Id Not Found");
+      return res.status(404).json({ message: "Car Id Not Found" });
     }
 
     const car = {
@@ -77,7 +80,7 @@ app.get("/:carId", async (req, res) => {
   } catch (err) {
     //err - if can't connect to our database
     console.log(err);
-    res.status(500).send("Server error");
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -127,7 +130,7 @@ app.post("/", async (req, res) => {
     res.status(201).send(`Car created with ID: ${carId}`);
   } catch (err) {
     console.log(err);
-    res.status(500).send("Server error"); //if there is an error connecting to the database
+    res.status(500).json({ message: "Server error" }); //if there is an error connecting to the database
   }
 });
 ////////////////////////////////////////////////////////////////////////UPDATE
@@ -137,8 +140,10 @@ app.put("/:carId", async (req, res) => {
   const { brand, seats, date, fuel, serviceCheck, involved, notes, phone } =
     req.body;
 
+  const updatedData = req.body;
+
   if (isNaN(carId)) {
-    return res.status(400).send("Invalid car ID");
+    return res.status(400).json({ message: "Invalid car ID" });
   }
 
   try {
@@ -148,7 +153,7 @@ app.put("/:carId", async (req, res) => {
     ]);
 
     if (!existing.length) {
-      return res.status(404).send("Car ID not found");
+      return res.status(404).json({ message: "Car ID not found" });
     }
 
     // Update cars table
@@ -186,10 +191,11 @@ app.put("/:carId", async (req, res) => {
       }
     }
 
-    res.status(200).send("Car updated successfully");
-  } catch (error) {
+    res.status(200).json({ message: "Car updated successfully", updatedData }); //send a message that the car has been updated successfully
+    // res.status(200).send("Car updated successfully");
+  } catch (err) {
     console.log(err);
-    res.status(500).send("Server error"); //if there is an error connecting to the database
+    res.status(500).json({ message: "Server error" }); //if there is an error connecting to the database
   }
 });
 
@@ -199,7 +205,7 @@ app.delete("/:carId", async (req, res) => {
   const { carId } = req.params;
 
   if (isNaN(carId)) {
-    return res.status(400).send("Invalid car ID");
+    return res.status(400).json({ message: "Invalid car ID" });
   }
 
   try {
@@ -212,14 +218,14 @@ app.delete("/:carId", async (req, res) => {
     ]);
 
     if (result.affectedRows === 0) {
-      return res.status(404).send("Car ID not found");
+      return res.status(404).json({ message: "Car ID not found" });
     }
 
-    res.status(204).send("Car deleted Successfully");
+    res.status(204).json({ message: "Car deleted Successfully", carId }); //204 No Content
   } catch (err) {
     console.error(err);
 
-    res.status(500).send("Server error"); //if there is an error connecting to the database
+    res.status(500).json({ message: "Server error" }); //if there is an error connecting to the database
   }
 });
 
