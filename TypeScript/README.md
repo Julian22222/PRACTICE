@@ -43,7 +43,11 @@ TypeScript is a high-level programming language that adds static typing with opt
 - Option 1
   install npm package --> ts-node
 
-  this will run node and perform typescript compilation and start script.
+```JS
+ts-node script.ts  //run the code
+```
+
+this will run node and perform typescript compilation and start script.
 
 - Option 2
 
