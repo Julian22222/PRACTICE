@@ -178,3 +178,70 @@ class Huj implements kilo {
 let mojHuj = new Huj("pi", 23, "zopa");
 console.log(mojHuj)
 ```
+
+- Abstract classes can be extended by other classes.
+
+- Abstract classes can implement interfaces
+
+- class implement few interfaces
+
+```JS
+interface A {
+  methodA(): void;
+}
+
+interface B {
+  methodB(): void;
+}
+
+// Class implements both interfaces A and B
+class MyyClass implements A, B {
+  methodA() {
+    console.log('methodA');
+  }
+
+  methodB() {
+    console.log('methodB');
+  }
+}
+
+/////////////////////////////
+
+interface A {
+  methodA(): void;
+}
+
+interface B {
+  methodB(): void;
+}
+
+// Interface C extends both A and B
+interface C extends A, B {}
+
+class MyClass implements C {
+  methodA() {
+    console.log('methodA');
+  }
+
+  methodB() {
+    console.log('methodB');
+  }
+}
+```
+
+- Interface can extend another interface, interfaces can extend one or many other interfaces to combine their members.
+
+```JS
+interface CanRun {
+  run(): void;
+}
+
+interface CanJump {
+  jump(): void;
+}
+
+
+interface Athlete extends CanRun, CanJump {
+  compete(): void;
+}
+```

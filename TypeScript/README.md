@@ -40,17 +40,24 @@ TypeScript is a high-level programming language that adds static typing with opt
 
 # Run Typescript file
 
-1. Compile first
+- Option 1
+  install npm package --> ts-node
 
-```JS
-tsc index.ts
-```
+  this will run node and perform typescript compilation and start script.
 
-2. node index.js
+- Option 2
 
-```JS
-node index.js
-```
+  1. Compile first (manualy)
+
+  ```JS
+  tsc index.ts
+  ```
+
+  2. node index.js
+
+  ```JS
+  node index.js
+  ```
 
 # React + TypeScript
 
@@ -112,6 +119,40 @@ notSure = "hello";
 
 # Enum Type (mix of object and array)
 
+- enum types are used often
+- enum is typically used when you have a fixed set of related values, like directions, statuses, roles, etc
+- Fixed set of named values
+- No inheritance from enum
+- don't use enums if you need dynamic values or runtime evaluation
+
+🔸 Key Features:
+
+- Automatically assigns numeric or string values.
+- Used mainly as labels for constants.
+- Enforces valid values at compile time.
+- Good for things like:
+  -Statuses (enum Status { Pending, Approved, Rejected })
+  - Roles (enum Role { Admin, User, Guest })
+  - Flags (enum Permission { Read = 1, Write = 2, Execute = 4 })
+
+Use an enum when:
+
+- You have a fixed list of possible values.
+- You want type safety and readable code.
+- You need a clean alternative to magic strings or numbers.
+
+```JS
+enum OrderStatus {
+  Pending,
+  Processing,
+  Shipped,
+  Delivered
+}
+
+// Enforces correct value
+function updateStatus(status: OrderStatus) { ... }
+```
+
 ```JS
 //here each element has their own index
 enum Directions{
@@ -120,6 +161,7 @@ enum Directions{
     Left,
     Right
 }
+
 Directions.Up;  //0
 Directions.Down;  //1
 Directions[2];   //Reverse enum - //Left.  Reverse enum works only with numbers, and indexes
@@ -215,8 +257,84 @@ user.nickName = "strong";
 
 # Type Aliases
 
+A type alias is a custom name for a type (primitive, union, intersection, object, etc.).
+
+Types allow to:
+
+1. Improve Readability and Intent
+
 ```JS
-//wit "type" - we can define data types
+// This makes the function signature clearer than just using string
+
+type Email = string;
+type Age = number;
+
+function sendEmail(email: Email) { ... }
+```
+
+2. To Represent Union or Intersection Types
+
+```JS
+// It prevents invalid values and documents the allowed states.
+type Status = "success" | "error" | "loading";
+
+function setStatus(status: Status) { ... }
+```
+
+3. To Reuse Complex Object Structures
+
+```JS
+//Avoids repeating the same object structure everywhere.
+type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+
+function getUser(): User { ... }
+function saveUser(user: User) { ... }
+```
+
+4. To Make Code DRY and Flexible
+
+```JS
+//If you change the structure in one place, it's updated everywhere the alias is used
+//This creates reusable patterns using generics.
+
+type APIResponse<T> = {
+  data: T;
+  success: boolean;
+  error?: string;
+};
+
+const response: APIResponse<string[]> = {
+  data: ["one", "two"],
+  success: true
+};
+```
+
+5. To Alias Existing Types for Meaning
+
+```JS
+// Adds semantic meaning without changing behavior.
+type UUID = string;
+type Timestamp = number;
+```
+
+When Not to Use Type Aliases:
+
+- Don’t use type aliases for class-like behavior — use interface or class instead.
+- For purely object shapes that will be extended or implemented, prefer interface (see below)
+
+Use type when:
+
+- You need to alias anything, not just objects.
+- You want to define union, intersection, or tuple types.
+
+Some common examples and notes of Type Aliases:
+
+```JS
+//with "type" - we can define data types
 
 //We’ve been using object types and union types by writing them directly in type annotations. This is convenient, but it’s common to want to use the same type more than once and refer to it by a single name.
 
