@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "./posts.css"; // Importing CSS for styling the posts page
+import "./posts.css";
 import { singlePost } from "@/shared/types/post";
 
 async function fechData() {
@@ -7,6 +7,11 @@ async function fechData() {
     "https://jsonplaceholder.typicode.com/posts?_limit=10"
   );
   const result = await response.json();
+
+  if (!result || result.length === 0) {
+    throw new Error("No posts found"); // Handle error if no posts are found, will send this message to Error page- error.tsx
+  }
+
   return result;
 }
 

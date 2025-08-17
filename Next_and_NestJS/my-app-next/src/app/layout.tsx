@@ -33,6 +33,7 @@ export const metadata: Metadata = {
 
 // RootLayout component that wraps the application
 // This is the main layout file for the Next.js application
+//Next automatically don't add HTML and body tags, so we need to add them manually in the RootLayout component, at least we need to have 1 RootLayout component in the app directory
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,7 +46,8 @@ export default function RootLayout({
         // className={`${geistSans.className} ${geistMono.variable} antialiased`}
         //className={geistSans.className}
       >
-        {children}
+        {children}{" "}
+        {/* Rendering the children components inside the body, children - it is a certain page from our application */}
       </body>
     </html>
   );

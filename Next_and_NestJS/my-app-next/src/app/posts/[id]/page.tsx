@@ -23,6 +23,10 @@ async function getPost(id: string | null) {
     (res) => res.json()
   );
 
+  if (!result) {
+    throw new Error("Post not found"); //use Error handling to throw an error if the post is not found, Error page will be shown with this message - error.tsx
+  }
+
   return result;
 }
 

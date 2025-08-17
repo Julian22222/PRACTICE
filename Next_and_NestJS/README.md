@@ -12,6 +12,22 @@
 - Very convenient Routing
 - Automatic optimization of images, styles, fonts and scripts
 - Optimization of building an application (building is very fast)
+- by default next is running on webpack -->
+
+```JS
+//package.json file
+
+"scripts":{
+  "build": "next build"  //running on webpack by default
+}
+
+//Vercel company that is developing Next.js
+//made their own bulder -> turbopack
+"build": "next build --turbopack"
+```
+
+- global styles and google fonts we add in layout.tsx file. Google fonts can be found on their google website
+- to create a page, we create the folder in app folder and create page.tsx file
 
 # Start Next JS project
 
@@ -30,6 +46,7 @@ rafce + Tab //standard React new component
 ```JS
 npx create-next-app my-app-name //<-- can use this by default or -->
 
+px create-next-app@13.4 .  //dot in the end means -create app in current folder, next version -13.4
 
 npx create-next-app@latest my-app-name
 //install some packages -->
@@ -385,7 +402,7 @@ export const metadata: Metadata = {
 }
 
 const fetchData = async()=>{  //async request to the server
-  const response = await fetch('https://api.example.com/products')
+  const response = await fetch('https://api.example.com/products') //will keep the post in cache
   const data = await response.json()
   return data
 }
@@ -478,13 +495,26 @@ export default async function Page(){
 # Layout
 
 - allow to change visual part, seo, titles, descriptions
+- at least we need to have one layout.tsx file in the app folder/ root of our application, also we can have many layouts. Next automatically don't add HTML and body tags, so we need to add them manually in the RootLayout component, at least we need to have 1 RootLayout component in the app directory.
 - We can have many layouts in our app
 - if we have root layout all pages will have the same template
-- We can have a layout file in any folder, it will affect on that folder and other folders inside
+- We can have a layout file in any folder, it will affect on that folder and other folders inside/ children folders
 
 # How to use Styles
 
-1. use CSS
+1. use CSS, we can use css as normal
+
+```JS
+//page.tsx file
+import "./posts.css";
+//some code
+
+
+//posts.css file
+//css code here
+```
+
+1. use CSS, using modules
 
 - We need to import module styles
 - model styles allows as generate unique classes for specific page, will work only for certain page.
@@ -496,7 +526,7 @@ import styles from "./Products.module.css"; // Importing CSS module for styling
 export function Products() {
   return (
     <div>
-      <h1 className={styles.products}>Products</h1>
+      <h1 className={styles.products}>Products</h1>  //specify here the class name using styles
     </div>
   );
 }
@@ -551,6 +581,39 @@ import {Metal} from "next/font/google";
 # 404 Not Found
 
 - create file not-found.tsx in the app folder Root, and style that file
+
+# Loading page
+
+- we can create preloading page, if data is loading we can show Loading ... message or any other GIF files, spinner
+- create loading.tsx file, has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
+- must have name -> loading.tsx
+- check app//posts/loading.tsx file
+
+# Error page
+
+- if there an error occured we can through an error message and show the specific page
+- error page MUST have 'use client'
+- create error.tsx file, has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
+- check app//posts/error.tsx file //will work only on posts id pages
+
+```JS
+//error.tsx file
+
+"use client"; // This file is a client component, allowing it to use hooks like useState, useEffect, etc.
+
+export default function ErrorWrapper({ error }: { error: Error }) {
+  //receive error as a prop
+  return (
+    <div>
+      <h2 className="post-header">Error Page</h2>
+      <p>Something went wrong. Please try again later.</p>
+      <p>Error details: {error.message}</p>
+    </div>
+  );
+}
+```
+
+- also, we need through an error in the posts/[id]/page.tsx (check line 26-28 in app/posts/[id]/page.tsx)
 
 # How to insert Images to Next.JS using unique image component
 
@@ -637,8 +700,8 @@ export const metadata: Metadata = {
 
 ```JS
 //dynamic metadata title, see example on app/posts/[id]/page.tsx file
-
-export async function generateMetadata({params, searchParams}){  //receive 2 parameters
+//function MUST have this name --> generateMetadata
+export async function generateMetadata({params, searchParams}){  //receive 2 parameters as our component in the page.tsx file
   const post = await getPost(params.id)
   return {  //return metadata object
     title: post.title,
