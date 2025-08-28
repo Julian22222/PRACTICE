@@ -1,7 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Navigation } from "./Navigation";
 
 export function Header() {
+  //can get some data from Database, like user data, etc. and then pass it to the Navigation component as props
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/products", label: "Products" },
+    { href: "/posts", label: "Posts" },
+    { href: "/posts2", label: "Posts2" },
+    { href: "/myhome", label: "Profile" },
+  ];
+
   return (
     <header className="border-b border-white/10 px-6 py-4 flex items-center justify-between bg-black">
       <Link href="/" className="flex items-center gap-3">
@@ -10,13 +20,14 @@ export function Header() {
         {/* Image width and height is mandatory */}
       </Link>
 
-      <nav className="flex gap-6 text-white/80">
+      <Navigation navLinks={navItems} />
+      {/* <nav className="flex gap-6 text-white/80">
         <Link href="/">Home</Link>
         <Link href="/flights">Flights</Link>
         <Link href="/products">Products</Link>
         <Link href="/posts">Posts</Link>
         <Link href="/myhome">Profile</Link>
-      </nav>
+      </nav> */}
     </header>
   );
 }

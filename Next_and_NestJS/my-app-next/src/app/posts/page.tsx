@@ -1,6 +1,8 @@
 import Link from "next/link";
 import "./posts.css";
 import { singlePost } from "@/shared/types/post";
+import { getAllPosts } from "@/services/getPosts"; // can import Importing the function to fetch posts from services, then we need to use useEffect to call this function and set the data in state, but here we are using async/await directly in the component.
+//by importing a function we need to use promises-> .then
 
 async function fechData() {
   const response = await fetch(
@@ -19,6 +21,8 @@ interface Props {}
 
 export default async function page({}: Props) {
   const data = await fechData(); // Fetching data from the API
+
+  console.log(data);
 
   return (
     <div>

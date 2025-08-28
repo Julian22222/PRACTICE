@@ -1,7 +1,9 @@
-export async function GET(request: Request) {
-  //GET request handler for the API route
-  return new Response("Hello, World!");
-}
+// export async function GET(request: Request) {
+//   //GET request handler for the API route
+//   return new Response("Hello, World!");
+// }
+
+import { NextResponse } from "next/server";
 
 // export async function POST(request: Request) {
 //   return new Response(request.body);
@@ -9,17 +11,27 @@ export async function GET(request: Request) {
 
 ////////////////////////////////////////////////////////
 
-// export async function GET(request: Request) {
-//   //here you can receive an object from Database, and return it as a response
-//   const data = {
-//     id: 1,
-//     title: "Sample Data",
-//     message: "Hello, World!",
-//     timestamp: new Date().toISOString(),
-//   };
+export async function GET(request: Request) {
+  //receiing a request from the client with the GET method
+  //here you can receive an object from Database, and return it as a response
+  const data = {
+    id: 1,
+    title: "Sample Data",
+    message: "Hello, World!",
+    timestamp: new Date().toISOString(),
+  };
 
-//   return new Response(JSON.stringify(data));
-// }
+  return new Response(JSON.stringify(data));
+
+  // //or can use NextResponse to return a JSON response
+  // return NextResponse.json(data, {
+  //   status: 200, // HTTP status code
+  //   headers: {
+  //     "Content-Type": "application/json", // Set the content type to JSON
+  //     "Cache-Control": "no-cache", // Disable caching for this response
+  //   },
+  // });
+}
 
 ///////////////////////////////////////////////////////////////////////////////////
 

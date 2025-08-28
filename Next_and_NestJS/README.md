@@ -76,6 +76,10 @@ scripts:
 //users.js  --> this component will be available using this URL -> localhost:3000/users
 ```
 
+# Deployment
+
+can be hosted on vercel.com
+
 # Structure and Components of the Next JS app (Main locations of different files)
 
 ```JS
@@ -232,18 +236,21 @@ const params = useParams<{username: string}>()  //username is in squere brackets
 params.username
 ```
 
-# Data and server side components
+# Component- level Client and Server side Rendering
+
+![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.JPG)
 
 - In Next.JS you can create server side and client side components
-- Server side components will be created on server, all rendering taking place on server then sending to the browser already made Page
+- Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page
 - Client side components will be created in the browser, code is not rendered on the server
 - in your app you can use both components
+- page.tsx file can be - as a server side component (by default) or client side component. Also, other componets can be server or client side.
 - Next.JS has a Rule when to use each component :
   - If get receiving data from the server, or just showing something on the page - in this occasion use server components!!!
   - by default, components are server side components
   - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Whithout client side component it will show an error. This component will be proccessed in browser
 - If you use client component - 'use client' we can't use async await in that component. Only Server Components can be async at the moment. you cannot have an async function component when it’s a client component ("use client").
-- To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need
+- To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can inser client side components into server side components
 - Metadata block and 'use client' can't be used in the same file page.tsx, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
 
 ```JS
@@ -269,14 +276,15 @@ export default function Post(){
   ISR - static (with data update)
   SSG static (without data update)
 - access to back-end utils and back-end,
-- great security on back end server (access token, api keys, etc.)
+- great security on back end server, uses sensetive data (access token, api keys, etc.)
 - make light weight on client side and moving all heavy tasks on server
+- great when use heavy dependencies
 
 ### advantages of Client side components
 
-- use states and effects (hooks, useState, useRef, useEffect..)
-- use events (onclick,onchange, etc.)
-- use browser API
+- use states and effects (hooks, useState, useRef, useEffect, usePathname, etc. )
+- use client events (onclick,onchange, onmouseover, etc.)
+- use browser API (local storage, etc.)
 - use custom brouser hooks
 - class components (doesn't work on server side)
 
@@ -319,12 +327,17 @@ Server (by default)
 - Can fetch data
 - can use async await
 - File system access with ‘fs’ library
+- can use metadata on the page
 
 Client
 
 - can use hooks(useState, useEffect,etc.), onClick, etc
+- if client side component inserted to another client side component (then we don't need to write "use client" on the top of the file that was inserted) --> see posts2 page.tsx file and PostSearch component, both are client side components, but you don't need to write "use client" in the PostSearch component
 
 ###### You can use Client Component in a Server Component
+
+- We can insert Client component into Server component,
+- But you can't use server component in the Client component
 
 - Server Component fetches the data (e.g., from an API).
 - It passes the fetched data as a prop to the Client Component.
@@ -763,6 +776,8 @@ export async function generateMetadata({
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+To pass props in any component we can use Redux, Context, Zustand library and SWR
+
 # Midleware
 
 Expanded configuration and optimization
@@ -797,7 +812,13 @@ export const config = {  //our condition is here to run middleware function, if 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
 ```
 
-# API Routes
+# Handlers API
+
+To create API routes inside /app directory, we create directory /api inside app directory. /api folder can have other directories inside where you create route.ts file.
+
+If route.ts file is located /app/api/posts , then URL request will be /api/posts
+
+route.ts file MUST export an object with function and with one of methods: GET, POST, DELETE, PUT, PATCH, etc.
 
 Next.js is one of the best front-end frameworks, it is better practice to don't add back-end to Next.js. It is not good practice to mix back-end database, PRISMA etc. with front-end in Next.js.
 If you will mix everithing in Next.js - Once your application will grow/expand, you will have more problems, and trash bin with all different files in one place.
@@ -807,14 +828,191 @@ But Next.js has ability to work with back-end.
 - allow to control and adjust server side.
 - You create any database and you can work with that Database from Next.Js Framework. You don't need to install express.js, node.js, or other additional frameworks, etc.
 - Next.js applicationYou allow to connect to your Database and get needed values from that database. We use --> app/api folder and route.ts file
+
+```JS
+YOU MUST create folder api inside app folder and file name MUST be - route.ts
+
+IF we have folders location -> app/api/data - the URL to get data will be --> /api/data + request method(GET,POST, PUT, PATCH, DELETE, etc.)
+
+IF we have folders location -> app/api - the URL to get data will be --> /api + request method(GET,POST, PUT, PATCH, DELETE, etc.)
+```
+
 - api folder must be inside app folder. api folder outside of app folder will not be read at all.
 - The logic is the same as folder app, where you can add additional folders which will effect on final URL address of our api, and instead of page.tsx we use route.ts
 - in route.ts you just use URL address with HTTP method and returning the response
+- route.ts and page.tsx Must be in different folders!!! route.ts MUST be in api folder!
 
 ```JS
-//URL to our local data
+//URL to our local data, if your application is running on port 3001
 http://localhost:3001/api/data
 
 //this is endpoint that we can use to get data from Next.js
 
+```
+
+If we need to DELETE some object using API Routes, there is 2 options:
+
+```JS
+//option 1
+//check app/api/data/route.ts file
+
+export async function DELETE(request: Request) {
+//   const { searchParams } = new URL(request.url); // Get the search parameters from the request URL
+
+//   //https://localhost:3000/api/posts?q=Manchester
+//   const query = searchParams.get("q"); // Get the 'q' parameter from the URL
+
+//the same as code above
+  const url = new URL(request.url);
+  const id = url.searchParams.get("id");   // Get the 'id' parameter from the URL
+
+if (!id) {
+    return new Response("ID is required", { status: 400 });
+  }
+
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    return new Response("Failed to delete data", { status: response.status });
+  }
+
+  return new Response("Data deleted successfully");
+}
+```
+
+```JS
+//option 2, create folder [id] and create route.ts file
+//check app/api/posts/[id]/route.ts file
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  //get id from params to delete specific post
+
+  const id = params.id;
+
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (response.ok) {
+    return new Response(id, { status: 204 }); // returnn 204 status code for successful deletion with id of deleted post
+  } else {
+    return new Response("Failed to delete the post", { status: 500 });
+  }
+}
+```
+
+- Can use Next.js helpers
+
+```JS
+//If we need to delete the post by its ID and we don't need to return anything but we need to redirect user to another page
+import { NextResponse } from 'next/server'
+import { headers, cookies } from 'next/headers'  //Next JS helpers, can check cookies and headers not mandatory
+import { redirect } from 'next/headers'  //Next JS helpers
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  //get id from params to delete specific post
+
+  const id = params.id;
+
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (response.ok) {
+    redirect('/home')  //redirect to home page, when post is deleted
+  } else {
+    return new Response("Failed to delete the post", { status: 500 });
+  }
+}
+```
+
+# API secret keys
+
+- check app/api/movies/route.ts file
+- this file needs API KEY, we can keep secret variables in env.local file in the root of our project
+- or we can keep secret variables in .env file, which must present in the root of our project.
+- then use as usual - process.env.variableName, to get the value
+- then to get movies we need to use URL - https://localhost:3000/api/movies
+
+# API requests
+
+```JS
+// GET query params
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+
+  const query = searchParams.get("q");
+
+  // some logic
+
+  return NextResponse.json(currentPosts);
+}
+
+/////////////////////////////////////////
+
+// GET body request
+
+export async function POST(req: Request) {
+  const body = await req.json();
+
+  console.log(body);
+
+  return NextResponse.json({ message: "done" });
+}
+
+//////////////////////////////////////////
+
+// GET URL params
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = params?.id;
+
+  // some logic for delete post by id
+
+  return NextResponse.json({ id });
+}
+
+//////////////////////////////////////////////
+
+// Build-in function
+import { headers, cookies } from "next/headers";
+
+export async function GET(req: Request) {
+  const headersList = headers();
+  const cookiesList = cookies();
+
+  const type = headersList.get("Content-Type");
+  const Cookie_1 = cookiesList.get("Cookie_1")?.value;
+
+  return NextResponse.json({});
+}
+
+//////////////////////////////////////////////
+
+import { redirect } from "next/navigation";
+
+export async function GET(request: Request) {
+  redirect("https://nextjs.org/");
+}
 ```

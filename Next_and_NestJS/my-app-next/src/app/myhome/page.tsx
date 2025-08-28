@@ -2,14 +2,20 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Me } from "./Me";
 
 export default function page() {
   return (
     <div>
-      <p>page</p>
-      <Link href="/">Home Page</Link>
+      <Me />
+
+      <Link href="/" className="posts-link">
+        Go to Home
+      </Link>
       <br />
-      <Link href="/user/1234">Products Page</Link>
+      <Link className="posts-link" href="/user/1234">
+        Products Page
+      </Link>
     </div>
   );
 }
