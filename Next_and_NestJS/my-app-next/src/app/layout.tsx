@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"; // Importing Geist and Gei
 import "./globals.css"; // Importing global styles, connects to the globals.css file in the same folder
 import "./myhome/style.css"; // Importing local styles css
 import { Header } from "@/components/Header";
+import { Providers } from "@/components/Providers";
 
 //adding fonts from next/font/google
 // it includes global styles and font settings
@@ -47,9 +48,11 @@ export default function RootLayout({
         // className={`${geistSans.className} ${geistMono.variable} antialiased`}
         //className={geistSans.className}
       >
-        <Header />
-        {children}{" "}
-        {/* Rendering the children components inside the body, children - it is a certain page from our application */}
+        <Providers>
+          <Header />
+          {children}{" "}
+          {/* Rendering the children components inside the body, children - it is a certain page from our application */}
+        </Providers>
       </body>
     </html>
   );

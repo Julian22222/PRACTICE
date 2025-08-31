@@ -9,7 +9,7 @@ export function Header() {
     { href: "/products", label: "Products" },
     { href: "/posts", label: "Posts" },
     { href: "/posts2", label: "Posts2" },
-    { href: "/myhome", label: "Profile" },
+    { href: "/myhome", label: "Page" },
   ];
 
   return (
@@ -26,7 +26,7 @@ export function Header() {
         <Link href="/flights">Flights</Link>
         <Link href="/products">Products</Link>
         <Link href="/posts">Posts</Link>
-        <Link href="/myhome">Profile</Link>
+        <Link href="/myhome">Page</Link>
       </nav> */}
     </header>
   );

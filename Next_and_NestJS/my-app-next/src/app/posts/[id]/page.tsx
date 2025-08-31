@@ -1,6 +1,8 @@
 import PostClient from "./PostClient";
 import "./post.css"; //import css file for styling
 
+///////////////////////////////////////////////
+// Dynamic metadata generation for each post page
 export async function generateMetadata({
   params,
   searchParams,
@@ -29,6 +31,7 @@ async function getPost(id: string | null) {
 
   return result;
 }
+//////////////////////////////////////////////////////
 
 // params is a Promise — so we call .then() in a useEffect to resolve it.
 // We store id in state — so it triggers the second useEffect for fetching.

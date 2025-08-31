@@ -1,10 +1,11 @@
 # NEXT.JS (Advantages of Next.js)
 
 - It is a Front-End framework for static(clint side) and server side rendering of React applications
+- Next.JS has ability to add API endpoints, but usually it is not used to don't mix Front-end and Back-end. For Back-end we need to use Nest.JS
 - It is made from React JS, It is a cover over React JS
 - Next JS allows to render the page on the server side and we get HTML file
 - Next JS allows to create big, scalable applications
-- Next JS has performance and simplicity (support of ISR, SSR, SSG, CSR). Therefore it is flexible to adjust for any tasks.
+- Next JS has performance and simplicity (support of CSR - client side rendering, RSC - react server component, SSR - server side rendering, SSG - static site generation, ISR - incremental site generation ). Therefore it is flexible to adjust for any tasks.
 - Next JS has build-in Routing and Seo optimization, Server Actions (server logic inside component)
 - Next JS saves a lot of time and resources, cashing and optimization(images, styles, fonts, scripts) reduce load on a server, reduce hosts.
 - Also, Next JS increasing development and hosting applications
@@ -637,6 +638,7 @@ export default function ErrorWrapper({ error }: { error: Error }) {
 
 # Meta data
 
+SEO team is responsible for Metadata, they will tell what data you need to insert there.
 Metadata is information about your web page that helps browsers and search engines understand what your page is about. This includes things like the page title, description, keywords, and more.
 
 You typically set metadata per page. In Next.js, each page (in the /pages or /app directory) can have its own metadata. This keeps things organized and ensures SEO is focused per page.
@@ -1015,4 +1017,108 @@ import { redirect } from "next/navigation";
 export async function GET(request: Request) {
   redirect("https://nextjs.org/");
 }
+```
+
+# Environment Variables
+
+Also, unlike client-side variables, these do not need the NEXT*PUBLIC* prefix (since they are server-only).
+
+1. Server-only variables
+
+- Stored in .env, .env.local, .env.development, etc.
+- Accessible only in server code: API routes, getServerSideProps, middleware, or any code that runs on the Node.js side.
+
+```JS
+//Example
+
+//.env file
+GOOGLE_CLIENT_ID=your-secret-id
+GOOGLE_CLIENT_SECRET=your-secret-secret
+
+
+//ts file
+// Safe: runs only on server
+const id = process.env.GOOGLE_CLIENT_ID;
+
+//These are never exposed to the browser unless you manually pass them down.
+```
+
+2. ```JS
+   Client-side variables (with NEXT_PUBLIC_)
+   ```
+
+````
+
+- Must be prefixed with NEXT*PUBLIC* in your .env file.
+- Next.js will inline them into your frontend bundle at build time.
+- Accessible in any client component or browser-side JS.
+
+```JS
+//Example
+
+//.env file
+NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+
+//ts file
+// Safe in client code (browser can see this)
+const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+//Use only for values you’re comfortable exposing publicly (like non-secret API URLs, feature flags, analytics keys, etc.).
+````
+
+###### Why this distinction matters?
+
+```JS
+Something like a Google OAuth client secret must stay server-only → keep it in GOOGLE_CLIENT_SECRET (no prefix).
+
+Something like a frontend base URL or public Stripe publishable key → needs to be visible to the browser, so you add NEXT_PUBLIC_.
+```
+
+###### Quick rule of thumb
+
+```JS
+Sensitive? (passwords, API secrets, private keys, database URLs) → plain .env, no NEXT_PUBLIC_*.
+
+Needed in browser? (public keys, feature toggles, app base URL) → use NEXT_PUBLIC_.
+```
+
+you can absolutely keep both server-only and client-side variables in the same .env file.
+
+```JS
+//How it works
+//Next.js automatically loads environment variables from .env, .env.local, etc.
+//Variables without NEXT_PUBLIC_ → available only on the server.
+//Variables with NEXT_PUBLIC_ → injected into both the server and the client bundle.
+
+//Example .env.local:
+# Server-only (never exposed to browser)
+DATABASE_URL=postgres://user:password@host:5432/db
+GOOGLE_CLIENT_SECRET=super-secret
+
+# Client-side (safe to expose)
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_FEATURE_X=true
+
+//In code
+//Server side:
+//ts file
+console.log(process.env.DATABASE_URL); // works
+console.log(process.env.NEXT_PUBLIC_API_URL); // works too
+
+//Client side (React component):
+//tsx file
+
+export default function Home() {
+  console.log(process.env.NEXT_PUBLIC_API_URL); // works
+  console.log(process.env.DATABASE_URL); // ❌ undefined
+  return <div>API: {process.env.NEXT_PUBLIC_API_URL}</div>;
+}
+
+
+
+
+//Rule of thumb
+//Keep everything in one .env file if you want simplicity.
+//Use NEXT_PUBLIC_ prefix only for values you intend to leak to the browser.
+//Sensitive secrets should never have the prefix.
 ```
