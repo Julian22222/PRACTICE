@@ -302,4 +302,49 @@ export default async function Profile({}: Props) {
 
 ```
 
-21:00
+# Make your own form signIn
+
+- Not always we will use already build-in form. Can can make our own form and style it as we want.
+- Therefore, we need to create separate page for our own signIn Form --> /app/signin/page.tsx (it will be server component)
+- and make separate components as button for SignIn form and Form to fill --> components/GoogleButton.tsx
+- We change component/Navigation.tsx line 54
+
+```JS
+//from build-in signIn Form
+<Link href={"/api/auth/signin"}>Sign In</Link>
+
+//our page for Sign-in
+<Link href={"/signin"}>Sign In</Link>
+```
+
+- Also, in config/auth.ts file we need to declere that we will use our own Sign-In page by changing our settings in there
+
+```JS
+export const authConfig: AuthOptions = {
+  // AuthOptions is an interface/data type provided by next-auth to define the configuration options for authentication.
+  // You can add authentication providers here, e.g., Google, Facebook, GitHub, LinkedIn, Twiter etc.
+  providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!, //this values we get from Google Developer Console. from cloud.google.com
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!, //this values we get from Google Developer Console. from cloud.google.com
+
+      //   clientId: process.env.GOOGLE_CLIENT_ID as string, <-- can be writen as well this way
+    }),
+    Credentials({
+      //credentials has at least 2 fields: credentials and authorize
+      credentials: {//some credentials here, (build in sign in Form from NextAuth library)
+      },
+      async authorize(credentials) {
+        //return data after build-in sign-In Form
+        }
+      },
+    }),
+  ],
+  pages: {  //We add this object, to tell that we have our own sign in page
+    signIn: '/signin'
+  },
+  debug: true, // Enable debug mode for detailed logging during development. Set to false in production.
+};
+```
+
+- Then create component --> SignInForm.tsx (to make this component as client side component and import to signin page, which is server side component)

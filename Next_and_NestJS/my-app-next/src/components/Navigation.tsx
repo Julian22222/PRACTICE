@@ -51,7 +51,8 @@ export function Navigation({ navLinks }: Props) {
           Sign Out
         </Link>
       ) : (
-        <Link href={"/api/auth/signin"}>Sign In</Link>
+        // <Link href={"/api/auth/signin"}>Sign In</Link>
+        <Link href="/signin">Sign In</Link> //if you have your own custom sign in page at /signin
       )}
     </nav>
   );

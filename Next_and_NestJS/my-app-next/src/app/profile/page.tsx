@@ -8,22 +8,17 @@ export default async function Profile({}: Props) {
   //receive authConfig from config/auth.ts
 
   return (
-    <div>
-      <h1
-        style={{ marginTop: "50px", display: "flex", justifyContent: "center" }}
-      >
-        Hello {session?.user?.name}
-      </h1>
+    <div className="profile-header">
+      <h1>Hello {session?.user?.name}</h1>
       {session?.user?.image && (
         <img
           src={session.user.image}
           alt={session.user.name || "User Image"}
-          width={100}
-          height={100}
+          width={200}
+          height={200}
         />
       )}
       {/* //if user has image, then only show the img tag */}
-      <p>page</p>
     </div>
   );
 }

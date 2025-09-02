@@ -1,16 +1,25 @@
 # NEXT.JS (Advantages of Next.js)
 
-- It is a Front-End framework for static(clint side) and server side rendering of React applications
+- It is a Front-End framework for static(client side) and server side rendering of React applications
 - Next.JS has ability to add API endpoints, but usually it is not used to don't mix Front-end and Back-end. For Back-end we need to use Nest.JS
 - It is made from React JS, It is a cover over React JS
-- Next JS allows to render the page on the server side and we get HTML file
+- Next JS allows to render the page on the server side and client side (browser)
 - Next JS allows to create big, scalable applications
-- Next JS has performance and simplicity (support of CSR - client side rendering, RSC - react server component, SSR - server side rendering, SSG - static site generation, ISR - incremental site generation ). Therefore it is flexible to adjust for any tasks.
+- Next JS has performance and simplicity
+
+support of CSR - client side rendering,
+RSC - react server component,
+SSR - server side rendering,
+SSG - static site generation,
+ISR - incremental site generation.
+
+Therefore it is flexible to adjust for any tasks.
+
 - Next JS has build-in Routing and Seo optimization, Server Actions (server logic inside component)
 - Next JS saves a lot of time and resources, cashing and optimization(images, styles, fonts, scripts) reduce load on a server, reduce hosts.
 - Also, Next JS increasing development and hosting applications
 - It has great code separation (=== fast loading of your website)
-- Very convenient Routing
+- Very convenient Routing. Routing use foldersfor Routing. To create a page, we create the folder in app folder and create page.tsx file
 - Automatic optimization of images, styles, fonts and scripts
 - Optimization of building an application (building is very fast)
 - by default next is running on webpack -->
@@ -28,7 +37,6 @@
 ```
 
 - global styles and google fonts we add in layout.tsx file. Google fonts can be found on their google website
-- to create a page, we create the folder in app folder and create page.tsx file
 
 # Start Next JS project
 
@@ -88,7 +96,7 @@ node_modules // folder where you can find all libraries and dependencies (normal
 public //static folder, path to these files will be static. Here we keep images, other static files
 src //main folder, here we keep all main files. src folder allow us to make good application folder structure, Insded src we have app folder, components, etc.
 next-env.d.ts  //declerative file for TypeScript from Next.JS, allowing to add important types
-next.config.ts  //Next.js application configuration
+next.config.ts  //Next.js application configuration.all default Next settings, add output: "export", this command will run automatically -when we build our app and allow to create staic website to host it
 package-lock.json  //the same as package.json. This file additionally contains sertain library versions. It needs if you have 2 different versions of your project, one is local and one is on production.
 tsconfig.json  //settings of TypeScript
 
@@ -97,9 +105,7 @@ tsconfig.json  //settings of TypeScript
 src/app //folder app needs to correctly organize Routing and pages
 src/app/page.tsx //main page
 src/app/(home)  //folder (home) - is not a route for a page, (use brackets if not a Route), without brackets - the Route will be --> /home, with brackets will be --> /
-src/app/layout.tsx //layouts, common design for pages
-next.config.ts //all default Next settings, add output: "export", this command will run automatically -when we build our app and allow to create staic website to host it
-tsconfig.json // settings of TypeScript
+src/app/layout.tsx //layouts, common design for pages. applies to current folder and folders and files inside that folder.
 
 global.css //global css file, you must import/connect this file in current layout.tsx file
 anyname.css //local css file for certain page, import/connect in current layout.tsx file
@@ -116,7 +122,7 @@ anyname.css //local css file for certain page, import/connect in current layout.
 
 # Routing
 
-1.
+1. URL depends from folders nesting
 
 ```JS
 //for this URL -> domain.com/products
@@ -131,11 +137,11 @@ return (<div>Products</div>)
 
 ```JS
 //for this URL -> domain.com/products/tv
-//We create new products folder in app folder and inside products foleder we create tv folder--> and then we create a file with this name-> page.tsx
+//We create new products folder in app folder and inside products folder we create tv folder--> and then we create a file with this name-> page.tsx
 src/app/products/tv/page.tsx
 ```
 
-2.
+2. URL with dynamic parametrs
 
 ```JS
 //create route parameter which has dynamic value in the URL --> products/:id (for example)
@@ -145,7 +151,7 @@ src/app/products/[id]/page.tsx
 src/app/products/[category]/[item]  //for example URL-> /products/tv/lg, /products/phone/nokia
 ```
 
-3.
+3. Routing exception
 
 ```JS
 //if you use round brackets in folder name-> (public)
@@ -155,11 +161,17 @@ src/app/products/[category]/[item]  //for example URL-> /products/tv/lg, /produc
 src/app/(home)/products/tv/page.tsx  // URL --> /products/tv
 ```
 
-# useful Hooks (hooks are used with "use client")
+# Next.JS useful Hooks (hooks are used with "use client")
 
-- useRouter() <--return ab object
+Hooks always are used in Client side.
+
+we use - useState, useEffect
+
+1. useRouter(); <--return an object. Is used to redirect user to some page after some action(for example LogIn)
 
 ```JS
+//components/SigninForm.tsx
+
 //import useRouter from next/navidation
 
 //often used hooks - push and replace -> redirect user to new URL, with option to return back, and no return back option
@@ -173,7 +185,11 @@ export function Products() {
 // const {back} = useRouter();  //navigation back, return to previous page
 const {push} = useRouter(); // Using useRouter hook for navigation, redirect user to some page
 
-push("/products/1")  //will redirect user to this URL, with option to return back
+if(/if the signin was successful){
+  push("/products")  //will redirect user to this URL, with option to return back
+}else{
+  console.log(/some error)
+}
 
   return (
     <div>
@@ -205,28 +221,49 @@ replace("/products")  //will redirect user to this URL, with option to return ba
 }
 ```
 
-- usePathname() <-- return a variable
+2. usePathname(); <-- return a variable, get the current URL path
 
 ```JS
-import { useRouter } from "next/navigation";
-import styles from "./Products.module.css"; // Importing CSS module for styling
-import Image from "next/image"; // Importing Image component from Next.js
+"use client"; //if we use usePathname, it should be in -> use client
 
-export function Products() {
+import Link from "next/link";
+import { usePathname } from "next/navigation"; // Importing usePathname to get the current path
 
+type NavLink = {
+  href: string;
+  label: string;
+};
+
+interface Props {
+  navLinks: NavLink[];
+}
+
+export function Navigation({ navLinks }: Props) {{
 const pathname = usePathname();  //show URL address of your current page, used to show active element in the menu bar, or do some logic- if it is this page -> do this code...
+// Using usePathname to get the current URL path where the user is currently located
 
   return (
-    <div>
-      <h1 className={styles.products}>Hello from Products</h1>
-      <Image src="/globe.svg" alt="Next.js Logo" width={100} height={100} />
-    </div>
+    <nav className="flex gap-6 text-white/80">
+      {navLinks.map((link) => {
+        const isActive = pathname === link.href; // Check if the current path matches the link's href
+
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={isActive ? "text-white font-bold" : ""}
+          >
+            {link.label}
+          </Link>
+        );
+      })}
+      }
+    </nav>
   );
 }
 ```
 
-- useSearchParams()
-- it is working only for query requests
+3. useSearchParams(); <-- it is working only for query requests, help to get some values from URL
 
 ```JS
 const params = useSearchParams()
@@ -237,22 +274,52 @@ const params = useParams<{username: string}>()  //username is in squere brackets
 params.username
 ```
 
+```JS
+//components/GoogleButton.tsx
+
+"use client";
+
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+
+interface Props {}
+
+export function GoogleButton({}: Props) {
+  const searchParams = useSearchParams(); //hook Must be used in a Client side Component. It returns the URLSearchParams object of the current URL
+  const callbackUrl = searchParams?.get("callbackUrl") || "/profile"; //if there is no callbackUrl in the URL, we will redirect user to /profile page after successful sign in
+
+  return (
+    <div className="google-page">
+      <div className="signIn-google-btn">
+        <button
+          onClick={() => signIn("google", { callbackUrl })} //signIn is build-In method from next-auth/react, inside we pass the name of the provider we want to use - google
+          //callbackUrl is optional, it will redirect user to the specified URL after successful sign in
+        >
+          Sign In with Google
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
 # Component- level Client and Server side Rendering
 
-![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.JPG)
+![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
 
 - In Next.JS you can create server side and client side components
-- Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page
-- Client side components will be created in the browser, code is not rendered on the server
+- Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page, only HTML will be sent
+- Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code.
 - in your app you can use both components
 - page.tsx file can be - as a server side component (by default) or client side component. Also, other componets can be server or client side.
 - Next.JS has a Rule when to use each component :
-  - If get receiving data from the server, or just showing something on the page - in this occasion use server components!!!
+  - If you receive data from the server ( --> fetch('http://jsonplaceholder.type') ), or just showing something on the page - in this occasion use server components!!!
   - by default, components are server side components
   - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Whithout client side component it will show an error. This component will be proccessed in browser
-- If you use client component - 'use client' we can't use async await in that component. Only Server Components can be async at the moment. you cannot have an async function component when it’s a client component ("use client").
-- To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can inser client side components into server side components
-- Metadata block and 'use client' can't be used in the same file page.tsx, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
+- If you use client component add -> 'use client'
+- async await main function can be used only in server side components
+- To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can insert client side components into server side components
+- Metadata block can't be used in 'use client' file, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
 
 ```JS
 //page.tsx file, this example will show an error!!!
@@ -276,6 +343,21 @@ export default function Post(){
   SSR- one request === 1 responce (usual approach), will cause browser delays if you have 1000users on your website, server always will ask to increase resources because server power of the cloud will not be enough
   ISR - static (with data update)
   SSG static (without data update)
+
+```JS
+//app/posts
+
+//it must be server component
+
+async function getPost(id: string | null) {
+  const result = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
+    (res) => res.json()
+  );
+
+  //if fetch is done in other file then was imported then you can use client side
+  //app/posts2
+```
+
 - access to back-end utils and back-end,
 - great security on back end server, uses sensetive data (access token, api keys, etc.)
 - make light weight on client side and moving all heavy tasks on server

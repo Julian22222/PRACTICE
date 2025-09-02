@@ -70,5 +70,11 @@ export const authConfig: AuthOptions = {
       //authorize method receives credentials and req as parameters. and checks if the credentials are valid and returns a user object if they are valid, otherwise returns null
     }),
   ],
+  pages: {
+    //We add this object, to tell that we have our own sign in page,
+    //By default, NextAuth provides its own sign-in page at /api/auth/signin. But if you want to create your own custom sign-in page, you can specify its path here.
+    //signIn property specifies the path to your custom sign-in page. There are other properties as well like signOut, error, verifyRequest, newUser etc.
+    signIn: "/signin",
+  },
   debug: true, // Enable debug mode for detailed logging during development. Set to false in production.
 };
