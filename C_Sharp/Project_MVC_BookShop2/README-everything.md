@@ -53,6 +53,132 @@ int Num = 7;
 ```
 
 ```C#
+class myItem{
+    public string name {get; set;}
+    public int age {get; set;}
+}
+
+var ok = new myItem {name ="Tom", age = 22};
+
+int num = 7;
+
+string str = "Hello World";
+
+var you = (new {name="Adam", age=22});
+
+string myStr = "123";
+
+var pop = Convert.ToInt32(myStr);
+
+var modifiedStr = str.Substring(0,5);
+
+var myList = new List<int>(){1,2,3,4};
+myList.Add(5);
+
+foreach(var item in myList){
+ Console.WriteLine(item);
+}
+
+Convert.ToInt32(myStr);
+
+Console.WriteLine(modifiedStr);
+
+//Console.WriteLine("Hello World");
+
+var items = new List<string>(){"one", "two", "three"};
+
+foreach(var item in items){
+ Console.WriteLine(item);
+}
+
+for (int i=0; i< items.Count; i++){
+ Console.WriteLine(items[i]);
+};
+
+
+public class Item {
+    public int Age {get; set;}
+    public string Name {get; set;}
+}
+
+var Tony = new Item(){Age=12, Name="Tony"};
+var Ben = new Item(){Age=15, Name="Ben"};
+
+var list = new List<Item>(){
+Tony, Ben
+};
+
+//Console.WriteLine(Tony.Name);
+
+//foreach(var item in list){
+//  Console.WriteLine(item.Name);
+//}
+
+public class Item2:Item{  //class is extends another class
+public string Address {get; set;}
+}
+
+
+var me = new Item2{
+Age=22, Name ="Ant", Address = "PIZDA"
+};
+
+/////////////////////////////////////////////
+
+abstract class Temple{
+    public string Name { get; set; }
+    public int Tel { get; set; }
+}
+
+class Goo : Temple{
+    public int Age { get; set; }
+}
+
+
+var cla = new Goo { Name = "Lee", Tel = 123455, Age = 22 };
+
+Console.WriteLine($"{cla.Name}, {cla.Tel}, {cla.Age}");
+
+Console.WriteLine(me.Address);
+/////////////////////////////////////////////
+
+abstract class Temple{
+    public string Name { get; set; }
+    public int Tel { get; set; }
+    public abstract string Address { get; set; }
+}
+
+
+class Goo : Temple{
+    public int Age { get; set; }
+    public override string Address { get; set; } = "street";
+}
+
+var cla = new Goo { Name = "Lee", Tel = 123455, Age = 22 };
+Console.WriteLine($"{cla.Name}, {cla.Tel}, {cla.Age}, {cla.Address}");
+
+
+
+var myList = new List<int>(){1,2,3,4};
+
+var modifiedList = myList.Select(x => x * 2).ToList();   //correct example
+//Select(x => x * 2) is a LINQ projection that doubles each element.
+// .ToList() materializes the result into a new list
+
+var modifiedList = myList.Where(x => x % 2 == 0).ToList();  //Where method expects a predicate — a function that returns a bool
+
+var modifiedList = myList.Where(x => x * 2).ToList();     //INCORRECT!!!!, WHERE expecting – Boolean result
+
+int i = 2 + 2;
+
+i
+
+
+
+
+```
+
+```C#
 static void Main(){
 
 //static method, function MyArray
@@ -656,6 +782,261 @@ public JsonResult Basket([FromBody] Book book) //receive a book that we sent fro
     return Json(new { success = true, message = "Book added to basket" });
 }
 
+```
+
+# Ajax/JQuery options to pass data from cshtml page to controller
+
+1. Content-Type & DataType
+
+When sending JSON data or expecting JSON back, specifying these can avoid some common issues.
+
+```C#
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    contentType: "application/json; charset=utf-8",  // specify what you send
+    dataType: "json", // specify what you expect back
+    data: JSON.stringify({ id: bookId }),
+    success: function(response) { /*...*/ }
+});
+```
+
+2. Anti-Forgery Token (CSRF Protection)
+
+ASP.NET Core usually requires an antiforgery token for POST requests for security.
+You can include the token in your AJAX request headers.
+
+```C#
+var token = $('input[name="__RequestVerificationToken"]').val();
+
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    headers: { "RequestVerificationToken": token },
+    data: { id: bookId },
+    success: function(response) { /*...*/ }
+});
+
+//Make sure your form includes:
+@Html.AntiForgeryToken()
+```
+
+3. Using .done(), .fail(), .always() Promises Syntax
+
+Instead of using success and error callbacks, you can use the jQuery Promise methods which can sometimes look cleaner and allow chaining:
+
+```C#
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    data: { id: bookId }
+}).done(function(response) {
+    alert(response.message);
+}).fail(function() {
+    alert("Error adding book to basket.");
+}).always(function() {
+    console.log("Request completed.");
+});
+```
+
+4. BeforeSend and Complete Callbacks
+
+Useful for showing loaders or disabling buttons before the AJAX call, and enabling them afterward.
+
+```C#
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    data: { id: bookId },
+    beforeSend: function() {
+        $("#loading").show();  // or disable button: $("#myBtn").prop('disabled', true);
+    },
+    complete: function() {
+        $("#loading").hide();  // or enable button: $("#myBtn").prop('disabled', false);
+    },
+    success: function(response) { /*...*/ },
+    error: function() { /*...*/ }
+});
+```
+
+5. Global AJAX Event Handlers
+
+If you want to handle AJAX events for the entire page (like global loading indicators):
+
+```C#
+$(document).ajaxStart(function(){
+    $("#loading").show();
+}).ajaxStop(function(){
+    $("#loading").hide();
+});
+```
+
+6. Timeout
+   To prevent hanging AJAX calls:
+
+```C#
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    data: { id: bookId },
+    timeout: 5000, // milliseconds
+    success: function(response) { /*...*/ },
+    error: function(xhr, status, error) {
+        if (status === "timeout") {
+            alert("The request timed out.");
+        } else {
+            alert("Error adding book to basket.");
+        }
+    }
+});
+```
+
+7. Handling Complex Data / Multiple Parameters
+   If you have complex objects or multiple parameters, serialize to JSON:
+
+```C#
+var book = {
+    id: bookId,
+    quantity: 2,
+    notes: "Gift wrap"
+};
+
+$.ajax({
+    type: "POST",
+    url: "/Home/Basket",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(book),
+    success: function(response) { /*...*/ }
+});
+```
+
+8. Using $.post() Shortcut
+
+If you only need a simple POST request without extra configuration, jQuery provides a shorthand:
+
+```C#
+$.post("/Home/Basket", { id: bookId }, function(response) {
+    alert(response.message);
+}).fail(function() {
+    alert("Error adding book to basket.");
+});
+```
+
+##### Submit Form
+
+```C#
+$("Form").submit();   ß $("Form") — selects all <form> elements on the page (case-insensitive but usually lowercase is preferred: "form").
+
+.submit() — triggers the form's native submit event, causing the form to post back to the server in the usual way (not AJAX).
+
+.submit() is perfect when you want a full page refresh or server-rendered page response.
+```
+
+1. $("Form").submit();
+
+This triggers a normal form submit, which sends the form data to the controller via a full page reload or redirect (classic POST/GET request).
+Not AJAX. It submits the form traditionally.
+If you want to send form data using AJAX instead (to avoid page reload), you usually do something like:
+
+```C#
+$("form").submit(function(event) {
+    event.preventDefault();  // prevent normal form submit
+    var formData = $(this).serialize(); // serialize form inputs into URL encoded string
+    $.ajax({
+        type: $(this).attr("method"), // POST or GET
+        url: $(this).attr("action"),
+        data: formData,
+        success: function(response) {
+            // handle success (update UI, show message, etc.)
+        },
+        error: function() {
+            // handle error
+        }
+    });
+
+});
+```
+
+2. Use .serialize() to grab all input fields in a form and send as URL-encoded string via AJAX
+
+```C#
+var formData = $("form").serialize();
+```
+
+3. Use FormData API to upload files asynchronously
+
+```C#
+var formData = new FormData(this);
+```
+
+4. Disable submit button to prevent multiple clicks
+
+```C#
+$("#btn").prop("disabled", true);
+```
+
+```C#
+//Example: Sending entire form with AJAX (instead of $("form").submit() traditional)
+
+$("form").submit(function(e) {
+    e.preventDefault(); // stop traditional submit
+    var formData = $(this).serialize();
+
+    $.ajax({
+        type: $(this).attr("method"),
+        url: $(this).attr("action"),
+        data: formData,
+        success: function(response) {
+            alert("Form submitted successfully");
+            // update UI or do other things
+        },
+        error: function() {
+            alert("Error submitting form");
+        }
+    });
+});
+```
+
+# LINQ stands for Language Integrated Query
+
+It’s a powerful feature in C# that allows you to write queries directly in your code to work with collections of data like arrays, lists, XML, databases, and more — all in a very readable and concise way.
+
+What LINQ does:
+
+Lets you filter, sort, group, and transform data collections easily.
+Makes querying data feel like writing SQL but directly inside your C# code.
+Works with any data source that implements IEnumerable<T> or IQueryable<T>.
+
+```C#
+//Basic example of LINQ:
+//Imagine you have a list of numbers, and you want only the even numbers:
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program{
+    static void Main(){
+
+        List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
+
+        // LINQ query to get even numbers
+        var evenNumbers = numbers.Where(n => n % 2 == 0);
+
+        foreach (var num in evenNumbers){
+            Console.WriteLine(num);
+        }
+    }
+}
+
+//Output =  2,4,6
+
+
+//Key LINQ methods:
+-  .Where() — filter elements  .Select() — transform elements
+-  .OrderBy(), .OrderByDescending() — sort elements
+-  .First(), .FirstOrDefault() — get first element(s)
+-  .ToList() — convert query result to a list
 ```
 
 ## What is an ORM Tool?
