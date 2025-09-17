@@ -22,13 +22,13 @@ async function fetchData(username: string) {
   return res || null; // Return the user data if found, otherwise return null
 }
 
-interface UserPageProps {
+type UserPageProps = {
   params: {
     // username is a dynamic parameter in the URL, defined by the folder name [username]
     //username - is because or [username] folder name, it must be the same as we used in folder name
     username: string; // The username can be a string or a number, depending on how you want to handle it
   };
-}
+};
 
 export default async function UserPage({ params }: UserPageProps) {
   //to get the params from the URL we use params

@@ -41,13 +41,13 @@ import withAuth from "next-auth/middleware"; // Middleware that checks if the us
 //This sets up the middleware that will run before your page loads. If the user is logged in → let them see the page. If not → redirect them to the login page.
 export default withAuth({
   pages: {
-    signIn: "/api/auth/signin", // This tells NextAuth where to send users if they are not logged in. In this case, it sends them to /api/auth/signin (the built-in NextAuth sign-in page).
+    signIn: "/signin", // This tells NextAuth where to send users if they are not logged in. In this case, it sends them to /api/auth/signin (the built-in NextAuth sign-in page).
     //You could change this to /signin if you create your own custom login page
   },
 });
 
 export const config = {
-  //This allow to create private routes
+  //matcher - allow to create private routes
   // Apply middleware to all paths,
   // matcher: ["/:path*", '/profile'], // This will match all paths in the brackets. '/profile' - static path, '/:path*' - dynamic path
   //matcher <-- is a property that defines which paths the middleware should apply to, to be private routes

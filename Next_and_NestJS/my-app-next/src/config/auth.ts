@@ -14,6 +14,15 @@ export const authConfig: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!, //this values we get from Google Developer Console. from cloud.google.com
 
       //   clientId: process.env.GOOGLE_CLIENT_ID as string, <-- can be writen as well this way
+
+      authorization: {
+        params: {
+          prompt: "select_account", // 👈 force Google to always show account chooser. Google defaults to prompt=none or reuses the last account → skipping the chooser.
+          access_type: "offline", // optional: useful if you want refresh tokens
+          response_type: "code",
+          ////Without prompt: "select_account", Google assumes you want to log back in with the last-used account → no chooser. With it, you always get the account chooser.
+        },
+      },
     }),
     Credentials({
       //credentials has at least 2 fields: credentials and authorize

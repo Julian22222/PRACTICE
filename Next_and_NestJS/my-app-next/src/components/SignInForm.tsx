@@ -18,17 +18,22 @@ export function SignInForm({}: Props) {
     //we define the provider as "credentials" because we are using Credentials Provider in config/auth.ts, line 36, and credentials contains email and password fields from the config/auth.ts line 20-33
     //therefore we need to pass email and password to the signIn method, credentials contains email and password fields in the config/auth.ts line 20-33
     const res = await signIn("credentials", {
+      //signIn is a built-in NextAuth function that handles logging in a user.
       email: formData.get("email"), //email value will be taken from the form input field with name="email"
       password: formData.get("password"),
       redirect: false, //in case of error will redirect user to build-in signin form, if it is set to true. In this case we set it to false, so we can handle the error ourselves
       // callbackUrl: "/profile", //after successful sign in, we will redirect user to /profile page
+      callbackUrl: "/profile", //after successful sign in, we will redirect user to /profile page. // 👈 important: tell NextAuth where to go
     });
 
-    if (res && res.error) {
-      //if the signin was successful
-      router.push("/profile"); //redirect user to /profile page
-    } else {
-      console.log("Error signing in:", res);
+    if (res?.error) {
+      // ❌ login failed
+      console.log("Error signing in:", res.error);
+      console.log("res:", res);
+    } else if (res?.url) {
+      //   router.push("/profile"); //redirect user to /profile page
+      // ✅ if login was successful
+      router.push(res?.url);
     } // Ensure this closing brace is here
   };
 

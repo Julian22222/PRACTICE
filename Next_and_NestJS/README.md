@@ -135,13 +135,13 @@ return (<div>Products</div>)
 }
 ```
 
+2. URL with dynamic parametrs
+
 ```JS
 //for this URL -> domain.com/products/tv
 //We create new products folder in app folder and inside products folder we create tv folder--> and then we create a file with this name-> page.tsx
 src/app/products/tv/page.tsx
 ```
-
-2. URL with dynamic parametrs
 
 ```JS
 //create route parameter which has dynamic value in the URL --> products/:id (for example)
@@ -176,6 +176,7 @@ we use - useState, useEffect
 
 //often used hooks - push and replace -> redirect user to new URL, with option to return back, and no return back option
 //refresh - refresh current browser page
+'use client'
 
 import { useRouter } from "next/navigation";
 import styles from "./Products.module.css"; // Importing CSS module for styling
@@ -201,6 +202,7 @@ if(/if the signin was successful){
 ```
 
 ```JS
+'use client'
 import { useRouter } from "next/navigation";
 import styles from "./Products.module.css"; // Importing CSS module for styling
 import Image from "next/image"; // Importing Image component from Next.js
@@ -266,6 +268,8 @@ const pathname = usePathname();  //show URL address of your current page, used t
 3. useSearchParams(); <-- it is working only for query requests, help to get some values from URL
 
 ```JS
+'use client'
+
 const params = useSearchParams()
 
 //if you want to get dynamic variable from [] folder, that we made in app folder
@@ -318,6 +322,24 @@ export function GoogleButton({}: Props) {
   - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Whithout client side component it will show an error. This component will be proccessed in browser
 - If you use client component add -> 'use client'
 - async await main function can be used only in server side components
+
+```JS
+//main function with async can be only in server side component
+export default async function ProductsPage() {
+  const data = await fetchData();
+  //some code
+}
+
+/////////////
+"use client";
+
+export function SignInForm({}: Props) {
+  //async can be inside main block in client side
+  const res = await signIn("credentials", {...}
+  //some code
+}
+```
+
 - To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can insert client side components into server side components
 - Metadata block can't be used in 'use client' file, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
 
@@ -340,7 +362,8 @@ export default function Post(){
 ### advantages of server side components
 
 - data loading on the server (SSR, ISR, SSG)
-  SSR- one request === 1 responce (usual approach), will cause browser delays if you have 1000users on your website, server always will ask to increase resources because server power of the cloud will not be enough
+
+  SSR- one request === 1 responce (usual approach), will cause browser delays if you have 1000 users on your website, server always will ask to increase resources because server power of the cloud will not be enough
   ISR - static (with data update)
   SSG static (without data update)
 
@@ -485,10 +508,54 @@ export const getApiToken = () =>{
 
 If you use REST API use fetch("http://.....")
 
+# Rendering Strategies (different options)
+
+To check and see Rendering option for each our Route in your application, we need to type -->
+
+```JS
+npm run build
+
+//static rendering
+//server rendering
+```
+
+- CSR - Client side rendering
+  Tipical for SPA applications, Rendering is occuring on Client side, bad for SEO optimization
+
+- SSR - Server side rendering
+  Rendering is occuring on the server and send already build page to client, also send separate JS to the client which will build in to HTML page - (hydration). Good for SEO. This approach is deprecated (is used only when we don't use app(routing) main folder)
+
+- RSC - React Server components
+  New approach, when we have app main directory with all our routing. Rendering is occuring on the server and send already build page to client. It uses striming process (giving data by pieces) without hydration.Good for SEO. Striming HTML static in first request and further navigation.
+
+- SSG - Static Site generation
+  HTML rendering takes place on the server side during build (npm run build) and send static HTML to the client. During runtime no excess/extra load on the server side. Server keeps static data and send it to client side when needed. No hydration. Needs to be added by using getStaticParams (in app router api), by default Next.js use SSR and RSC or CSR
+  If you want to use dynamic data (when you add, edit or delite something in your app it will not show up, to see changes you need to - npm run build, again)
+
+- ISR - Incremental Static Regeneration
+  Allows to rerender static page by timer trigger or event trigger. It contains combination of SSG and SSR/RSC approaches.
+
+  Revalidate uses to rerender the page using one of the triggers
+
+[--> Revalidating Data notes <--](https://nextjs.org/docs/14/app/building-your-application/data-fetching/fetching-caching-and-revalidating)
+
+```JS
+//SSG example
+
+export async function generateStaticParams(){
+  const posts: any[] = await getAllPosts();  //getting posts from the server by fetch in different file
+
+  return posts.map(post => ({
+    slug: post.id.toString();  //slug is unchangable, toString() - must be a string as in URL, id must much with dynamic folder -> [id]
+  }))
+}
+
+```
+
 # Data loading using different options (SSR, ISR, SSG)
 
 ```JS
-//SSR option
+//SSG option, (Server-Side Generation) data loading.
 
 import type {Metadata} from 'next'
 import {Products} from './Products'
@@ -498,7 +565,7 @@ export const metadata: Metadata = {
 }
 
 const fetchData = async()=>{  //async request to the server
-  const response = await fetch('https://api.example.com/products') //will keep the post in cache
+  const response = await fetch('https://api.example.com/products') //will keep the post in cache, by default is --> cache: 'force-cache'
   const data = await response.json()
   return data
 }
@@ -515,6 +582,8 @@ export default async function Page(){
 }
 ```
 
+[ --> Route Segment Config <--](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config)
+
 ```JS
 //to optimize your code - use static options (ISR, SSG)
 
@@ -528,7 +597,10 @@ export const metadata: Metadata = {
 const fetchData = async()=>{  //async request to the server
   const response = await fetch('https://api.example.com/products',{
     cache: 'force-cache'  //for static only, SSG option - data will be loaded once only when building application(npm run build)
-    // cache: 'no-cache'  <-- this willl be SSR option
+
+    // cache: 'no-cache'  <-- this willl be SSR option, can be used with revalidate. depends on HTTP caching headers, not Next.js’s cache
+
+    //cache: 'no-store' <-- SSR, no cache, Always fetches fresh data from the origin server. This is true SSR — runs on every request, no caching
   })
   const data = await response.json()
   return data
@@ -580,6 +652,23 @@ export default async function Page(){
 }
 ```
 
+```JS
+//can use this code in one of this levels  --> layout.tsx | page.tsx | route.ts
+//
+export const revalidate = 200;
+
+export default async function Blog(){
+  const response = await fetch('https://api.example.com/products');
+}
+
+//it is the same as
+const response = await fetch('https://api.example.com/products',{
+    cache: 'force-cache',
+    next:{
+      revalidate: 200 //will update data every 0,2sec( if you change item name, price, etc)
+    }
+```
+
 # Link component
 
 ```JS
@@ -594,7 +683,7 @@ export default async function Page(){
 - at least we need to have one layout.tsx file in the app folder/ root of our application, also we can have many layouts. Next automatically don't add HTML and body tags, so we need to add them manually in the RootLayout component, at least we need to have 1 RootLayout component in the app directory.
 - We can have many layouts in our app
 - if we have root layout all pages will have the same template
-- We can have a layout file in any folder, it will affect on that folder and other folders inside/ children folders
+- layout.tsx file has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
 
 # How to use Styles
 
@@ -716,6 +805,61 @@ export default function ErrorWrapper({ error }: { error: Error }) {
 ```JS
 //src="/nameOfTheFile" <-- if file is located in public folder
  <Image src="/globe.svg" alt="Next.js Logo" width={100} height={100} />
+```
+
+# Work with Images in Next.js
+
+- Build in Image component
+
+[ --> Image component props <--](https://nextjs.org/docs/pages/api-reference/components/image)
+
+it allows to make website optimization, with loading images in certain way.
+The Next.js Image component extends the HTML <img> element for automatic image optimization.
+
+have different ways how to optimase images:
+
+- can make images - lazy loading, when images loads only when it shown to user on the screen, by scrolling page down images will load -> loading="lazy"
+- use different image formats
+- etc.
+
+```JS
+import type {ImageProps} from '@chakra-ui/next-js';  //data types if we use TypeScript
+import NextImage from 'next/image'; //import component from next, NextImage - can be any name
+
+//when we import image in React.JS without framework usually it is a string
+import Img from '@/assets/hero.jpg';
+
+//In this case it is an object with certain properties
+
+<Image src={Img} alt="Hero image" />  //2 mandatory, required Props
+//by default all image have lazy loading
+
+<Image src={Img} alt="Hero image" priority/> //priority - this image will load first, don't use on all image tags, used only on main image
+```
+
+```JS
+//not all the images can be loaded locally, some images can be loaded from other servers. In this case we need to adjust the next configurations in --> next.config.ts file and add object with key = images
+
+const nextConfig: NextConfig = {
+
+  images:{
+    remotePatterns: [
+      //formats: ['image/avif', 'image/web'],
+      //deviceSizes: [375, 640, 750, 828, 1080, 1200, 1920]
+
+      //if we use one server where we get Images we have one object in here
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/vi/**', //folder direction where the image is
+      },
+    ]
+  }
+
+}
+
+//if we don't use formats it will have default values, can assign some images formats
 ```
 
 # Meta data
@@ -894,6 +1038,224 @@ export const config = {  //our condition is here to run middleware function, if 
 }
 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
+```
+
+# Server Actions
+
+NEXT JS allow to create api routes and interact with data without creating back-end api server.
+
+What are Server Actions in Next.js?
+
+- All queries are taking place in the Next.js server side
+
+Server Actions are special functions that run only on the server when you call them from your React components. They let you do things like:
+
+- Fetch data securely
+- Write to a database
+- Call APIs without exposing secrets
+- Perform server-side logic directly from your UI code
+
+Why use Server Actions?
+Normally, when you want to update data or do some backend work, you create API routes and call them with fetch or axios. Server Actions let you skip the extra API layer and call server functions directly from your React components — making your code simpler and cleaner.
+
+How do Server Actions work?
+
+1. You define a function as a server action.
+2. Call this function inside your React component.
+3. The function runs on the server.
+4. The client gets the updated UI or data after the action finishes.
+
+Summary:
+
+- Server Actions are functions that run on the server.
+- You can call them from React components without creating separate API routes.
+- Useful for secure operations like DB access or secret API calls.
+- Makes your app code simpler and cleaner.
+
+Real Example:
+
+1.  npm install mysql2
+2.  Define the Server Action to insert a user into the database
+
+```JS
+// app/actions.js
+'use server';
+
+import mysql from 'mysql2/promise';
+
+// Create a connection pool (reuse connections)
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
+
+export async function createUser(name, email) {
+  const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
+  const [result] = await pool.execute(sql, [name, email]);
+  return { id: result.insertId, name, email };
+}
+```
+
+3. React Client Component calling this Server Action
+
+```JS
+'use client';
+
+import { createUser } from '../actions';
+
+export default function UserForm() {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+
+    try {
+      const user = await createUser(name, email);
+      alert(`User created with ID: ${user.id}`);
+      form.reset();
+    } catch (error) {
+      alert('Failed to create user: ' + error.message);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="name" placeholder="Name" required />
+      <input name="email" placeholder="Email" type="email" required />
+      <button type="submit">Create User</button>
+    </form>
+  );
+}
+
+// Notes:
+// The Server Action createUser connects directly to MySQL using mysql2/promise.
+// You don’t create an API route manually.
+// The function runs securely on the server, so your database credentials never leak to the client.
+// The client calls the function like a normal async function, but under the hood Next.js runs it on the server.
+
+
+// Important:
+// In Next.js, only variables prefixed with NEXT_PUBLIC_ are exposed to the browser.
+// Since database credentials should stay secret, use environment variables without NEXT_PUBLIC_ prefix.
+// Server Actions run on the server, so they can safely access these env vars.
+// The .env.local file is loaded automatically by Next.js during development and build.
+```
+
+Simple example 2:
+
+```JS
+//Step 1: Server Action with validation and DB logic
+
+// app/actions.js (or inside a server component file)
+// app/actions.js
+'use server';
+
+const fakeDB = []; // Mock database
+
+export async function createPost({ title, content }) {
+  // Simple validation
+  if (!title || title.length < 5) {
+    throw new Error('Title must be at least 5 characters.');
+  }
+  if (!content || content.length < 20) {
+    throw new Error('Content must be at least 20 characters.');
+  }
+
+  // Simulate saving to DB
+  const newPost = {
+    id: Date.now(),
+    title,
+    content,
+    createdAt: new Date().toISOString(),
+  };
+  fakeDB.push(newPost);
+
+  return newPost;
+
+}
+```
+
+```JS
+//Step 2: React Client Component to use the Server Action
+
+'use client';
+
+import { useState } from 'react';
+import { createPost } from '../actions';
+
+export default function BlogForm() {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    setSuccess(null);
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    const title = formData.get('title');
+    const content = formData.get('content');
+
+    try {
+      const post = await createPost({ title, content });
+      setSuccess(post);
+      e.target.reset();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div>
+      <h2>Create a New Blog Post</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Title:</label><br />
+          <input name="title" type="text" />
+        </div>
+        <div>
+          <label>Content:</label><br />
+          <textarea name="content" rows="5" />
+        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Saving...' : 'Create Post'}
+        </button>
+      </form>
+
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {success && (
+        <div style={{ marginTop: '20px', color: 'green' }}>
+          <h3>Post created successfully!</h3>
+          <p><strong>{success.title}</strong></p>
+          <p>{success.content}</p>
+          <small>Created at: {success.createdAt}</small>
+        </div>
+      )}
+    </div>
+  );
+}
+
+//Explanation:
+The client calls createPost server action.
+Server validates the input and throws errors if invalid.
+If valid, server "saves" post to the fake database.
+Server returns the new post object.
+Client updates UI with success or error messages.
+All heavy logic happens on the server, making the client clean and secure.
+
+//Why this is better than API routes?
+{/* You write less boilerplate (no need for fetch or API endpoints).
+You get automatic server/client boundaries.
+You avoid manually handling request/response objects.
+Stronger type safety and better developer experience. */}
 ```
 
 # Handlers API
@@ -1103,7 +1465,9 @@ export async function GET(request: Request) {
 
 # Environment Variables
 
-Also, unlike client-side variables, these do not need the NEXT*PUBLIC* prefix (since they are server-only).
+```JS
+Also, unlike client-side variables, these do not need the NEXT_PUBLIC_ prefix (since they are server-only).
+```
 
 1. Server-only variables
 
@@ -1125,15 +1489,54 @@ const id = process.env.GOOGLE_CLIENT_ID;
 //These are never exposed to the browser unless you manually pass them down.
 ```
 
-2. ```JS
+2.
+
+```JS
+process.env.NEXT_PUBLIC_BASE_URL
+
+NEXT_PUBLIC_ is a special prefix for environment variables in Next.js that makes those variables available in both the server and client-side code.
+
+Why use NEXT_PUBLIC_?
+
+By default, environment variables in Next.js are only available server-side.
+If you want to expose an environment variable to your browser (client-side) code, you need to prefix it with NEXT_PUBLIC_.
+```
+
+```JS
    Client-side variables (with NEXT_PUBLIC_)
-   ```
+```
 
-````
-
-- Must be prefixed with NEXT*PUBLIC* in your .env file.
+```JS
+- Must be prefixed with NEXT_PUBLIC_ in your .env file.
 - Next.js will inline them into your frontend bundle at build time.
 - Accessible in any client component or browser-side JS.
+```
+
+```JS
+//Example:
+//.env file
+# Only server-side
+DATABASE_PASSWORD=supersecret123
+
+# Available client and server
+NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+
+
+Usage in code:
+//ts file
+// server or client code
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+
+
+Important security note:
+Do NOT expose sensitive info (like passwords, API secrets, private keys) with NEXT_PUBLIC_.
+Anything prefixed with NEXT_PUBLIC_ is bundled into the client JavaScript and visible to anyone.
+
+
+In your case:
+//.env file
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+```
 
 ```JS
 //Example
@@ -1146,7 +1549,7 @@ NEXT_PUBLIC_API_BASE_URL=https://api.example.com
 const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 //Use only for values you’re comfortable exposing publicly (like non-secret API URLs, feature flags, analytics keys, etc.).
-````
+```
 
 ###### Why this distinction matters?
 

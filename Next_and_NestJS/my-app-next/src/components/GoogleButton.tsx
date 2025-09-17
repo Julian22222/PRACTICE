@@ -16,7 +16,12 @@ export function GoogleButton({}: Props) {
           onClick={() => signIn("google", { callbackUrl })} //signIn is build-In method from next-auth/react, inside we pass the name of the provider we want to use - google
           //callbackUrl is optional, it will redirect user to the specified URL after successful sign in
         >
-          Sign In with Google
+          <img
+            src="/googleProvider-logo.png"
+            alt="Google Logo"
+            style={{ width: "50px" }}
+          />
+          {/* Sign In with Google */}
         </button>
       </div>
     </div>
