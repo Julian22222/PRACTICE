@@ -10,6 +10,7 @@ export function Header() {
     { href: "/posts", label: "Posts" },
     { href: "/posts2", label: "Posts2" },
     { href: "/myhome", label: "Page" },
+    { href: "/blog", label: "Blog" },
   ];
 
   return (

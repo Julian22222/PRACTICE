@@ -1040,12 +1040,15 @@ export const config = {  //our condition is here to run middleware function, if 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
 ```
 
-# Server Actions
+# Server Actions -
 
-NEXT JS allow to create api routes and interact with data without creating back-end api server.
+NEXT JS allow to create Api Routes and Server Actions, but most of the time developers separate application to NEXT.JS (Front-END) and NEST.JS (BACK-END) and dont put all together Front-end and Back-end.
+
+usually Server Actions are used with Forms, (from UI), See -> components/NewPostForm.tsx
 
 What are Server Actions in Next.js?
 
+- Allow interact with data without creating back-end api server.
 - All queries are taking place in the Next.js server side
 
 Server Actions are special functions that run only on the server when you call them from your React components. They let you do things like:
@@ -1093,6 +1096,8 @@ const pool = mysql.createPool({
 
 
 export async function createUser(name, email) {
+  //Direct query to Database without back-end server with api
+  //Can use ORM approach (Prisma) or other interactions with databases (Firebase, etc)
   const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
   const [result] = await pool.execute(sql, [name, email]);
   return { id: result.insertId, name, email };
@@ -1256,6 +1261,90 @@ All heavy logic happens on the server, making the client clean and secure.
 You get automatic server/client boundaries.
 You avoid manually handling request/response objects.
 Stronger type safety and better developer experience. */}
+```
+
+##### If you want Component to behave the same wasy from different pages
+
+```JS
+//components/NewPostForm.tsx
+import { blogPosts } from "@/shared/data/blogposts.data";
+import { redirect } from "next/navigation";
+
+async function createPost(data: FormData) {
+"use server";
+
+ const { title, body } = Object.fromEntries(data);
+
+//make DB request, call an API, or perform any other server-side logic here
+  // we can use PRISMA or direct DB queries here- using SQL query, or call an external API
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  //example of making a POST request to an API to create a new post
+  //   const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       title,
+  //       body,
+  //       userId: 1, //hardcoded userId, in real app we will get it from the session
+  //     }),
+  //   });
+
+  //   const post = await response.json(); //getting the newly created post from the response
+  ///////////////////////////////////////////////////////////////////////////////////////
+
+   blogPosts.push({
+    userId: 1,
+    id: blogPosts.length + 1,
+    title: title as string,
+    body: body as string,
+  });
+
+  const post = blogPosts[blogPosts.length - 1]; //getting the newly created post from the response
+
+  redirect(`/blog/${post.id}`); //redirecting user to the posts page after creating a new post
+}
+
+//NewPostForm component dont receive any props from parent component -> NewPostForm(){...}
+export default function NewPostForm(){
+  return (
+    // form submission will be handled by the createPost function - which is a Server Action
+    <form
+      action={createPost} //handling form submission using the createPost - it is server action
+      className="form"
+      style={{
+        border: "1px solid white",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        gap: "10px",
+        padding: "10px",
+        borderRadius: "5px",
+        maxWidth: "400px",
+        margin: "0 auto",
+      }}
+    >
+      <input type="text" placeholder="title" required name="title" />
+      <textarea placeholder="body" required name="body" />
+      <div>
+        <input type="submit" value="Add post" />
+      </div>
+    </form>
+  );
+}
+
+
+
+//blog/page.tsc
+export default function page({}: Props) {
+  return (
+      <div>
+        <a>Add new post</a>
+       <NewPostForm /> //not passing any props
+       .....
+      </div>)}
 ```
 
 # Handlers API
