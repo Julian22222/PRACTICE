@@ -7,11 +7,12 @@
 - Next JS allows to create big, scalable applications
 - Next JS has performance and simplicity
 
-support of CSR - client side rendering,
-RSC - react server component,
-SSR - server side rendering,
-SSG - static site generation,
-ISR - incremental site generation.
+Next.js support of:
+-CSR - client side rendering,
+-RSC - react server component,
+-SSR - server side rendering,
+-SSG - static site generation,
+-ISR - incremental site generation.
 
 Therefore it is flexible to adjust for any tasks.
 
@@ -66,8 +67,10 @@ npx create-next-app@latest my-app-name
 //alias - no (don't customize default version) (used to use imports instead of doing this --> import logo from '../../../assets/logo.svg'), it allows to use -> import logo from '@assets/logo.svg'
 
 //use bun + next js
-bunx xreate-next-app@latest my-app-name
+bunx create-next-app@latest my-app-name
 //bun dev - start app
+//bunx → Bun’s equivalent of npx (used to run packages without installing them globally
+//create-next-app@latest → Ensures you get the latest version of Next.js.
 ```
 
 ```JS
@@ -88,6 +91,9 @@ scripts:
 # Deployment
 
 can be hosted on vercel.com
+
+- Vercel does offer a free tier (called the Hobby plan) where you can host a Next.js application without paying.
+- Free tier gives some limitations in storage and functions
 
 # Structure and Components of the Next JS app (Main locations of different files)
 
@@ -363,9 +369,9 @@ export default function Post(){
 
 - data loading on the server (SSR, ISR, SSG)
 
-  SSR- one request === 1 responce (usual approach), will cause browser delays if you have 1000 users on your website, server always will ask to increase resources because server power of the cloud will not be enough
-  ISR - static (with data update)
-  SSG static (without data update)
+- (SSR) - server side rendering -> one request === 1 responce (usual approach), will cause browser delays if you have 1000 users on your website, server always will ask to increase resources because server power of the cloud will not be enough
+- (ISR) - incremental site generation -> static (with data update)
+- (SSG) - static site generation -> static (without data update)
 
 ```JS
 //app/posts
@@ -752,7 +758,7 @@ export function Products() {
 }
 ```
 
-3. how to use fonts
+# How to use Fonts
 
 check layout.tsx file
 
@@ -765,7 +771,7 @@ import {Metal} from "next/font/google";
 
 # 404 Not Found
 
-- create file not-found.tsx in the app folder Root, and style that file
+- Create file not-found.tsx in the app folder Root, and style that file
 
 # Loading page
 
@@ -871,12 +877,13 @@ You typically set metadata per page. In Next.js, each page (in the /pages or /ap
 
 Here are some key properties you want to include for SEO in the metadata object:
 
-title — The page title shown in browser tabs and search results.
-description — A short summary of the page, shown in search results.
-keywords — Keywords related to the page (less important nowadays but still used sometimes).
-robots — Controls if search engines should index or follow the page (index, follow is default).
-openGraph — Metadata for social media sharing (Facebook, LinkedIn, etc.).
-twitter — Metadata for Twitter cards.
+- title — The page title shown in browser tabs and search results.
+- description — A short summary of the page, shown in search results.
+- keywords — Keywords related to the page (less important nowadays but still used sometimes).
+- robots — Controls if search engines should index or follow the page (index, follow is default).
+- openGraph — Metadata for social media sharing (Facebook, LinkedIn, etc.).
+- twitter — Metadata for Twitter cards.
+- etc.
 
 Metadata
 
@@ -1038,518 +1045,6 @@ export const config = {  //our condition is here to run middleware function, if 
 }
 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
-```
-
-# Server Actions -
-
-NEXT JS allow to create Api Routes and Server Actions, but most of the time developers separate application to NEXT.JS (Front-END) and NEST.JS (BACK-END) and dont put all together Front-end and Back-end.
-
-usually Server Actions are used with Forms, (from UI), See -> components/NewPostForm.tsx
-
-What are Server Actions in Next.js?
-
-- Allow interact with data without creating back-end api server.
-- All queries are taking place in the Next.js server side
-
-Server Actions are special functions that run only on the server when you call them from your React components. They let you do things like:
-
-- Fetch data securely
-- Write to a database
-- Call APIs without exposing secrets
-- Perform server-side logic directly from your UI code
-
-Why use Server Actions?
-Normally, when you want to update data or do some backend work, you create API routes and call them with fetch or axios. Server Actions let you skip the extra API layer and call server functions directly from your React components — making your code simpler and cleaner.
-
-How do Server Actions work?
-
-1. You define a function as a server action.
-2. Call this function inside your React component.
-3. The function runs on the server.
-4. The client gets the updated UI or data after the action finishes.
-
-Summary:
-
-- Server Actions are functions that run on the server.
-- You can call them from React components without creating separate API routes.
-- Useful for secure operations like DB access or secret API calls.
-- Makes your app code simpler and cleaner.
-
-Real Example:
-
-1.  npm install mysql2
-2.  Define the Server Action to insert a user into the database
-
-```JS
-// app/actions.js
-'use server';
-
-import mysql from 'mysql2/promise';
-
-// Create a connection pool (reuse connections)
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-
-export async function createUser(name, email) {
-  //Direct query to Database without back-end server with api
-  //Can use ORM approach (Prisma) or other interactions with databases (Firebase, etc)
-  const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
-  const [result] = await pool.execute(sql, [name, email]);
-  return { id: result.insertId, name, email };
-}
-```
-
-3. React Client Component calling this Server Action
-
-```JS
-'use client';
-
-import { createUser } from '../actions';
-
-export default function UserForm() {
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-
-    try {
-      const user = await createUser(name, email);
-      alert(`User created with ID: ${user.id}`);
-      form.reset();
-    } catch (error) {
-      alert('Failed to create user: ' + error.message);
-    }
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input name="name" placeholder="Name" required />
-      <input name="email" placeholder="Email" type="email" required />
-      <button type="submit">Create User</button>
-    </form>
-  );
-}
-
-// Notes:
-// The Server Action createUser connects directly to MySQL using mysql2/promise.
-// You don’t create an API route manually.
-// The function runs securely on the server, so your database credentials never leak to the client.
-// The client calls the function like a normal async function, but under the hood Next.js runs it on the server.
-
-
-// Important:
-// In Next.js, only variables prefixed with NEXT_PUBLIC_ are exposed to the browser.
-// Since database credentials should stay secret, use environment variables without NEXT_PUBLIC_ prefix.
-// Server Actions run on the server, so they can safely access these env vars.
-// The .env.local file is loaded automatically by Next.js during development and build.
-```
-
-Simple example 2:
-
-```JS
-//Step 1: Server Action with validation and DB logic
-
-// app/actions.js (or inside a server component file)
-// app/actions.js
-'use server';
-
-const fakeDB = []; // Mock database
-
-export async function createPost({ title, content }) {
-  // Simple validation
-  if (!title || title.length < 5) {
-    throw new Error('Title must be at least 5 characters.');
-  }
-  if (!content || content.length < 20) {
-    throw new Error('Content must be at least 20 characters.');
-  }
-
-  // Simulate saving to DB
-  const newPost = {
-    id: Date.now(),
-    title,
-    content,
-    createdAt: new Date().toISOString(),
-  };
-  fakeDB.push(newPost);
-
-  return newPost;
-
-}
-```
-
-```JS
-//Step 2: React Client Component to use the Server Action
-
-'use client';
-
-import { useState } from 'react';
-import { createPost } from '../actions';
-
-export default function BlogForm() {
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError('');
-    setSuccess(null);
-    setLoading(true);
-
-    const formData = new FormData(e.target);
-    const title = formData.get('title');
-    const content = formData.get('content');
-
-    try {
-      const post = await createPost({ title, content });
-      setSuccess(post);
-      e.target.reset();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <div>
-      <h2>Create a New Blog Post</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label><br />
-          <input name="title" type="text" />
-        </div>
-        <div>
-          <label>Content:</label><br />
-          <textarea name="content" rows="5" />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Saving...' : 'Create Post'}
-        </button>
-      </form>
-
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      {success && (
-        <div style={{ marginTop: '20px', color: 'green' }}>
-          <h3>Post created successfully!</h3>
-          <p><strong>{success.title}</strong></p>
-          <p>{success.content}</p>
-          <small>Created at: {success.createdAt}</small>
-        </div>
-      )}
-    </div>
-  );
-}
-
-//Explanation:
-The client calls createPost server action.
-Server validates the input and throws errors if invalid.
-If valid, server "saves" post to the fake database.
-Server returns the new post object.
-Client updates UI with success or error messages.
-All heavy logic happens on the server, making the client clean and secure.
-
-//Why this is better than API routes?
-{/* You write less boilerplate (no need for fetch or API endpoints).
-You get automatic server/client boundaries.
-You avoid manually handling request/response objects.
-Stronger type safety and better developer experience. */}
-```
-
-##### If you want Component to behave the same wasy from different pages
-
-```JS
-//components/NewPostForm.tsx
-import { blogPosts } from "@/shared/data/blogposts.data";
-import { redirect } from "next/navigation";
-
-async function createPost(data: FormData) {
-"use server";
-
- const { title, body } = Object.fromEntries(data);
-
-//make DB request, call an API, or perform any other server-side logic here
-  // we can use PRISMA or direct DB queries here- using SQL query, or call an external API
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-  //example of making a POST request to an API to create a new post
-  //   const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       title,
-  //       body,
-  //       userId: 1, //hardcoded userId, in real app we will get it from the session
-  //     }),
-  //   });
-
-  //   const post = await response.json(); //getting the newly created post from the response
-  ///////////////////////////////////////////////////////////////////////////////////////
-
-   blogPosts.push({
-    userId: 1,
-    id: blogPosts.length + 1,
-    title: title as string,
-    body: body as string,
-  });
-
-  const post = blogPosts[blogPosts.length - 1]; //getting the newly created post from the response
-
-  redirect(`/blog/${post.id}`); //redirecting user to the posts page after creating a new post
-}
-
-//NewPostForm component dont receive any props from parent component -> NewPostForm(){...}
-export default function NewPostForm(){
-  return (
-    // form submission will be handled by the createPost function - which is a Server Action
-    <form
-      action={createPost} //handling form submission using the createPost - it is server action
-      className="form"
-      style={{
-        border: "1px solid white",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        gap: "10px",
-        padding: "10px",
-        borderRadius: "5px",
-        maxWidth: "400px",
-        margin: "0 auto",
-      }}
-    >
-      <input type="text" placeholder="title" required name="title" />
-      <textarea placeholder="body" required name="body" />
-      <div>
-        <input type="submit" value="Add post" />
-      </div>
-    </form>
-  );
-}
-
-
-
-//blog/page.tsc
-export default function page({}: Props) {
-  return (
-      <div>
-        <a>Add new post</a>
-       <NewPostForm /> //not passing any props
-       .....
-      </div>)}
-```
-
-# Handlers API
-
-To create API routes inside /app directory, we create directory /api inside app directory. /api folder can have other directories inside where you create route.ts file.
-
-If route.ts file is located /app/api/posts , then URL request will be /api/posts
-
-route.ts file MUST export an object with function and with one of methods: GET, POST, DELETE, PUT, PATCH, etc.
-
-Next.js is one of the best front-end frameworks, it is better practice to don't add back-end to Next.js. It is not good practice to mix back-end database, PRISMA etc. with front-end in Next.js.
-If you will mix everithing in Next.js - Once your application will grow/expand, you will have more problems, and trash bin with all different files in one place.
-
-But Next.js has ability to work with back-end.
-
-- allow to control and adjust server side.
-- You create any database and you can work with that Database from Next.Js Framework. You don't need to install express.js, node.js, or other additional frameworks, etc.
-- Next.js applicationYou allow to connect to your Database and get needed values from that database. We use --> app/api folder and route.ts file
-
-```JS
-YOU MUST create folder api inside app folder and file name MUST be - route.ts
-
-IF we have folders location -> app/api/data - the URL to get data will be --> /api/data + request method(GET,POST, PUT, PATCH, DELETE, etc.)
-
-IF we have folders location -> app/api - the URL to get data will be --> /api + request method(GET,POST, PUT, PATCH, DELETE, etc.)
-```
-
-- api folder must be inside app folder. api folder outside of app folder will not be read at all.
-- The logic is the same as folder app, where you can add additional folders which will effect on final URL address of our api, and instead of page.tsx we use route.ts
-- in route.ts you just use URL address with HTTP method and returning the response
-- route.ts and page.tsx Must be in different folders!!! route.ts MUST be in api folder!
-
-```JS
-//URL to our local data, if your application is running on port 3001
-http://localhost:3001/api/data
-
-//this is endpoint that we can use to get data from Next.js
-
-```
-
-If we need to DELETE some object using API Routes, there is 2 options:
-
-```JS
-//option 1
-//check app/api/data/route.ts file
-
-export async function DELETE(request: Request) {
-//   const { searchParams } = new URL(request.url); // Get the search parameters from the request URL
-
-//   //https://localhost:3000/api/posts?q=Manchester
-//   const query = searchParams.get("q"); // Get the 'q' parameter from the URL
-
-//the same as code above
-  const url = new URL(request.url);
-  const id = url.searchParams.get("id");   // Get the 'id' parameter from the URL
-
-if (!id) {
-    return new Response("ID is required", { status: 400 });
-  }
-
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
-
-  if (!response.ok) {
-    return new Response("Failed to delete data", { status: response.status });
-  }
-
-  return new Response("Data deleted successfully");
-}
-```
-
-```JS
-//option 2, create folder [id] and create route.ts file
-//check app/api/posts/[id]/route.ts file
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  //get id from params to delete specific post
-
-  const id = params.id;
-
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
-
-  if (response.ok) {
-    return new Response(id, { status: 204 }); // returnn 204 status code for successful deletion with id of deleted post
-  } else {
-    return new Response("Failed to delete the post", { status: 500 });
-  }
-}
-```
-
-- Can use Next.js helpers
-
-```JS
-//If we need to delete the post by its ID and we don't need to return anything but we need to redirect user to another page
-import { NextResponse } from 'next/server'
-import { headers, cookies } from 'next/headers'  //Next JS helpers, can check cookies and headers not mandatory
-import { redirect } from 'next/headers'  //Next JS helpers
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  //get id from params to delete specific post
-
-  const id = params.id;
-
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
-
-  if (response.ok) {
-    redirect('/home')  //redirect to home page, when post is deleted
-  } else {
-    return new Response("Failed to delete the post", { status: 500 });
-  }
-}
-```
-
-# API secret keys
-
-- check app/api/movies/route.ts file
-- this file needs API KEY, we can keep secret variables in env.local file in the root of our project
-- or we can keep secret variables in .env file, which must present in the root of our project.
-- then use as usual - process.env.variableName, to get the value
-- then to get movies we need to use URL - https://localhost:3000/api/movies
-
-# API requests
-
-```JS
-// GET query params
-
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-
-  const query = searchParams.get("q");
-
-  // some logic
-
-  return NextResponse.json(currentPosts);
-}
-
-/////////////////////////////////////////
-
-// GET body request
-
-export async function POST(req: Request) {
-  const body = await req.json();
-
-  console.log(body);
-
-  return NextResponse.json({ message: "done" });
-}
-
-//////////////////////////////////////////
-
-// GET URL params
-
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = params?.id;
-
-  // some logic for delete post by id
-
-  return NextResponse.json({ id });
-}
-
-//////////////////////////////////////////////
-
-// Build-in function
-import { headers, cookies } from "next/headers";
-
-export async function GET(req: Request) {
-  const headersList = headers();
-  const cookiesList = cookies();
-
-  const type = headersList.get("Content-Type");
-  const Cookie_1 = cookiesList.get("Cookie_1")?.value;
-
-  return NextResponse.json({});
-}
-
-//////////////////////////////////////////////
-
-import { redirect } from "next/navigation";
-
-export async function GET(request: Request) {
-  redirect("https://nextjs.org/");
-}
 ```
 
 # Environment Variables

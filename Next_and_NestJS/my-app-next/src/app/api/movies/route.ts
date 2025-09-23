@@ -10,4 +10,5 @@ export async function GET(request: Request) {
   ).then((res) => res.json());
 
   return new Response(JSON.stringify(movies));
+  //return NextResponse.json(movies); //you can also use this
 }
