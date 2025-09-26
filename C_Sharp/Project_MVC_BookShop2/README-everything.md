@@ -42,6 +42,101 @@ public static void CollegeTime(){
 }
 ```
 
+[ --> Playground <-- ](https://dotnetfiddle.net/)
+
+```C#
+//////////////////////////////////// insert to Playground to work
+
+using System.Reflection.Emit;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System;       //using the System library in your project.Which gives you some useful classes like Console or functions/methods like WriteLine-> Console.WriteLine("Hello World!");
+using System.Collections.Generic;  //allow users to create strongly typed collections that provide better type safety and performance than non-generic strongly typed collections.
+//using System.Linq;    //querying any type of data source
+using System.Threading.Tasks;              //creating new threads for computation, aslo when use async-await operations, and to use Task
+using System.IO;  // to use Path.Combine function
+using System.Diagnostics;
+```
+
+```C#
+class myItem{
+    public string name {get; set;}
+    public int age {get; set;}
+}
+
+var ok = new myItem {name ="Tom", age = 22};
+
+int num = 7;
+
+string str = "Hello World";
+var modifiedStr = str.Substring(0,5);
+
+var you = (new {name="Adam", age=22});
+
+var myList = new List<int>(){1,2,3,4};
+myList.Add(5);
+
+foreach(var item in myList){
+    Console.WriteLine(item);
+}
+
+ Convert.ToInt32(myStr);
+
+Console.WriteLine(modifiedStr);
+
+
+//Console.WriteLine("Hello World");
+
+var items = new List<string>(){"one", "two", "three"};
+
+
+foreach(var item in items){
+ Console.WriteLine(item);
+}
+
+
+for (int i=0; i< items.Count; i++){
+ Console.WriteLine(items[i]);
+};
+
+
+
+public class Item {
+    public int Age {get; set;}
+    public string Name {get; set;}
+}
+
+
+
+var Tony = new Item(){Age=12, Name="Tony"};
+
+var Ben = new Item(){Age=15, Name="Ben"};
+
+var list = new List<Item>(){
+Tony, Ben
+};
+
+
+//Console.WriteLine(Tony.Name);
+
+foreach(var item in list){
+ Console.WriteLine(item.Name);
+}
+
+public class Item2:Item{
+public string Address {get; set;}
+}
+
+var me = new Item2{
+Age=22, Name ="Ant", Address = "PIZDA"
+};
+
+Console.WriteLine(me.Address);
+
+
+int i = 2 + 2;
+Console.WriteLine($"sum is {i}");
+```
+
 ```C#
 static void Main(){
 
