@@ -124,6 +124,7 @@ notSure = "hello";
 # Enum Type (mix of object and array)
 
 - enum types are used often
+  -enum is always public by default. Enums are always accessible. There is no public, private, or protected modifier for enum. Enum inside a class Not allowed at all.
 - enum is typically used when you have a fixed set of related values, like directions, statuses, roles, etc
 - Fixed set of named values
 - No inheritance from enum
@@ -193,6 +194,17 @@ enum links {
 
 links.youtube  //http://youtube.com/
 
+//////////////////
+//To use an enum in other files, you must export it
+export enum Color {
+  Red,
+  Green,
+  Blue
+}
+
+//in other file:
+//import { Color } from './Color';
+//const c: Color = Color.Green;
 ```
 
 # Never Type
