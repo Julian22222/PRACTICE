@@ -1,3 +1,23 @@
+# TypeScript can't be run directly from terminal
+
+VS Code automatically use JS. Therefore we need:
+
+1. tsx library --> npm install tsx (this will install tsx library locally in our project). but the terminal won’t find tsx directly. Therefore to run the typescript file if we installed tsx localy - we use:
+
+```JS
+npx tsx mytypescript.ts
+```
+
+2. If you want to run -> tsx filename.ts , without npx. Install tsx globally :
+
+```JS
+npm install -g tsx
+
+tsx --version
+
+tsx filename.ts
+```
+
 # Common Hotkeys to Create React Component Template
 
 ```JS
