@@ -1,4 +1,5 @@
 // const mysql = require("mysql");
+// If work with SQLite --> require("sqlite3")
 const mysql = require("mysql2/promise"); // Use mysql2/promise for async/await support
 
 require("dotenv").config();

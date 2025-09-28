@@ -1,17 +1,6 @@
 const db = require("./db");
 require("dotenv").config();
 
-// const mySQL = require("mysql");
-
-// const connection = mySQL.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-
-//   connectTimeout: 1000,
-// });
-
 const util = require("util"); //node utilities for mySQL, give access to different functions
 
 //mySQL doesn't support async await, support callbacks only. Theredore we need -  util
