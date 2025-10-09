@@ -42,7 +42,17 @@ public static void CollegeTime(){
 }
 ```
 
+/
+//
+///
+///
+
 [ --> Playground <-- ](https://dotnetfiddle.net/)
+
+///
+///
+//
+/
 
 ```C#
 //////////////////////////////////// insert to Playground to work
@@ -58,19 +68,25 @@ using System.Diagnostics;
 ```
 
 ```C#
-class myItem{
+class MyItem{
     public string name {get; set;}
     public int age {get; set;}
 }
 
-var ok = new myItem {name ="Tom", age = 22};
+var ok = new MyItem {name ="Tom", age = 22};
 
 int num = 7;
 
 string str = "Hello World";
 var modifiedStr = str.Substring(0,5);
+Console.WriteLine(modifiedStr);
 
 var you = (new {name="Adam", age=22});
+
+
+string myStr = "123";
+var pop = Convert.ToInt32(myStr);
+
 
 var myList = new List<int>(){1,2,3,4};
 myList.Add(5);
@@ -78,10 +94,6 @@ myList.Add(5);
 foreach(var item in myList){
     Console.WriteLine(item);
 }
-
- Convert.ToInt32(myStr);
-
-Console.WriteLine(modifiedStr);
 
 
 //Console.WriteLine("Hello World");
@@ -122,7 +134,7 @@ foreach(var item in list){
  Console.WriteLine(item.Name);
 }
 
-public class Item2:Item{
+public class Item2:Item{  //class is extends another class, Item2 inherits all methods and properties from Item class
 public string Address {get; set;}
 }
 
@@ -140,85 +152,15 @@ Console.WriteLine($"sum is {i}");
 ```C#
 static void Main(){
 
-int Num = 7;
+int num = 7;
 
     Console.WriteLine("Hello");
-    Console.WriteLine($"My number is {Num}");
+    Console.WriteLine($"My number is {num}");
 }
 ```
 
 ```C#
-class myItem{
-    public string name {get; set;}
-    public int age {get; set;}
-}
 
-var ok = new myItem {name ="Tom", age = 22};
-
-int num = 7;
-
-string str = "Hello World";
-
-var you = (new {name="Adam", age=22});
-
-string myStr = "123";
-
-var pop = Convert.ToInt32(myStr);
-
-var modifiedStr = str.Substring(0,5);
-
-var myList = new List<int>(){1,2,3,4};
-myList.Add(5);
-
-foreach(var item in myList){
- Console.WriteLine(item);
-}
-
-Convert.ToInt32(myStr);
-
-Console.WriteLine(modifiedStr);
-
-//Console.WriteLine("Hello World");
-
-var items = new List<string>(){"one", "two", "three"};
-
-foreach(var item in items){
- Console.WriteLine(item);
-}
-
-for (int i=0; i< items.Count; i++){
- Console.WriteLine(items[i]);
-};
-
-
-public class Item {
-    public int Age {get; set;}
-    public string Name {get; set;}
-}
-
-var Tony = new Item(){Age=12, Name="Tony"};
-var Ben = new Item(){Age=15, Name="Ben"};
-
-var list = new List<Item>(){
-Tony, Ben
-};
-
-//Console.WriteLine(Tony.Name);
-
-//foreach(var item in list){
-//  Console.WriteLine(item.Name);
-//}
-
-public class Item2:Item{  //class is extends another class
-public string Address {get; set;}
-}
-
-
-var me = new Item2{
-Age=22, Name ="Ant", Address = "PIZDA"
-};
-
-/////////////////////////////////////////////
 
 abstract class Temple{
     public string Name { get; set; }
@@ -295,6 +237,45 @@ public int Identification {get; set;}
 
 //from other file we can interact with User field-->
 User.Identifications = 10; //interact with this field through the class without creating am object from this User class
+```
+
+```C#
+////functions in C#
+
+//"Action" - is a delegate type for methods that return void and take no parameters.
+Action myfunc = () => {
+    Console.WriteLine("Hello!!!");
+};
+
+myfunc();  // Call the function
+
+///////////////////////////////
+// When you use Action in C#, you don’t need to explicitly specify the return type in the lambda because:
+
+// Action is a predefined delegate that represents a method with no return value (void) and no parameters.
+// So the compiler already knows the method returns nothing (void), and the lambda you write must match that.
+// Func<T> = delegate for methods returning a value of type T.
+///////////////////////////////////
+
+///As method in the class
+myfunction(){
+ Console.WriteLine("Hello!!!");
+}
+
+myfunction();  // Call the method
+
+///////////////////////////////////
+
+//function in C#
+Func<string> myfunc = () => {  //<string> <-- return a string
+    return "this is a string";
+};
+
+// Calling the function
+string result = myfunc();
+Console.WriteLine(result);
+
+// Func<string> means: a delegate that returns a string and takes no parameters.
 ```
 
 # Arrays
