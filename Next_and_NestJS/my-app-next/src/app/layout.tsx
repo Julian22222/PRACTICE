@@ -48,6 +48,7 @@ export default function RootLayout({
         // className={`${geistSans.className} ${geistMono.variable} antialiased`}
         //className={geistSans.className}
       >
+        {/* you need to wrap it to Providers if you add some components as Header, contexts, theme,etc.  */}
         <Providers>
           <Header />
           {children}{" "}

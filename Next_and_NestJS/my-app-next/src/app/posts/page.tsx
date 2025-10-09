@@ -12,6 +12,7 @@ async function fechData() {
 
   if (!result || result.length === 0) {
     throw new Error("No posts found"); // Handle error if no posts are found, will send this message to Error page- error.tsx
+    //throw new Error("Failed to fetch posts"); // Handle error if fetch failss
   }
 
   return result;
@@ -22,7 +23,7 @@ interface Props {}
 export default async function page({}: Props) {
   const data = await fechData(); // Fetching data from the API
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>

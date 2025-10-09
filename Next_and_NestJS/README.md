@@ -90,10 +90,39 @@ scripts:
 
 # Deployment
 
-can be hosted on vercel.com
+Next.JS has it own hosting website --> can be hosted on vercel.com
 
+[ --> youTube <--](https://www.youtube.com/watch?v=Cez-ecgXvNU&list=PLiZoB8JBsdzlgeYHZDJ_orG0vy8JiEhKr&index=16)
+
+- Versel is a Next.js hosting
 - Vercel does offer a free tier (called the Hobby plan) where you can host a Next.js application without paying.
 - Free tier gives some limitations in storage and functions
+
+Check what you need to do for hosting on different providers.-->
+
+[ --> Deploying Next.JS <-- ](https://nextjs.org/docs/app/getting-started/deploying)
+
+Next.JS can be hosted on GitHub pages (static export), as a Docker container and as a Node.js server (Virtual hosting with your own domen)
+
+- To host NEXT.JS to GitHub pages you need make some changes in the next.config.ts file and there is some limitations, doesn't support some features. use link above to check that.
+
+```JS
+//next.config.ts file
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  output: 'export',
+  basePath: process.env.PAGES_BASE_PATH, //path to correct project folder in GitHub, path after -> https://github.com/Julian22222/everythin in here put in basePath
+};
+
+export default nextConfig;
+```
+
+```JS
+also add to all dynamic componens (such as individual item page)--> export async function generateStaticParams(){
+  //need to get an array of all ellements in your Database
+}
+```
 
 # Structure and Components of the Next JS app (Main locations of different files)
 
@@ -313,6 +342,62 @@ export function GoogleButton({}: Props) {
 }
 ```
 
+# Next.JS 15 - Form (with big letter)
+
+[ --> Forms <--](https://nextjs.org/docs/app/api-reference/components/form)
+
+```JS
+//See --> app/posts3/page.tsx file
+
+import Form from 'next/form'
+
+export default function Page() {
+  return (
+    //action="..." <--can be passed Server Actions or string.
+    //If we put a string - it is URL route, if we1 put the same page URL there -it will stay on the same page after Form submission and we will get "GET" parametrs, or if it is different URL route - it will redirect user to another page after Form submission and again will get "GET" parametrs.
+    <Form action="/search">
+      {/* On submission, the input value will be appended to
+          the URL, e.g. /search?query=abc */}
+      <input name="query" />
+      {/* //add "GET" parametrs using input tags by using name="parametrs", if we have name="query" -->  /search?query=abc , abc - it is a value from user Form input and it will be asigned to query key*/}
+      <button type="submit">Submit</button>
+    </Form>
+  )
+}
+
+////////////////////////////////////////
+//How to use "GET" parametrs
+
+import { getSearchResults } from '@/lib/search'
+
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>  //searchParams - has Promise1 type, it can be - string, string[], undefined
+}) {
+  const results = await getSearchResults((await searchParams).query)  //query <-- it is our parametr name, from --> <input name="query" />, if we use different name,for example for example -title. It will be --> await getSearchResults((await searchParams).title)
+
+  return <div>...</div>
+}
+```
+
+```JS
+//Form also propose useFormStatus, special hook to work with submission form status
+
+//See --> components/SearchButton
+
+"use client";
+import { useFormStatus } from "react-dom";
+
+export default function SearchButton() {
+  const status = useFormStatus(); // it is spe1cial hook to get the form submission status, it has pending value, if pending = true when submitting the form or false when not submitting
+
+  return (
+    <button type="submit">{status.pending ? "Searching..." : "Search"}</button> // Change button text based on form submission status. If form is being submitted (pending = true), show "Searching...", otherwise show "Search"
+  );
+}
+```
+
 # Component- level Client and Server side Rendering
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
@@ -346,7 +431,7 @@ export function SignInForm({}: Props) {
 }
 ```
 
-- To avoid errors with async await and -> use client and useSatte, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can insert client side components into server side components
+- To avoid errors with async await and -> use client and useState, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can insert client side components into server side components
 - Metadata block can't be used in 'use client' file, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
 
 ```JS
@@ -444,6 +529,7 @@ Server (by default)
 Client
 
 - can use hooks(useState, useEffect,etc.), onClick, etc
+- error.tsx file must have "use client"
 - if client side component inserted to another client side component (then we don't need to write "use client" on the top of the file that was inserted) --> see posts2 page.tsx file and PostSearch component, both are client side components, but you don't need to write "use client" in the PostSearch component
 
 ###### You can use Client Component in a Server Component
@@ -571,7 +657,7 @@ export const metadata: Metadata = {
 }
 
 const fetchData = async()=>{  //async request to the server
-  const response = await fetch('https://api.example.com/products') //will keep the post in cache, by default is --> cache: 'force-cache'
+  const response = await fetch('https://api.example.com/products') //will keep the post in cache, by default is --> cache: 'no-store'
   const data = await response.json()
   return data
 }
@@ -624,8 +710,15 @@ export default async function Page(){
 }
 ```
 
+##### ISR and revalidate
+
+- It is has Time-based trigger
+- Granularity -> Per-page or per-fetch request
+- Use case this option: when Data changes on a predictable schedule
+
 ```JS
 //ISR option
+// revalidate option is Good when the data changes predictably (e.g., every few minutes). Based on time
 
 import type {Metadata} from 'next'
 import {Products} from './Products'
@@ -638,7 +731,7 @@ const fetchData = async()=>{  //async request to the server
   const response = await fetch('https://api.example.com/products',{
     cache: 'force-cache',
     next:{
-      revalidate: 200 //will update data every 0,2sec( if you change item name, price, etc)
+      revalidate: 60 //will update data every 60sec( if you change item name, price, etc)
     }
 
   })
@@ -661,7 +754,7 @@ export default async function Page(){
 ```JS
 //can use this code in one of this levels  --> layout.tsx | page.tsx | route.ts
 //
-export const revalidate = 200;
+export const revalidate = 60;
 
 export default async function Blog(){
   const response = await fetch('https://api.example.com/products');
@@ -669,11 +762,120 @@ export default async function Blog(){
 
 //it is the same as
 const response = await fetch('https://api.example.com/products',{
-    cache: 'force-cache',
+    cache: 'force-cache', //this cache: force-cache' is defined by default, not needed to write this line.
     next:{
-      revalidate: 200 //will update data every 0,2sec( if you change item name, price, etc)
+      revalidate: 60 //will update data every 60 sec( if you change item name, price, etc)
     }
+})
+
+//////////another option to write ISR and revalidate
+
+// Revalidate every 60 seconds
+export default async function Page() {
+  const res = await fetch('https://api.example.com/posts', {
+    //No need cache: 'force-cache', because it is defined by default
+    next: { revalidate: 60 } // 60 seconds
+  });
+  const data = await res.json();
+  return <div>{data.title}</div>;
+}
 ```
+
+##### ISR and tags
+
+- tags are cache keys (labels) that you can attach to a fetch request or page.
+- They let you manually invalidate cached data on demand (not just based on time).
+- tags give you fine-grained control over when and what to invalidate data. (via revalidateTag)
+- Tags Granularity -> Groups of requests/pages by a shared tag can be updated manually, and Developer-controlled (triggered by code).
+- Ideal for:
+  - Admin dashboards (e.g., after publishing a new blog post, you call revalidateTag('posts')).
+  - E-commerce sites (invalidate product data after a price update).
+
+How it works:
+
+1. Tag your fetch calls or pages:
+
+```JS
+const res = await fetch('https://api.example.com/posts', {
+  next: { tags: ['posts'] }
+});
+
+```
+
+2. Later, invalidate the tag:
+
+```JS
+import { revalidateTag } from 'next/cache'
+
+export async function POST() {
+  await revalidateTag('posts');
+  return Response.json({ revalidated: true });
+}
+//This clears the cache for all data/pages that used the tag posts
+```
+
+```JS
+//Another example with tags
+
+//1. Tag the Product Fetch
+//In app/products/[id]/page.tsx:
+import React from 'react';
+
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  const res = await fetch(`https://api.example.com/products/${params.id}`, {
+    // Tag cache with the product ID
+    next: { tags: [`product-${params.id}`] }
+  });
+
+  const product = await res.json();
+
+  return (
+    <div>
+      <h1>{product.name}</h1>
+      <p>${product.price}</p>
+      <p>{product.stock} in stock</p>
+    </div>
+  );
+}
+///Each product page is cached with a unique tag like product-123
+
+
+
+//2. Revalidate a Tag When Data Changes
+//In app/api/admin/update-product/route.ts:
+
+import { revalidateTag } from 'next/cache';
+import { NextResponse } from 'next/server';
+
+export async function POST(req: Request) {
+  const body = await req.json();
+  const { id, price, stock } = body;
+
+  // ✅ Update the product in your database
+  await updateProductInDB(id, { price, stock });
+
+  // ✅ Immediately invalidate the cache for this product
+  await revalidateTag(`product-${id}`);
+
+  return NextResponse.json({ revalidated: true });
+}
+
+//As soon as an admin updates the product in the dashboard:
+//revalidateTag('product-123') clears the cache for that product.
+//Next request to /products/123 fetches fresh data from the API.
+
+
+//3. Optional: Add a Fallback Timer
+//You can also combine tags with a revalidate fallback:
+next: { revalidate: 3600, tags: [`product-${params.id}`] }
+
+//Product data will refresh:
+//Immediately when an admin calls revalidateTag.
+//Or automatically every hour if no manual update occurs.
+
+```
+
+You can combine 2 methods.
 
 # Link component
 
@@ -775,17 +977,33 @@ import {Metal} from "next/font/google";
 
 # Loading page
 
-- we can create preloading page, if data is loading we can show Loading ... message or any other GIF files, spinner
+- we can create preloading page, if data is loading we can show Loading ... message or any other GIF files, spinners
 - create loading.tsx file, has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
 - must have name -> loading.tsx
-- check app//posts/loading.tsx file
+- check app/posts/loading.tsx file
 
 # Error page
 
 - if there an error occured we can through an error message and show the specific page
 - error page MUST have 'use client'
 - create error.tsx file, has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
-- check app//posts/error.tsx file //will work only on posts id pages
+- check app/posts/error.tsx file //will work only on posts id pages
+- error message is comming from app/posts/page.tsx -->
+
+```JS
+async function fechData() {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10"
+  );
+  const result = await response.json();
+
+  if (!result || result.length === 0) {
+    throw new Error("No posts found"); // Handle error if no posts are found, will send this message to Error page- error.tsx
+  }
+
+  return result;
+}
+```
 
 ```JS
 //error.tsx file
@@ -798,7 +1016,7 @@ export default function ErrorWrapper({ error }: { error: Error }) {
     <div>
       <h2 className="post-header">Error Page</h2>
       <p>Something went wrong. Please try again later.</p>
-      <p>Error details: {error.message}</p>
+      <p>Error details: {error.message}</p>  //will show - Error details: No posts found
     </div>
   );
 }

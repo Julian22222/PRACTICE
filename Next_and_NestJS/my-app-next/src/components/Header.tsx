@@ -9,6 +9,7 @@ export function Header() {
     { href: "/products", label: "Products" },
     { href: "/posts", label: "Posts" },
     { href: "/posts2", label: "Posts2" },
+    { href: "/posts3", label: "Posts3" },
     { href: "/myhome", label: "Page" },
     { href: "/blog", label: "Blog" },
   ];
