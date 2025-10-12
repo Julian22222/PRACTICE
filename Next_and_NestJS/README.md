@@ -205,7 +205,7 @@ we use - useState, useEffect
 1. useRouter(); <--return an object. Is used to redirect user to some page after some action(for example LogIn)
 
 ```JS
-//components/SigninForm.tsx
+//see  --> /components/SigninForm.tsx
 
 //import useRouter from next/navidation
 
@@ -261,6 +261,8 @@ replace("/products")  //will redirect user to this URL, with option to return ba
 2. usePathname(); <-- return a variable, get the current URL path
 
 ```JS
+//see --> components/Navigation
+
 "use client"; //if we use usePathname, it should be in -> use client
 
 import Link from "next/link";
@@ -342,7 +344,7 @@ export function GoogleButton({}: Props) {
 }
 ```
 
-# Next.JS 15 - Form (with big letter)
+# Next.JS Form - appeared in Next.JS 15, we can use Form tag (with big letter)
 
 [ --> Forms <--](https://nextjs.org/docs/app/api-reference/components/form)
 
@@ -354,7 +356,7 @@ import Form from 'next/form'
 export default function Page() {
   return (
     //action="..." <--can be passed Server Actions or string.
-    //If we put a string - it is URL route, if we1 put the same page URL there -it will stay on the same page after Form submission and we will get "GET" parametrs, or if it is different URL route - it will redirect user to another page after Form submission and again will get "GET" parametrs.
+    //If we put a string - it is URL route, if we put the same page URL there -it will stay on the same page after Form submission and we will get "GET" parametrs, or if it is different URL route - it will redirect user to another page after Form submission and again will get "GET" parametrs.
     <Form action="/search">
       {/* On submission, the input value will be appended to
           the URL, e.g. /search?query=abc */}
@@ -398,7 +400,7 @@ export default function SearchButton() {
 }
 ```
 
-# Component- level Client and Server side Rendering
+# Component - on level Client and Server side Rendering
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
 
@@ -602,14 +604,21 @@ If you use REST API use fetch("http://.....")
 
 # Rendering Strategies (different options)
 
-To check and see Rendering option for each our Route in your application, we need to type -->
+To check and understand what Rendering option has each our Route in your application, we need to type in terminal-->
 
 ```JS
 npm run build
 
+//after building we will number of Routes that were generated and next to them - its rendering option. See picture below
+
+//we have: (signs meaning in the bottom of the picture)
 //static rendering
 //server rendering
+
+//but can have other rendering options if any of our Routes will have other rendering option in our application
 ```
+
+[pic03](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next3.jpg)
 
 - CSR - Client side rendering
   Tipical for SPA applications, Rendering is occuring on Client side, bad for SEO optimization
@@ -632,16 +641,90 @@ npm run build
 [--> Revalidating Data notes <--](https://nextjs.org/docs/14/app/building-your-application/data-fetching/fetching-caching-and-revalidating)
 
 ```JS
-//SSG example
+//For example if we have this Route--> posts/[id]/page.tsx
+//we can make SSG (Static Site generation) from SSR (Server side rendering), if articles or post,etc. not changing, don't want to update
 
 export async function generateStaticParams(){
   const posts: any[] = await getAllPosts();  //getting posts from the server by fetch in different file
 
   return posts.map(post => ({
-    slug: post.id.toString();  //slug is unchangable, toString() - must be a string as in URL, id must much with dynamic folder -> [id]
+    slug: post.id.toString();  //slug <-- is unchangable-always use word-slug, if -> post.id is a number type ->> toString() - must be a string as in URL, id must much with dynamic folder -> [id]
   }))
 }
+```
 
+```JS
+//full example
+
+import { getAllPosts, getPostById } from "@/services/getPosts";  //get function from other file
+import { Metadata } from "next";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export async function generateStaticParams() {
+  const posts: any[] = await getAllPosts();
+
+  return posts.map((post) => ({
+    slug: post.id.toString(),
+  }));
+}
+
+export async function generateMetadata({
+  params: { id },
+}: Props): Promise<Metadata> {
+  const post = await getPostById(id);
+
+  return {
+    title: post.title,
+  };
+}
+
+async function removePost(id: string) {
+  "use server";
+  await fetch(`http://localhost:3300/posts/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  revalidatePath("/blog");
+  redirect("/blog");
+}
+
+export default async function Post({ params: { id } }: Props) {
+  const post = await getPostById(id);
+
+  return (
+    <>
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
+
+      <form action={removePost.bind(null, id)}>
+        <input type="submit" value="delete post" />
+      </form>
+
+      <Link href={`/blog/${id}/edit`}>Edit</Link>
+    </>
+  );
+}
+
+
+//from /services/getPosts file
+// export const getAllPosts = async () => {
+//   const response = await fetch("http://localhost:3300/posts");
+
+//   if (!response.ok) throw new Error("Unable to fetch posts.");
+
+//   return response.json();
+// };
 ```
 
 # Data loading using different options (SSR, ISR, SSG)
@@ -877,6 +960,16 @@ next: { revalidate: 3600, tags: [`product-${params.id}`] }
 
 You can combine 2 methods.
 
+# use revalidatePath() method to update data from database, if you posted, edited or delited something
+
+```JS
+//see --> blog/[id]/page.tsx
+
+revalidatePath("/blog"); // Revalidating the /posts path to reflect the deleted post
+redirect("/blog"); // Redirecting to the /posts page after deletion
+
+```
+
 # Link component
 
 ```JS
@@ -887,8 +980,8 @@ You can combine 2 methods.
 
 # Layout
 
-- allow to change visual part, seo, titles, descriptions
-- at least we need to have one layout.tsx file in the app folder/ root of our application, also we can have many layouts. Next automatically don't add HTML and body tags, so we need to add them manually in the RootLayout component, at least we need to have 1 RootLayout component in the app directory.
+- allow to change visual part, SEO, titles, descriptions
+- at least we need to have one layout.tsx file in the app folder/ root of our application, also we can have many layouts. Next.JS don't automatically add HTML and body tags, so we need to add them manually in the RootLayout component, at least we need to have 1 RootLayout component in the app directory.
 - We can have many layouts in our app
 - if we have root layout all pages will have the same template
 - layout.tsx file has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
@@ -975,6 +1068,35 @@ import {Metal} from "next/font/google";
 
 - Create file not-found.tsx in the app folder Root, and style that file
 
+```JS
+//See --> products/page.tsx
+
+const fetchData = async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await response.json();
+  return data;
+};
+
+//this example is using SSR, but you can use ISR or SSG as well
+//this approach is not optimized for performance, as it fetches data on every request
+//one request === one response,
+export default async function ProductsPage() {
+  const data = await fetchData(); // Fetching data from the API
+
+  //server-side comonent advantage, can check here, if data is empty or not
+  if (!data || data.length === 0) redirect("/404"); // Redirect to not-found page if no data is found
+
+  return (
+    <div>
+      <h1>Products Page</h1>
+      <p>This is the products page.</p>
+      {/* <Products data={data}/>   //<--passing data to our component*/}
+      <Products />
+    </div>
+  );
+}
+```
+
 # Loading page
 
 - we can create preloading page, if data is loading we can show Loading ... message or any other GIF files, spinners
@@ -1025,6 +1147,8 @@ export default function ErrorWrapper({ error }: { error: Error }) {
 - also, we need through an error in the posts/[id]/page.tsx (check line 26-28 in app/posts/[id]/page.tsx)
 
 # How to insert Images to Next.JS using unique image component
+
+use Big letter --> <Image .../>
 
 ```JS
 //src="/nameOfTheFile" <-- if file is located in public folder
