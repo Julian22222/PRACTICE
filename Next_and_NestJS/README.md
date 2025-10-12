@@ -618,7 +618,7 @@ npm run build
 //but can have other rendering options if any of our Routes will have other rendering option in our application
 ```
 
-[pic03](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next3.jpg)
+![pic03](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next3.jpg)
 
 - CSR - Client side rendering
   Tipical for SPA applications, Rendering is occuring on Client side, bad for SEO optimization
