@@ -400,6 +400,8 @@ export default function SearchButton() {
 }
 ```
 
+Also, Form has --> Suspense tag and use function
+
 # Component - on level Client and Server side Rendering
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
@@ -970,6 +972,185 @@ redirect("/blog"); // Redirecting to the /posts page after deletion
 
 ```
 
+# Midleware
+
+Expanded configuration and optimization
+
+- create middleware.ts is src folder
+- middleware it is common function that will run on certain condition, conndition is in config block, in the file.
+- Most of the time this is used in Authorization(adjust Roles, close page for certain Roles)
+- middleware allow to give access for some pages and forbid access for some pages
+
+```JS
+//middleware.ts file
+
+// file has some function that will run after specific triger
+
+import type {NextRequest} from 'next/server'
+import {NextResponse} from 'next/server'
+
+//this function will run
+export function middleware(request: NextRequest){
+
+const pathname = request.url  //get current URL, where the user is located at the moment
+
+
+    return NextResponse.redirect(now URL('/home', request.url))
+}
+
+export const config = {  //our condition is here to run middleware function, if you use this URL path then function will be invoked
+    matcher: '/about/:path*'  //when user on this path it will run function above
+    // match: ['/about/:path*', 'dashboard/:path*']
+}
+
+//middleware file most often is used for authorization, Page is accessible only for Admin, etc
+```
+
+# Environment Variables
+
+```JS
+Also, unlike client-side variables, these do not need the NEXT_PUBLIC_ prefix (since they are server-only).
+```
+
+1. Server-only variables
+
+- Stored in .env, .env.local, .env.development, etc.
+- Accessible only in server code: API routes, getServerSideProps, middleware, or any code that runs on the Node.js side.
+
+```JS
+//Example
+
+//.env file
+GOOGLE_CLIENT_ID=your-secret-id
+GOOGLE_CLIENT_SECRET=your-secret-secret
+
+
+//ts file
+// Safe: runs only on server
+const id = process.env.GOOGLE_CLIENT_ID;
+
+//These are never exposed to the browser unless you manually pass them down.
+```
+
+2.
+
+```JS
+process.env.NEXT_PUBLIC_BASE_URL
+
+NEXT_PUBLIC_ is a special prefix for environment variables in Next.js that makes those variables available in both the server and client-side code.
+
+Why use NEXT_PUBLIC_?
+
+By default, environment variables in Next.js are only available server-side.
+If you want to expose an environment variable to your browser (client-side) code, you need to prefix it with NEXT_PUBLIC_.
+```
+
+```JS
+   Client-side variables (with NEXT_PUBLIC_)
+```
+
+```JS
+- Must be prefixed with NEXT_PUBLIC_ in your .env file.
+- Next.js will inline them into your frontend bundle at build time.
+- Accessible in any client component or browser-side JS.
+```
+
+```JS
+//Example:
+//.env file
+# Only server-side
+DATABASE_PASSWORD=supersecret123
+
+# Available client and server
+NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+
+
+Usage in code:
+//ts file
+// server or client code
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+
+
+Important security note:
+Do NOT expose sensitive info (like passwords, API secrets, private keys) with NEXT_PUBLIC_.
+Anything prefixed with NEXT_PUBLIC_ is bundled into the client JavaScript and visible to anyone.
+
+
+In your case:
+//.env file
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+```
+
+```JS
+//Example
+
+//.env file
+NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+
+//ts file
+// Safe in client code (browser can see this)
+const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+//Use only for values you’re comfortable exposing publicly (like non-secret API URLs, feature flags, analytics keys, etc.).
+```
+
+###### Why this distinction matters?
+
+```JS
+Something like a Google OAuth client secret must stay server-only → keep it in GOOGLE_CLIENT_SECRET (no prefix).
+
+Something like a frontend base URL or public Stripe publishable key → needs to be visible to the browser, so you add NEXT_PUBLIC_.
+```
+
+###### Quick rule of thumb
+
+```JS
+Sensitive? (passwords, API secrets, private keys, database URLs) → plain .env, no NEXT_PUBLIC_*.
+
+Needed in browser? (public keys, feature toggles, app base URL) → use NEXT_PUBLIC_.
+```
+
+you can absolutely keep both server-only and client-side variables in the same .env file.
+
+```JS
+//How it works
+//Next.js automatically loads environment variables from .env, .env.local, etc.
+//Variables without NEXT_PUBLIC_ → available only on the server.
+//Variables with NEXT_PUBLIC_ → injected into both the server and the client bundle.
+
+//Example .env.local:
+# Server-only (never exposed to browser)
+DATABASE_URL=postgres://user:password@host:5432/db
+GOOGLE_CLIENT_SECRET=super-secret
+
+# Client-side (safe to expose)
+NEXT_PUBLIC_API_URL=https://api.example.com
+NEXT_PUBLIC_FEATURE_X=true
+
+//In code
+//Server side:
+//ts file
+console.log(process.env.DATABASE_URL); // works
+console.log(process.env.NEXT_PUBLIC_API_URL); // works too
+
+//Client side (React component):
+//tsx file
+
+export default function Home() {
+  console.log(process.env.NEXT_PUBLIC_API_URL); // works
+  console.log(process.env.DATABASE_URL); // ❌ undefined
+  return <div>API: {process.env.NEXT_PUBLIC_API_URL}</div>;
+}
+
+
+
+
+//Rule of thumb
+//Keep everything in one .env file if you want simplicity.
+//Use NEXT_PUBLIC_ prefix only for values you intend to leak to the browser.
+//Sensitive secrets should never have the prefix.
+```
+
 # Link component
 
 ```JS
@@ -1148,7 +1329,24 @@ export default function ErrorWrapper({ error }: { error: Error }) {
 
 # How to insert Images to Next.JS using unique image component
 
-use Big letter --> <Image .../>
+- use Big letter --> <Image .../>
+- Next.JS <image ../> by default has loading="lazy"
+
+```JS
+//In Next.js, when you use the built-in <Image /> component from next/image, images are lazy-loaded by default. This means they won't load until they're close to entering the viewport, which improves performance.
+
+So your code:
+
+<Image src="/globe.svg" alt="Next.js Logo" width={100} height={100} />
+
+//will automatically have lazy loading behavior without you needing to add loading="lazy" explicitly.
+
+//If you want to disable lazy loading (e.g., for above-the-fold images), you can add:
+
+<Image src="/globe.svg" alt="Next.js Logo" width={100} height={100} loading="eager" />
+
+//But by default, it’s lazy.
+```
 
 ```JS
 //src="/nameOfTheFile" <-- if file is located in public folder
@@ -1354,182 +1552,3 @@ export async function generateMetadata({
 /////////////////////////////////////////////////////////////////////////////////////
 
 To pass props in any component we can use Redux, Context, Zustand library and SWR
-
-# Midleware
-
-Expanded configuration and optimization
-
-- create middleware.ts is src folder
-- middleware it is common function that will run on certain condition, conndition is in config block, in the file.
-- Most of the time this is used in Authorization(adjust Roles, close page for certain Roles)
-- middleware allow to give access for some pages and forbid access for some pages
-
-```JS
-//middleware.ts file
-
-// file has some function that will run after specific triger
-
-import type {NextRequest} from 'next/server'
-import {NextResponse} from 'next/server'
-
-//this function will run
-export function middleware(request: NextRequest){
-
-const pathname = request.url  //get current URL, where the user is located at the moment
-
-
-    return NextResponse.redirect(now URL('/home', request.url))
-}
-
-export const config = {  //our condition is here to run middleware function, if you use this URL path then function will be invoked
-    matcher: '/about/:path*'  //when user on this path it will run function above
-    // match: ['/about/:path*', 'dashboard/:path*']
-}
-
-//middleware file most often is used for authorization, Page is accessible only for Admin, etc
-```
-
-# Environment Variables
-
-```JS
-Also, unlike client-side variables, these do not need the NEXT_PUBLIC_ prefix (since they are server-only).
-```
-
-1. Server-only variables
-
-- Stored in .env, .env.local, .env.development, etc.
-- Accessible only in server code: API routes, getServerSideProps, middleware, or any code that runs on the Node.js side.
-
-```JS
-//Example
-
-//.env file
-GOOGLE_CLIENT_ID=your-secret-id
-GOOGLE_CLIENT_SECRET=your-secret-secret
-
-
-//ts file
-// Safe: runs only on server
-const id = process.env.GOOGLE_CLIENT_ID;
-
-//These are never exposed to the browser unless you manually pass them down.
-```
-
-2.
-
-```JS
-process.env.NEXT_PUBLIC_BASE_URL
-
-NEXT_PUBLIC_ is a special prefix for environment variables in Next.js that makes those variables available in both the server and client-side code.
-
-Why use NEXT_PUBLIC_?
-
-By default, environment variables in Next.js are only available server-side.
-If you want to expose an environment variable to your browser (client-side) code, you need to prefix it with NEXT_PUBLIC_.
-```
-
-```JS
-   Client-side variables (with NEXT_PUBLIC_)
-```
-
-```JS
-- Must be prefixed with NEXT_PUBLIC_ in your .env file.
-- Next.js will inline them into your frontend bundle at build time.
-- Accessible in any client component or browser-side JS.
-```
-
-```JS
-//Example:
-//.env file
-# Only server-side
-DATABASE_PASSWORD=supersecret123
-
-# Available client and server
-NEXT_PUBLIC_API_BASE_URL=https://api.example.com
-
-
-Usage in code:
-//ts file
-// server or client code
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-
-
-Important security note:
-Do NOT expose sensitive info (like passwords, API secrets, private keys) with NEXT_PUBLIC_.
-Anything prefixed with NEXT_PUBLIC_ is bundled into the client JavaScript and visible to anyone.
-
-
-In your case:
-//.env file
-NEXT_PUBLIC_BASE_URL=https://yourdomain.com
-```
-
-```JS
-//Example
-
-//.env file
-NEXT_PUBLIC_API_BASE_URL=https://api.example.com
-
-//ts file
-// Safe in client code (browser can see this)
-const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-//Use only for values you’re comfortable exposing publicly (like non-secret API URLs, feature flags, analytics keys, etc.).
-```
-
-###### Why this distinction matters?
-
-```JS
-Something like a Google OAuth client secret must stay server-only → keep it in GOOGLE_CLIENT_SECRET (no prefix).
-
-Something like a frontend base URL or public Stripe publishable key → needs to be visible to the browser, so you add NEXT_PUBLIC_.
-```
-
-###### Quick rule of thumb
-
-```JS
-Sensitive? (passwords, API secrets, private keys, database URLs) → plain .env, no NEXT_PUBLIC_*.
-
-Needed in browser? (public keys, feature toggles, app base URL) → use NEXT_PUBLIC_.
-```
-
-you can absolutely keep both server-only and client-side variables in the same .env file.
-
-```JS
-//How it works
-//Next.js automatically loads environment variables from .env, .env.local, etc.
-//Variables without NEXT_PUBLIC_ → available only on the server.
-//Variables with NEXT_PUBLIC_ → injected into both the server and the client bundle.
-
-//Example .env.local:
-# Server-only (never exposed to browser)
-DATABASE_URL=postgres://user:password@host:5432/db
-GOOGLE_CLIENT_SECRET=super-secret
-
-# Client-side (safe to expose)
-NEXT_PUBLIC_API_URL=https://api.example.com
-NEXT_PUBLIC_FEATURE_X=true
-
-//In code
-//Server side:
-//ts file
-console.log(process.env.DATABASE_URL); // works
-console.log(process.env.NEXT_PUBLIC_API_URL); // works too
-
-//Client side (React component):
-//tsx file
-
-export default function Home() {
-  console.log(process.env.NEXT_PUBLIC_API_URL); // works
-  console.log(process.env.DATABASE_URL); // ❌ undefined
-  return <div>API: {process.env.NEXT_PUBLIC_API_URL}</div>;
-}
-
-
-
-
-//Rule of thumb
-//Keep everything in one .env file if you want simplicity.
-//Use NEXT_PUBLIC_ prefix only for values you intend to leak to the browser.
-//Sensitive secrets should never have the prefix.
-```
