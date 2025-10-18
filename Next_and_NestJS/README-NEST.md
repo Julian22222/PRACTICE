@@ -8,7 +8,7 @@
 
 - you need Node JS and npm package installed
 
-- then we need to install nest.js cli
+- then we need to install NEST.JS CLI
 
 ```JS
 //in terminal write
@@ -26,6 +26,11 @@ nest new nestProjectName
 
 //then use npm package manager
 ```
+
+- after creating new NEST.JS --> ninja-api folder using NEST CLI - it creates hiden .git folder, it causes .git which can cause error when you push the code to GitHub. Your main folder Next_AND_NEST folder has a .git folder. After npx create-nest-app ninja-api ,NEST CLI automatically creates its own .git folder inside ninja-api folder. Now you have a .git folder inside .git folder, this is called nested Git repo, and Git doesn't like it. VS Code and GitHub are confused because ninja-api is not part of the main repository remote tracking, ninja-api has no remote link.To solve this error ->
+  - open termimal and navigate to your NEST JS project folder
+  - type command: ls -a (list all files, including hidden files)
+  - rm -rf .git (delete .git folder inside Nest.JS)
 
 # To run NEST.JS
 
@@ -50,11 +55,9 @@ HTTP GET/ --> Controller --> Service
 
 # 3 Main components in NEST - Modules, Controllers and Services
 
-# Modules in NEST
+# 🔴 Modules in NEST
 
-```JS
 see --> /src/app.module.ts
-```
 
 - module has your own controllers and providers.
 - You can think of this app.module.ts as the root of our application and we can add here additional modules to our application. These modules can be grouped and encapsulated. Most projects your modules will probably be for each feature and each of these features might have their own Routes, their own business logic. For example we can make - Users modules where we can add, delete and edit users etc.
@@ -78,7 +81,7 @@ nest g module ninjas  //the same but short version
 - The same thing applies for controllers and providers keys in -> app.module.ts file (root file of our tree). You register them the same way when you add ned controllers and providers (services)
 - After creating new Module we need to add new controller and new service for this.
 
-# Controllers
+# 🔴 Controllers
 
 ```JS
 //using NEST CLI command - we create new controller, with name ninjas
@@ -89,11 +92,14 @@ nest g controller ninjas
 //will update -> src/ninjas/ninjas.module.ts --> (this will add [NinjasController] to controllers), to register that controller
 ```
 
+- Controllers define the routes and allow to parse values from the requests and queries from URL, from request body and then we can pass these data down to services or providers, where we have all the logic
 - at the high level controllers are in charge of defining the path, what are the HTTP methods for each of these path.
 - @Controller('ninjas') - tells prefix of your route for all methods within this controller
 - then we need to export a class --> export class NinjasController.
 - inside your controller you need to define your Routes
 - @Get() - inside get method we can provide optional path --> @Get('black'). This method will have "ninjas/black" path
+
+1. URL path main structure
 
 ```JS
 //see --> ninjas.controller.ts
@@ -136,12 +142,13 @@ import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 @Controller('ninjas')
 export class NinjasController {
 
-  @Get()
+    @Get()
   getNinjas() {
-    return ['ninja1', 'ninja2', 'ninja3'];
+      return ['ninja1', 'ninja2', 'ninja3'];
   }
 
 
+  //GET params from URL
   @Get(':id') //parameter id insde Get decorator
   //to parse out this id from request to make some logic in our method below
   //@Param('id')  --> //Param decorator helps to get id
@@ -170,9 +177,57 @@ export class NinjasController {
 }
 ```
 
-#3 4:31
+2. URL can also include a query. For example we can filter ninjas by the typy of ninja that you are getting back from URL query
 
-# Services
+```JS
+//you URL might look something like this-->
+//GET  /ninjas?type=fast --> []  //filter and find all fast ninjas by type
+```
+
+- Now we need to parse that out of the URL
+- it is very similar approach to @Param, but istead of @Param -> we use @Query
+
+```JS
+//see --> ninjas.controller.ts
+
+  //@Query('type')  --> //Param decorator helps to get a value from "type" query
+  //type: string  --> this needs for TypeScript to give type a data type
+ @Get()
+  getNinjas(@Query('type') type: string) {  //type is a query name
+    return {type};
+  }
+```
+
+3. Post method, Here we need to parse @Body request, to get body passed object
+
+- We use this method with Dto, we create a dto folder inside ninjas folder where we will keep all our DTO for ninjas
+
+```JS
+//see --> ninjas.controller.ts
+
+//POST /ninjas --> {...}
+  @Post() // This decorator defines a method that will handle POST requests to the 'ninjas' path.
+  createNinja(@Body() body: any) {   //@Body decorator allows you to parse out request body
+    //method for a current controller
+    return {
+        body.name
+    };
+  }
+```
+
+4. Update the data, we need to get @Body and @Param
+
+```JS
+//see --> ninjas.controller.ts
+
+  //PUT  /ninjas/:id --> {...}
+  @Put(':id')
+  updateNinjaById(@Param('id') id: string) {
+    return { id: id, name: 'ninja' + id };
+  }
+```
+
+# 🔴 Services (or Providers)
 
 ```JS
 //using NEST CLI command - we create new service, with name ninjas
@@ -185,7 +240,118 @@ nest g service ninjas
 
 Here you can see benefits of the NEST CLI - it starts to inform you of what is a recommended folder structure, what is a recommended file naming convention. You can of course do all these manually - creating folder - ninjas and write correct file names if you wanted. But is saves you a lot of time in terms of generating files and hooking things up.
 
-# There is also a CLI command that allows you to generate an entire resource along with controllers and providers all in one command
+- all API logic live in Providers or Services.
+- Providers is just a class just like anything else in NEST but they specifically have an @Injectable decorator, this provider is something that can be injected into any class that depends on it. What is Dependency Injection and how it works?
+
+🔥 To understand this concept better lets make an example:
+
+-We mentioned that our API should manage our collection of ninjas. The Ninjas collection in real application will be stored in DB but in your own project it can be stored locally in "Services".
+-Then In Services we can make some methods where will be all the logic.
+-From controller we call this "Services" methods.
+
+```JS
+//see --> ninjas.service.ts
+
+@Injectable() //Injectable decorator
+export class NinjasService {
+
+//This is our local data storage for ninjas
+  private ninjas = [
+    { id: 1, name: 'Naruto Uzumaki', rank: 'Genin', weapon: 'stars' },
+    { id: 2, name: 'Sasuke Uchiha', rank: 'Genin', weapon: 'nunchucks' },
+    { id: 3, name: 'Sakura Haruno', rank: 'Chunin', weapon: 'sward' },
+  ];
+
+ //method the return all ninjas
+  getNinjas() {
+    return this.ninjas;
+  }
+
+}
+```
+
+- to get acces to "Service" methods in controller we need to instantiate an instance of "Service" class (create an object from "Service" class)
+
+```JS
+//example of ninjas.controller.ts (NOT GOOD PRACTICE) ❌
+//We can create instantiate an instance of "Service" class in each method - GET,POST,PUT,DELETE,
+//Example without injection of ninja service class
+
+@Controller('ninjas')
+export class NinjasController {
+
+    @Get()
+    getNinjas(@Query('weapon') weapon: 'stars' | 'nunchucks' | 'sward') { //method getNinjas,in a wapon variable it can receive - 'stars' | 'nunchucks' | 'sward'
+
+    const service = new NinjasService();  //we create an object from NinjasService to use its method (from ninjas.service.ts)
+
+    //use NinjasService method --> getNinjas, and passing optional "weapon" filter
+    return service.getNinjas(weapon);
+  }
+
+
+@Post(){
+    ...
+    const service = new NinjasService();
+}
+
+
+@Put(){
+    ...
+    const service = new NinjasService();
+}
+
+
+}
+```
+
+This example above is not a great option, it takes a lot of time to instanciate an instance of "Service" class in all Routes/ all methods in controller. It will be nice if that was just the instance that was created for us and injected into out Ninjas conntroller and that is actually what NEST.JS can do for you -->
+
+```JS
+//ninjas.controller.ts
+//GOOD PRACTICE ✅
+
+@Controller('ninjas')
+export class NinjasController {
+
+    //we add a new constructor, and inside we put ninjasService1 - it is a parametr with data type = NinjasService (=== the name of our service that we are injecting)
+    constuctor (private readonly ninjasService1: NinjasService){}
+
+    @Get()
+    getNinjas(@Query('weapon') weapon: 'stars' | 'nunchucks' | 'sward') {
+        //we don't need to create new object from Service class to use its methods anymore
+    return this.ninjasService1.getNinjas(weapon);
+  }
+
+}
+```
+
+- What is happening here? we can inject our "service" class because we have @Injectable decorator in our service class. So we are telling NEST.JS this is a class that will be instanciating/injecting this class and then you can automatically inject it to anything that depends on it.
+
+```JS
+//ninjas.service.ts
+
+@Injectable() //Injectable decorator
+export class NinjasService {
+    //some code
+}
+```
+
+We never instanciate the Ninjas controller class - NEST.JS is doing that for us. So behind the scenes NEST.JS is doing -->
+
+```JS
+const controller = new NinjasController()
+//and
+const service = new NinjasService()
+```
+
+- This way - you can inject a provider into a service, you can use multiple services that inject other service, controllers can inject multiple services it depends what you are trying to build
+
+⭐ This is what Dependency Injection is
+
+# Create entire resource(folder with models,controllers,services and DTOs) with one command
+
+There is also a CLI command that allows you to generate an entire resource along with controllers and providers all in one command
 
 ```JS
 //for example, giving the name of resource -users
