@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -54,8 +55,17 @@ export class NinjasController {
   getOneNinja(@Param('id') id: string) {
     // return { id: id, name: 'ninja' + id }; // Return an object with the id, No service used here
 
-    return this._ninjasServer.getNinjaById(Number(id)); //invoking getNinjaById method from NinjasService to get a ninja by id
-    //turn string to number use +id --> return this._ninjasServer.getNinjaById(+id);
+    //try-catch block to handle potential errors when getting a ninja by id
+    try {
+      return this._ninjasServer.getNinjaById(Number(id)); //invoking getNinjaById method from NinjasService to get a ninja by id
+      //turn string to number use +id --> return this._ninjasServer.getNinjaById(+id);
+    } catch (err) {
+      //error is received from the ninjas.services method when ninja with the given id is not found
+      //getNinjaById method in ninjas.service.ts file throws an error if the ninja is not found
+
+      // throw new Error(error.message);
+      throw new NotFoundException(err.message);
+    }
   }
 
   //POST /ninjas --> {...}

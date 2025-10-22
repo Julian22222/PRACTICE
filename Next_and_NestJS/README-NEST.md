@@ -4,7 +4,375 @@
 - Node.js Framework for building efficient, reliable and scalable server-side applications
 - Nest.JS is cover/abstruction over express.js. NEST JS takes architecture and uses express under the hood.
 
-# START
+Nest.js is a progressive Node.js framework for building server-side applications. It’s built with TypeScript (but you can also use JavaScript) and is heavily inspired by Angular (the frontend framework).
+
+# Why use Nest.js?
+
+- It makes building backend applications organized and scalable.
+- It uses modern JavaScript and TypeScript features.
+- It provides a structured way to build apps using modules, controllers, and services.
+- It supports dependency injection, which helps manage your code better.
+- It works great with REST APIs, GraphQL, WebSockets, and more.
+
+# Main concepts in Nest.js
+
+1. Modules
+   Think of modules as containers or groups that organize your app’s components. Every Nest.js app has at least one root module called AppModule. Modules help keep related code together.
+
+2. Controllers
+   Controllers handle incoming requests (like HTTP requests) and send responses back. They are like the “traffic cops” directing the requests to the right place.
+
+3. Services
+   Services contain business logic and are used by controllers. They do the actual work like fetching data from a database or processing information. They can be injected into controllers using dependency injection.
+
+4. Providers
+   Providers are any class that can be injected via dependency injection. Services are the most common providers.
+
+5. Dependency Injection (DI)
+   DI is a design pattern that makes it easier to manage dependencies between classes. Instead of creating instances manually, Nest injects them for you, making testing and maintenance easier.
+
+6. Decorators
+   Nest.js uses decorators (special annotations) like @Module(), @Controller(), @Injectable(), and @Get() to define how classes and methods behave.
+
+# How does Nest.js work? (Basic flow)
+
+1. You define a module to organize your app.
+2. Inside the module, you create controllers to handle HTTP requests.
+3. Controllers use services to perform the logic.
+4. Requests come in → Controller routes them → Service does the work → Controller sends back response.
+
+# Summary
+
+- Nest.js = A framework to build backend apps in Node.js using TypeScript.
+- Uses modules, controllers, services to organize code.
+- Uses decorators to declare routes and behaviors.
+- Supports dependency injection for cleaner, testable code.
+- Helps build scalable and maintainable server applications.
+
+# 👀 Example of Nest JS
+
+```JS
+//Example 1:
+1. Define a Task interface
+
+export interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+2. Create a Service to handle tasks logic
+//Services contain the business logic — like storing tasks, adding new tasks, etc.
+
+import { Injectable } from '@nestjs/common';
+import { Task } from './task.interface';
+
+@Injectable()  // @Injectable() means this class can be injected elsewhere (like in controllers).
+export class TasksService {
+  private tasks: Task[] = [];
+  private idCounter = 1;
+
+  findAll(): Task[] {  //returns all tasks.
+    return this.tasks;
+  }
+
+  create(title: string): Task {  //adds a new task with a unique ID and returns it.
+    const newTask: Task = {
+      id: this.idCounter++,
+      title,
+      completed: false,
+    };
+
+    this.tasks.push(newTask);
+
+    return newTask;
+  }
+}
+
+3. Create a Controller to handle HTTP requests
+//Controllers route incoming requests and send responses.
+
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { TasksService } from './tasks.service';
+import { Task } from './task.interface';
+
+@Controller('tasks')   //@Controller('tasks') means this controller handles routes starting with /tasks. @Controller('tasks') means the base route is /tasks
+export class TasksController {
+
+  constructor(private readonly tasksService: TasksService) {}  //Constructor injects the TasksService
+
+  //@Get() method returns all tasks. @Get() means this method responds to HTTP GET requests at /tasks.  If you want to change the route  to tasks/getall à we put @Get(“getall”)
+  //If you want the URL to be /tasks/getAllTasks, you can specify the path inside the @Get() decorator:  @Get('getAllTasks')
+  @Get()  //@Get() without any parameters means this method handles GET requests on exactly /tasks.
+  getAllTasks(): Task[] {
+    return this.tasksService.findAll();
+  }
+
+  @Post()  //@Post() method creates a new task using the title sent in the request body.
+  createTask(@Body('title') title: string): Task {
+    return this.tasksService.create(title);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////
+
+//@Get() can have only one method, with the same path, can’t have more than 1 method -> can't have two or more @Get() in the same controller
+
+//If we will have more than 1 @Get() this will through an error -->
+@Controller('tasks')
+export class TasksController {
+  @Get()
+  getAllTasks(): Task[] {
+    return this.tasksService.findAll();
+  }
+
+  @Get()
+  getSomethingElse(): string {
+    return 'Something else';
+  }
+}
+
+//What will happen?
+
+//Nest.js will throw an error at runtime.
+//Why? Because both methods are trying to handle the exact same route: GET /tasks — this causes a conflict.
+
+//Nest can’t decide which method to call for that URL.
+
+// You must give each @Get() decorator a unique path if you have multiple GET handlers in the same controller: @Get() and @Get('somethingElse')
+
+// Summary:
+// You cannot have two identical routes with the same HTTP method in the same controller.
+// You can have multiple handlers with different paths.
+
+// Summary:
+// @Get() → responds to /tasks
+// @Get('getAllTasks') → responds to /tasks/getAllTasks
+
+
+// The route path and HTTP method are controlled by the decorators, not by the function name. The method name , for example- getAllTasks(): doesn’affect anything . It is used for Readability and maintainability, Code organization, Code organization .  getAllTasks ß can have any name, doesn’t affect anything
+
+
+// So, why name the method getAllTasks()?
+// Readability and maintainability
+// Method names help humans understand what the code does. getAllTasks() clearly says this method fetches all tasks.
+// Code organization
+// If your controller has multiple GET endpoints, naming methods clearly helps you and others quickly know their purpose.
+// Function reference
+// You need a method to handle the request. The method name is just a regular TypeScript function name.
+
+
+4. Define the Module
+//Modules tie everything together.
+
+import { Module } from '@nestjs/common';
+import { TasksController } from './tasks.controller';
+import { TasksService } from './tasks.service';
+
+@Module({
+  controllers: [TasksController],
+  providers: [TasksService],
+})
+
+export class TasksModule {}
+
+
+// How it works when running:
+// If you send GET /tasks, Nest calls getAllTasks() → returns list of tasks.
+// If you send POST /tasks with JSON { "title": "Learn Nest.js" }, Nest calls createTask() → adds a new task → returns the new task.
+
+
+// Summary of this example:
+// Service holds and manipulates data.
+// Controller handles HTTP requests and calls service methods.
+// Module organizes controller and service.
+```
+
+# 👀 Nest JS + PSQL example
+
+Here we have an example without using an ORM, using a plain PostgreSQL client library and writing SQL queries directly.
+
+1. Install pg package
+
+```JS
+npm install pg
+```
+
+2. Create a PostgreSQL database connection provider
+
+-Create a dedicated database provider to handle the connection pool.
+-Create a file src/database/database.providers.ts:
+
+```JS
+import { Pool } from 'pg';
+
+export const databaseProviders = [
+  {
+    provide: 'PG_CONNECTION',
+    useFactory: async () => {
+      const pool = new Pool({
+        host: 'localhost',
+        port: 5432,
+        user: 'your_db_username',
+        password: 'your_db_password',
+        database: 'your_db_name',
+      });
+
+      await pool.connect(); // test connection
+
+      return pool;
+    },
+  },
+];
+```
+
+3. Create a DatabaseModule to export the connection
+
+-Create src/database/database.module.ts:
+
+```JS
+import { Module } from '@nestjs/common';
+import { databaseProviders } from './database.providers';
+
+@Module({
+  providers: [...databaseProviders],
+  exports: [...databaseProviders],
+})
+
+export class DatabaseModule {}
+```
+
+4. Create UsersService to run SQL queries
+
+-Create src/users/users.service.ts:
+
+```JS
+import { Inject, Injectable } from '@nestjs/common';
+import { Pool } from 'pg';
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+@Injectable()
+export class UsersService {
+  constructor(@Inject('PG_CONNECTION') private pool: Pool) {}
+
+  async findAll(): Promise<User[]> {
+    const { rows } = await this.pool.query('SELECT * FROM users');
+    return rows;
+  }
+
+  async findOne(id: number): Promise<User | null> {
+    const { rows } = await this.pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    return rows[0] || null;
+  }
+
+  async create(user: Partial<User>): Promise<User> {
+    const { name, email } = user;
+    const { rows } = await this.pool.query(
+      'INSERT INTO users(name, email) VALUES ($1, $2) RETURNING *',
+      [name, email],
+    );
+    return rows[0];
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.pool.query('DELETE FROM users WHERE id = $1', [id]);
+  }
+}
+```
+
+5. UsersController remains mostly the same
+
+-Create src/users/users.controller.ts
+
+```JS
+import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
+import { UsersService, User } from './users.service';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<User | null> {
+    return this.usersService.findOne(+id);
+  }
+
+  @Post()
+  create(@Body() userData: Partial<User>): Promise<User> {
+    return this.usersService.create(userData);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<void> {
+    return this.usersService.remove(+id);
+  }
+}
+```
+
+6. UsersModule
+
+-Create src/users/users.module.ts:
+
+```JS
+import { Module } from '@nestjs/common';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
+import { DatabaseModule } from '../database/database.module';
+
+@Module({
+  imports: [DatabaseModule],
+  controllers: [UsersController],
+  providers: [UsersService],
+})
+
+export class UsersModule {}
+```
+
+7. Import UsersModule in AppModule
+
+-Edit src/app.module.ts
+
+```JS
+import { Module } from '@nestjs/common';
+import { UsersModule } from './users/users.module';
+
+@Module({
+  imports: [UsersModule],
+})
+
+export class AppModule {}
+```
+
+8. Create users table in PostgreSQL
+
+-Run this SQL manually in your database
+
+```JS
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE
+);
+```
+
+Summary:
+
+- You use pg client directly to run raw SQL queries.
+- Database connection pool is injected via Nest.js provider system.
+- Service runs queries with parameters to avoid SQL injection.
+- Controller exposes API endpoints as before.
+
+# 👉 START
 
 - you need Node JS and npm package installed
 
@@ -32,13 +400,13 @@ nest new nestProjectName
   - type command: ls -a (list all files, including hidden files)
   - rm -rf .git (delete .git folder inside Nest.JS)
 
-# To run NEST.JS
+# ✅ To run NEST.JS
 
 ```JS
 npm run start:dev
 ```
 
-# Main locations of different files (Structure and components of the NEST.JS)
+# 🗃️ Main locations of different files (Structure and components of the NEST.JS)
 
 ```JS
 /src/main.ts  //enty point for your application, have connection PORT, root module
@@ -53,7 +421,7 @@ HTTP GET/ --> Controller --> Service
 - Controllers -> defining the Routes. Routes represented by methods and those methods ulimately call our Services.
 - Services - have your business logic and any sort of reusable logic that you want to use across other services or other controllers that you have
 
-# 3 Main components in NEST - Modules, Controllers and Services
+# 🔥 3 Main components in NEST - Modules, Controllers and Services
 
 # 🔴 Modules in NEST
 
@@ -391,3 +759,69 @@ CREATE src/users/entities/user.entity.ts
 UPDATE package.json
 UPDATE src/app.module.ts
 ```
+
+# ✔️ Exception Handling, to handle different errors
+
+[ --> Different exception options <-- ](https://docs.nestjs.com/exception-filters)
+
+Most used exceptions:
+
+- BadRequestException
+- UnathorizedException
+- NotFoundEception
+- ForbiddenException
+- and etc.
+- can create your own custome exceptions
+
+for example: when you throw an error page, or 404 - not found page
+
+```JS
+//throw an error example
+//see --> ninjas.service.ts  line 30
+
+getNinjaById(id: number) {
+    const ninja = this.ninjas.find((ninja) => ninja.id === id);
+
+    if (!ninja) {
+      throw new Error(`Ninja with id ${id} not found`);  //throws an error
+    }
+
+    //if found, return the ninja
+    return ninja;
+  }
+```
+
+```JS
+//throw not found
+//see --> ninjas.controller.ts  line 64
+
+//if id is not correct it will throw NotFoundException
+@Get(':id')
+getOneNinja(@Param('id') id: string) {
+  // return { id: id, name: 'ninja' + id }; // Return an object with the id, No service used here
+
+  //try-catch block to handle potential errors when getting a ninja by id
+  try {
+    return this._ninjasServer.getNinjaById(Number(id)); //invoking getNinjaById method from NinjasService to get a ninja by id
+    //turn string to number use +id --> return this._ninjasServer.getNinjaById(+id);
+  } catch (err) {
+    throw new NotFoundException(err.message);
+  }
+}
+```
+
+- This way We are telling Nest JS wow to behave in these occasions (when id is not correct, etc.)
+- if we don't use "try-catch" block, to catch the error --> by default Nest JS will respond as:
+
+```JS
+{
+  "statusCode": 500,
+  "message": "Internal server error"
+}
+```
+
+but we want for example show -statusCode: 404 and message: not found, therefore we need to use 'try-catch' block and handle exceptions
+
+- then in services we can throw an error (see ninjas.service.ts line 30) --> then send this response back to controller and in controller throw an exception (see ninjas.controller.ts line 67), telling Nest.JS how we want Nest.JS to behave in different occasions
+
+# 6

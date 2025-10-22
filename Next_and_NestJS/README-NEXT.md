@@ -77,7 +77,7 @@ bunx create-next-app@latest my-app-name
 ```JS
 //Can create Front-End app manually
 
-npm init -y //create package.josn
+npm init -y //create package.json
 npm i next react react-dom //download dependencies
 
 scripts:
@@ -89,7 +89,7 @@ scripts:
 //users.js  --> this component will be available using this URL -> localhost:3000/users
 ```
 
-# Deployment
+# 📤 Deployment
 
 Next.JS has it own hosting website --> can be hosted on vercel.com
 
@@ -125,15 +125,15 @@ also add to all dynamic componens (such as individual item page)--> export async
 }
 ```
 
-# ⭐ Structure and Components of the Next JS app (Main locations of different files)
+# 🗄️ Structure and Components of the Next JS app (Main locations of different files)
 
 ```JS
 node_modules // folder where you can find all libraries and dependencies (normal and dev dependencies)
 public //static folder, path to these files will be static. Here we keep images, other static files
-src //main folder, here we keep all main files. src folder allow us to make good application folder structure, Insded src we have app folder, components, etc.
+src //main folder, here we keep all main files. src folder allow us to make good application folder structure. Insid src we have app folder, components, etc.
 next-env.d.ts  //declerative file for TypeScript from Next.JS, allowing to add important types
-next.config.ts  //Next.js application configuration.all default Next settings, add output: "export", this command will run automatically -when we build our app and allow to create staic website to host it
-package-lock.json  //the same as package.json. This file additionally contains sertain library versions. It needs if you have 2 different versions of your project, one is local and one is on production.
+next.config.ts  //Next.js application configuration.all default Next settings, add output: "export", this command will run automatically -when we build our app and allow to create static website to host it
+package-lock.json  //the same as package.json. This file additionally contains certain library versions. It needs if you have 2 different versions of your project, one is local and one is on production.
 tsconfig.json  //settings of TypeScript
 
 
@@ -197,7 +197,7 @@ src/app/products/[category]/[item]  //for example URL-> /products/tv/lg, /produc
 src/app/(home)/products/tv/page.tsx  // URL --> /products/tv
 ```
 
-# Next.JS useful Hooks (hooks are used with "use client")
+# ⭐ Next.JS useful Hooks (hooks are used with "use client")
 
 Hooks always are used in Client side.
 
@@ -212,7 +212,7 @@ we use - useState, useEffect
 
 //often used hooks - push and replace -> redirect user to new URL, with option to return back, and no return back option
 //refresh - refresh current browser page
-'use client'
+'use client'  //<--this derective, define component or function that will run on server or browser side.
 
 import { useRouter } from "next/navigation";
 import styles from "./Products.module.css"; // Importing CSS module for styling
@@ -319,7 +319,7 @@ params.username
 ```JS
 //components/GoogleButton.tsx
 
-"use client";
+"use client";  //<--this derective, define component or function that will run on server or browser side.
 
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -345,7 +345,7 @@ export function GoogleButton({}: Props) {
 }
 ```
 
-# Next.JS Form - appeared in Next.JS 15, we can use Form tag (with big letter)
+# ✔️ Next.JS Form - appeared in Next.JS 15, we can use Form tag (with big letter)
 
 [ --> Forms <--](https://nextjs.org/docs/app/api-reference/components/form)
 
@@ -386,7 +386,7 @@ export default async function SearchPage({  // searchParams is value from "GET" 
 
 //See --> components/SearchButton
 
-"use client";
+"use client";  //<--this derective, define component or function that will run on server or browser side.
 import { useFormStatus } from "react-dom";
 
 export default function SearchButton() {
@@ -400,7 +400,7 @@ export default function SearchButton() {
 
 Also, Form has --> Suspense tag and use function
 
-# Component - on level Client and Server side Rendering
+# 🎉 Component - on level Client and Server side Rendering
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
 
@@ -412,7 +412,7 @@ Also, Form has --> Suspense tag and use function
 - Next.JS has a Rule when to use each component :
   - If you receive data from the server ( --> fetch('http://jsonplaceholder.type') ), or just showing something on the page - in this occasion use server components!!!
   - by default, components are server side components
-  - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Whithout client side component it will show an error. This component will be proccessed in browser
+  - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Without client side component it will show an error. This component will be proccessed in browser
 - If you use client component add -> 'use client'
 - async await main function can be used only in server side components
 
@@ -433,7 +433,7 @@ export function SignInForm({}: Props) {
 }
 ```
 
-- To avoid errors with async await and -> use client and useState, etc. ,separare your app on small components and then you can add client side server or client side server where you need. Also, you can insert client side components into server side components
+- To avoid errors with async await and -> use client and useState, etc. ,separare your app on small components and then you can add client side or server side server where you need. Also, you can insert client side components into server side components.
 - Metadata block can't be used in 'use client' file, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
 
 ❌ This example below will show an error!!!
@@ -608,6 +608,42 @@ export default function Items({ data }: { data: any }) {
 }
 ```
 
+- You can't use server functions on the client side. Server functions (marked with 'use server') are only executed on the server. You cannot directly call or run server functions on the client side because they may contain sensitive logic (like environment variables) that should never be exposed to the browser.
+- separate server side and client side components in different files
+- In the new Next.js, you can define server actions (functions marked with 'use server') which run only on the server.
+
+```JS
+//file1.ts
+'use server'; // This directive makes the function a server action
+
+export const getApiToken = () => {
+  console.log(process.env.TOKEN);
+  return process.env.TOKEN;
+};
+
+
+//file2.ts
+How to call server functions from client components?
+You cannot call server functions directly on the client. Instead, Next.js provides ways to invoke server actions from client components, typically through form submissions or special server action APIs.
+Here’s a simple way to call server actions:
+
+'use client';
+
+import { getApiToken } from './path/to/serverActions';
+
+export default function MyComponent() {
+  async function handleClick() {
+    const token = await getApiToken();
+    console.log('Token from server:', token);
+  }
+
+
+  return <button onClick={handleClick}>Get Token</button>;
+}
+
+//But! This only works if getApiToken is exported as a server action, which must be used inside a server component or via specific mechanisms Next.js provides.
+```
+
 ```JS
 //how to define is it server or client component?
 
@@ -618,21 +654,27 @@ export const getApiToken = () =>{
 
     console.log(process.env.TOKEN)
 }
-
 ```
 
 - Check examples on api/products/page.tsx file
 
 If you use REST API use fetch("http://.....")
 
-# Rendering Strategies (different options)
+# 👍 Rendering Strategies (different options)
 
 To check and understand what Rendering option has each our Route in your application, we need to type in terminal-->
 
 ```JS
 npm run build
 
-//after building we will get number of Routes that were generated and next to them we will see - its rendering option. See picture below
+//Next.js will build your application and, during this process, it will output a summary table in the terminal showing which rendering mode each route uses.This table usually shows:
+// - Static Generation (SSG) — pages generated at build time.
+// - Server-side Rendering (SSR) — pages rendered on each request.
+// - ISR (Incremental Static Regeneration) — static pages with on-demand regeneration.
+// - Edge Rendering (if you’re using edge middleware or edge functions).
+// - And any client-side rendered parts if relevant.
+
+//after building we will get number of Routes that were generated and next to them we will see - its rendering option. See picture below. This is super useful to confirm that your routes have the expected rendering strategy.
 
 //we have: (signs meaning in the bottom of the picture)
 //static rendering
@@ -667,6 +709,8 @@ npm run build
 //For example if we have this Route--> posts/[id]/page.tsx
 //we can make SSG (Static Site generation) from SSR (Server side rendering), if articles or post,etc. not changing, don't want to update
 
+//This is Static Site Generation (SSG) with Incremental Static Regeneration (ISR).
+
 export async function generateStaticParams(){
   const posts: any[] = await getAllPosts();  //getting posts from the server by fetch in different file
 
@@ -678,6 +722,7 @@ export async function generateStaticParams(){
 
 ```JS
 //full example
+//This is Static Site Generation (SSG) with Incremental Static Regeneration (ISR).
 
 import { getAllPosts, getPostById } from "@/services/getPosts";  //get function from other file
 import { Metadata } from "next";
@@ -691,6 +736,7 @@ type Props = {
   };
 };
 
+//// generateStaticParams() - generating static paths at build time. It tells Next.js to pre-render pages for these paths (static generation).
 export async function generateStaticParams() {
   const posts: any[] = await getAllPosts();
 
@@ -699,7 +745,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
+export async function generateMetadata({ //async func.,which runs at build time or on-demand during regeneration.
   params: { id },
 }: Props): Promise<Metadata> {
   const post = await getPostById(id);
@@ -718,10 +764,13 @@ async function removePost(id: string) {
     },
   });
 
+  //This triggers a revalidation of the cached static page, which aligns with ISR — after a mutation (deletion), it refreshes the static content.
   revalidatePath("/blog");
   redirect("/blog");
 }
 
+
+//async server component fetching post data (getPostById(id)) — this fetch happens at build time for each statically generated page.
 export default async function Post({ params: { id } }: Props) {
   const post = await getPostById(id);
 
@@ -750,7 +799,14 @@ export default async function Post({ params: { id } }: Props) {
 // };
 ```
 
-# Data loading using different options (SSR, ISR, SSG)
+Summary
+
+- You use generateStaticParams() to generate static pages for each post at build time → SSG.
+- You fetch data in async functions that run at build time (or regeneration) → static props.
+- You manually trigger revalidation (revalidatePath) → ISR (on-demand regeneration of static pages).
+- No getServerSideProps or similar that forces rendering on every request.
+
+# 👀 Data loading using different options (SSR, ISR, SSG)
 
 ```JS
 //SSG option, (Server-Side Generation) data loading.
@@ -778,6 +834,21 @@ export default async function Page(){
 
   return <Products />
 }
+```
+
+```JS
+How to control caching behavior?
+You can pass the cache option to fetch:
+
+- cache: 'no-store' — disables caching; fetches fresh data every time (like SSR behavior).
+- cache: 'force-cache' — caches the response indefinitely (default in server components).
+- next: { revalidate: number } — set a time in seconds for how often the cache should be invalidated (ISR TTL).
+
+////////////////
+
+const response = await fetch(http://localhost:3300/posts, {
+  cache: "no-store", // disables caching, always fetch fresh data
+});
 ```
 
 [ --> Route Segment Config <--](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config)
@@ -994,11 +1065,11 @@ redirect("/blog"); // Redirecting to the /posts page after deletion
 
 ```
 
-# Midleware
+# ➡️ Midleware
 
 Expanded configuration and optimization
 
-- create middleware.ts is src folder
+- create middleware.ts in src folder
 - middleware it is common function that will run on certain condition, conndition is in config block, in the file.
 - Most of the time this is used in Authorization(adjust Roles, close page for certain Roles)
 - middleware allow to give access for some pages and forbid access for some pages
@@ -1028,11 +1099,7 @@ export const config = {  //our condition is here to run middleware function, if 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
 ```
 
-# Environment Variables
-
-```JS
-Also, unlike client-side variables, these do not need the NEXT_PUBLIC_ prefix (since they are server-only).
-```
+# 🪹 Environment Variables
 
 1. Server-only variables
 
@@ -1051,10 +1118,10 @@ GOOGLE_CLIENT_SECRET=your-secret-secret
 // Safe: runs only on server
 const id = process.env.GOOGLE_CLIENT_ID;
 
-//These are never exposed to the browser unless you manually pass them down.
+//❗ These are never exposed to the browser unless you manually pass them down.
 ```
 
-2.
+2. Client side variables (and server side. Available on both)
 
 ```JS
 process.env.NEXT_PUBLIC_BASE_URL

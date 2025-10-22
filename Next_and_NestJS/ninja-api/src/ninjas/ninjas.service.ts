@@ -24,10 +24,10 @@ export class NinjasService {
   getNinjaById(id: number) {
     const ninja = this.ninjas.find((ninja) => ninja.id === id);
 
-    //if ninja with the given id is not found
+    //if ninja with the given id is not found, throw an error, handling error in controller
     if (!ninja) {
       // return { message: `Ninja with id ${id} not found` };
-      throw new Error(`Ninja with id ${id} not found`);
+      throw new Error(`Ninja with id ${id} not found`); //will return to controller - this message, "error": "Not Found","statusCode": 404
     }
 
     //if found, return the ninja
