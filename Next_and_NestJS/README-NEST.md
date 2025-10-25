@@ -824,4 +824,261 @@ but we want for example show -statusCode: 404 and message: not found, therefore 
 
 - then in services we can throw an error (see ninjas.service.ts line 30) --> then send this response back to controller and in controller throw an exception (see ninjas.controller.ts line 67), telling Nest.JS how we want Nest.JS to behave in different occasions
 
-# 6
+# Advance exception handling (not need for now)
+
+Also, if you have DB driver that throes very specific exception when it can't find a record in the database, in this case you might want to set up an exception filter that automatically catches that specific exception and responds with a 404, that way you don't need use try-catch block. You can extend and customize this behaviour.
+
+```JS
+
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { Request, Response } from 'express';
+
+@Catch(HttpException)   //<---- use @Catch
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest<Request>();
+    const status = exception.getStatus();
+
+    response
+      .status(status)
+      .json({
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+      });
+  }
+}
+
+```
+
+# ⚠️ Pipes in Nest.js
+
+[ --> Pipes <--](https://docs.nestjs.com/pipes)
+
+Pipes have 2 core use cases: (from link above)
+
+- Transformation: transform input data to the desired form (e.g., from string to integer)
+- Validation: evaluate input data and if valid, simply pass it through unchanged; otherwise, throw an exception
+
+Pipes allow to transform data types automatically, see example below -->
+
+```JS
+//in ninjas.controller.ts file we could use pipes and change our code to this one
+
+//URL parametr always comes as a string
+//we receive "id" as a string in @Param
+//ParseIntPipe - allow to transform --> "id" as a number
+//there is other build in pipes that you can use, you need to type -> Parse and you will se other options(such as: ParseArrayPipe, ParseBoolPipe, ParseEnumPipe, ParseFloatPipe, ParseUUIDPipe, etc.)
+@Get(':id')
+  getOneNinja(@Param('id', ParseIntPipe) id: number) {
+
+    try {
+      return this._ninjasServer.getNinjaById(id);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
+  }
+```
+
+```JS
+//but we have this code in ninjas.controller.ts
+
+  @Get(':id')
+  getOneNinja(@Param('id') id: string) {
+
+    try {
+      return this._ninjasServer.getNinjaById(Number(id));
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
+  }
+```
+
+Or pipes allows to validate a request body, we can validate does the ninja receives correct weapon, or maybe ninja name should be certain length etc.
+
+-within our create ninja DTO we are going to install 2 new packages to our application --> ( class-validator and class-transformer )
+
+```JS
+npm i --save class-validator class-transformer
+```
+
+[ --> class-validator <--](https://github.com/typestack/class-validator/blob/develop/README.md)
+
+class-validator is a couple extra set of decorators that you can add to your classes, (adding validation - title Length should be between 10 and 20, etc.)
+
+```JS
+export class Post {
+  @Length(10, 20)  //title Length should be between 10 and 20
+  title: string;
+
+  @Contains('hello')  //text must contain word - "hello"
+  text: string;
+
+  @IsInt()  //rating should be a string
+  @Min(0)  //min 0
+  @Max(10)  //max 10
+  rating: number;
+
+  @IsEmail()   //patern for email, chech that email is filled correctly
+  email: string;
+
+  @IsFQDN()
+  site: string;
+
+  @IsDate()  //patern for date, also another patern can be for phone nr.
+  createDate: Date;
+}
+
+//there is a lot of decorators that can be applied to your class for validation
+//also can create your own custom decorators
+```
+
+#### Example of validation in Nest.js
+
+1. Below We are providing additional metadata to this class in order for Nest.js to take advantage of these decorators
+
+```JS
+//example
+//create-ninja.dto.ts
+import { MinLength } from "class-validator";
+
+export class CreateNinjaDto {
+  @MinLength(3)  //min length must be at least 3 letters for a "name"
+  name: string
+
+  @IsEnum(['stars', 'nunchucks'], {message: "use correct weapon"}) //weapon can be only these names, also can add custom message if it fails validation
+
+  // weapon: string
+  //or
+  weapon: "stars" | "nunchucks";
+  .....
+
+}
+```
+
+2. Then we need to add specific pipe called - "the validation pipe".
+
+```JS
+//ninjas.controller.ts
+
+
+//@Body(new ValidationPipe() - this is build in pipe that Nest.js specifically looks at your DTOs, your objects and checks to see what decorators you have for validation in there and then compares it with the object that is comming in --> createNinjaDto1
+  @Post()
+  createNinja(@Body(new ValidationPipe()) createNinjaDto1: CreateNinjaDto) {
+    return this._ninjasServer.createNinja(createNinjaDto1); //invoking createNinja
+  }
+```
+
+3. If avlidations are not met, Nest.js will respond with error object
+
+🧨 You can use other types of validators apart from 'class-validator', you can use 'joy' and others. But 'class-validator' feels cohesive to the rest of the Nest.js framework.
+
+Also, We can create custome Pipes
+
+# ✅ Guards - it is a way how you protect your routs
+
+[ --> GUARDS <-- ](https://docs.nestjs.com/guards)
+
+Guards have a single responsibility to protect the underlying Routes based on some kind of logic.
+
+For example:
+
+- Authentication and Authorization. Perhaps you want to protect an endpoint to make sure that a user is already Logged-In before they can use specific Route.
+
+- Or maybe you are trying to protect an endpoint to make sure that only a specific type of user can use that Route. For example, an Admin can only change a specific setting that is Guards are for.
+
+```JS
+//in ninjas.controller.ts
+//If we want to protect a specific route, for example this route to create ninjas
+
+@Post()
+createNinja(@Body() createNinjaDto1: CreateNinjaDto) {
+  return this._ninjasServer.createNinja(createNinjaDto1); //invoking createNinja
+}
+```
+
+### How to start using Guards?
+
+In your main project folder - src folder, in terminal we put -->
+
+```JS
+nest g guard nameOfTheGuard   //can have any name
+
+
+
+//for example, you need to have a black belt to use specific Route to create a new ninja in the database:
+nest g guard belt
+
+//it will create these files below:
+src/belt/belt.guard.spec.ts
+src/belt/belt.guard.ts
+```
+
+```JS
+//belt.guard.ts
+
+//This is another class with @Injectable, kind of like a provider but it very specifically implements the "CanActivate" Interface. And if you mouse over on "CanActivate" you can see it must return boolean --> true or false
+
+@Injectable()
+export class BeltGuard implements CanActivate {  //Guard name - BeltGuard
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    return true;
+  }
+}
+```
+
+So the core idea behind Guards is that you can attach a Guard either to an entire controller or individual methods in that controller (similar to ASP.NET Core MVC --> see template below)
+
+```JS
+//similar logic in .NET MVC controller file
+
+[Authorize] //Authorize - attribute, only logedIn user will be able to access this method
+[HttpGet]
+public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId = 0){
+///some logic
+    return View();
+}
+```
+
+For example: you can add - @UseGuards and provide your guard in there --> @UseGuards(BeltGuard), because we have thisname in belt.guard.ts file - line 5. So you can have a Guard in front of an entire controller which means that it is going to sit in front of all underlying routes. So if you trying to protect all of the Ninja Routes - all routes in current controller. You do this way. See example below.
+
+```JS
+//ninjas.controler.ts
+
+@Controller('ninjas') // This decorator defines a controller that will handle requests to the 'ninjas' path.
+@UseGuards(BeltGuard) //<----Guard
+export class NinjasController {
+
+  constructor(public readonly _ninjasServer: NinjasService) {}
+
+  @Get()
+  getNinjas(@Query('weapon') weapon: 'stars' | 'nunchucks' | 'sward') {
+    return .....
+  }
+
+  @Get(':id')
+  getOneNinja(@Param('id') id: string) {
+    return...
+  }
+
+  //other Routes
+}
+```
+
+If you want to protect individual Route, you move this Guard to individual Routes, for example we want to protect this Route, to create new ninja -->
+
+```JS
+  @Post()
+  @UseGuards(BeltGuard) //<----use Guard in this method only
+  createNinja(@Body() createNinjaDto1: CreateNinjaDto) {
+    return this._ninjasServer.createNinja(createNinjaDto1);
+  }
+```
+
+Guards work at a super high level. For example if BeltGuard returns true, then it has an access to those Routes that are protected with Guards. If BeltGuard will return false, then those Routes won't be accessable. See belt.guard.ts file.
+
+Guard has a single purpose of allowing something to move forward or not based on the logic that happens in our case in belt.guard.ts file.
