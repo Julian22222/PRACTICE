@@ -125,7 +125,7 @@ also add to all dynamic componens (such as individual item page)--> export async
 }
 ```
 
-# 🗄️ Structure and Components of the Next JS app (Main locations of different files)
+# 🗂️ Structure and Components of the Next JS app (Main locations of different files)
 
 ```JS
 node_modules // folder where you can find all libraries and dependencies (normal and dev dependencies)
@@ -305,15 +305,31 @@ const pathname = usePathname();  //show URL address of your current page, used t
 
 3. useSearchParams(); <-- it is working only for query requests, help to get some values from URL
 
+This hook is used only for query strings — the part of a URL after the ?
+
 ```JS
+//Example:  to read those values
+//profile?name=John&age=25
+//Works only for query parameters (after the ?).
+
+
 'use client'
 
-const params = useSearchParams()
+import { useSearchParams } from 'next/navigation'
 
-//if you want to get dynamic variable from [] folder, that we made in app folder
-const params = useParams<{username: string}>()  //username is in squere brackets and it is dynamic value, which is a string data type, it is used to get value from []dynamic folder
 
-params.username
+export default function ProfilePage() {
+  const searchParams = useSearchParams()
+  const name = searchParams.get('name')      // "John"
+  const age = searchParams.get('age')        // "25"
+
+  return (
+    <div>
+      <h1>Name: {name}</h1>
+      <p>Age: {age}</p>
+    </div>
+  )
+}
 ```
 
 ```JS
@@ -343,6 +359,42 @@ export function GoogleButton({}: Props) {
     </div>
   );
 }
+```
+
+4. useParams() <-- to get values from dynamic variables, from [] folder.
+
+This hook is used for dynamic route segments — the part of a URL defined by square brackets in your folder structure.
+
+Works only for dynamic route segments (from [folderName]).
+
+```JS
+//Example folder:
+app/
+└── user/
+      └── [username]/
+           └── page.tsx
+
+Example URL:
+/user/alice
+To get the dynamic segment:
+
+'use client'
+
+import { useParams } from 'next/navigation'
+
+export default function UserPage() {
+  const params = useParams<{ username: string }>()
+  return <h1>Welcome, {params.username}!</h1>
+}
+
+
+///////////////////////////////////////////////
+
+
+//if you want to get dynamic variable from [] folder, that we made in app folder
+const params = useParams<{username: string}>()  //username is in squere brackets and it is dynamic value, which is a string data type, it is used to get value from []dynamic folder
+
+params.username
 ```
 
 # ✔️ Next.JS Form - appeared in Next.JS 15, we can use Form tag (with big letter)
