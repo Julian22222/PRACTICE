@@ -417,9 +417,9 @@ npm run start:dev  //Start the server
 When you make a URL request with some method, it goes to Controller first then that it forwards to our service and it will returns back to controller to give a response back.
 
 ```JS
-HTTP GET/ --> Controller --> Service --|
-                                       |
-response  <-- Controller <--------------
+HTTP GET/ --> Controller --> Service
+                                |
+response  <-- Controller <-------
 ```
 
 - it has high level architecture that NEST JS is telling you to use.
