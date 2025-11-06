@@ -116,7 +116,7 @@ export class TasksController {
 
 ////////////////////////////////////////////////////////////////////////
 
-//@Get() can have only one method, with the same path, can’t have more than 1 method -> can't have two or more @Get() in the same controller
+❌ //@Get() can have only one method, with the same path, can’t have more than 1 method -> can't have two or more @Get() in the same controller
 
 //If we will have more than 1 @Get() this will through an error -->
 @Controller('tasks')
@@ -132,7 +132,7 @@ export class TasksController {
   }
 }
 
-//What will happen?
+❌ //What will happen?
 
 //Nest.js will throw an error at runtime.
 //Why? Because both methods are trying to handle the exact same route: GET /tasks — this causes a conflict.
@@ -141,7 +141,7 @@ export class TasksController {
 
 // You must give each @Get() decorator a unique path if you have multiple GET handlers in the same controller: @Get() and @Get('somethingElse')
 
-// Summary:
+❌// Summary:
 // You cannot have two identical routes with the same HTTP method in the same controller.
 // You can have multiple handlers with different paths.
 
@@ -416,7 +416,11 @@ npm run start:dev  //Start the server
 
 When you make a URL request with some method, it goes to Controller first then that it forwards to our service and it will returns back to controller to give a response back.
 
-HTTP GET/ --> Controller --> Service
+```JS
+HTTP GET/ --> Controller --> Service --|
+                                       |
+response  <-- Controller <--------------
+```
 
 - it has high level architecture that NEST JS is telling you to use.
 - Controllers -> defining the Routes. Routes represented by methods and those methods ulimately call our Services.
