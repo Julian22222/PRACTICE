@@ -1073,48 +1073,6 @@ $("form").submit(function(e) {
 });
 ```
 
-# LINQ stands for Language Integrated Query
-
-It’s a powerful feature in C# that allows you to write queries directly in your code to work with collections of data like arrays, lists, XML, databases, and more — all in a very readable and concise way.
-
-What LINQ does:
-
-Lets you filter, sort, group, and transform data collections easily.
-Makes querying data feel like writing SQL but directly inside your C# code.
-Works with any data source that implements IEnumerable<T> or IQueryable<T>.
-
-```C#
-//Basic example of LINQ:
-//Imagine you have a list of numbers, and you want only the even numbers:
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-class Program{
-    static void Main(){
-
-        List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
-
-        // LINQ query to get even numbers
-        var evenNumbers = numbers.Where(n => n % 2 == 0);
-
-        foreach (var num in evenNumbers){
-            Console.WriteLine(num);
-        }
-    }
-}
-
-//Output =  2,4,6
-
-
-//Key LINQ methods:
--  .Where() — filter elements  .Select() — transform elements
--  .OrderBy(), .OrderByDescending() — sort elements
--  .First(), .FirstOrDefault() — get first element(s)
--  .ToList() — convert query result to a list
-```
-
 ## What is an ORM Tool?
 
 An ORM tool is software designed to help OOP developers interact with relational databases. So instead of creating your own ORM software from scratch, you can make use of these tools
