@@ -203,6 +203,19 @@ Hooks always are used in Client side.
 
 we use - useState, useEffect
 
+```JS
+redirect("/pathToRedirect") ////can be used --> in server-side only in Next.js.
+
+router.push("/pathToRedirect") //can be used --> in client-side only for navigation.
+
+//////////////////
+//Client side example:
+import { useRouter } from "next/navigation";
+
+const router = useRouter();
+router.push("/user-page");
+```
+
 1. useRouter(); <--return an object. Is used to redirect user to some page after some action(for example LogIn)
 
 ```JS

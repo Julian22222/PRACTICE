@@ -17,22 +17,28 @@ Nest.js is a progressive Node.js framework for building server-side applications
 # Main concepts in Nest.js
 
 1. Modules
-   Think of modules as containers or groups that organize your app’s components. Every Nest.js app has at least one root module called AppModule. Modules help keep related code together.
+
+- Think of modules as containers or groups that organize your app’s components. Every Nest.js app has at least one root module called AppModule. Modules help keep related code together.
 
 2. Controllers
-   Controllers handle incoming requests (like HTTP requests) and send responses back. They are like the “traffic cops” directing the requests to the right place.
+
+- Controllers handle incoming requests (like HTTP requests) and send responses back. They are like the “traffic cops” directing the requests to the right place.
 
 3. Services
-   Services contain business logic and are used by controllers. They do the actual work like fetching data from a database or processing information. They can be injected into controllers using dependency injection.
+
+- Services contain business logic and are used by controllers. They do the actual work like fetching data from a database or processing information. They can be injected into controllers using dependency injection.
 
 4. Providers
-   Providers are any class that can be injected via dependency injection. Services are the most common providers.
+
+- Providers are any class that can be injected via dependency injection. Services are the most common providers.
 
 5. Dependency Injection (DI)
-   DI is a design pattern that makes it easier to manage dependencies between classes. Instead of creating instances manually, Nest injects them for you, making testing and maintenance easier.
+
+- DI is a design pattern that makes it easier to manage dependencies between classes. Instead of creating instances manually, Nest injects them for you, making testing and maintenance easier.
 
 6. Decorators
-   Nest.js uses decorators (special annotations) like @Module(), @Controller(), @Injectable(), and @Get() to define how classes and methods behave.
+
+- Nest.js uses decorators (special annotations) like @Module(), @Controller(), @Injectable(), and @Get() to define how classes and methods behave.
 
 # How does Nest.js work? (Basic flow)
 
@@ -304,7 +310,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User | null> {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(+id); //+id <-- converts string to number
   }
 
   @Post()
@@ -396,10 +402,29 @@ nest new nestProjectName  //with NEST CLI
 npx @nestjs/cli new myappName   //without NEST CLI
 ```
 
+# Avoid error before pushing Nest.JS and Next.JS
+
 - after creating new NEST.JS --> ninja-api folder using NEST CLI - it creates hiden .git folder, it causes .git which can cause error when you push the code to GitHub. Your main folder Next_AND_NEST folder has a .git folder. After command - "nest new ninja-api" ,NEST CLI automatically creates its own .git folder inside ninja-api folder. Now you have a .git folder inside .git folder, this is called nested Git repo, and Git doesn't like it. VS Code and GitHub are confused because ninja-api is not part of the main repository remote tracking, ninja-api has no remote link.To solve this error ->
   - open termimal and navigate to your NEST JS project folder
   - type command: ls -a (list all files, including hidden files)
   - rm -rf .git (delete .git folder inside Nest.JS)
+
+If you don't delete .git inside your Nest.Js project and push the code to GitHub it will create Git folder with arrow on GitHub --> "Git submodule", it is not a regular folder, you can't open this folder
+
+Next.js also has its own .git hidden file
+
+```JS
+//Remove the submodule reference from your main repo:
+
+git rm --cached bankapp  //bankapp  <-- folder to remove Git submodule
+rm -rf .git/modules/bankapp
+
+git commit -m "Remove bankapp submodule"
+git add bankapp
+git commit -m "Add bankapp as regular folder"
+git push origin main
+
+```
 
 # ✅ To run NEST.JS
 
@@ -451,7 +476,35 @@ nest g module ninjas  //the same but short version
 - Also, will update file automatically--> src/app.module.ts
   our new module will be added to --> imports. starting to build that dependency tree.
 - When you are creating new modules make sure it is being added to -> app.module.ts file - to imports array of another module. This is how things are registred in NEST.JS.
-- The same thing applies for controllers and providers keys in -> app.module.ts file (root file of our tree). You register them the same way when you add ned controllers and providers (services)
+- You don’t need to manually register NinjaController, UsersController, NinjaService, or UsersService in your main AppModule if they’re already declared in their own feature modules (NinjasModule, UsersModule).
+
+```JS
+//Then, in your AppModule, you just import those modules:
+
+@Module({
+  imports: [NinjasModule, UsersModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+//By importing NinjasModule and UsersModule, all their controllers and providers automatically become part of the application’s dependency graph.
+
+
+/////////////////////////
+
+@Module({
+  controllers: [NinjasController],
+  providers: [NinjasService],
+  exports: [NinjasService], // optional: only if you want to use this service in other modules
+})
+
+export class NinjasModule {}
+```
+
+- You would only add controllers or providers to AppModule if they:
+  Don’t belong to a feature module, or
+  Need to be globally available (e.g. global interceptors, guards, or filters).
 - After creating new Module we need to add new controller and new service for this.
 
 # 🔴 Controllers
@@ -522,7 +575,7 @@ export class NinjasController {
 
 
   //GET params from URL
-  @Get(':id') //parameter id insde Get decorator
+  @Get(':id') //parameter "id" inside Get decorator
   //to parse out this id from request to make some logic in our method below
   //@Param('id')  --> //Param decorator helps to get id
   //id: string  --> this needs for TypeScript to give id a data type
@@ -538,13 +591,13 @@ export class NinjasController {
 
 
   @Put(':id')
-  updateNinja() {
+  updateNinja(@Param('id') id: string) {
     return {};
   }
 
 
   @Delete(':id')
-  deleteNinja() {
+  deleteNinja(@Param('id') id: string) {
     return {};
   }
 }
@@ -614,13 +667,15 @@ nest g service ninjas
 Here you can see benefits of the NEST CLI - it starts to inform you of what is a recommended folder structure, what is a recommended file naming convention. You can of course do all these manually - creating folder - ninjas and write correct file names if you wanted. But is saves you a lot of time in terms of generating files and hooking things up.
 
 - all API logic live in Providers or Services.
-- Providers is just a class just like anything else in NEST but they specifically have an @Injectable decorator, this provider is something that can be injected into any class that depends on it. What is Dependency Injection and how it works?
+- Providers is just a class just like anything else in NEST but they specifically have an @Injectable decorator, this provider is something that can be injected into any class that depends on it.
+
+# What is Dependency Injection and how it works?
 
 🔥 To understand this concept better lets make an example:
 
--We mentioned that our API should manage our collection of ninjas. The Ninjas collection in real application will be stored in DB but in your own project it can be stored locally in "Services".
--Then In Services we can make some methods where will be all the logic.
--From controller we call this "Services" methods.
+- We mentioned that our API should manage our collection of ninjas. The Ninjas collection in real application will be stored in DB but in your own project it can be stored locally in "Services".
+- Then In Services we can make some methods where will be all the logic.
+- From controller we call this "Services" methods.
 
 ```JS
 //see --> ninjas.service.ts
@@ -815,7 +870,7 @@ getOneNinja(@Param('id') id: string) {
 }
 ```
 
-- This way We are telling Nest JS wow to behave in these occasions (when id is not correct, etc.)
+- This way we are telling Nest JS how to behave in these occasions (when id is not correct, etc.)
 - if we don't use "try-catch" block, to catch the error --> by default Nest JS will respond as:
 
 ```JS
