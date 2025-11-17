@@ -589,7 +589,7 @@ dynamic data = ViewBag.Data
 @data.Name  //<--will give us Jack
 ```
 
-4. Another way how to pass AnonymousObjects (--> See HomeController contactUs action method and Views/Home/ContactUs)
+4. Another way how to pass AnonymousObjects
 
 - Also ViewBag can be passed from action method to View and then we can loop through all the ellement -->
 
@@ -1167,7 +1167,7 @@ Which allow to trigger different function depending from View Page behaviour. if
 - it is simple cshtml file that can be inserted anywhere in any View.
 - It helps to separate (break up) the long code into small parts and insert it with partial views. (Similar to React components - components with certain code , that can be inserted anywhere,simplify the code).
 - Helps to remove duplicate code from app.
-- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
+- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksViewComponent.cs )
 - In one application we can use as many partial views as we want, there is no limit of partial views
 - The partial tag helper render content asynchronous
 
@@ -1226,7 +1226,7 @@ or
 
 - is similar to partial views but much more powerful, don't use model binding, only depend on the data provided when calling into it. ViewComponent is a special feature that is used to render some data(view +data) on a view file without actually being the part of HTTP life cycle. It is not part of Http life cycle.
 
-- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksComponent.cs , line 27, line 37)
+- If we compare with Partial View, In ViewComponent file we can connect to database and get the data from database (-->See Components/ TopBooksViewComponent.cs )
 
 There are 2 files in any ViewComponent:
 
@@ -1311,10 +1311,8 @@ public async Task<IViewComponentResult> InvokeAsync(int count){
 //interacting with our database here using GetTopBooksAsync method from BookRepository.cs
 var books = await _bookRepository.GetTopBooksAsync(count)
 
-return View(count)
-
+return View(books);
 }
-
 ```
 
 - then in Default.cshtml file we can receive "count"-->
@@ -1369,7 +1367,7 @@ pattern: "{controller=Home}/{action=Index}/{id?}");
 #### Types of Routing:
 
 1. This method is Conventional Routing
-   Usually to get for instance AboutUs page we put in URL --> Book/AboutUs
+   Usually to get for instance AboutUs page we put in URL --> "/Home/AboutUs"
    -But we can change the Routing for URL in Program.cs file--> using this
 
    ```C#
@@ -1484,7 +1482,16 @@ name : alpha : minlength(5) <-- name has letters only and min length is 5
 
 ................................................................................................................................
 
-# DEPENDENCY INJECTION
+# DEPENDENCY INJECTION (DI)
+
+🔥 To understand this concept better lets make an example:
+
+- In Repository/Services we can make some methods where will be all the logic.
+- Then In Services we can make some methods where will be all the logic
+- From controller we call this "Services" methods.
+- TO don't instantiate an instance of "Service" in each method in Controllers we can use Dependency Injection.
+
+#### What Classes must be used as Dependency Injection
 
 - Our Repository classes and Context class must be used with Dependency injection !!!!!!!!
 - Also, we use UserService Class (to get Logge-in User Id in any controller or service)
@@ -1526,6 +1533,15 @@ _context = new BookStoreContext();
 ### Services lifetime:
 
 [-->Click HERE<--](https://www.youtube.com/watch?v=vDJMzs1OYqo)
+
+```C#
+//These lifetime services is used in Program.cs file -->
+
+builder.Services.AddScoped<BookRepository, BookRepository>();
+
+//or with Interface
+builder.Services.AddScoped<IBookTypeRepository, BookTypeRepository>();
+```
 
 In ASP.NET Core MVC, there are 3 different ways to register services with build-in dependency injection:
 
