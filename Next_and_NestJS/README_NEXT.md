@@ -318,13 +318,44 @@ const pathname = usePathname();  //show URL address of your current page, used t
 
 3. useSearchParams(); <-- it is working only for query requests, help to get some values from URL
 
-This hook is used only for query strings — the part of a URL after the ?
+- searchParams does let you read variables from the URL query string
+- This hook is used only for query strings — the part of a URL after the ?
+
+✅ How searchParams works (App Router: /app directory)
+
+In server components, page.tsx, layout.js, and server actions, you can access URL query parameters using searchParams.
+
+```JS
+//Example: /app/products/page.tsx
+//Example in server component
+
+export default function ProductsPage({ searchParams }) {
+
+  // URL: /products?category=shoes&page=2
+  const category = searchParams.category; // "shoes"
+  const page = searchParams.page;         // "2"
+
+  return (
+    <div>
+      <h1>Category: {category}</h1>
+      <p>Page: {page}</p>
+    </div>
+  );
+}
+
+//⚠️ Important Notes
+//searchParams only works in the App Router, not the old /pages directory.
+//It is available automatically as a prop to page.js and layout.js.
+//It always returns strings (or undefined).
+```
 
 ```JS
 //Example:  to read those values
 //profile?name=John&age=25
 //Works only for query parameters (after the ?).
 
+//example in a client component - Client components cannot receive searchParams directly.
+//Therefore --> import { useSearchParams } from "next/navigation";
 
 'use client'
 
@@ -571,7 +602,7 @@ return(<div>....</div>)
 ### ✅ Advantages of Client side components
 
 - use states and effects (hooks, useState, useRef, useEffect, usePathname, etc. )
-- use client events (onclick,onchange, onmouseover, etc.)
+- use client events (onClick, onSubmit, onChange, onmouseover, etc.)
 - use browser API (local storage, etc.)
 - use custom brouser hooks
 - class components (doesn't work on server side)
@@ -1661,6 +1692,99 @@ So your code:
 ```
 
 # Work with Images in Next.js
+
+In Next.js, using the built-in <Image /> component is generally better than using a plain HTML <img /> tag because it provides automatic performance optimizations, better user experience, and built-in best practices with almost no extra effort.
+
+✅ Why <Image /> is better than <img />
+
+1. Automatic image optimization
+
+Next.js optimizes images on-demand:
+
+- Generates multiple sizes for different devices (responsive images)
+- Serves modern formats like WebP when supported
+- Compresses images automatically
+- Delivers correctly sized images based on device viewport
+
+With <img>, you would have to handle all this manually.
+
+2. Built-in lazy loading
+
+<Image /> automatically lazy-loads images that are off-screen, improving:
+
+- Page load speed
+- Core Web Vitals (especially LCP)
+
+<img> requires loading="lazy" and still won’t handle all optimizations.
+
+3. Prevents layout shift (CLS)
+
+<Image /> reserves space based on width/height or aspect-ratio, preventing layout jumps.
+
+<img> can cause layout shift unless you manually set width/height or CSS aspect ratios.
+
+4. Integrated with Next.js CDN
+
+Images are cached and served from the Next.js Image Optimization CDN (or your configured loader).
+
+<img> has no optimization pipeline and serves raw image files.
+
+5. Responsive image support
+
+Simple API for responsive behavior:
+
+```JS
+<Image
+  src="/hero.png"
+  width={800}
+  height={600}
+  sizes="(max-width: 768px) 100vw, 800px"
+  alt="Hero image"
+/>
+```
+
+Next.js generates images for each size automatically.
+
+With <img> you'd have to manually create and provide srcset and multiple image versions.
+
+6. Better caching
+
+Next.js handles immutable caching, etags, and revalidation automatically.
+
+<img> depends entirely on how the server sets headers.
+
+7. Built-in security checks
+
+Next.js ensures:
+
+- Safe external domains (via next.config.js)
+- Avoiding untrusted or oversized image downloads
+
+<img> provides no such protections.
+
+When should you NOT use <Image />?
+
+Use <img> if:
+
+- You need to display raw SVG (not rasterized)
+- You need extremely custom behavior that <Image> can’t support (rare)
+- You’re dealing with content inside MDX/Markdown (unless using next-mdx-remote + custom components)
+
+```JS
+Feature                      |    <Image />      |   	<img>
+                             |                   |
+Automatic optimization       |     ✅ Yes        |    ❌ No
+Lazy loading                 |      Auto         |  	Manual
+Prevents layout shift        |      Auto         |   	Manual
+Responsive sizes             |      Auto         |    Manual
+CDN optimization             |      Yes          |    No
+Modern formats (WebP/AVIF)   |      Yes          |    No
+Caching + compression        |   	  Auto         |    Manual
+Easiest developer experience |      Yes          |    No
+```
+
+➡️ Use <Image /> whenever possible.
+It makes your site faster, improves SEO, and reduces manual work drastically.
 
 - Build in Image component
 
