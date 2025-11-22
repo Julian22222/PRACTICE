@@ -155,3 +155,68 @@ res.status(500).send("Server error");
 400 Bad Request for validation errors
 404 Not Found when the resource doesn't exist
 500 Internal Server Error for unexpected errors
+
+# try-catch with async await and block then()
+
+When you get a data from Database, by --> fetch(“http://......”).
+It always returns a Promise
+
+Then you need to handle the response asynchronously using .then() or async/await.
+
+⭐ Try-Catch blocks can be used with: async await, but not with then() callback-->
+
+- Because -try...catch works with synchronous code or with async/await (which is syntactic sugar over Promises),
+- but .then() uses callbacks that are asynchronous, so exceptions inside those callbacks don’t propagate to the outer try...catch.
+- try/catch only catches synchronous errors.
+
+❌ If we will use try catch block with then() - we won’t catch the error inside .then() because the error happens asynchronously after the try block has already finished running.
+
+Example below:
+
+```JS
+//❌ This is BAD example, not working
+try {
+  fetch(url)
+    .then(response => {
+      // If this throws an error...
+
+      // .then() callbacks run later, in the microtask queue → outside the try block → so the catch never triggers.
+      throw new Error('Oops');
+    });
+} catch (error) {
+  // This won't catch the error thrown inside .then()
+  console.error('Caught:', error);
+}
+```
+
+```JS
+//🔥 Good Example with Try-Catch block + async/await
+
+async function fetchData() {
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Network response was not ok');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
+}
+```
+
+```JS
+//🔥 Good Example with promises (callbacks)
+
+fetch(url)
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });
+```
