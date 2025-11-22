@@ -1,3 +1,501 @@
+# Fetching data in Server Actions not in Component function
+
+Generally it is better to interact with your database through Server Actions (or Route Handlers) rather than directly from a component.
+
+```JS
+//Example -> src/components/NewPostForm.tsx
+// ❌ It is working example, 🔥 but it is better to interact with your database using Server Actions
+//❌ Client component + fetch is not recommended
+
+export default function NewPostForm({
+  onSuccess,
+}: {
+  onSuccess: (id?: number) => Promise<void> | void;
+}) {
+
+async function createPost(data: FormData) {
+"use server";
+
+//getting form data values
+const { title, body } = Object.fromEntries(data); //converting form data to an object, and destructuring the object to get title and body values
+
+//example of making a POST request to an API to create a new post
+const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    title,c
+    body,
+    userId: 1, //hardcoded userId, in real app we will get it from the session
+  }),
+});
+
+const post = await response.json(); //getting the newly created post from the response
+
+return (
+    // form submission will be handled by the createPost function - which is a Server Action
+    <form
+      action={createPost} //handling form submission using the createPost - it is server action
+    >
+      <input type="text" placeholder="title" required name="title" />
+      <textarea placeholder="body" required name="body" />
+      <div>
+        <input type="submit" value="Add post" />
+      </div>
+    </form>
+  );
+}
+```
+
+### ✅ Why you should use a Server Action to interact with your DB
+
+✔ 1. No secrets or DB logic must ever run in the client
+
+If you do this inside a React component (client-side):
+
+- Anyone can see network calls
+- Anyone can hit your API with whatever data they want
+- You must secure and validate the API route separately
+- You expose your app to more attack surface
+
+⭐⭐⭐ Server actions must – contain a “use server”. You can use server action in separate function or in separate file
+
+##### 🔥 //Good Example 1 - Server Action in separate file
+
+```JS
+//app/actions.ts
+"use server";  //adding this directive to indicate that this is a server component
+
+export async function createPost(data) {
+  // Safe: runs only on server
+  await db.query("INSERT ...");
+}
+
+//This logic is completely hidden from the user.
+//No fetch, no API route, no exposure.
+```
+
+##### 🔥 //Good Example 2 - Server action in separate function in the same file
+
+```JS
+//See --> /components/NewPostForm.tsx
+
+export default function NewPostForm({
+  onSuccess,
+}: {
+  onSuccess: (id?: number) => Promise<void> | void;
+}) {
+
+async function createPost(data: FormData) { //Server Actions in separate function
+//we use form data to get the form input values, we receive the "data" from the form submission,
+
+"use server";
+
+const { title, body } = Object.fromEntries(data);
+
+const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,c
+          body,
+          userId: 1, //hardcoded userId, in real app we will get it from the session
+        }),
+      });
+
+      const post = await response.json(); //getting the newly created post from the response
+
+  await onSuccess?.(post.id); //calling the onSuccess function passed as a prop from the parent component, and passing the newly created post id to it
+}
+
+  return (
+    // form submission will be handled by the createPost function - which is a Server Action
+    <form
+      action={createPost} //handling form submission using the createPost - it is server action
+    >
+      <input type="text" placeholder="title" required name="title" />
+      <textarea placeholder="body" required name="body" />
+      <div>
+        <input type="submit" value="Add post" />
+      </div>
+    </form>
+  );
+}
+```
+
+```JS
+//Example 3 -  <Form action="/posts3">
+//See -> src/app/posts3/page.tsx
+
+Type Post = {
+  id: number;
+  title: string;
+  body: string;
+};
+
+const baseUrl = "https://jsonplaceholder.typicode.com/posts?_limit=10";
+
+export default async function PostPage({
+  //will get the search params from the URL
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  // get title parametr value from search params, if not present set it to an empty string
+  //if we have ?title=something in the URL, we will get that value here
+  //title will be used to filter the posts, if we have title in the search params
+  //title comes from Form--> <input type="text" name="title" />
+  const title = (await searchParams).title || ""; // Get the title from search params, if parametrs not present set it to an empty string
+
+  console.log("Title from search params:", title);
+
+  const url = title ? `${baseUrl}&title_like=${title}` : baseUrl; //if title is present in the search params, we add title_like query param to the URL to filter the posts by title. If not, we just use the baseUrl
+  //title_like is a query param that jsonplaceholder API supports to filter posts by title
+  //title_like does a partial match, so if we search for "sunt" it will return all posts that have "sunt" in the title
+  //if we want exact match, we can use title=somevalue, but it will return only one post that matches the title exactly
+  //title_like is case insensitive
+  //title_like is a query param that jsonplaceholder API supports to filter posts by title
+
+  const data: Promise<Post[]> = fetch(
+    url //if title is present in the search params, we add title_like query param to the URL to filter the posts by title. If not, we just use the
+    // baseUrl
+    //filtering posts by title using title_like query param
+    //if title is present in the search params, we add title_like query param to the URL to filter the posts by title. If not, we just use the baseUrl to get all posts
+  ).then((res) => res.json());
+
+  return (
+    <>
+      <h1>Here we use new approach with Form tag from Next.js 15</h1>
+
+      {/* action="/posts3" <-- we stay on the same page, we don't do redirect to different page after Form submission*/}
+      {/* by submission this Form we make URL ->  https://jsonplaceholder.typicode.com/posts +?title=somevalue*/}
+      <Form action="/posts3">
+        <input type="text" name="title" placeholder="Enter your name" />
+        {/* <button type="submit">Search</button>  //<-- usual button tag*/}
+        <SearchButton />
+      </Form>
+
+      <PostsComponent data={data} />
+    </>
+  );
+}
+```
+
+```JS
+//See --> src/app/blog/[id]/page.tsx
+
+async function deletePost(id: string) {
+"use server"; // Marking the function to be a server action
+// ..some code to interact with Database
+
+}
+
+export default function Post({ params }: { params: { id: string } }) {
+  const singlePost = blogPosts?.find((post) => post.id === Number(params.id)); // Find the post with the matching ID from the static data
+
+  return(
+<>
+<form action={deletePost.bind(null, params.id)}>
+  {/* Binding the deletePost function to the form action, bind method allow you to pass correct post id*/}
+  {/* null - is passing context in bind method,we don't have any context therefore it is null */}
+  {/* params.id - is a string  */}
+  <input type="submit" value="Delete Post" />
+</form>
+}
+</>
+```
+
+✔ 2. Cleaner and faster — no extra API hop
+
+```JS
+//Traditional client flow:
+
+Component → fetch → API Route → DB
+```
+
+```JS
+//Server Action flow:
+
+Component → Server Action → DB
+```
+
+You remove an entire HTTP round-trip.
+
+✔ 3. No need for useEffect or fetch() for mutations
+
+```JS
+//Your form can directly submit to the server action:
+
+
+<form action={createPost}>   //<--use Server Actions
+  <input name="title" />
+  <input name="body" />
+  <button type="submit">Create</button>
+</form>
+
+//The server action receives the values on the server and interacts with your database
+```
+
+🚦 So when should you not use Server Actions?
+
+Use a normal API route only when:
+
+❗ You must call it from a fully client-side interaction
+
+(e.g., fetching in useEffect, polling, dynamic search-as-you-type)
+
+❗ Your call must be accessible by external clients
+
+(e.g., mobile app, webhook)
+
+Otherwise, Server Actions should be your default choice.
+
+#### API endpoints are exposed — but that’s normal and safe when done correctly
+
+i should not use Server Actions, when I must call it from a fully client-side interaction (e.g., fetching in useEffect, polling, dynamic search-as-you-type)
+
+When you must fetch from client-side code (useEffect, search-as-you-type, polling, pagination), you must expose a public API endpoint because the browser needs something to call.
+
+This is not insecure as long as the API is properly protected.
+
+🛡 How to stay secure when exposing API routes
+
+1. Authenticate the user (required)
+
+Protect the endpoint with NextAuth, Clerk, Auth.js, JWT, or cookies.
+
+```JS
+//Example:
+export async function POST(req: Request) {
+  const session = await auth();
+  if (!session) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  // only authenticated users reach this part
+}
+```
+
+2. Validate the incoming data
+
+```JS
+//Never trust body data: always give certain rules
+
+const { search } = await req.json();
+if (typeof search !== "string" || search.length > 100) {
+  return new Response("Invalid input", { status: 400 });
+}
+```
+
+3. Apply authorization rules
+
+```JS
+//Example: only allow users to modify their own posts.
+
+if (session.user.id !== post.userId) {
+  return new Response("Forbidden", { status: 403 });
+}
+```
+
+4. Never expose raw SQL or sensitive logic
+
+The API handler is the only place that touches the DB:
+
+```JS
+await db.query("SELECT * FROM posts WHERE title LIKE ?", [`%${search}%`]);
+
+//This is safe.
+```
+
+🔍 Why Server Actions cannot replace client-side fetch
+
+Server Actions require:
+
+- A form submission, or
+- A server component
+
+But when you are doing:
+
+- search-as-you-type (debounced)
+- infinite scroll
+- dashboard auto-refresh
+- polling
+- loading data after page load
+- user-type → real-time suggestions
+- WebSockets-style updates
+
+# Practical List what to use in each scenario in Next.js App Router — Server Actions vs. Server Components vs. API Routes.
+
+✅ 1. Fetching Data (READ)
+
+**A. Static or server-rendered page loading data**
+
+Use **Server Components**
+✔ Best performance
+✔ Runs only on server
+✔ No exposure
+✔ No client fetch needed
+
+**Example:** product list, blog posts, user dashboard
+
+```tsx
+// Server Component
+export default async function Page() {
+  const posts = await db.query("SELECT * FROM posts");
+  return <PostList posts={posts} />;
+}
+```
+
+---
+
+**B. Client needs to load data AFTER render**
+
+(useEffect, infinite scroll, search-as-you-type)
+
+Use **API Route (Route Handler)**
+❌ Cannot use Server Action (because it does not work from client)
+✔ Requires authentication
+✔ Must validate inputs
+
+**Example:** live user search, infinite load, filtering on client typing
+
+```tsx
+useEffect(() => {
+  fetch("/api/search?q=" + query);
+}, [query]);
+```
+
+---
+
+🚀 **2. Mutations (WRITE: create, update, delete)**
+
+**A. Triggered by a form or a button inside a server component**
+
+Use **Server Actions (BEST)**
+✔ Never exposed
+✔ No API required
+✔ No fetch
+✔ More secure
+✔ Simpler code
+
+**Example:** add post, update profile, delete item
+
+```tsx
+<form action={createPost}>
+  <input name="title" />
+  <button type="submit">Save</button>
+</form>
+```
+
+---
+
+**B. Triggered by client-side event (useEffect, polling, dynamic actions)**
+
+Use **API Route**
+✔ Browser must be able to call it
+✔ Authenticate + validate
+❌ Server Actions cannot run here
+
+**Example:**
+
+- auto-save draft every 2 seconds
+- upvote button without page refresh
+- like/unlike a post
+- toast UI triggered from client code
+
+```tsx
+await fetch("/api/upvote", { method: "POST", body: ... })
+```
+
+---
+
+🔄 **3. Mixed: Read + Write in UI**
+
+### **A. Page loads data (server), but also mutates**
+
+- Load data: **Server Component**
+- Mutate: **Server Action**
+
+**Example:** dashboard that loads tasks, and form adds a task.
+
+---
+
+**B. Page loads data dynamically on client and mutates**
+
+Both from client → **API Routes for both read + write**
+
+**Example:** chat app, live search + send message
+
+---
+
+🔐 **4. Authentication-required operations**
+
+Use this rule:
+
+### **If action requires login and doesn’t need client-side fetch → Server Action**
+
+### **If login-required action needs to run from browser JS → API Route**
+
+---
+
+🎯 **5. Real-time or frequent updates**
+
+Server Actions do NOT work → use API Route.
+
+Examples requiring **API Routes**:
+
+- Polling every X seconds
+- Realtime notifications
+- WebSocket/sse connections
+- Search suggestions as user types
+
+---
+
+💾 **6. Heavy database operations**
+
+### If running on initial page load → **Server Component**
+
+### If running on user submission → **Server Action**
+
+### If triggered by client-side JS → **API Route**
+
+---
+
+# 📌 **Ultimate Cheat Sheet (Summary)**
+
+| Scenario                              | Use                                  | Why                                |
+| ------------------------------------- | ------------------------------------ | ---------------------------------- |
+| Load data on page (SSR)               | **Server Component**                 | Fast, secure, no API               |
+| Submit a form (create/update/delete)  | **Server Action**                    | Best for mutations                 |
+| Dynamic data loaded from client       | **API Route**                        | Browser must fetch                 |
+| Live search / infinite scroll         | **API Route**                        | Needs client fetch                 |
+| Auto-save draft                       | **API Route**                        | Periodic client calls              |
+| Load + mutate in same route           | **Server Component + Server Action** | Clean split                        |
+| External clients need access          | **API Route**                        | Public endpoint                    |
+| Sensitive DB writes without client JS | **Server Action**                    | Most secure                        |
+| Use button click handled in client    | **API Route**                        | SA cannot be called from client JS |
+| External webhook                      | **API Route**                        | Must be reachable                  |
+
+---
+
+# ⭐ Final Rules to Remember
+
+### ✓ **Reads → Server Components (when possible)**
+
+### ✓ **Writes → Server Actions (when possible)**
+
+### ✓ **Client-side fetch → API Routes (always)**
+
+### ✓ **API Routes must be authenticated + validated**
+
+### ✓ **Server Actions never run in client → safe**
+
+# Interact with your Database in Server Actions and API Handlers but without Back-end (with no Nest JS) - adding all in Next.JS
+
 Next.js is one of the best front-end frameworks, it is better practice to don't add back-end to Next.js such as Server Actions and API Handlers. It is not good practice to mix back-end database, PRISMA etc. with front-end in Next.js.
 If you will mix everithing in Next.js - Once your application will grow/expand, you will have more problems, and trash bin with all different files in one place.
 
@@ -310,6 +808,38 @@ export default function page({}: Props) {
        <NewPostForm /> //not passing any props
        .....
       </div>)}
+```
+
+#### interactions with Database without Back-End in a Server Action
+
+```JS
+//example
+
+export async function createUser(name, email) {
+  //Direct query to Database without back-end server with api
+  //Can use ORM approach (Prisma) or other interactions with databases (Firebase, etc)
+
+  const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
+  const [result] = await pool.execute(sql, [name, email]);
+  return { id: result.insertId, name, email };
+}
+
+//Fetch() – is used for Calls an external API or route. For External data from another backend, microservices, or REST APIs
+//To interact directly to your own database – use SQL queries
+
+
+
+//Example of fetch in Server actions:
+
+"use server";
+
+export async function sendNotification(email: string) {
+  await fetch(https://api.mailservice.com/send, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, message: "Welcome!" }),
+  });
+}
 ```
 
 # Handlers API

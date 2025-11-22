@@ -378,7 +378,7 @@ Summary:
 - Service runs queries with parameters to avoid SQL injection.
 - Controller exposes API endpoints as before.
 
-# 👉 START
+# 👉 NestJS START
 
 - you need Node JS and npm package installed
 
@@ -387,8 +387,19 @@ Summary:
 ```JS
 //in terminal write
 npm install -g @nestjs/cli@latest
+//-g → installs globally so you can use the nest command anywhere
+//@latest → ensures you get the most recent version.
+
 //or
 sudo npm install -g @nestjs/cli@latest
+//or
+npm i -g @nestjs/cli
+
+//OR
+
+npx @nestjs/cli new project-name
+//npx lets you run CLI tools without installing them globally.
+//npx automatically downloads and runs the Nest CLI for this command only
 
 //nest.js CLI --> it is the way to help you to generate new projects and also has a couple other extra commands and create new files for you and it will make it easier
 ```
@@ -591,8 +602,8 @@ export class NinjasController {
 
 
   @Put(':id')
-  updateNinja(@Param('id') id: string) {
-    return {};
+  updateNinja(@Param('id') id: string, @Body() body: any) {
+    return {id,...body};
   }
 
 
@@ -782,12 +793,30 @@ const service = new NinjasService()
 There is also a CLI command that allows you to generate an entire resource along with controllers and providers all in one command
 
 ```JS
-//for example, giving the name of resource -users
-nest g resource users --dry-run
-
-//then also we can specify the dry-run command if you want
-//if you run this command
+//for example, if you want to give a the name of resource -users
+//if you run this command -> it will create entire resource -users (folder with models,controllers,services and DTOs) with one command
 nest g resource users
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Also, we can specify the dry-run command if you want. This command will show how much space each file will take without creating any file
+nest g resource users --dry-run
+//--dry-run → A flag that simulates the command without actually creating any files.
+//When you include --dry-run (or the short version -d), NestJS will:
+// -Will show those files that can be created or modified, without actually creating any files to your disk.
+//This is useful when you want to preview the effects of the command before running it for real.
+
+//When you run:
+nest g resource users --dry-run
+//You might see something like this:
+
+//CREATE src/users/users.controller.ts (88 bytes)
+//CREATE src/users/users.service.ts (108 bytes)
+//CREATE src/users/users.module.ts (252 bytes)
+//CREATE src/users/dto/create-user.dto.ts (34 bytes)
+//CREATE src/users/dto/update-user.dto.ts (36 bytes)
+//CREATE src/users/entities/user.entity.ts (36 bytes)
+
+//INFO  Dry run mode -- no files were created
 ```
 
 - then you will see that it will ask you what transport layer do you use?

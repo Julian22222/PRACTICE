@@ -2,12 +2,12 @@
 
 ⭐ If we use Context - to have global scope to some useStates -> all variables that we want to use from Context in other components, must be --> "use client"
 
-✨ In most cases structure of Next.js should be
+✨ In most cases in Next.js you should:
 
 - fetch data on the server, then ➜ pass the result to a client component
-- page.tsx (server side component) <-- fetch the data and then pass it to another component -> to use Hooks or client interactions - onClick, etc.
+- page.tsx (server side component) <-- fetch the data and then pass it to another component(client component) -> to use Hooks or client interactions - onClick, etc.
 
-🔥 bBecause server fetching is:
+🔥 Because server fetching is:
 
 - faster (runs on the server, no waterfall)
 - secure (no exposing secrets)
@@ -190,6 +190,7 @@ export default async function LoginPage() {
 //✅ This example works, but
 //❌ It is not the recommended way in Next.js App Router unless you must fetch on the client.
 
+//Example 1
 "use client";
 import Header from "@/src/components/Header";
 import Link from "next/link";
@@ -317,6 +318,51 @@ export default function LoginPage() {
             </div>
           )}
     </div>
+  );
+}
+```
+
+```JS
+//Example 2
+
+"use client";
+
+import { useEffect, useState } from "react";
+
+type Mypost = { id: number; title: string };
+
+export default function Page() {
+  const [myposts, setMyposts] = useState<Mypost[]>([]);
+
+  const fetchPosts = async () => {     ////////////use async in client component but it is not in main function
+    const res = await fetch(http://localhost:3001/myposts);
+    const data = await res.json();
+    setMyposts(data);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleAdd = async () => {
+    await fetch(http://localhost:3001/myposts, {
+      method: "POST",
+      body: JSON.stringify({ title: "New Post" }),
+      headers: { "Content-Type": "application/json" },
+    });
+    fetchPosts(); // refresh list
+  };
+
+  return (
+    <>
+      <h1>Local Server Page</h1>
+      <button onClick={handleAdd}>Add Post</button>
+      <ul>
+        {myposts.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </>
   );
 }
 ```

@@ -32,19 +32,23 @@ export default function NewPostForm({
 
     ///////////////////////////////////////////////////////////////////////////////////////
     //example of making a POST request to an API to create a new post
+    // we are not using this code, because we are using in-memory data - blogPosts array
+
+    // ❌ It is working example, 🔥 but it is better to interact with your database using Server Actions
     //   const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
     //     method: "POST",
     //     headers: {
     //       "Content-Type": "application/json",
     //     },
     //     body: JSON.stringify({
-    //       title,
+    //       title,c
     //       body,
     //       userId: 1, //hardcoded userId, in real app we will get it from the session
     //     }),
     //   });
 
     //   const post = await response.json(); //getting the newly created post from the response
+
     ///////////////////////////////////////////////////////////////////////////////////////
 
     blogPosts.push({
