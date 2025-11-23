@@ -13,7 +13,7 @@ export default function NewPostForm({
   onSuccess: (id?: number) => Promise<void> | void;
 }) {
 
-async function createPost(data: FormData) {
+async function createPost(data: FormData) {  //this is not common function - It is Server Actions (because - we use "use server"; on the top line)
 "use server";
 
 //getting form data values

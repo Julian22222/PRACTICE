@@ -1167,14 +1167,19 @@ const fetchData = async()=>{  //async request to the server
 }
 
 export default async function Page(){
-  const data = await fetchData()
+  const products = await fetchData()
 
-  if(!data){ //can make some checks, on a server component
+  if(!products){ //can make some checks, on a server component
     //do some logic
     redirect('/404')
   }
 
-  return <Products />
+  return (
+  <>
+    <h1>Product List</h1>
+    <Products products={products }/>  //passing products to client component
+  </>
+  )
 }
 ```
 
@@ -1409,7 +1414,7 @@ Usage in code:
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
 
-Important security note:
+❗ Important security note:
 Do NOT expose sensitive info (like passwords, API secrets, private keys) with NEXT_PUBLIC_.
 Anything prefixed with NEXT_PUBLIC_ is bundled into the client JavaScript and visible to anyone.
 

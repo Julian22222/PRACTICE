@@ -99,6 +99,7 @@ export async function DELETE(request: Request) {
 
   if (!id) {
     return new Response("ID is required", { status: 400 });
+    //return NextResponse.json({ error: 'ID is required' }, { status: 400 })
   }
 
   const response = await fetch(
