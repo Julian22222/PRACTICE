@@ -413,7 +413,7 @@ nest new nestProjectName  //with NEST CLI
 npx @nestjs/cli new myappName   //without NEST CLI
 ```
 
-# Avoid error before pushing Nest.JS and Next.JS
+# Avoid error before pushing Nest.JS and/or Next.JS
 
 - after creating new NEST.JS --> ninja-api folder using NEST CLI - it creates hiden .git folder, it causes .git which can cause error when you push the code to GitHub. Your main folder Next_AND_NEST folder has a .git folder. After command - "nest new ninja-api" ,NEST CLI automatically creates its own .git folder inside ninja-api folder. Now you have a .git folder inside .git folder, this is called nested Git repo, and Git doesn't like it. VS Code and GitHub are confused because ninja-api is not part of the main repository remote tracking, ninja-api has no remote link.To solve this error ->
   - open termimal and navigate to your NEST JS project folder
