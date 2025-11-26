@@ -366,3 +366,79 @@ export default function Page() {
   );
 }
 ```
+
+# If you want to use fetch in “use client” à use asunc await function inside useEffect !!!!
+
+```JS
+//Example 1
+
+"use client";
+
+async function getPost(id: string | null) {
+  const result = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
+    (res) => res.json()
+  );
+  return result;
+}
+
+//some code…
+
+export default function PostClient({ params }: Props) {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPost(id);
+      setPost(data); // Set the post data in state
+    };
+
+   if (id) {
+      fetchData(); // Fetch post data only if id is available
+    }
+  }, [id]);
+
+retur(
+//some HTML code
+)
+}
+```
+
+```JS
+Example 2:
+
+//src/services/getPosts.ts separate file where you fetch data
+
+export const getAllPosts = async () => {
+  const res = await fetch(
+    https://jsonplaceholder.typicode.com/posts?_limit=10
+  );
+
+  if (!res.ok) {
+    throw new Error("Unable to fetch posts.");
+  }
+  return res.json();
+};
+
+
+
+//src/app/posts2/page.tsx file
+
+"use client";
+
+import { getAllPosts } from "@/services/getPosts";  //import fetched data
+
+export default function Posts2({}: Props) {
+
+//some code
+
+useEffect(() => {
+    getAllPosts()   //ß use here imported feched data
+      .then(setPosts)
+      .finally(() => {
+        setUpdatedPosts(false); // Reset updatedPosts to false after fetching
+        setLoading(false); // Set loading to false after data is fetched
+      });
+  }, [updatedPosts]);
+
+return (<>some HTML</>)
+}
+```

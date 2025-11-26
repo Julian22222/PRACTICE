@@ -1,3 +1,171 @@
+# How Next.js work with Database ?
+
+⭐ Server Actions are now the best default way to interact with your database, for POST, PATCH, and DELETE
+
+Using server actions for:
+
+createPost() → POST
+updatePost() → PATCH
+deletePost() → DELETE
+
+is:
+
+✔ secure (code stays server-only)
+✔ simple (no API route needed)
+✔ fast (no network hop if on same server)
+✔ easy to use with forms or client components
+
+⭐ For GET requests, Server Actions work, but are not always ideal
+
+- Next.js for GET requests from Database, Next.js prefers using Server Components, because they:
+
+run on the server
+cache automatically
+stream immediately
+don't require a Server Action wrapper
+
+```JS
+//Example of GET request:
+
+export default async function Page() {
+const posts = await fetch(https://my-api/posts).then(res => res.json());   //Get request
+
+return <PostsList posts={posts} />;
+}
+```
+
+⚠ Use Server Components or fetch() for GET data:
+
+- Use a Server Component when:
+
+  - rendering a page
+  - loading initial data
+  - using Next.js caching/layering
+
+- Use a Server Action for GET only when:
+  - the GET requires authentication/session
+  - the GET is triggered by a user event (button click)
+  - the GET is too dynamic for static rendering
+
+💡 Summary
+
+👍 Best practice
+
+- GET → Server Component (or server fetch)
+- POST / PATCH / DELETE → Server Actions
+
+Why?
+
+- Server Actions are designed for mutations
+- Server Components are designed for data fetching
+- Both keep your DB secure and hidden from the client
+- No API routes needed unless you want an external API
+
+🧠 Why Server Components are the preferred way for GET
+
+Next.js designed Server Components specifically to:
+
+- fetch data
+- render data
+- cache data efficiently
+- stream HTML progressively
+- avoid client-side JS
+
+```JS
+//Server Actions are meant for mutations, not for fetching initial data.
+
+//Best practice (official guidance):
+
+Type of Operation                   |      Type of Operation
+
+GET / Fetch data                    |   ⭐ Server Component
+POST / PATCH / DELETE / Mutations   |   ⭐ Server Action
+```
+
+# Server actions work only with <form> tags ? NO
+
+Using <form action={myAction}> is one way to call a Server Action, but there are three different ways to use Server Actions in Next.js.
+
+✅ 1. Using Server Actions with <form action={...}> (HTML form submit)
+
+This is the simplest and MOST COMMON:
+
+```JS
+<form action={createPost}>
+  <input name="title" />
+  <button type="submit">Save</button>
+</form>
+```
+
+✔ Works with form data
+✔ No JavaScript needed
+✔ Good for simple server mutations
+
+But this is not the only way.
+
+✅ 2. Calling Server Actions manually (from client components)
+
+You can call a server action directly from a client component using the server action as a function.
+
+```JS
+'use client';
+
+import { createPost } from "./actions";
+
+export default function Page() {
+  async function handleClick() {
+    const id = await createPost({ title: "My Title" });
+    console.log("New post", id);
+  }
+
+  return <button onClick={handleClick}>Create</button>;
+}
+```
+
+You can call server actions like normal async functions — but only from client components.
+
+✔ Allows custom UI interactions
+✔ No need for <form>
+✔ Ideal for buttons, modals, dropdowns, etc.
+
+✅ 3. Calling Server Actions using the “useTransition” pattern
+
+Recommended for UI that should stay responsive.
+
+```JS
+'use client';
+
+import { useTransition } from "react";
+import { createPost } from "./actions";
+
+export default function Page() {
+  const [isPending, startTransition] = useTransition();
+
+  return (
+    <button
+      onClick={() => {
+        startTransition(() => {
+          createPost("hello world");
+        });
+      }}
+    >
+      {isPending ? "Saving..." : "Save"}
+    </button>
+  );
+}
+```
+
+⚠️ Important: The "use server" needs to be inside the server action function itself
+
+```JS
+export async function createPost(data) {
+  "use server";
+  // server-only code here
+}
+```
+
+The calling component can be client or server — doesn’t matter.
+
 # Fetching data in Server Actions not in Component function
 
 Generally it is better to interact with your database through Server Actions (or Route Handlers) rather than directly from a component.
@@ -46,6 +214,36 @@ return (
       </div>
     </form>
   );
+}
+```
+
+#### Also, you can have Server Actions file separately
+
+```JS
+//Example:
+//createPost.actions.ts
+
+"use server";
+
+export async function createPost(data: FormData) {
+
+  const { title, body } = Object.fromEntries(data);
+
+  // Call your backend API
+
+  const res = await fetch(process.env.INTERNAL_BACKEND_URL + "/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.INTERNAL_API_KEY}`
+    },
+    body: JSON.stringify({ title, body })
+  });
+
+  if (!res.ok) throw new Error("Failed to create post");
+
+  const post = await res.json();
+  return post.id;
 }
 ```
 

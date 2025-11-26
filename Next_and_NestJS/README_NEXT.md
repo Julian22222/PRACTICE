@@ -26,6 +26,12 @@ Therefore it is flexible to adjust for any tasks.
 - Optimization of building an application (building is very fast)
 - by default next is running on webpack -->
 
+////If you pass some params (customer_id) -> to child component, child component can be server or client side component, to get id from URL for example
+//Never use useGlobal() or context hooks inside the server component.
+//layouts and pages are server components by default in Next.js 13+
+//if you add "use cleint " to the layout, all its children will become client components too, which is not desired.
+//If your layout or provider imports any "use client" modules incorrectly, or the page imports a client-only module in the wrong way, you may get the params Promise error after navigation.
+
 ```JS
 //package.json file
 
@@ -87,6 +93,31 @@ scripts:
 //Then create folder - pages (in the Root folder of the project)
 //Inside "pages" folder--> index.js //home page -> localhost:3000
 //users.js  --> this component will be available using this URL -> localhost:3000/users
+```
+
+# Avoid error before pushing Nest.JS and/or Next.JS
+
+- after you create Next.js project it creates hiden .git folder. It causes .git which can cause error when you push the code to GitHub. And if you want to push first time your project it can cause error when you push the code to GitHub. Therefore you need to delete hidden .git folder.
+- after creating new NEST.JS --> ninja-api folder using NEST CLI - it creates hiden .git folder, it causes .git which can cause error when you push the code to GitHub. Your main folder Next_AND_NEST folder has a .git folder. After command - "nest new ninja-api" ,NEST CLI automatically creates its own .git folder inside ninja-api folder. Now you have a .git folder inside .git folder, this is called nested Git repo, and Git doesn't like it. VS Code and GitHub are confused because ninja-api is not part of the main repository remote tracking, ninja-api has no remote link.To solve this error ->
+  - open termimal and navigate to your NEST JS project folder
+  - type command: ls -a (list all files, including hidden files)
+  - rm -rf .git (delete .git folder inside Nest.JS)
+
+If you don't delete .git inside your Nest.Js project and push the code to GitHub it will create Git folder with arrow on GitHub --> "Git submodule", it is not a regular folder, you can't open this folder
+
+Next.js also has its own .git hidden file
+
+```JS
+//Remove the submodule reference from your main repo:
+
+git rm --cached bankapp  //bankapp  <-- folder to remove Git submodule
+rm -rf .git/modules/bankapp
+
+git commit -m "Remove bankapp submodule"
+git add bankapp
+git commit -m "Add bankapp as regular folder"
+git push origin main
+
 ```
 
 # 📤 Deployment
@@ -1247,6 +1278,8 @@ export async function POST() {
 ```
 
 ```JS
+//If you pass some params -> to child component, child component can be server or client side component, to get id from URL for example
+
 //Another example with tags
 
 //1. Tag the Product Fetch
@@ -1497,7 +1530,14 @@ export default function Home() {
 # Link component
 
 ```JS
-<Link href="/products">Click Here</Link>  //<--will address user to somhere without page loading,
+Always use <Link> tags instead of <a>
+```
+
+```JS
+<Link className="posts-link" href="/products">
+    Click Here
+</Link>  //<--will address user to somhere without page loading,
+
 
 <a></a>  //<--anker will adress user to somewhere with page loading
 ```
@@ -1955,6 +1995,16 @@ You can keep Metadata in layout.tsx file or in page.tsx
 -page.tsx file - specific or dynamic metadata. The metadata needs to change depending on the page content (like blog post titles, product names, etc).
 
 You can use Both at the same time - Use layout for base, and page to override as needed
+
+Metadata in Next.js (including generateMetadata) can be used only in Server Components, because metadata is resolved on the server at build/request time.
+
+Metadata can be defined in any of the following, as long as they are server components:
+
+Metadata can be used in :
+
+- layout.ts
+- page.tsx
+- generateMetadata() inside any page or layout
 
 # SEO Optimization
 
