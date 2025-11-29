@@ -156,7 +156,42 @@ res.status(500).send("Server error");
 404 Not Found when the resource doesn't exist
 500 Internal Server Error for unexpected errors
 
-# try-catch with async await and block then()
+# ✅ try-catch with async await and block then()
+
+try-catch:
+
+- during running some programms errors can occur, therefore we use -try catch.
+- catch block - allow us to process, or handle error and show
+- required message to the user or developer, without shouting down the running programm.
+- in catch block we write down the error that we are trying to catch , and then we
+- show a message that we want to show to the user, when this error occur.
+
+```JS
+try{
+  /some code to do
+}
+catch(err){
+  //show an error to developer
+  //Anything after a throw is unreachable, so console.log must be before throw:
+  console.log(err)
+  throw error(err);
+  //or
+  throw new Error(`Something went wrong: ${err.message}`);
+}
+
+//to handle other errors-->  can use may catch blocks to catch different errors
+//Example from C#
+
+try{.....
+}catch(error){ ..... when find this error , do this...
+}catch(FormatException){ ..... when find this error , do this...
+}catch(DivideByZeroException){..... when find this error , do this...}4
+
+also you can add -- finally block - which will anyway run after try blcok or catch block
+try{....
+}catch(){....
+}finally{ .....}
+```
 
 When you get a data from Database, by --> fetch(“http://......”).
 It always returns a Promise
