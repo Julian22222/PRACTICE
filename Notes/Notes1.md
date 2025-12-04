@@ -17,7 +17,7 @@ id: ninjas.array.length +1   //<-- added field id to the object
 
 ```JS
 //Example 1
-//Change one key in all the objects- Example from RepairShop project
+//Change one key in all the objects- Example from MySQL-database/app.js project
 
 const formattedRows = rows.map((row) => ({
 //converting database -serviceCheck property from 1/0 to true/false
