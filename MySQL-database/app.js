@@ -133,6 +133,17 @@ app.post("/", async (req, res) => {
     res.status(500).json({ message: "Server error" }); //if there is an error connecting to the database
   }
 });
+
+/////////////////////NOTES from PSQL
+//use RETURNING *; (/ or RETURN column1, column2,... ); <--- for POST, PUT, PATCH, DELETE methods
+//<--to get the inserted row back, The updated row(s) or deleted row(s) back
+
+// const data = pool.query(
+//       `INSERT INTO comments (author,body,article_id) VALUES($1, $2, $3)
+//       RETURNING*;`,
+//       [newComment.username, newComment.body, article_id]
+//     )
+
 ////////////////////////////////////////////////////////////////////////UPDATE
 app.put("/:carId", async (req, res) => {
   // Get ID from request body
