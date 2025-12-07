@@ -921,9 +921,9 @@ is generally better than using a plain HTML tag -->
 <img src="/...." alt="...."/>
 ```
 
-because "<Image/>" provides automatic performance optimizations, better user experience, and built-in best practices with almost no extra effort.
+because "Image" provides automatic performance optimizations, better user experience, and built-in best practices with almost no extra effort.
 
-✅ Why <Image /> is better than <img />
+✅ Why "Image" tag is better than "img"
 
 1. Automatic image optimization
 
@@ -934,28 +934,28 @@ Next.js optimizes images on-demand:
 - Compresses images automatically
 - Delivers correctly sized images based on device viewport
 
-With <img>, you would have to handle all this manually.
+With "img" tag , you would have to handle all this manually.
 
 2. Built-in lazy loading
 
-<Image /> automatically lazy-loads images that are off-screen, improving:
+"Image" tag - automatically lazy-loads images that are off-screen, improving:
 
 - Page load speed
 - Core Web Vitals (especially LCP)
 
-<img> requires loading="lazy" and still won’t handle all optimizations.
+"img" tag - requires loading="lazy" and still won’t handle all optimizations.
 
 3. Prevents layout shift (CLS)
 
-<Image /> reserves space based on width/height or aspect-ratio, preventing layout jumps.
+"Image" tag - reserves space based on width/height or aspect-ratio, preventing layout jumps.
 
-<img> can cause layout shift unless you manually set width/height or CSS aspect ratios.
+"img" tag - can cause layout shift unless you manually set width/height or CSS aspect ratios.
 
 4. Integrated with Next.js CDN
 
 Images are cached and served from the Next.js Image Optimization CDN (or your configured loader).
 
-<img> has no optimization pipeline and serves raw image files.
+"img" tag - has no optimization pipeline and serves raw image files.
 
 5. Responsive image support
 
@@ -973,13 +973,13 @@ Simple API for responsive behavior:
 
 Next.js generates images for each size automatically.
 
-With <img> you'd have to manually create and provide srcset and multiple image versions.
+With "img" you'd have to manually create and provide srcset and multiple image versions.
 
 6. Better caching
 
 Next.js handles immutable caching, etags, and revalidation automatically.
 
-<img> depends entirely on how the server sets headers.
+"img" tag - depends entirely on how the server sets headers.
 
 7. Built-in security checks
 
@@ -988,14 +988,14 @@ Next.js ensures:
 - Safe external domains (via next.config.js)
 - Avoiding untrusted or oversized image downloads
 
-<img> provides no such protections.
+"img" provides no such protections.
 
-When should you NOT use <Image />?
+❓ When should you NOT use "Image " ?
 
-Use <img> if:
+Use "img" if:
 
 - You need to display raw SVG (not rasterized)
-- You need extremely custom behavior that <Image> can’t support (rare)
+- You need extremely custom behavior that "Image" can’t support (rare)
 - You’re dealing with content inside MDX/Markdown (unless using next-mdx-remote + custom components)
 
 ```JS
@@ -1011,7 +1011,7 @@ Caching + compression        |   	  Auto         |    Manual
 Easiest developer experience |      Yes          |    No
 ```
 
-➡️ Use <Image /> whenever possible.
+➡️ Use "Image" whenever possible.
 It makes your site faster, improves SEO, and reduces manual work drastically.
 
 - Build in Image component
@@ -1019,7 +1019,7 @@ It makes your site faster, improves SEO, and reduces manual work drastically.
 [ --> Image component props <--](https://nextjs.org/docs/pages/api-reference/components/image)
 
 it allows to make website optimization, with loading images in certain way.
-The Next.js Image component extends the HTML <img> element for automatic image optimization.
+The Next.js Image component extends the HTML "img" tag element for automatic image optimization.
 
 have different ways how to optimase images:
 
