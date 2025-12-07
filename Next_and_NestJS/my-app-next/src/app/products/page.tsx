@@ -14,11 +14,6 @@ export const metadata: Metadata = {
   },
 };
 
-//Data loading using SSR, ISR, or SSG
-//SSR - Server-Side Rendering
-//ISR - Incremental Static Regeneration
-//SSG - Static Site Generation
-
 //request
 const fetchData = async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -34,6 +29,13 @@ export default async function ProductsPage() {
 
   //server-side comonent advantage, can check here, if data is empty or not
   if (!data || data.length === 0) redirect("/404"); // Redirect to not-found page if no data is found
+  //It only accepts the target URL as its argument: redirect(url). It does not accept an options object to pass a message or status like your example.
+  //Can't use this -->  redirect("/404", {status: 404, message:"some message"}); //this is not valid in nextjs
+  //can use Search Parameters to pass messages if needed, --> redirect("/404?message=some+message");
+  //or can use --> throw new Error("Failed to fetch data from the server.");  - this will show the error page- error.tsx
+
+  //or you can use built-in --> notFound() function to trigger the dedicated not-found.tsx page
+  //if (!data || data.length === 0) {notFound();}
 
   return (
     <div>
@@ -44,6 +46,11 @@ export default async function ProductsPage() {
     </div>
   );
 }
+
+//Data loading using SSR, ISR, or SSG
+//SSR - Server-Side Rendering
+//ISR - Incremental Static Regeneration
+//SSG - Static Site Generation
 
 ///////////////////////////////////////////////////////////////////
 // SSG option

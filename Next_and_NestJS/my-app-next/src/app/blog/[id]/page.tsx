@@ -18,6 +18,14 @@ async function deletePost(id: string) {
 
   revalidatePath("/blog"); // Revalidating the /posts path to reflect the deleted post
   redirect("/blog"); // Redirecting to the /posts page after deletion
+
+  //revalidatePath and redirect are used in in Next.js Server Actions or Route Handlers when you perform a mutation (like creating, updating, or deleting data) and want to control how the UI updates afterward.
+  //Use revalidatePath(path) when you have changed data and you need to ensure the Next.js cache for a specific page is updated, so the next visitor (or the current user) sees the new data
+  //This is essential after any server action that changes data that is displayed on another page
+  //very common to use both together in a Server Action
+  // Use redirect(url) when you want to navigate the user to a different page immediately after a server action is completed. This is useful for improving user experience by taking them to a relevant page after an operation, such as going back to the list view after deleting an item.
+  //Revalidate: Clear the cache for the page(s) that display the changed data.
+  //// Redirect: Navigate the user to a different page after the action is complete.
 }
 
 // export default function Post({ params: { id }}:Props) {
