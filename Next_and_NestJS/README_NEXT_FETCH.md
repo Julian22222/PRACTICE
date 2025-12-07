@@ -48,6 +48,45 @@ export default async function Item({ id }: { id: string }) {
 }
 ```
 
+```JS
+//example from my-app-next/src/app/posts/page.tsx
+
+async function fechData() {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10"
+  );
+  const result = await response.json();
+
+  if (!result || result.length === 0) {
+    throw new Error("No posts found"); // Handle error if no posts are found, will send this message to Error page- error.tsx
+    //throw new Error("Failed to fetch posts"); // Handle error if fetch failss
+  }
+
+  return result;
+}
+
+
+export default async function page() {
+  const data = await fechData(); // Fetching data from the external API
+
+  return (
+    <div>
+      <ul>
+        {data.map((post: singlePost) => (
+          <li key={post.id} className="post-element">
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <Link href={`/posts/${post.id}`} className="posts-link">
+              Read More
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
 2. Client Component (if needs useEffect)
 
 ```JS
@@ -63,6 +102,129 @@ export default function ItemClient({ item }) {
 
   return <div>{item.name}</div>;
 }
+```
+
+```JS
+//example from my-app-next/src/app/posts/[id]/PostClient.tsx
+
+"use client";
+
+async function getPost(id: string | null) {
+  const result = fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
+    (res) => res.json()
+  );
+  return result;
+}
+
+interface Props {
+  params: { id: string };
+}
+
+export default function PostClient({ params }: Props) {
+  const [id, setId] = useState<string | null>(null); // State to hold the post ID
+  const [post, setPost] = useState<singlePost | null>(null); // State to hold the post data
+
+  useEffect(() => {
+    // Unwrap params
+    params.then((resolvedParams) => {
+      setId(resolvedParams.id); // Set the ID in state
+    });
+  }, [params]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPost(id);
+      setPost(data); // Set the post data in state
+    };
+
+    if (id) {
+      fetchData(); // Fetch post data only if id is available
+    }
+  }, [id]);
+
+
+  return (
+    <div>
+      <Post_element id={id} post={post} />
+    </div>
+  );
+}
+```
+
+```JS
+//example from my-app-next/src/app/posts2/page.tsx
+
+"use client";
+import { Posts } from "@/components/Posts";
+import { PostSearch } from "@/components/PostSearch";
+import { getAllPosts } from "@/services/getPosts";    //fetch from another file
+
+export default function Posts2({}: Props) {
+  type Post = {
+    id: number;
+    title: string;
+    body: string;
+  };
+
+  const [posts, setPosts] = useState<Post[]>([]); // State to hold the posts data
+  const [error, setError] = useState<string | null>(null); // State to hold any error message
+  const [loading, setLoading] = useState<boolean>(true); // State to manage loading state
+  const [updatedPosts, setUpdatedPosts] = useState<boolean>(false); //change useEffect to re-fetch posts when this state changes
+
+  // useEffect(() => {
+  //   getAllPosts().then((data) => {
+  //     setPosts(data); // Set the posts data in state
+  //     setLoading(false); // Set loading to false after data is fetched
+  //   });
+  // }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  //the same code as above
+  useEffect(() => {
+    getAllPosts()
+      .then(setPosts)
+      .finally(() => {
+        setUpdatedPosts(false); // Reset updatedPosts to false after fetching
+        setLoading(false); // Set loading to false after data is fetched
+      });
+  }, [updatedPosts]); // Adding posts as a dependency to re-fetch if posts change
+
+  return (
+    <div>
+      <h1 className="posts-header">Posts2</h1>
+      <PostSearch                    //passing posts data
+        posts={posts}
+        setPosts={setPosts}
+        setUpdatedPosts={setUpdatedPosts}
+      />
+      {posts && posts.length > 0 ? (
+        <Posts posts={posts} />     // //passing posts data
+      ) : loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        "No posts found."
+      )}
+    </div>
+  );
+}
+
+
+
+//another file
+//from --> my-app-next/src/services/getPosts.ts
+export const getAllPosts = async () => {
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=10"
+  );
+
+  if (!res.ok) {
+    throw new Error("Unable to fetch posts.");
+  }
+
+  return res.json();
+};
+
 ```
 
 3. Server fetching utils
