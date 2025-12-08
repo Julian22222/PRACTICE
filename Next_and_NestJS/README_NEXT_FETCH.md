@@ -1,11 +1,11 @@
 # Fetch data and assign to variables or to useState
 
-⭐ If we use Context - to have global scope to some useStates -> all variables that we want to use from Context in other components, must be --> "use client"
+⭐ If we use Context - to have global scope to some useStates -> to use Context in some certain component - we need make sure that component where we use Context is "use client"
 
 ✨ In most cases in Next.js you should:
 
 - fetch data on the server, then ➜ pass the result to a client component
-- page.tsx (server side component) <-- fetch the data and then pass it to another component(client component) -> to use Hooks or client interactions - onClick, etc.
+- page.tsx (server side component) <-- fetch the data and then pass it to another component(client component) -> to use Hooks or client interactions - onClick, onChange, onSubmit, etc.
 
 🔥 Because server fetching is:
 
@@ -20,16 +20,16 @@ If you do fetching on the client side component, it loses all these benefits.
 
 ```JS
 -app/
-  -layout.tsx
-  -page.tsx  //<--useally server component
-  -other.tsx  //<--if needed it can be "use client" component that is inserted to page.tsx
+  └── layout.tsx
+  └── page.tsx  //<--useally server component
+  └── other.tsx  //<--if needed it can be "use client" component that is inserted to page.tsx
 
 -components/
-    -Item.tsx            ← Server Component (fetching)
-    -ItemClient.tsx      ← Client Component (useEffect)
+    └── Item.tsx            ← Server Component (fetching data)
+    └── ItemClient.tsx      ← Client Component (useEffect, client interactions - onClick, onChange, onSubmit, etc.)
 
 -services/
-    -fetchItem.ts        ← Helper function for server fetch
+    └── fetchItem.ts        ← Helper function for server fetch
 ```
 
 ✔️ Pattern to Follow
@@ -37,7 +37,6 @@ If you do fetching on the client side component, it loses all these benefits.
 1. Server Component (fetches data)
 
 ```JS
-
 // app/components/Item.tsx  (Server Component)
 import ItemClient from "./ItemClient";
 import { getItem } from "@/services/fetchItem";
@@ -133,7 +132,7 @@ export default function PostClient({ params }: Props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getPost(id);
+      const data = await getPost(id);    //use asyn/await and fetch inside useEffect!!!
       setPost(data); // Set the post data in state
     };
 

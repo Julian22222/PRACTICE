@@ -4,18 +4,18 @@
 
 Using server actions for:
 
-createPost() → POST
-updatePost() → PATCH
-deletePost() → DELETE
+- createPost() → POST
+- updatePost() → PATCH
+- deletePost() → DELETE
 
-is:
+and it is:
 
-✔ secure (code stays server-only)
-✔ simple (no API route needed)
-✔ fast (no network hop if on same server)
-✔ easy to use with forms or client components
+- ✔ secure (code stays server-only)
+- ✔ simple (no API route needed)
+- ✔ fast (no network hop if on same server)
+- ✔ easy to use with forms or client components
 
-⭐ For GET requests, Server Actions work, but are not always ideal
+⭐ You can use GET requests with Server Actions, but it is not always ideal
 
 - Next.js for GET requests from Database, Next.js prefers using Server Components, because they:
 
@@ -25,7 +25,7 @@ stream immediately
 don't require a Server Action wrapper
 
 ```JS
-//Example of GET request:
+//GET request example:  <--on Server Component
 
 export default async function Page() {
 const posts = await fetch(https://my-api/posts).then(res => res.json());   //Get request
@@ -47,9 +47,9 @@ return <PostsList posts={posts} />;
   - the GET is triggered by a user event (button click)
   - the GET is too dynamic for static rendering
 
-💡 Summary
+# 💡 Summary
 
-👍 Best practice
+Best practice
 
 - GET → Server Component (or server fetch)
 - POST / PATCH / DELETE → Server Actions
@@ -97,9 +97,9 @@ This is the simplest and MOST COMMON:
 </form>
 ```
 
-✔ Works with form data
-✔ No JavaScript needed
-✔ Good for simple server mutations
+- ✔ Works with form data
+- ✔ No JavaScript needed
+- ✔ Good for simple server mutations
 
 But this is not the only way.
 
@@ -124,9 +124,9 @@ export default function Page() {
 
 You can call server actions like normal async functions — but only from client components.
 
-✔ Allows custom UI interactions
-✔ No need for <form>
-✔ Ideal for buttons, modals, dropdowns, etc.
+- ✔ Allows custom UI interactions
+- ✔ No need for "form" tag
+- ✔ Ideal for buttons, modals, dropdowns, etc.
 
 ✅ 3. Calling Server Actions using the “useTransition” pattern
 
@@ -168,11 +168,11 @@ The calling component can be client or server — doesn’t matter.
 
 # Fetching data in Server Actions not in Component function
 
-Generally it is better to interact with your database through Server Actions (or Route Handlers) rather than directly from a component.
+🔥 Generally it is better to interact with your database through Server Actions (or Route Handlers) rather than directly from a component.
 
 ```JS
 //Example -> src/components/NewPostForm.tsx
-// ❌ It is working example, 🔥 but it is better to interact with your database using Server Actions
+// 🔥 example where we interact with your database using Server Actions
 //❌ Client component + fetch is not recommended
 
 export default function NewPostForm({
@@ -182,7 +182,7 @@ export default function NewPostForm({
 }) {
 
 async function createPost(data: FormData) {  //this is not common function - It is Server Actions (because - we use "use server"; on the top line)
-"use server";
+"use server";   //<-- when Next.js see "use server", it will run this function exclusively on the server
 
 //getting form data values
 const { title, body } = Object.fromEntries(data); //converting form data to an object, and destructuring the object to get title and body values
@@ -438,7 +438,7 @@ You remove an entire HTTP round-trip.
 //The server action receives the values on the server and interacts with your database
 ```
 
-🚦 So when should you not use Server Actions?
+# 🚦 So when should you not use Server Actions?
 
 Use a normal API route only when:
 
@@ -533,10 +533,11 @@ But when you are doing:
 **A. Static or server-rendered page loading data**
 
 Use **Server Components**
-✔ Best performance
-✔ Runs only on server
-✔ No exposure
-✔ No client fetch needed
+
+- ✔ Best performance
+- ✔ Runs only on server
+- ✔ No exposure
+- ✔ No client fetch needed
 
 **Example:** product list, blog posts, user dashboard
 
@@ -555,9 +556,10 @@ export default async function Page() {
 (useEffect, infinite scroll, search-as-you-type)
 
 Use **API Route (Route Handler)**
-❌ Cannot use Server Action (because it does not work from client)
-✔ Requires authentication
-✔ Must validate inputs
+
+- ❌ Cannot use Server Action (because it does not work from client)
+- ✔ Requires authentication
+- ✔ Must validate inputs
 
 **Example:** live user search, infinite load, filtering on client typing
 
@@ -574,11 +576,12 @@ useEffect(() => {
 **A. Triggered by a form or a button inside a server component**
 
 Use **Server Actions (BEST)**
-✔ Never exposed
-✔ No API required
-✔ No fetch
-✔ More secure
-✔ Simpler code
+
+- ✔ Never exposed
+- ✔ No API required
+- ✔ No fetch
+- ✔ More secure
+- ✔ Simpler code
 
 **Example:** add post, update profile, delete item
 
@@ -594,9 +597,10 @@ Use **Server Actions (BEST)**
 **B. Triggered by client-side event (useEffect, polling, dynamic actions)**
 
 Use **API Route**
-✔ Browser must be able to call it
-✔ Authenticate + validate
-❌ Server Actions cannot run here
+
+- ✔ Browser must be able to call it
+- ✔ Authenticate + validate
+- ❌ Server Actions cannot run here
 
 **Example:**
 
@@ -692,6 +696,10 @@ Examples requiring **API Routes**:
 
 ### ✓ **Server Actions never run in client → safe**
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# ✨✨✨ Use Server Actions and API Handlers to interact with your Database without Back-End, TRY to AVOID THIS INTERACTIONS!!!!!!
+
 # Interact with your Database in Server Actions and API Handlers but without Back-end (with no Nest JS) - adding all in Next.JS
 
 Next.js is one of the best front-end frameworks, it is better practice to don't add back-end to Next.js such as Server Actions and API Handlers. It is not good practice to mix back-end database, PRISMA etc. with front-end in Next.js.
@@ -703,13 +711,13 @@ But it is good to know that Next.js have opportunities to work with Back-End in 
 
 # Server Actions
 
-NEXT JS allow to create Api Routes and Server Actions, but most of the time developers separate application to NEXT.JS (Front-END) and NEST.JS (BACK-END) and dont put all together Front-end and Back-end.
+NEXT JS allow to create Api Routes and Server Actions, but most of the time developers separate application to NEXT.JS (Front-END) and NEST.JS (BACK-END) and don't put all together Front-end and Back-end.
 
 usually Server Actions are used with Forms, (from UI), See -> components/NewPostForm.tsx
 
-What are Server Actions in Next.js?
+❓ What are Server Actions in Next.js?
 
-- Allow interact with data without creating back-end api server.
+- Allow interact with data without creating Back-End API Server.
 - All queries are taking place in the Next.js server side
 
 Server Actions are special functions that run only on the server when you call them from your React components. They let you do things like:
@@ -719,17 +727,17 @@ Server Actions are special functions that run only on the server when you call t
 - Call APIs without exposing secrets
 - Perform server-side logic directly from your UI code
 
-Why use Server Actions?
+❓ Why use Server Actions?
 Normally, when you want to update data or do some backend work, you create API routes and call them with fetch or axios. Server Actions let you skip the extra API layer and call server functions directly from your React components — making your code simpler and cleaner.
 
-How do Server Actions work?
+❓ How do Server Actions work?
 
 1. You define a function as a server action.
 2. Call this function inside your React component.
 3. The function runs on the server.
 4. The client gets the updated UI or data after the action finishes.
 
-Summary:
+💡 Summary:
 
 - Server Actions are functions that run on the server.
 - You can call them from React components without creating separate API routes.
@@ -742,7 +750,7 @@ Real Example:
 2.  Define the Server Action to insert a user into the database
 
 ```JS
-// app/actions.js
+// app/actions.js    <-- Server Actions file
 'use server';
 
 import mysql from 'mysql2/promise';
@@ -757,7 +765,7 @@ const pool = mysql.createPool({
 
 
 export async function createUser(name, email) {
-  //Direct query to Database without back-end server with api
+  //You write Direct query in Server Actions to Database without back-end server with api
   //Can use ORM approach (Prisma) or other interactions with databases (Firebase, etc)
   const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
   const [result] = await pool.execute(sql, [name, email]);
@@ -807,7 +815,7 @@ export default function UserForm() {
 // Important:
 // In Next.js, only variables prefixed with NEXT_PUBLIC_ are exposed to the browser.
 // Since database credentials should stay secret, use environment variables without NEXT_PUBLIC_ prefix.
-// Server Actions run on the server, so they can safely access these env vars.
+// Server Actions run on the server, so they can safely access these env variables.
 // The .env.local file is loaded automatically by Next.js during development and build.
 ```
 

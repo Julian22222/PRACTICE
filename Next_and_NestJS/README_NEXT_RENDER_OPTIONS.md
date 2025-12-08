@@ -24,7 +24,7 @@
 - If you want to use async/await on the Client Component - "use clinet" --> You must place it within an event handler or a hook (like useEffect or inside a state update function), not the component's main body.
 
 ```JS
-//❌ Bad example, can't use async/await this way
+//❌ Bad example, can't use async/await and fetch this way
 export default async function ProductsPage() {
   const data = await fetchData();
   //some code
