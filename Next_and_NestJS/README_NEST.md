@@ -59,7 +59,7 @@ Nest.js is a progressive Node.js framework for building server-side applications
 
 ```JS
 //Example 1:
-1. Define a Task interface
+//1. Define a Task interface
 
 export interface Task {
   id: number;
@@ -67,8 +67,8 @@ export interface Task {
   completed: boolean;
 }
 
-2. Create a Service to handle tasks logic
-//Services contain the business logic — like storing tasks, adding new tasks, etc.
+//2. Create a Service to handle tasks logic
+//Services contain the business logic — like storing tasks, adding new tasks, etc., interaction with DB
 
 import { Injectable } from '@nestjs/common';
 import { Task } from './task.interface';
@@ -95,7 +95,7 @@ export class TasksService {
   }
 }
 
-3. Create a Controller to handle HTTP requests
+//3. Create a Controller to handle HTTP requests
 //Controllers route incoming requests and send responses.
 
 import { Controller, Get, Post, Body } from '@nestjs/common';
@@ -107,7 +107,7 @@ export class TasksController {
 
   constructor(private readonly tasksService: TasksService) {}  //Constructor injects the TasksService
 
-  //@Get() method returns all tasks. @Get() means this method responds to HTTP GET requests at /tasks.  If you want to change the route  to tasks/getall à we put @Get(“getall”)
+  //@Get() method returns all tasks. @Get() means this method responds to HTTP GET requests at /tasks.  If you want to change the route  to tasks/getall <-- we put @Get(“getall”)
   //If you want the URL to be /tasks/getAllTasks, you can specify the path inside the @Get() decorator:  @Get('getAllTasks')
   @Get()  //@Get() without any parameters means this method handles GET requests on exactly /tasks.
   getAllTasks(): Task[] {
@@ -168,7 +168,7 @@ export class TasksController {
 // You need a method to handle the request. The method name is just a regular TypeScript function name.
 
 
-4. Define the Module
+//4. Define the Module
 //Modules tie everything together.
 
 import { Module } from '@nestjs/common';
