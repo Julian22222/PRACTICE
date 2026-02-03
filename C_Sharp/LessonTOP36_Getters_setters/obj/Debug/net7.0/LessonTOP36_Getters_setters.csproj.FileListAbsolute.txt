@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/bin/Debug/net7.0/LessonTOP36_Getters_setters
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/bin/Debug/net7.0/LessonTOP36_Getters_setters.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/bin/Debug/net7.0/LessonTOP36_Getters_setters.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/bin/Debug/net7.0/LessonTOP36_Getters_setters.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/bin/Debug/net7.0/LessonTOP36_Getters_setters.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/refint/LessonTOP36_Getters_setters.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/LessonTOP36_Getters_setters.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP36_Getters_setters/obj/Debug/net7.0/ref/LessonTOP36_Getters_setters.dll

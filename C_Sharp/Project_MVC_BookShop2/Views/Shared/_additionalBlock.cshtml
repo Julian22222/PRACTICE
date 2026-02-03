@@ -1,0 +1,159 @@
+<div class="container mt-5 mb-5">
+    <div class="row">
+
+
+        <div class="col">
+           <img src="~/img/pngwing9.png" alt="unknown" class="img-fluid" style="width: 300px;"/>
+        </div>
+
+        <div class="col">
+            <h1>About Us</h1>
+            <p>At Diamond Book Shop, we’re passionate about connecting readers with the books they love through a seamless and inspiring online experience.</p>
+            @* <button class="btn btn-primary">Learn More</button> *@
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Learn More
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">About US</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Welcome to Diamond Book Shop, your trusted online destination for books of all kinds. Whether you're a lifelong reader, a curious learner, or someone searching for the perfect gift, we offer a carefully curated selection of titles across genres—from bestsellers and classics to indie gems and academic resources. Our mission is to make reading accessible and enjoyable for everyone, with fast shipping, secure checkout, and friendly customer service. At Diamond Book Shop, every book tells a story—and so do we.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            <h1>Contact Us</h1>
+            <p>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                    Toggle width collapse
+                </button>
+            </p>
+            <div style="min-height: 120px;">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                    <div class="card card-body" style="width: 300px;">
+                        We’re here to help! If you have any questions, feedback, or need assistance with your order, please don’t hesitate to reach out. You can contact us via email at <a href="#">Diamond@Bookshop.com</a> or use our contact number <strong>0123456789</strong>  , and we’ll get back to you as soon as possible. Your satisfaction is important to us, and we’re always happy to hear from fellow book lovers.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2 mt-2">
+           <img src="~/img/pngwing7.png" alt="unknown" class="img-fluid" />
+        </div>
+       
+    </div>
+
+        <div class="containrer">
+            <h1 class="d-flex justify-content-center mb-5 text-decoration-underline">Most popular books in @DateTime.Now.Year</h1>
+            <div class="row">
+                <div class="col-4">
+                    <span class="d-flex justify-content-center">Book1</span>
+
+                    <span class="d-flex justify-content-center">Book2</span>
+
+                    <span class="d-flex justify-content-center">Book3</span>
+
+                    <span class="d-flex justify-content-center">Book4</span>
+
+                    <span class="d-flex justify-content-center">Book5</span>
+                </div>
+
+                <div class="col-8">
+                    @* <span class="col-1 d-flex justify-content-center">Book1</span> *@
+                    <div class="progress mb-2" role="progressbar" aria-label="Basic example" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-success progress-bar-striped" style="width: 5%">5%</div>
+                    </div>
+
+                    <div class="progress mb-2" role="progressbar" style="height: auto;" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-info progress-bar-striped" style="width: 20%">20%</div>
+                    </div>
+
+                    <div class="progress mb-2" role="progressbar" aria-label="Basic example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped" style="width: 50%">50%</div>
+                    </div>
+
+                    <div class="progress mb-2" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-danger progress-bar-striped" style="width: 75%">75%</div>
+                    </div>
+
+                    <div class="progress mb-2" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-warning progress-bar-striped" style="width: 100%">100%</div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    
+
+</div>
+
+    <div class="row" style="color: white; background-color: rgb(87, 87, 79)">
+        <div class="col m-5">
+            <h5 class="text-decoration-underline">Shopping with us</h5>
+            <p>Contact Us</p>
+            <p>Bookshops</p>
+            <p>Click & Collect</p>
+            <p>Delivery Options</p>
+            <p>Returns Policy</p>
+        </div>
+
+        <div class="col m-5">
+            <h5 class="text-decoration-underline">Legal</h5>
+            <p>Accessibility</p>
+            <p>Terms and Conditions</p>
+            <p>Privacy Policy</p>
+            <p>Cookie Policy</p>
+        </div>
+
+        <div class="col m-5">
+            <h5 class="text-decoration-underline">About Dimond Bookshop</h5>
+            <p>About us</p>
+            <p>Careers</p>
+            <p>Corporate Sales</p>
+            <p>Gift Cards</p>
+            <p>Independent Publishers</p>
+        </div>
+
+        <div class="col m-5">
+            <h5 class="text-decoration-underline mb-5" >Follow US</h5>
+            <img src="~/img/media/facebook.png" alt="facebook" class="img-fluid" style="width: 40px;"/> 
+            <img src="~/img/media/x.png" alt="facebook" class="img-fluid" style="width: 40px;"/> 
+            <img src="~/img/media/instagram.png" alt="facebook" class="img-fluid" style="width: 40px;"/> 
+            <img src="~/img/media/tik-tok.png" alt="facebook" class="img-fluid" style="width: 40px;"/> 
+            <img src="~/img/media/youtube.png" alt="facebook" class="img-fluid" style="width: 40px;"/> 
+            <br/>
+            <br/>
+
+
+            @* to make Bootstrap Toast work additionally to this HTML we added JS code in - wwwroot/js/site.js*@
+            <button type="button" class="btn btn-primary" id="liveToastBtn">Learn More</button>
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="/img/ajax-loader.gif" style="width: 50px;" class="rounded me-2" alt="myGif">
+                        <strong class="me-auto">Bootstrap Toast</strong>
+                        <small>11 mins ago</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body text-dark">
+                        Follow us on our social media platforms to get the latest updates and news about our bookshop. We are active on Facebook, Instagram, TikTok, and YouTube. Join our community of book lovers and stay connected with us!
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

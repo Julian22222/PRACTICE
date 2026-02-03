@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/bin/Debug/net7.0/LessonTOP18_ARRAY4
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/bin/Debug/net7.0/LessonTOP18_ARRAY4.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/bin/Debug/net7.0/LessonTOP18_ARRAY4.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/bin/Debug/net7.0/LessonTOP18_ARRAY4.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/bin/Debug/net7.0/LessonTOP18_ARRAY4.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/refint/LessonTOP18_ARRAY4.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/LessonTOP18_ARRAY4.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP18_ARRAY4/obj/Debug/net7.0/ref/LessonTOP18_ARRAY4.dll

@@ -1,0 +1,39 @@
+name: SuperTest check
+on: workflow_dispatch
+jobs:
+  get-code:
+    name: get code from GitHub
+    runs-on: ubuntu-latest
+    steps:
+      - name: print to console
+        run: echo Starting my workflow!
+
+      - name: Get Repository code
+        uses: actions/checkout@v4
+
+      # - name: Super-Linter
+      #   uses: super-linter/super-linter@v7.2.1
+
+      - name: Install dependencies
+        working-directory: MySQL-database
+        run: npm ci
+
+      - name: Add environment variables
+        run: |
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_DATABASE=${{ secrets.DB_DATABASE }} >> .env
+          echo PORT=9080 >> .env
+        working-directory: MySQL-database
+
+      - name: start server
+        working-directory: MySQL-database
+        run: |
+          npx pm2 start server.js
+          sleep 10
+          npm run test
+
+      # - name: testing application with SuperTest
+      #   working-directory: MySQL-database
+      #   run: npm run test

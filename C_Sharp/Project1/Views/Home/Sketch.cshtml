@@ -1,0 +1,68 @@
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+@* these two lines are needed to use GetValue in View file, ( to get data from appsettings.json) *@
+@* @using Microsoft.Extensions.Configuration <-- using this link we can use GetValue method *@
+@* this 2 lines are the same as top line, but this example we use with GetValue method *@
+@using Microsoft.Extensions.Configuration 
+@using Project_MVC_BookShop2.Models
+@inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+@model bool
+
+<h1>Sketch Page to practice</h1>
+
+@{
+    var newCar = new AlertConfig();
+    _configuration.Bind("NewCarAlertObj", newCar);
+}
+
+<br/>
+<h2>How to use appsettings.json data in View, showing data from appsettings.json obejct</h2>
+<h3>option 1:</h3>
+
+@* with these options we always geting string data type from appsettings.json *@
+<p>@_configuration["DisplayNewCarAlert"]</p>
+
+<p>@_configuration["Name"]</p>
+
+    using Project_MVC_BookShop2.Models;
+<p>@_configuration["infoObj:key1"]</p> 
+<p>@_configuration["infoObj:key3:key 3 obj 1"]</p>
+
+<br/>
+<hr/>
+
+<h3>Option 2: we use GetValue method</h3>
+@* with this option we can choose the data type what we want to receive from appsettings.json *@
+<p>@(_configuration.GetValue<bool>("DisplayNewCarAlert"))</p>
+
+@* receiving data from HomeController *@
+<p>@Model</p>
+
+
+<br/>
+<hr/>
+
+<h2>Binding Configuration to objects using Bind method, bind object from appsettings.json file to Model class </h2>
+ @* if newBook.DisplayNewBookAlert == true, show --> message *@
+
+@if(newCar.DisplayNewCarAlert){
+    <p>@newCar.CarName</p>
+}
+
+
+<br/>
+
+<h4>Areas</h4>
+
+<a asp-area="Admin" asp-controller="Home" asp-action="Index">Click here</a>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<h4>Passing Anonymous Object using an Object</h4>
+<p>@ViewBag.Employee.EmployeeID</p>
+<p>@ViewBag.Employee.EmployeeName</p>

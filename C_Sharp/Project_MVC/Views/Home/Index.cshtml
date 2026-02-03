@@ -1,0 +1,383 @@
+﻿@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Text;
+@using System.Threading.Tasks;
+
+@* //Clients class connection, can use Contact class in here *@
+@* @using Project_MVC.Models;  *@
+
+@using Project_MVC.Controllers;
+@* import function *@
+
+
+@using Project_MVC.Models 
+ 
+@* //import Newclass *@
+
+
+
+@model List<Clients>   //to receive a List from HomeController
+
+
+@{ //in this brackets we can use C# code
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to my page created by ASP.Net</h1>
+    <p>Here you can see my projects uszing C#.</p>
+</div>
+
+
+
+@* <div> *@
+@* HTML helpers *@
+@* @Html.Label(expression:"Name",labelText: "Insert your name: ")<br/>
+@Html.TextBox(expression:"Name")
+@Html.TextArea(expression:"text", null, rows:5, columns:50,new { @class = "form-control" })<br/><br/>
+</div> *@
+
+
+
+<div>
+@* we need to choose correct controller where exists method PostFormMethodToDatabase ,which will post all our data from form to the database *@
+@* <form action ="./Index"> *@
+@* <form  asp-controller="Contacts" asp-action="Index" method="post"> 
+<div asp-validation-summary="All" style="font-size:23px; font-family:Impact">
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" placeholder="insert your name"/> *@
+        @* asp-for="Name *@
+    @* </div>
+
+    <div>
+        <label>Age</label>
+        <input type="text" name="Age" placeholder="insert your age"/> *@
+        @* asp-for="Age" the same as name="Age"*@
+    @* </div>
+
+     <div>
+        <label>Description</label>
+        <textarea type="text" name="Description" placeholder="insert your description"></textarea> *@
+        @* asp-for="Age" the same as name="Age"*@
+    @* </div>
+
+    </div>
+<div>
+        <button type="submit">Send</button>
+    </div>
+</form> *@
+</div>
+
+
+<h1>Sum of 2 num</h1>
+<p>
+@{
+    int num1 = 3;
+    int num2 =1;
+    int result = num1 +num2;
+}
+
+@result
+</p>
+
+<p>The sum of 5 and 7 is <i>@(5 + 7)</i></P>
+
+@{
+    int a = 10;
+    int b = 20;
+    int c = a + b;
+}
+<p>@c</p>
+
+<hr/>
+<br/>
+<br/>
+
+
+@* Your view is being rendered before your layout *@
+@{
+
+    string test = "";
+
+   string myFunction (){
+         return test = "HEY";
+    }
+}
+
+<input type="button" value="Click me" class="btn btn-danger" />
+<br/>
+<br/>
+
+
+
+@* jquery code *@
+@* <script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+  $(document).ready(function (){
+    alert("Page loaded");
+})  
+</script> *@
+
+
+
+
+
+<button type="button" name="clickMe" value="7" onclick="@myFunction">Click me</button>
+<p>@test</p>
+
+<input type="button" value="Link to another page in your app" onclick="location.href='@Url.Action("Game", "Home")'" />
+
+<hr/>
+<br/>
+<h2>Day Time code and logic</h2>
+
+ <p>The time is @DateTime.Now</p>
+ <p>@DateTime.Now.ToString("dd-M-yy")</p>
+
+ <br/>
+
+
+@{
+    var greeting = "Welcome to my site!";
+    var weekDay = DateTime.Now.DayOfWeek;
+    var greetingMessage = greeting + "today is " + weekDay;
+
+    var txt = "";
+if(DateTime.Now.Hour > 12)
+  {txt = "Good Evening";}
+else
+  {txt = "Good Morning";}
+}
+<p>@greetingMessage</p>
+<p>@DateTime.Now.Day</p>
+<p>@DateTime.Now.Hour</p>
+<p>@DateTime.Now.Minute</p>
+<p>@DateTime.Now.Second</p>
+
+<p>The message is @txt</p>
+<br/>
+<hr/>
+<br/>
+
+
+<h2>For loop</h2>
+
+@* Loops:
+For
+ForEach
+and others *@
+@* <p>@Model.Clients.clients.Count</p> *@
+<div>
+    <ul>
+        @foreach (var client in Model){
+        <li>
+            <span>@client.Name - @client.LastName - @client.Age </span>
+        </li>
+            }
+
+            
+    </ul>
+
+</div>
+
+
+@for (int j = 0; j < 5; j++){
+<p>This is a For loop with index - @j</p>
+}
+
+<hr/>
+@{
+var i = 0;
+while (i < 5)
+    {
+    i += 1;
+    <p>Line @i</p>
+    }
+}
+
+<br/>
+<br/>
+
+
+<h4>ForEach Loop</h4>
+@{
+    var list = new List<int>(){1,2,3,4,5};
+}
+
+@foreach(var item in list){
+    <h5>@item</h5>
+}
+
+<br/>
+<hr/>
+<br/>
+
+<h2>how to use Emails and @@tags </h2>
+
+<h5>my email is - julik@test.com</h5>
+<h5>My twiter nick name is - @@Julik</h5>
+
+
+<br/>
+<hr/>
+
+<h2>logic examples</h2>
+
+@{var price=20;}
+
+@if (price>=30)
+  {
+  <p>The price is high.</p>
+  }
+else if (price>20 && price<30)
+  {
+  <p>The price is OK.</p>
+  }
+else
+  {
+  <p>The price is low.</p>
+  } 
+
+
+
+
+
+
+@* @{
+
+bool IsPost = true;
+
+} 
+
+if (@IsPost) { 
+string companyname = Request["CompanyName"]; 
+string contactname = Request["ContactName"]; 
+<p>You entered: <br />
+Company Name: @companyname <br />
+Contact Name: @contactname </p>
+}
+else
+{
+<form method="post" action="">
+Company Name:<br />
+<input type="text" name="CompanyName" value="" /><br />
+Contact Name:<br />
+<input type="text" name="ContactName" value="" /><br /><br />
+<input type="submit" value="Submit" class="submit" />
+</form>
+} *@
+<br/>
+<hr/>
+
+<br/>
+<h2>How to import pictures from the web and from wwwroot folder</h2>
+
+<img width="150" src="https://i.redd.it/the-penguins-are-the-elite-task-force-and-the-perfect-four-v0-ozypgzg8muh91.jpg?width=3840&format=pjpg&auto=webp&s=e2c9e029308f1ed2aaab44bd8b61e1f4f8ee4369" alt="Sample" />
+
+
+@* <img src="~/images/@item.flName" width="100" height="100" /> *@
+<img src="@Url.Content("~/images/Breaking_Bad.webp")" alt="logo" width="500" height="250"/>
+
+<img src="~/images/Breaking_Bad.webp" alt="logo2" class="logo" width="500" height="250"/>
+
+
+<hr/>
+<br/>
+
+<h2>If Condition</h2>
+@* Conditional statement  -
+if
+else
+else if
+Ternary operator
+Switch
+and others *@
+
+@{
+   bool testLine = false;
+
+   int z = 10;
+
+   int y = 0;
+}
+
+
+
+@if (testLine)
+{
+<p>It is true</p>
+}else{
+<p> It is False</p>
+}
+
+@if(z > 5){
+    z+=4;
+    <p>Hello from if block and value of z = @z</p>
+}else if(z == 11){
+    z++;
+    <p>Hello from elseIF block and value of z = @z</p>
+}else{
+    <p>Hello from else block</p>
+}
+
+<br/>
+<h3>Ternary Operator </h3>
+
+<p>Ternary - @(z==10 ? y=10 : y=5)</p>
+<p>Value of y - @y</p>
+<p>Value of z = @z</p>
+<br/>
+<br/>
+
+
+
+<h3>Switch </h3>
+@{
+int m = 4;
+}
+
+@switch(m){
+    case 1:
+<p>I am 1</p>
+    break;
+    case 2:
+    <p>I am 2</p>
+    break;
+    case 3:
+    <p>I am 3</p>
+    break;
+    case 4:
+    <p>I am 4</p>
+    break;
+    default:
+    <p>I am default case</p>
+    break;
+}
+
+
+
+<br/>
+
+@{
+   var myValue = "Some Value";
+ }
+ <input asp-for="@myValue" />
+
+<br/>
+
+
+
+
+@* 
+<label class="form-check-label">
+   <input class="form-check-input" asp-for="IsActive" /> 
+   @Html.DisplayNameFor(model => model.IsActive)
+</label>  *@
+
+
+
+
+<footer>  My project in C Sharp, Copyright @DateTime.Now.Year</footer>

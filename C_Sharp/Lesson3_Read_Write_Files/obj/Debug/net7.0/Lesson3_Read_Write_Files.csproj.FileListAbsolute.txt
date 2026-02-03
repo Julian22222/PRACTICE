@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/bin/Debug/net7.0/Lesson3_Read_Write_Files
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/bin/Debug/net7.0/Lesson3_Read_Write_Files.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/bin/Debug/net7.0/Lesson3_Read_Write_Files.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/bin/Debug/net7.0/Lesson3_Read_Write_Files.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/bin/Debug/net7.0/Lesson3_Read_Write_Files.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/refint/Lesson3_Read_Write_Files.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/Lesson3_Read_Write_Files.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson3_Read_Write_Files/obj/Debug/net7.0/ref/Lesson3_Read_Write_Files.dll

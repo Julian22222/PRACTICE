@@ -1,0 +1,50 @@
+@using Project1.Models
+@model Car
+
+ <div class="container">
+    <div class="card mb-3" style="max-width: 1600px;">
+         <div class="row g-0">
+            <div class="col-md-3">
+                <img class="img-fluid rounded-start" src="/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg" alt="car image" >
+            </div>
+            <div class="col-md-9">    
+                <div class="card-body">
+                    <div class="card-header">Full Car Details</div>
+                    <h2 class="card-title">Car Brand: @Model.Name</h2>
+                    <span class="card-subtitle">Price: £ @Model.Price</span>
+                    <br
+                    <span class="card-subtitle">Reference Id: @Model.Id</span>
+                    <br/>
+                    <span class="card-subtitle">Year: @Model.Year</span>
+                    <br/>
+                    <span class="card-subtitle">FuelType: @Model.FuelType</span>
+                    <br/>
+
+                    @if(Model.IsAvailable)
+                    {
+                        <span class="card-subtitle">Available for viewing or test drive: Yes</span>
+                    }
+                    else
+                    {
+                        <span class="card-subtitle">Available for viewing or test drive: No</span>
+                    }
+
+                    <div class="card-text">Description: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe dicta suscipit at ea voluptatibus iure soluta tenetur dignissimos? A, facere!</div>
+                    <br/>
+                    <br/>
+                    <p class="text-danger">Tel.: 123456789</p>
+                    <p class="text-danger">Email: car_supreme_showroom@info.com</p>
+                    <hr/>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+
+

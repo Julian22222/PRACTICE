@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+      /* v-cloak - waits until all variable and data is connected in our app, 
+      and when user refreshes the page ,it shows better and smoother for users, don't upload all content step by step */
+    </style>
+  </head>
+  <body>
+    <div class="container pt-5" id="app" v-cloak>
+      <!-- v-clock derective -we put in our root div, to apply for all our app -->
+      <div class="card center">
+        <!-- v-html derective translate html tags from app.js to a string -->
+        <div v-html="myHtml"></div>
+        <!-- ///////////////////// -->
+        <!-- v-text='title' - is a derective , it is showing title in h1  -->
+        <!-- <h2 v-text="title"></h2> -->
+        <!-- ///////////////////// -->
+        <!-- v-once - don't change the name even if you try to change it  -->
+        <!-- <h3 v-once>{{ title }}</h3> -->
+        <!-- ///////////////////////////// -->
+        <!-- v-pre - show variables and text how you wrote it  -->
+        <h4 v-pre>{{ title }}</h4>
+        <hr />
+        <ul class="list">
+          <!-- v-for derective can loop numbers 1 to 4 in our case-->
+          <li class="list-item" v-for="item in 4">{{ item }}</li>
+        </ul>
+        <hr />
+        <ul class="list">
+          <!-- v-for - loop person details from app.js with the keys -->
+          <li class="list-item" v-for="(value,key) in person">
+            <strong>{{ key }} : </strong>
+            {{ value }}
+          </li>
+        </ul>
+        <hr />
+        <!-- if -else statement -->
+        <!-- <h3 v-shoe="items.length ===0">No elements</h3>  v-show the same as v-if, it will show content if it is true-->
+        <ul class="list" v-if="items.length !==0">
+          <!-- v-for derective, loop all items from app.js, i-index -->
+          <!-- @click="items.splice(i,1)" - when you click on number it will delete that number -->
+          <!-- &nbsp; -- it is added space  -->
+          <!-- v-bind:key="item" - the same as you put key value in react, to delete,
+          edit, update element in the list -->
+          <li
+            class="list-item"
+            v-for="(item,i) in items"
+            @click="items.splice(i,1)"
+            v-bind:key="item"
+          >
+            {{ item }} &nbsp;
+            <!-- @click.stop - when you click on input it won't delete number -->
+            <input type="text" @click.stop />
+          </li>
+        </ul>
+        <!-- if -else statement -->
+        <h3 v-else>No elements</h3>
+      </div>
+    </div>
+
+    <!-- vue library connection to our project -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- /// -->
+    <!-- connect our app.js file to the project -->
+    <script src="app.js"></script>
+  </body>
+</html>

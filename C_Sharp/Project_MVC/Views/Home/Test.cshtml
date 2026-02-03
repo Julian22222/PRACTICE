@@ -1,0 +1,88 @@
+@* import Fighter, User class, NewClass *@
+@using Project_MVC.Models 
+
+@* @model List<Clients> *@
+
+@* @model IEnumerable<int>  //to receive List  *@
+
+@* @model User *@
+
+@* @model string[] *@
+
+@{
+    ViewData["Title"] = "Test";
+
+  
+  string text = "Hello!!!";
+
+  List<string> names = new List <string>(){
+    "Mick","Peter","Bob"
+  };
+
+  User user = new User {
+    Name="Alex",
+    Age=3,
+    Email="test@mail.com",
+    Balance=3000
+    };
+
+
+
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<div>
+@foreach(var num in Model){
+
+<p>@num.Name</p>
+
+
+}
+<p>@text</p>
+<p>@names[1]</p>
+<p>@user.Name - @user.Email - @user.Balance</p>
+<p>Length of the name:  @user.Name.Length </p>
+
+@* <p>@Model.Lastname</p> *@
+
+
+<br/>
+
+@{
+var weekday=DateTime.Now.DayOfWeek;
+var day=weekday.ToString();
+var message="";
+}
+
+@switch(day)
+{
+case "Monday":
+    message="This is the first weekday.";
+    break;
+case "Thursday":
+    message="Only one day before weekend.";
+    break;
+case "Friday":
+    message="Tomorrow is weekend!";
+    break;
+default:
+    message="Today is " + day;
+    break;
+}
+<p>@message</p>
+
+<textarea class="form-control" id="Body" name="Body" rows="3"></textarea>
+
+
+
+@* <a asp-page="/Home/Index">Link to hOME</a> *@
+
+<p>hello</p>
+<p>hello</p>
+
+</div>
+

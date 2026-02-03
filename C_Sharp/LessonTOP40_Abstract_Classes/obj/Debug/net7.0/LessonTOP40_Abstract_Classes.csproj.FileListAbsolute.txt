@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/bin/Debug/net7.0/LessonTOP40_Abstract_Classes
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/bin/Debug/net7.0/LessonTOP40_Abstract_Classes.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/bin/Debug/net7.0/LessonTOP40_Abstract_Classes.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/bin/Debug/net7.0/LessonTOP40_Abstract_Classes.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/bin/Debug/net7.0/LessonTOP40_Abstract_Classes.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/refint/LessonTOP40_Abstract_Classes.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/LessonTOP40_Abstract_Classes.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP40_Abstract_Classes/obj/Debug/net7.0/ref/LessonTOP40_Abstract_Classes.dll

@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/bin/Debug/net7.0/LessonTOP42_ComputerClub
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/bin/Debug/net7.0/LessonTOP42_ComputerClub.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/bin/Debug/net7.0/LessonTOP42_ComputerClub.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/bin/Debug/net7.0/LessonTOP42_ComputerClub.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/bin/Debug/net7.0/LessonTOP42_ComputerClub.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/refint/LessonTOP42_ComputerClub.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/LessonTOP42_ComputerClub.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP42_ComputerClub/obj/Debug/net7.0/ref/LessonTOP42_ComputerClub.dll

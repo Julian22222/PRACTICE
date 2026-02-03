@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/bin/Debug/net7.0/LessonTOP41_Static
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/bin/Debug/net7.0/LessonTOP41_Static.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/bin/Debug/net7.0/LessonTOP41_Static.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/bin/Debug/net7.0/LessonTOP41_Static.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/bin/Debug/net7.0/LessonTOP41_Static.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/refint/LessonTOP41_Static.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/LessonTOP41_Static.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP41_Static/obj/Debug/net7.0/ref/LessonTOP41_Static.dll

@@ -1,0 +1,27 @@
+name: SuperTest check2
+on: workflow_dispatch
+jobs:
+  app-check:
+    name: get code from GitHub
+    runs-on: ubuntu-latest
+    steps:
+      - name: print to console
+        run: echo Starting my workflow2!
+
+      - name: Get Repository code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: open correct Repo
+        run: npm run openCorrectFolder
+
+      # - name: start server
+      #   run: npm start
+
+      # - name: Super-Linter
+      #   uses: super-linter/super-linter@v7.2.1
+
+      - name: testing application with SuperTest
+        run: npm run test

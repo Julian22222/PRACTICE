@@ -1,0 +1,106 @@
+@using Project_MVC_BookShop2.Models
+@model IEnumerable<Book> 
+@* @model List<string> *@
+
+@{
+    ViewData["Title"] = "Search Book";
+}
+
+
+<div class="container">
+    <h2 class="text-center mb-5">Search books</h2>
+
+        <form class="mb-3" asp-controller="Book" asp-action="SearchBook">
+            <div class="input-group md-form form-sm form-2 pl-0">
+                <input name="SearchTitle" class="form-control my-0 py-1 red-border" type="text" placeholder="Search" area-label="Search"/>
+                @* anything typed in input area will be assign to --> name="SearchTitle" *@
+
+
+                @* Search button block with id="search-text1"*@
+                @* by clicking Search btn --> will invoke function in the bottom with - "search-text1" *@
+                <span class="input-group-text red lighten-3" id="search-text1">
+                    <button>Search</button>
+                </span>
+
+            </div>
+
+        </form>
+
+    <a type="button" class="btn btn-success mb-5" asp-controller="Book" asp-action="AddNewBook">Add New Book</a>
+
+
+    <br/>
+    <table class="table table-hover">
+        <thead >
+            <tr>
+                <th scope="col">Cover photo</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Description</th>
+                <th>Price</th>
+                <th>Created At</th>
+                <th>Action</th>
+                
+            </tr>
+        </thead>
+
+        <tbody id="dynamic_data">
+            
+                @foreach(var book in Model){
+        @* <tr>
+            <td> *@
+
+                    @* @book *@
+                    @* <partial name="_bookThumbnail" model="book" />   *@
+                    <partial name="_bookLine" model="book" />  
+
+            @* </td>
+        </tr> *@
+                }
+            
+
+
+        </tbody>
+        
+    </table>
+   
+
+    <div class="loader-div">
+        <img class="loader-img" src="~/img/ajax-loader.gif" style="height: 120px;width:auto;"/>
+    </div>
+
+</div>
+
+    
+
+@* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
+@* Can use script block inside partial View, or in parent element - script for ->(_bookLine.cshtml)  *@
+@* by using jQuery function it picks up id property --> "search-text1" and then we can do what ever we want *@
+@section scripts{
+    <script>
+        $(document).ready( //It is good practice to wait for the document/page to be fully loaded and ready before working with it.
+            function (){
+            $("#search-text1").click(function(){  //by clicking the Search btn, the form will be submited to BookController amd Search action method (<--this path we identicated in  <form asp-controller="Book" asp-action="SearchBook">  -line 13 )
+                $("Form").submit();  //we submit our form with input to BookController amd Search method, passing the typed input to Search method,
+            })
+
+
+             //jquery for _bookLine.cshtml file (Partial View)
+            $(".add-to-basket").click(function () {
+                var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+                $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                    type: "POST",
+                    url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                    data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                    success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                        alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                    },
+                    error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                        alert("Error adding book to basket.");
+                    }
+                });
+            });
+        });
+    </script>
+}

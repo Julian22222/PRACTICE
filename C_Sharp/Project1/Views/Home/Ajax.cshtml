@@ -1,0 +1,255 @@
+@{
+    ViewData["Title"] = "Ajax";
+
+}
+
+
+<div class="ajax-container">
+    <h1>Ajax Requests To Database</h1>
+
+    <button class="get_all">Get all users</button>
+    <button class="test">Ajax</button>
+    <button class="get">Get </button>
+    <button class="post">Post</button>
+    <button class="put">Put</button>
+    <button class="delete">Delete</button>
+
+    <div class="content"></div>
+
+    <h2></h2>
+
+    <h4></h4>
+
+    <p></p>
+    
+
+    @* Container to hold the list of users *@
+    <ul id="userList"></ul>
+
+    
+
+</div>
+
+<script>
+$(document).ready(function(){
+
+
+    $('.get_all').click(function(){  //<--  this will handle the click event on the button with class get
+
+            $("#userList").show();  //<-- this will show the list of users
+            $("h2 , h4, p").hide();  //<-- this will hide h2, h4, p tags
+            $(".content").hide();  //<-- this will hide context block
+
+            $.get(    //<-- method get
+
+            "https://jsonplaceholder.typicode.com/users", function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parameters - data, that we receive from the server and status of the request
+
+                console.log(status);  //<-- log the status in the console
+
+                // Empty the current list before appending new items
+                $('#userList').empty();
+
+                // Loop through each user in the received data and create a list item
+                $.each(data, function(index, user) {
+                    $('#userList').append(
+                        `<li style="position: relative;">
+                        <strong>${user.name}</strong><br>
+                        Email: ${user.email}<br>
+                        Username: ${user.username}<br>
+                        <button class="get_user_details" data-id="${user.id}" style="position: absolute; top: 0; right: 0;">Get Details</button>
+                        <div class="user-details" id="details-${user.id}" style="display:none;"></div>
+                        </li><br>`
+                    );
+                });
+        });
+
+    });
+
+
+
+    // (document).on <-- Event delegation to handle dynamically added buttons
+    // .get_user_details <-- class of the button
+    // .on <-- used to bind the click event.
+    $(document).on('click', '.get_user_details', function(){
+
+        $('.user-details').text('Close');  //<-- Hides all user details <div>s
+
+
+        var userId = $(this).data('id');  //<-- $(this) refers to the button that was clicked. 
+        // .data('id') gets the data-id attribute from the clicked button --> <button class="get_user_details" data-id="${user.id}">Get Details</button>
+        var detailsContainer = $("#details-" + userId);  //<-- Creates a variable detailsContainer that refers to the <div> where user details will be shown.
+        var button = $(this);  //<-- Creates a variable button that refers to the clicked button.
+
+        //Fetch user details from the API
+        $.get("https://jsonplaceholder.typicode.com/users/" + userId, function(user){
+            //detailsContainer.html  <-- Fills the detailsContainer <div> with the received user data.
+            detailsContainer.html(`
+                <p><strong>Phone:</strong> ${user.phone}</p>
+                <p><strong>Website:</strong> ${user.website}</p>
+                <p><strong>Company:</strong> ${user.company.name}</p>
+                <p><strong>Address:</strong> ${user.address.street}, ${user.address.city}</p>
+            `).toggle();  // Toggle the visibility of user details
+        
+
+            // Toggle button text between "Get Details" and "Close"
+            if (detailsContainer.is(":visible")) {
+                button.text("Close");  //<-- check this variable -> var button = $(this);
+            } else {
+                button.text("Get Details");
+            }
+        });
+    });
+
+
+
+
+
+    $(".test").click(function(){   //<-- this will handle the click event on the button with class test
+
+        $("h2 , h4, p").show();  //<-- this will show h2, h4, p tags
+        $(".content").hide();  //<-- this will hide context block
+        $("#userList").hide();  //<-- this will hide the list of users
+
+        $.ajax({    //<-- this is the ajax request, ajax is a method that performs an asynchronous HTTP request
+            url: "https://jsonplaceholder.typicode.com/users/1",
+            @* async: false,  //<-- this will make the request synchronous *@
+            statusCode: {   //<-- this will handle the status codes of the response
+                404: function(){   //<-- if we receive status code 404
+                    alert("page not found");
+                }
+            },
+            success: function(result){  //<-- this will handle the success of the request, result parametr - is the result of the request
+                    console.log(result);  //<-- we are logging the result in the console
+
+                    //assign received data from DB to different tags, to display them on the page
+                    $("h2").text(result.id);  //<-- we are using the <p> tag to display the id of the first post
+                    $("h4").text(result.name);  //<-- we are using the <h2> tag to display the title of the first post
+                    $("p").text(result.email);  //<-- we are using the <h4> tag to display the body of the first post              
+            },
+            error: function(xhr){  //<-- this will handle the error of the request, parametr --> xhr is the XMLHttpRequest object- where we can get ->error status, error message
+                    alert(`Error: ${xhr.status}, Error text: ${xhr.statusText}`);
+                }
+            });
+    });
+      
+
+
+
+
+
+    $('.get').click(function(){  //<-- this will handle the click event on the button with class get
+
+        $("h2 , h4, p").show();  //<-- this will show h2, h4, p tags
+        $(".content").hide();   //<-- this will hide context block
+        $("#userList").hide();  //<-- this will hide the list of users
+
+
+        $.get(    //<-- method get
+            "https://jsonplaceholder.typicode.com/users/2", function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parametrs - data, that we receive from the server and status of the request
+                console.log(status);  //<-- log the status in the console
+
+                //assign received data from DB to different tags, to display them on the page
+                $("h2").text(data.id);  //<-- we are using the <p> tag to display the id of the first post
+                $("h4").text(data.name);  //<-- we are using the <h2> tag to display the title of the first post
+                $("p").text(data.email);  //<-- we are using the <h4> tag to display the body of the first post   
+        });
+
+    });
+
+
+
+
+
+    $(".post").click(function(){   //<-- this will handle the click event on the button with class post
+
+        $(".content").show();  //<-- this will show content block
+        $("h2 , h4, p").hide();  //<-- this will hide h2, h4, p tags
+        $("#userList").hide();  //<-- this will hide the list of users
+
+        $.post(              //<--post method receive 3 parameters: url address to send data, object -> data, and function
+          "https://jsonplaceholder.typicode.com/users", {
+            id: 11,
+            name: "Alex",
+            username: "Alex11",
+            email: "alex11@hello.com",
+            address: {
+              street: "Kulas Light",
+              suite: "Apt. 556",
+              city: "Gwenborough",
+              zipcode: "92998-3874",
+              geo: {
+                lat: "-37.3159",
+                lng: "81.1496"
+              }
+            },
+            phone: "1-770-736-8031 x56442",
+            website: "hildegard.org",
+            company: {
+              name: "Romaguera-Crona",
+              catchPhrase: "Multi-layered client-server neural-net",
+              bs: "harness real-time e-markets"
+            }
+          }, function(data, status){  //<-- function will be invoked after the request is completed, it has 2 parametrs - data, that we receive from the server and status of the request
+            console.log(data);
+            $(".content").text("Data has been posted successfully");
+          }
+          
+        );
+
+    });
+
+
+
+    $(".put").click(function(){   //<-- this will handle the click event on the button with class put
+
+      $.ajax({    //<-- this is the ajax request, ajax is a method that performs an asynchronous HTTP request
+            url: "https://jsonplaceholder.typicode.com/users/1",
+            type: "PUT",
+            data: {   //<-- this is the data that we are sending to the server to edit the object
+                name: "Ben",
+                username: "Ben11",
+                email: "Hello@hello.com"
+            },
+            statusCode: {   //<-- this will handle the status codes of the response
+                404: function(){   //<-- if we receive status code 404
+                    alert("page not found");
+                }
+            },
+            success: function(result){  //<-- this will handle the success of the request, result parametr - is the result of the request
+                    console.log(result);  //<-- Will get the result in the console    
+            },
+            error: function(xhr){  //<-- this will handle the error of the request, parametr --> xhr is the XMLHttpRequest object- where we can get ->error status, error message
+                    alert(`Error: ${xhr.status}, Error text: ${xhr.statusText}`);
+            }
+        });
+
+    });
+
+
+
+
+
+    $(".delete").click(function(){   //<-- this will handle the click event on the button with class delete
+
+      $.ajax({    //<-- this is the ajax request, ajax is a method that performs an asynchronous HTTP request
+            url: "https://jsonplaceholder.typicode.com/users/1",
+            type: "DELETE",
+            statusCode: {   //<-- this will handle the status codes of the response
+                404: function(){   //<-- if we receive status code 404
+                    alert("page not found");
+                }
+            },
+            success: function(result){  //<-- this will handle the success of the request, result parametr - is the result of the request
+                    console.log(result);  //<-- Will get empty object in the console, showing that the object has been deleted        
+            },
+            error: function(xhr){  //<-- this will handle the error of the request, parametr --> xhr is the XMLHttpRequest object- where we can get ->error status, error message
+                    alert(`Error: ${xhr.status}, Error text: ${xhr.statusText}`);
+            }
+        });
+
+    });
+
+
+});
+
+</script>

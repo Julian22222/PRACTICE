@@ -1,0 +1,385 @@
+{
+  "Files": [
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/obj/Release/net7.0/scopedcss/projectbundle/Project_MVC_BookShop2.bundle.scp.css",
+      "PackagePath": "staticwebassets/Project_MVC_BookShop2.bundle.scp.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/1e9ecc85-d30d-4777-9422-d7aa347dce07_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/cover/1e9ecc85-d30d-4777-9422-d7aa347dce07_books-4812032_960_720.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/4f1b938a-5baa-469d-833a-8fe44b03ea50_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/cover/4f1b938a-5baa-469d-833a-8fe44b03ea50_books-4812032_960_720.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/a7325328-7f08-4c8e-bbc2-65d9c8839f24_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/cover/a7325328-7f08-4c8e-bbc2-65d9c8839f24_books-4812032_960_720.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/cover/c2518a38-a4bc-4a6d-988d-0da033749fe9_stack-books-isolated-white-background-34637153.webp",
+      "PackagePath": "staticwebassets/books/cover/c2518a38-a4bc-4a6d-988d-0da033749fe9_stack-books-isolated-white-background-34637153.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/4d3e9a37-0128-430e-bea3-322b8ccc7ae7_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/4d3e9a37-0128-430e-bea3-322b8ccc7ae7_1.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/4e9b1891-d3f1-401c-8d77-03751966103d_books-4812032_960_720.jpg",
+      "PackagePath": "staticwebassets/books/pdf/4e9b1891-d3f1-401c-8d77-03751966103d_books-4812032_960_720.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/5c8a1e16-573c-4fc1-acd9-c0a9adbb386a_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/5c8a1e16-573c-4fc1-acd9-c0a9adbb386a_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/7d97dc30-cc7e-480c-a2d2-7ae9c18fbc8a_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/7d97dc30-cc7e-480c-a2d2-7ae9c18fbc8a_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/7fe1242d-9564-4787-b7c8-05186e3d61ca_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/7fe1242d-9564-4787-b7c8-05186e3d61ca_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/80d072a0-aa03-414e-96c6-a59d5938aec9_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/80d072a0-aa03-414e-96c6-a59d5938aec9_1.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/b08ab739-0cdf-46b3-9851-386df1e4cc86_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/b08ab739-0cdf-46b3-9851-386df1e4cc86_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/c50fef61-cc91-4ee1-86a6-eb0ee6721505_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/c50fef61-cc91-4ee1-86a6-eb0ee6721505_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/c68b0684-eb4b-4b18-bde7-012e77b61aa1_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/c68b0684-eb4b-4b18-bde7-012e77b61aa1_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/c7695698-6a86-485f-8e0b-a5cf88bc6f77_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/c7695698-6a86-485f-8e0b-a5cf88bc6f77_1.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/d632d74d-327d-4238-a9b9-95fa6c7e0b5c_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/d632d74d-327d-4238-a9b9-95fa6c7e0b5c_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/d8aa8245-4764-4cc4-a37c-1594bfdab74f_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/d8aa8245-4764-4cc4-a37c-1594bfdab74f_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/e5b3a7ea-96fe-4dcd-aae9-9f3050f53d88_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/e5b3a7ea-96fe-4dcd-aae9-9f3050f53d88_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/eddd4f09-4ebe-4adf-961f-718ae490323d_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/eddd4f09-4ebe-4adf-961f-718ae490323d_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/eebf7b88-4a82-4338-a9b5-0d686caafdb3_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/eebf7b88-4a82-4338-a9b5-0d686caafdb3_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/f1553083-c142-436d-96e8-7cd37b5dbdce_2.pdf",
+      "PackagePath": "staticwebassets/books/pdf/f1553083-c142-436d-96e8-7cd37b5dbdce_2.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/fb002947-8169-4476-adb2-7eca1d3bfe5b_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/fb002947-8169-4476-adb2-7eca1d3bfe5b_1.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/books/pdf/fd0e80c1-f137-4de1-b849-ff4d2baef716_1.pdf",
+      "PackagePath": "staticwebassets/books/pdf/fd0e80c1-f137-4de1-b849-ff4d2baef716_1.pdf"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/340719-200.png",
+      "PackagePath": "staticwebassets/img/340719-200.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/Cat.png",
+      "PackagePath": "staticwebassets/img/Cat.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/ajax-loader.gif",
+      "PackagePath": "staticwebassets/img/ajax-loader.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/book1.jpg",
+      "PackagePath": "staticwebassets/img/book1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/book2.jpg",
+      "PackagePath": "staticwebassets/img/book2.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/book3.jpeg",
+      "PackagePath": "staticwebassets/img/book3.jpeg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/login.webp",
+      "PackagePath": "staticwebassets/img/login.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/img/signup2.png",
+      "PackagePath": "staticwebassets/img/signup2.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC_BookShop2/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "obj/Release/net7.0/staticwebassets/msbuild.Project_MVC_BookShop2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Release/net7.0/staticwebassets/msbuild.build.Project_MVC_BookShop2.props",
+      "PackagePath": "build\\Project_MVC_BookShop2.props"
+    },
+    {
+      "Id": "obj/Release/net7.0/staticwebassets/msbuild.buildMultiTargeting.Project_MVC_BookShop2.props",
+      "PackagePath": "buildMultiTargeting\\Project_MVC_BookShop2.props"
+    },
+    {
+      "Id": "obj/Release/net7.0/staticwebassets/msbuild.buildTransitive.Project_MVC_BookShop2.props",
+      "PackagePath": "buildTransitive\\Project_MVC_BookShop2.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,26 @@
+@model Book  //receive data (1 random book) from Components/WeekBookViewCmponent.cs
+
+@{
+    ViewData["ExtraParam"] = true; //passing data to our partial View component
+}
+
+<h3 class="mt-5 mb-2 text-decoration-underline d-flex justify-content-center">Book of the week</h3>
+
+@if(Model == null) //if there is no book in the database
+{
+<div class="alert alert-danger" role="alert">
+    No books found in our BookShop
+</div>
+}
+else
+{    
+    <div class="row">
+        <div class="col-md-3"></div>
+        @* passing a book to Partial View *@
+        <div class="col-md-6">
+            <partial name="_bookThumbnail" model="Model" view-data="ViewData"/>
+            @* view-data="ViewData" - passing extra parametr to _bookThumbnail *@
+        </div>
+        <div class="col-md-3"></div>
+    </div> 
+}

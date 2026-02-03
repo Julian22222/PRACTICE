@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/bin/Debug/net7.0/LessonTOP5_SHOP
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/bin/Debug/net7.0/LessonTOP5_SHOP.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/bin/Debug/net7.0/LessonTOP5_SHOP.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/bin/Debug/net7.0/LessonTOP5_SHOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/bin/Debug/net7.0/LessonTOP5_SHOP.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/refint/LessonTOP5_SHOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/LessonTOP5_SHOP.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP5_SHOP/obj/Debug/net7.0/ref/LessonTOP5_SHOP.dll

@@ -1,0 +1,57 @@
+@* This is Partial view file *@
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration _configuration  //we can dirrectly read appsettings.json file from View using this injection, (don't need to use Controllers or other files).
+
+@{
+
+}
+
+
+ <header>        
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light br-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="~/img/Cat.png" width="60" height="60" asp-append-version="true" /> 
+                @* asp-append-version="true" <--(tag helper) will help to clear the cache in browser , and if we change the picture it will change on browser as well. Browser will not take old picture from cache memory*@
+                BookShop
+            </a>
+            @* button section for the phone -placing your content of navbar automatically on the phene, to make your app responsive*@
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                        
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav">
+                    <partial name="_LoginInfo"/>          
+                </ul>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark fw-bold" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-bold" asp-controller="book" asp-action="GetAllBooks" >
+                            @* Adding a Font Awesome pcs --> i tag *@
+                            All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-bold" href="/book/AddNewBook">
+                            @* Adding a Font Awesome pcs  --> i tag *@ 
+                            Add new book</a>
+                    </li>
+                </ul>
+            </div>                         
+        </div>    
+    </nav>
+                        
+    @* testing bollean data type from appsettings.json, if DisplayNewBookAlert = true ---> show message *@
+    @if(_configuration.GetValue<bool>("DisplayNewBookAlert")){
+        <div class="alert alert-info" role="alert" style="height: 50px;">       
+            <div id="scrollingMessage" class="scrolling-message">
+                Free UK delivery on orders over £25, otherwise pay £2.99      Buy subscription and save money for delivery and get discount on all books!!!!    Hurry up offer ends soon!!!
+            </div>
+        </div>
+    }
+               
+       
+</header>

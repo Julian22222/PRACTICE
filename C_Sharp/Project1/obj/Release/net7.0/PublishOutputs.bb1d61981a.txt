@@ -1,0 +1,7 @@
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/Project1
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/appsettings.Development.json
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/appsettings.json
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/Project1.dll
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/Project1.deps.json
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/Project1.runtimeconfig.json
+/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project1/build/Project1.pdb

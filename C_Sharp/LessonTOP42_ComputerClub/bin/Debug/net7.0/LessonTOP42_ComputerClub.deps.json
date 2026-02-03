@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP42_ComputerClub/1.0.0": {
+        "runtime": {
+          "LessonTOP42_ComputerClub.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP42_ComputerClub/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

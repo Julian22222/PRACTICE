@@ -1,0 +1,86 @@
+@* @using Project_MVC_BookShop2.Models  *@
+@* @using Project_MVC_BookShop2.Repository *@
+@* 
+@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList //<--inject Interface, _basketList <--get data from BasketRepository
+
+
+<h2>Basket</h2>
+
+<div class="container">
+    <div class="row">
+        @if((await _basketList.GetBasketItems()).Any()) //checking if we have any data in our model
+        {
+            var basketItems = await _basketList.GetBasketItems();
+            
+            foreach (var book in basketItems)
+            {
+                <div class="col-md-4">
+                    <partial name="_bookThumbnail" model="book" />
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                Your basket is empty.
+            </div>
+        }
+    </div> *@
+
+
+
+@* option getting bookList from Controller *@
+@model List<Book>
+
+@{
+    var totalPrice = 0f;
+
+     foreach (var book in Model)
+    {
+        totalPrice += Convert.ToSingle(book.Price);
+    }
+}
+
+@if (Model.Any()){
+    <table class="table table-hover">
+        <thead >
+            <tr>
+                <th scope="col">Cover photo</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Description</th>
+                <th>Price</th>
+                <th>Action</th>
+                
+            </tr>
+        </thead>
+
+        <tbody id="dynamic_data">
+            @foreach (var book in Model){
+                <div class="col-md-4">
+                    <partial name="_bookBasketPartial" model="book" />
+                </div>
+            }  
+        </tbody>
+    </table>
+}else{
+    <div class="alert alert-danger" role="alert">
+        Your basket is empty.
+    </div>
+}
+
+
+@if (Model.Any()){
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-8">
+            <strong class="fs-1 text-danger">Total: </strong><span class="fs-2">£ @totalPrice</span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-success" style="width: 200px;">Pay</button>
+        </div>
+
+    </div>
+     
+}

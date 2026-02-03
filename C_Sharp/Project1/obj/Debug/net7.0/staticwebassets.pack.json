@@ -1,0 +1,529 @@
+{
+  "Files": [
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/obj/Debug/net7.0/scopedcss/projectbundle/Project1.bundle.scp.css",
+      "PackagePath": "staticwebassets/Project1.bundle.scp.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/allcars.png",
+      "PackagePath": "staticwebassets/IMG/Home/allcars.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/bmw.png",
+      "PackagePath": "staticwebassets/IMG/Home/bmw.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/engine.png",
+      "PackagePath": "staticwebassets/IMG/Home/engine.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/main_header.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/main_header.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/pngegg (3).png",
+      "PackagePath": "staticwebassets/IMG/Home/pngegg (3).png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/pngegg (4).png",
+      "PackagePath": "staticwebassets/IMG/Home/pngegg (4).png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/pngegg (7).png",
+      "PackagePath": "staticwebassets/IMG/Home/pngegg (7).png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide1.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide10.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide10.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide111.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide111.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide2.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide2.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide22.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide22.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide3.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide3.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide4.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide4.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide5.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide5.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide6.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide6.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide7.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide7.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide8.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide8.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/slide9.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/slide9.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/tyre.png",
+      "PackagePath": "staticwebassets/IMG/Home/tyre.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/Home/wallpaperflare.com_wallpaper.jpg",
+      "PackagePath": "staticwebassets/IMG/Home/wallpaperflare.com_wallpaper.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal1.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/gal1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal2.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/gal2.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal3.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/gal3.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal4.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/gal4.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/gal5.jpg",
+      "PackagePath": "staticwebassets/IMG/gallery/gal5.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/load.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/load.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/loader.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/loader.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/gallery/loading2.gif",
+      "PackagePath": "staticwebassets/IMG/gallery/loading2.gif"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/baraka.jpg",
+      "PackagePath": "staticwebassets/IMG/game/baraka.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/cybex.jpg",
+      "PackagePath": "staticwebassets/IMG/game/cybex.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/dragon-logo.png",
+      "PackagePath": "staticwebassets/IMG/game/dragon-logo.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/jade.jpg",
+      "PackagePath": "staticwebassets/IMG/game/jade.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/jax.jpg",
+      "PackagePath": "staticwebassets/IMG/game/jax.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/jonny.jpg",
+      "PackagePath": "staticwebassets/IMG/game/jonny.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/jonny1.jpg",
+      "PackagePath": "staticwebassets/IMG/game/jonny1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/kitana.jpg",
+      "PackagePath": "staticwebassets/IMG/game/kitana.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/lao.jpg",
+      "PackagePath": "staticwebassets/IMG/game/lao.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/liukang.jpg",
+      "PackagePath": "staticwebassets/IMG/game/liukang.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/raiden.jpg",
+      "PackagePath": "staticwebassets/IMG/game/raiden.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/reptile.jpg",
+      "PackagePath": "staticwebassets/IMG/game/reptile.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/scorpion.jpg",
+      "PackagePath": "staticwebassets/IMG/game/scorpion.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/shangsung.jpg",
+      "PackagePath": "staticwebassets/IMG/game/shangsung.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/shangsung1.jpg",
+      "PackagePath": "staticwebassets/IMG/game/shangsung1.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/shaukan.jpg",
+      "PackagePath": "staticwebassets/IMG/game/shaukan.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/sonya.jpg",
+      "PackagePath": "staticwebassets/IMG/game/sonya.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/subzero.jpg",
+      "PackagePath": "staticwebassets/IMG/game/subzero.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/game/vs_logo.png",
+      "PackagePath": "staticwebassets/IMG/game/vs_logo.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/Bananas-Loose.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/Bananas-Loose.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/CARROT.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/CARROT.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/Pork.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/Pork.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/apple.webp",
+      "PackagePath": "staticwebassets/IMG/machine/apple.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/bread.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/bread.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/cheese.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/cheese.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/eggs.webp",
+      "PackagePath": "staticwebassets/IMG/machine/eggs.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/lemon.webp",
+      "PackagePath": "staticwebassets/IMG/machine/lemon.webp"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/milk.png",
+      "PackagePath": "staticwebassets/IMG/machine/milk.png"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/onion.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/onion.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/potato.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/potato.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/IMG/machine/salmon.jpg",
+      "PackagePath": "staticwebassets/IMG/machine/salmon.jpg"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/Index.html",
+      "PackagePath": "staticwebassets/Index.html"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fight-deep-voice-172194.mp3",
+      "PackagePath": "staticwebassets/sounds/fight-deep-voice-172194.mp3"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-hover2.mp3",
+      "PackagePath": "staticwebassets/sounds/fighter-hover2.mp3"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/fighter-selection.mp3",
+      "PackagePath": "staticwebassets/sounds/fighter-selection.mp3"
+    },
+    {
+      "Id": "/home/codenitro/VSCode/project/PRACTICE/PRACTICE/C_Sharp/Project1/wwwroot/sounds/swords-collide-230574.mp3",
+      "PackagePath": "staticwebassets/sounds/swords-collide-230574.mp3"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.Project1.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build/Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.build.Project1.props",
+      "PackagePath": "build/Project1.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.Project1.props",
+      "PackagePath": "buildMultiTargeting\\Project1.props"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.Project1.props",
+      "PackagePath": "buildTransitive\\Project1.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

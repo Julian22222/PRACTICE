@@ -1,0 +1,28 @@
+﻿@* main template of Layout *@
+@* to dont write the same code in each View file we -> we put this code here, 
+it is apply to all View files *@
+@* this file is common for all Views *@
+@* This file runs before View will be rendered in the browser, the code in this file will be applied to all Views *@
+@* if Layout is different for any of the View.cshtml files 
+-you can write it down in that file (on the top)-> @{Layout = "Different Layout"}*@
+@* If you want to overwrite the Layout template , we can write on the top of the View file -->  @{Layout = "Different Layout"}*@
+
+@* Whatever code is common for all the Views and we can put here common code that will be executed before any other View file ->then you can put your code over here *@
+@* This file located in Views folder and is applicable for all Views files in the Views folder and sub-folders *@
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+@* 
+@{
+if(Context.Request.Path.ToString().Contains("DeleteBook")){    //<-- if URL contains DeleteBook it will use Layout2 template
+// for Manager / HR / finance etc.
+
+    Layout = "_Layout2";
+}else{
+    layout = "_Layout"                      //<-- else this Layout
+}
+} *@

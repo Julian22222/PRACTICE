@@ -1,0 +1,19 @@
+@model IEnumerable<Project1.Models.Car>
+
+@{
+    ViewData["Title"] = "Show Cars";
+    Layout = "_Layout";
+}
+
+@* @using Project1.Models;
+@model IEnumerable<Car> *@
+
+@if(@ViewBag.Message != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+
+<partial name="_CarListPartial" model="Model"/>

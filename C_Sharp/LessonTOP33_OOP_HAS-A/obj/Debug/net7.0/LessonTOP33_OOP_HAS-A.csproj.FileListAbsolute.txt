@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/bin/Debug/net7.0/LessonTOP33_OOP_HAS-A
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/bin/Debug/net7.0/LessonTOP33_OOP_HAS-A.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/bin/Debug/net7.0/LessonTOP33_OOP_HAS-A.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/bin/Debug/net7.0/LessonTOP33_OOP_HAS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/bin/Debug/net7.0/LessonTOP33_OOP_HAS-A.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/refint/LessonTOP33_OOP_HAS-A.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/LessonTOP33_OOP_HAS-A.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP33_OOP_HAS-A/obj/Debug/net7.0/ref/LessonTOP33_OOP_HAS-A.dll

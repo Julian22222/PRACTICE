@@ -1,0 +1,61 @@
+@model Book;  //receiving Book model in this file as we passing --> model="book" in partial tag
+
+
+<div class="container">
+  <tr>
+        @* <th scope="row">
+            ////string.IsNullOrEmpty(Model.CoverImageUrl) <-- if Model.CoverImageUrl is null or empty then show --> "/img/340719-200.png" else -> Model.CoverImageUrl*
+        <img style="max-width:20%;" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/340719-200.png" : Model.CoverImageUrl)" alt="image logo" class="img-thumbnail" />
+        </th> *@
+
+        <td>
+            <img width="100" src="@Model.CoverImageUrl" alt="image logo" class="img-thumbnail" />
+        </td>
+        @* width="100"  <-- image width 100px*@
+        @*<img max-width:20% src="" />*@
+        @* style="@((getWidth() >= 500) ? max-width:20% : width:40%)" *@
+        <td>
+            <p >@Model.Title</p>
+        </td>
+
+        <td>
+            <p>@Model.Author</p>
+        </td>
+
+        <td>
+            @* accessing book Description  *@
+            <p>@Model.Description</p>
+        </td>
+
+        <td>
+            <p>
+                <span>£</span> @Model.Price
+            </p>   
+        </td>
+
+        <td style="white-space: nowrap;">
+            @* accessing book Id by clicking on each card  *@
+            @* <a href="/book/getbook/@book.Id" class="btn btn-sm btn-outline-secondary">View details</a> *@
+            <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-secondary">View details</a>
+            <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="RemoveFromBasket" asp-route-id="@Model.Id" onclick="return confirm('Are sure that you want to remove this Book from your basket?')">
+                <i class="fa-solid fa-trash-can"></i> 
+                Remove
+            </a>
+        @*/////// Make different design of the buttons *@
+            @* <a asp-controller="book" asp-action="getbook" asp-route-id="@Model.Id">View details</a> |  <a asp-controller="Book" asp-action="EditBook" asp-route-id="@Model.Id">Edit</a> | <a asp-controller="Book" asp-action="DeleteBook" asp-route-id="@Model.Id" onclick="return confirm('Are sure that you want to delete this file?')">Delete</a> *@
+        </td>   
+  </tr>
+</div>
+
+
+@section Scripts{
+
+@* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
+   <script>
+    //get the screen width
+  $(document).ready(function getWidth () {
+            $("#clientScreenWidth").val($(window).width());      
+        });
+</script> 
+
+}

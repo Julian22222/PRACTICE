@@ -1,0 +1,201 @@
+﻿@using Project_MVC_BookShop2.Models 
+@using Microsoft.AspNetCore.Mvc.Rendering
+@* @using Project_MVC_BookShop2.Components *@
+@using Project_MVC_BookShop2.Repository
+
+@inject Project_MVC_BookShop2.Repository.IBasketRepository _basketList 
+
+@{
+    ViewData["Title"] = "Books store";
+
+   @* Layout = null;  //<--this View wont use common Layout for all the pages from Views/Shared/_Layout.cshtml*@
+   @* Layout = "_Layout"; <--can use any Layout name here, buy default it takes _Layout file*@
+}
+
+
+
+<section class="jumbotron text-center" data-ajax="true" >
+    <div class="container">
+        <h1>Welcome to Diamond Bookstore</h1>
+
+        <img src="/img/pngwing11.png" alt="logo" class="Mainlogo"/>
+
+        @* if environment variable = Development ->it will show everithing inside environment tag *@
+        @* environment tag helpers can have different attributes *@
+        @* <environment names="Development">, <environment include="Development"> and <environment exclude="Development"> *@
+        @* environment variables located in-> Proporties -> launchSettings.json *@
+        <environment names="Development">
+            <h3>Development...</h3>
+        </environment>
+
+        <environment names="Production">
+            <h3>Production..</h3>
+        </environment>
+    
+
+        <h4 class="lead text-muted">Discover Your Next Great Read — Thousands of Books at Your Fingertips. From Bestsellers to Hidden Gems — Start Your Literary Journey Today.</h4>
+        <a asp-controller="Book" asp-action="SearchBook" class="btn btn-primary my-2">
+            <i class="fa-solid fa-magnifying-glass"></i> Search books
+        </a>
+        
+    </div>
+    
+</section>
+
+
+<partial name="_VideoBlock1" />
+
+
+
+@* mx-auto <-- colimn displayed in the centre of the page, p-3 <- padding =3px, mb -4 <- margin bottom*@
+<div class="main py-5 mx-auto rounded border p-3">
+
+    @* to render my View components *@
+    @* 1st option how to render View component *@
+    @* InvokeAsync <-- method in Componets/TestBooksViewComponent.cs *@
+    @* Component.InvokeAsync("TestBooks"  <--we passing here the name of our component , ignoring ViewComponent part in TestBooksViewComponent) *@
+    @* Component.InvokeAsync("TestBooks", new {bookId =4, isSort =true}) <-- also we can pass all parametrs that are required in View component *@
+    @await Component.InvokeAsync("TestBooks")
+
+
+    @* 2nd option how to render View component, using tag helpers *@
+    @* not passing any parametrs in this view component, use small letters in View component name *@
+    @* <vc: test-books book-id="2" is-sort="false"></vc: test-books>  <--- also we can pass all parametrs that are required in View component  *@
+    @* To use this 2nd option, you need to add --> (@addTagHelper *, Project_MVC_BookShop2 , @addTagHelper *, Project_MVC_BookShop2.Components ) in Views/_ViewImports.cshtml *@
+    <vc:test-books></vc:test-books>  
+
+
+
+
+    <div class="container border border-dark">
+
+        <div class="row">
+            @* View Component -TopBooks *@
+            @* @await Component.InvokeAsync("TopBooks" )   //not loading on first load, in FREE TIER *@
+            <div id="top-books-container">Loading Top Books...</div>
+        </div>
+        <hr/>
+
+        <div class="container">
+            <div class="row">
+
+                @* @await Component.InvokeAsync("WeekBook")     //not loading on first load, in FREE TIER  *@
+                <div id="week-book-container">Loading Week Book...</div> 
+            
+            </div>
+        </div>
+
+    </div>
+        
+
+    <img src="/img/bookshelf1.jpg" alt="logo" class="img-fluid mt-5 mb-5" />
+
+    <div style="background-color: rgb(139, 127, 127);">
+        <div class="container">
+            <h3 class="h3 mt-5 text-decoration-underline">Unknown Books</h3>
+            <div class="row">
+
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />      
+                </div>
+
+                <div class="col-md-3" >
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />
+                </div>
+
+                <div class="col-md-3">
+                    @* use the same code from Partial view - from _bookThumbnail.cshtml *@
+                    <partial name="_bookThumbnail" model="new Book()" />  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_additionalBlock" />
+
+</div>
+
+    <a asp-area="Admin" asp-controller="Home" asp-action="Index">Click here to use AREAS</a>
+
+    <br/>
+    <br/>
+
+
+@* @section directive - we use in View file with the name -Scripts,
+Scripts -can be any name that is the same with (created name(unique name) from RenderSectionAsync("Scripts")) , in _Layot.cshtml *@
+
+@* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
+@* You can create @section at any place in the View file. You not required that you have to create the @section derective in the bottom of your View *@
+
+@section Scripts{
+
+@* this is the jquery code (allow to use jquery code - because we connected jquery library in _Layout file) that you want to be read before all the code (--> line 72)*@
+   <script>
+
+
+//Helps with first load of the page, if the data is not loaded, it will show a spinner and retry loading the data
+    function loadWithRetry(containerId, url, attempts = 3) {
+    $(containerId).html('<div class="mt-5 mb-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>Please wait, loading data...<div>');  //Show this block while waiting for data.
+
+    function tryLoad(remaining) {    //this function sends the request to the server.
+        $(containerId).load(url, function (response, status, xhr) {
+            if (status == "error" && remaining > 0) {
+                setTimeout(() => tryLoad(remaining - 1), 3000); // Retry after 3 seconds
+            } else if (status == "error") {
+                $(containerId).html("<div class='alert alert-danger'>Failed to load data. Please refresh the page.</div>");
+            }
+        });
+    }
+
+    tryLoad(attempts);
+}
+
+
+    
+    $(document).ready(function (){
+        alert("document is ready, Click Ok");
+    })
+
+
+    @* You need to use JavaScript (or jQuery) to send the book ID to the controller via AJAX.  *@
+    @* Can use script block inside partial View, or in parent element - here we have a script for->(_bookThumbnail.cshtml) *@
+    $(document).ready(function () {
+
+        loadWithRetry("#top-books-container", '@Url.Action("LoadTopBooks", "Home")');  //call function loadWithRetry to load TopBooks
+        loadWithRetry("#week-book-container", '@Url.Action("LoadWeekBook", "Home")');  //call function loadWithRetry to load WeekBook
+
+
+
+
+
+        //jquery for _bookThambnail.cshtml file (Partial View)
+        $(".add-to-basket").click(function () {
+            var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+            $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                type: "POST",
+                url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                    alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                },
+                error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                    alert("Error adding book to basket.");
+                }
+            });
+        });
+    });
+
+</script> 
+
+}
+
+
+@* $.ajax({
+type: "POST",
+url: "/Book/Basket",
+data: JSON.stringify(book),
+contentType: "application/json"
+}); *@

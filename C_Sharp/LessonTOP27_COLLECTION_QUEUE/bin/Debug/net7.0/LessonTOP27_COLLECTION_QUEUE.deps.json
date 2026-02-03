@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP27_COLLECTION_QUEUE/1.0.0": {
+        "runtime": {
+          "LessonTOP27_COLLECTION_QUEUE.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP27_COLLECTION_QUEUE/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

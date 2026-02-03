@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Project_MVC_BookShop.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+            
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light br-white border-bottom box-shadow mb-3">
+                    <div class="container">
+
+                        <a class="navbar-brand" href="/">
+                        <img src="~/img/Cat.png" width="60" height="60" asp-append-version="true" />
+                        BookShop
+                        </a>
+                        @* button section for the phone -placing your content of navbar automatically*@
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="btn btn-outline-primary" href="#">Login</a>
+                                    <a class="btn btn-primary" href="#">Register</a>
+                                </li>
+                            </ul>
+
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/">Home</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/book/GetAllBooks">All Books</a>
+                                 </li>
+                                 <li class="nav-item">
+                                     <a class="nav-link text-dark" href="/book/AddNewBook">Add new book</a>
+                                 </li>
+
+                            </ul>
+
+                        </div>
+                      
+                        
+                        
+                       
+                    </div>
+               
+                </nav>
+               
+       
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+              @* all content from other View pages goes here *@
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            @* @DataTime.UtcNow - globaly showing time, local time *@
+            2023 - ASP.Net Project, Copyright &copy; ASP.NET @DateTime.Now.Year  
+            @* @DataTime.UtcNow *@
+        </div>
+       
+    </footer>
+
+    @* jquery connection, to use jquery library, (this method is -how you can access the library from your own application)*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    @* usibg these two jquery links -makes client side validation, not hiting server side validation *@
+    <script src="~/lib/jguery-validation/dist/jguery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @* RenderSectionAsync("Scripts") we use in _Layout file
+    JS code or jquery file or code are always placed in the bottom of the View page
+    but you code is at the top. So your code will not work. We need to use  -> @RenderSectionAsync and @Section
+    (the code can be read in the body because it is placed in the bottom.)
+    Therefore we use -> @RenderSectionAsync (in _Layout file) and @Section( with the same name in Home/Index View, or any other Views) 
+
+    This allow to read JS library code or jquery code before the programm will get to the bottom (in our case -in Home/Index.cshtml)*@
+
+@* Each section has unique name and whatever we will write inside this section block that will replace the RenderSection (defined in _Layout file) with same name *@
+    
+    @await RenderSectionAsync("Scripts", required: false)
+    @* @RenderSection tells the app that some other code (coming from Index View) will be placed here  *@
+
+
+@* bootstrap connection, to use carousel from -https://getbootstrap.com/docs/5.3/components/carousel/ , (this method is -how you can access the library using CDN network)*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

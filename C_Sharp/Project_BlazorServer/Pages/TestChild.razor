@@ -1,0 +1,75 @@
+@* This is component that can be inserted to any page *@
+@* It doesn't use @page "/some URL"  as example --> @page "/counter" *@
+
+<h4>This is Test Child component</h4>
+<h1>Blazor Component Life Cycle</h1>
+
+
+<h4>@Counter</h4>
+
+
+@foreach(var item in Info){
+    <p>@item</p>
+}
+
+
+
+
+
+
+@code{
+    [Parameter] //Use this attribute To pass parametr from Parent component
+    public int Counter {get;set;}  //<-- Counter is comming from Counter.razor page, passing arguments from Parent component
+
+    List<string> Info = new List<string>();
+
+    
+
+    //using 2 the same methods for each example, somethimes it usefull to use Async when you are waiting for something or use normal method if you don't need to wait
+    //When I ran this page(Child component) from Counter page (parent component) all these methods will be invoked
+    protected override void OnInitialized(){
+        //works before page renders
+    
+        Info.Add("1 Hello from OnInitialized");
+    }
+
+     protected override async Task OnInitializedAsync(){
+         Info.Add("2 Hello from OnInitializedAsync");
+         await Task.Delay(3000); //<-- will delay this --> 2 Hello from OnInitializedAsync for 3 sec. after invoking this function
+    }
+
+
+
+
+//This 2 methods will be invoked --> When parametr is set, or changing parametr (Counter in this case)
+     protected override void OnParametersSet(){
+        Info.Add("3 Hello from OnParametersSet");
+    }
+
+    protected override async Task OnParametersSetAsync(){
+        Info.Add("4 Hello from OnParametersSetAsync");
+        await Task.Delay(3000); //<-- will delay this --> 4 Hello from OnParametersSetAsync for 3 sec. after invoking this function
+    }
+
+
+
+
+//This 2 methods will be invoked --> after page is renders or you change something on the page
+    protected override void OnAfterRender(bool firstRender){  //<-- this method should have parametrs commming in, when paged rendered--> firstRender == true, 
+        //work after render, and any time you change anything on the page it will also invoke this methods
+          if(firstRender){
+            Info.Add("5 Hello from OnAfterRender, first render");
+          }else{
+            Info.Add("5 Hello from OnAfterRender, second render - after first one");  //after few seconds after rendering the page it will inko this method (firstRender become false)
+          }      
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender){
+          if(firstRender){
+            Info.Add("6 Hello from OnAfterRenderAsync, first render");
+          }else{
+            Info.Add("6 Hello from OnAfterRenderAsync, second render - after first one");  //after few seconds after rendering the page it will inko this method (firstRender become false)
+          } 
+    }
+
+}

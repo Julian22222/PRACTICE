@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/bin/Debug/net7.0/LessonTOP32_OOP
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/bin/Debug/net7.0/LessonTOP32_OOP.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/bin/Debug/net7.0/LessonTOP32_OOP.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/bin/Debug/net7.0/LessonTOP32_OOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/bin/Debug/net7.0/LessonTOP32_OOP.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/refint/LessonTOP32_OOP.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/LessonTOP32_OOP.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP32_OOP/obj/Debug/net7.0/ref/LessonTOP32_OOP.dll

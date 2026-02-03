@@ -1,0 +1,101 @@
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* html {
+  position: relative;
+  min-height: 100%;
+} */
+
+body {
+  background-color: rgb(187, 179, 179);
+  /* margin-bottom: 60px; */
+  margin: 0;
+}
+
+video {
+  display: block;
+  width: 100vw;
+  height: auto;
+}
+
+.footer {
+  /* position: absolute;
+  bottom: 0; */
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* //home page loader CSS */
+.loader-div {
+  display: none;
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 30001;
+  opacity: 0.8;
+}
+
+.loader-img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+/* _bookThumbnail.cshtnl, to make same size image, without straching */
+/*  */
+.same-size {
+  width: 380px; /* These properties set the size of the images to 380px by 380px, regardless of their original size.  */
+  height: 380px;
+  object-fit: cover; /* Ensures the image fills the area without distortion and stretching.  It crops the image if necessary to maintain the aspect ratio, so the images don’t get distorted. */
+}
+
+.Mainlogo {
+  margin-top: -100px;
+  margin-bottom: -80px;
+  width: 300px;
+}
+
+/* scrolling-message on the top of each Page */
+/* The white-space: nowrap; ensures the text doesn’t break into multiple lines */
+.scrolling-message {
+  white-space: nowrap;
+  position: absolute;
+  animation: scroll-left 30s linear infinite; /* The animation scrolls the text from right to left. */
+}
+
+/* The @keyframes creates the animation that moves the text from right to left. */
+/* The transform: translateX(100%) starts the message off-screen to the right, and transform: translateX(-100%) moves it off-screen to the left. */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

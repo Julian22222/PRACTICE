@@ -1,0 +1,86 @@
+﻿@using Project1.Models;
+@using Microsoft.Extensions.Configuration 
+@inject IConfiguration _configuration
+
+
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<img id="mainCar_logo" src="/IMG/Home/main_header.jpg" alt="main logo" style="width: 100%;">
+<br/>
+<br/>
+<hr/>
+
+<br/>
+<br/>
+
+@if(@ViewBag.Message != null){
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<div style="display: flex; justify-content: center;">
+    <div class="mainPage_btn-container" style="width: 400px; display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: center;">
+            <a id="anchor_showCars" href="@Url.Action("Index","Home")#carListContainer">
+                <button id="showCarsBtn" class="btn btn-primary" style="padding: 15px;">Show All Cars</button>
+            </a>
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <a class="btnLink_BookTestDrivr" asp-controller="Contacts" asp-action="Index">
+                <button id="testDriveBtn" class="btn btn-primary" style="padding: 15px;">Book Test Drive</button>
+            </a>
+        </div>
+    </div>    
+</div>
+
+<br/>
+<br/>
+
+
+<partial name="_SliderBlock" />
+
+<partial name="_AdditionalBlock" />
+
+<a class="btnLink_Addnewcar" asp-controller="home" asp-action="AddNewCar" style="display: none">
+<button class="btn btn-primary" style="padding: 5px;">
+    Add New Car
+</button>
+</a>
+  
+<a id="close_link" href="@Url.Action("Index","Home")#mainCar_logo">
+<button id="closelBtn" class="btn btn-danger" style="padding: 5px; display: none">Close</button>
+</a>
+
+<div id="carListContainer"></div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#anchor_showCars").click(function () {
+            $.get("/Home/ShowCarsData", function (data) {
+                $("#carListContainer").html(data);
+                $("#showCarsBtn").hide();
+                $("#closelBtn").show();
+                $(".btnLink_Addnewcar").show();
+                
+            });
+        });
+
+        $("#closelBtn").click(function () {
+            $("#carListContainer").empty();
+            $("#showCarsBtn").show();
+            $("#closelBtn").hide();
+            $(".btnLink_Addnewcar").hide();
+        });
+
+      
+    });
+</script>
+

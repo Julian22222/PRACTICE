@@ -1,0 +1,24 @@
+﻿@* main template of Layout *@
+@* to dont write the same code in each View file we -> we put this code here, 
+it is apply to all View files *@
+
+@* this file is common for all Views , because it is in Views folder, if you want 
+create new -> Layout file for only specific views -you can make _ViewStart.cshtml 
+file in the folder of those Views  (for example in folder Book we create file-> 
+_ViewStart.cshtml with other layout -> @{Layout = "different layout"} and this 
+Layout will be applied only for Views inside Book folder)*@
+
+@* The scope of _ViewStart applied to current folder (in which
+_ViewStart file is placed) and to all the sub folders*@
+
+@* This file runs before View will be rendered in the browser, the code in this file will be applied to all Views *@
+@* if Layout is different for any of the View.cshtml files 
+-you can write it down in that file (on the top)-> @{Layout = "Different Layout"} 
+
+or uses non of the Layout templates -->   @{Layout = null;} 
+*@
+
+
+@{
+    Layout = "_Layout";
+}

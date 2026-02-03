@@ -1,0 +1,52 @@
+@model IEnumerable<Project1.Models.Car>
+
+@{
+    ViewData["Title"] = "Car List";
+}
+
+@if (!Model.Any())
+{
+    <p>No cars available</p>
+}
+else
+{
+    <br />
+    <h1 style="display:flex; justify-content: center;">Available Cars In Our Showroom</h1>
+
+  <div class="car_container">
+        <div class="row">
+            @foreach (var car in Model)
+            {
+                ////////////////////////////////////////
+                <div class="col">
+                    <div class="card mb-3" style="width:240px">
+                        <img class="card-img-top" src="/IMG/Home/vector-car-png-favpng-gpinVUFdwJp91d2ihTCQu1WwS.jpg" alt="car image" >
+                        
+                        <div class="card-body">
+                            <h2 class="card-title"> @car.Name</h2>
+                            <span class="card-subtitle">Price: £ @car.Price</span>
+                                <br />
+                                <a href="/home/GetCar/@car.Id" class="btn btn-primary d-flex justify-content-end">More Details</a>
+                                <br/>
+                                <br/>
+                                <div class="position-absolute bottom-0 end-0">
+                                    @* <form asp-controller="Home" asp-action="EditCar" asp-route-id="@car.Id" method="post" style="display:inline;"> *@
+                                    <a class="btn btn-outline-primary" style="padding: 5px; asp-controller="Home" asp-action="EditCar" asp-route-id="@car.Id">
+                                        Edit
+                                    </a>
+                                    @* </form> *@
+                                    
+                                    @* This is to work with real DB -> <button class="btn btn-primary" asp-controller="home" asp-action="DeleteCar" asp-route-id="@car.Id">Delete</button>*@
+                                    @* When use local inmemory database (carList) - example from above does not generate a proper link or form submission — it just renders a <button> tag. That won’t send any request unless it's wrapped in a form, using method="post" *@
+                                    <form asp-controller="Home" asp-action="DeleteCar" asp-route-id="@car.Id" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this car?');">
+                                        <button type="submit" class="btn btn-outline-danger" style="padding: 5px">Delete</button>
+                                    </form>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

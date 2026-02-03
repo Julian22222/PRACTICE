@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/bin/Debug/net7.0/LessonTOP28_COLLECTION_STACK
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/bin/Debug/net7.0/LessonTOP28_COLLECTION_STACK.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/bin/Debug/net7.0/LessonTOP28_COLLECTION_STACK.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/bin/Debug/net7.0/LessonTOP28_COLLECTION_STACK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/bin/Debug/net7.0/LessonTOP28_COLLECTION_STACK.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/refint/LessonTOP28_COLLECTION_STACK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/LessonTOP28_COLLECTION_STACK.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP28_COLLECTION_STACK/obj/Debug/net7.0/ref/LessonTOP28_COLLECTION_STACK.dll

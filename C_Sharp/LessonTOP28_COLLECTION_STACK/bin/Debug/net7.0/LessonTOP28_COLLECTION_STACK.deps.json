@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "LessonTOP28_COLLECTION_STACK/1.0.0": {
+        "runtime": {
+          "LessonTOP28_COLLECTION_STACK.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LessonTOP28_COLLECTION_STACK/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

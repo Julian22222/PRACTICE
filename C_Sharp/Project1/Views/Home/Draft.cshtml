@@ -1,0 +1,143 @@
+﻿@* import User class *@
+@using Project1.Models
+@using Project1.Interfaces
+
+@* @model User *@
+
+@inject Project1.Interfaces.ICarRepository _carRepository //<--inject Interface, _bookLang <--name of interface.
+
+@model string[]
+
+@{
+    ViewData["Title"] = "Test Page";
+
+  
+    string text = "Hello!!!";
+
+    List<string> names = new List <string>(){
+    "Mick","Peter","Bob"
+    };
+
+    User user = new User {
+      Name="Alex",
+      Age=3,
+      Email="test@mail.com",
+      Balance=3000
+    };
+
+  int MyNum = 0;
+
+
+  int num1 = 3;
+  int num2 =1;
+  int result = num1 +num2;
+
+  dynamic data = ViewBag.Data;
+
+}
+
+
+
+<h1 style="margin-bottom: 50px;">@ViewData["Title"]</h1>
+
+<h2 id="numberDisplay">@MyNum</h2>
+
+
+
+<button id="incrementButton">Increment</button>
+<button id="decrementButton" value="-1">Decrement</button>
+
+<div>
+@foreach(var num in Model){
+
+<p>@num</p>
+
+
+}
+<p>@text</p>
+<p>@names[1]</p>
+<p>@user.Name - @user.Email - @user.Balance</p>
+<p>Length of the name:  @user.Name.Length </p>
+
+@* <p>@Model.Lastname</p> *@
+</div>
+
+<br/>
+<br/>
+
+<p>
+@num1 + @num2 = @result
+</p>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<input type="text" id="username" placeholder="Enter your name">
+<button id="submitBtn">Submit</button>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<h2>Dependency Injection passsing straight away to View from Repository, without passing it to controller and then to View</h2>
+<h2>But we must use Interface Repository only to do that!!!!!</h2>
+
+@foreach( var item in _carRepository.GetAllCars()){
+
+<p>@item.Name</p>
+}
+
+
+<br/>
+<br/>
+<h1>Without using Dynamic object</h1>
+<h4>@ViewBag.Obj</h4>
+
+<br/>
+<br/>
+
+<h1>Dynamic object</h1>
+<h4>@data.Name</h4>
+
+
+@* Section Declaration: The @section syntax defines a "section" in Razor views. This is typically used for placing content (such as scripts or additional markup) into a specific part of the layout (e.g., a <script> block at the bottom of the page). 
+The scripts section is used here to insert JavaScript into the page. *@
+@section scripts {
+@* Here we can insert any scripts*@
+
+@* Script Block: This is a standard HTML <script> block containing JavaScript code. The code inside will be executed in the browser when the page loads. *@
+   <script> 
+    $(document).ready(function () {
+      @* jQuery: $(document).ready(function () { ... }); ensures the JavaScript code inside the function is executed after the DOM is fully loaded (i.e., after the HTML elements have been completely rendered). 
+      This avoids potential errors that could occur if the script tries to interact with elements before they exist on the page. *@
+        let myNum = @MyNum; // Read initial value from Razor
+
+        $("#incrementButton").click(function () {
+            myNum++;
+
+            $("#numberDisplay").text(myNum);
+            @* Updating the Display: This line updates the content of the <h2> element (with ID numberDisplay) to reflect the new value of myNum. 
+              The text() function in jQuery sets the inner text of the targeted element. So, it changes the number shown in the <h2> tag to the new value of myNum after each increment. *@
+        });
+
+        $("#decrementButton").click(function () {
+            @* myNum--; *@
+            
+            @* alert($(this).val()); *@
+            myNum += parseInt($(this).val());
+
+            $("#numberDisplay").text(myNum); 
+        });
+
+
+         $("#submitBtn").click(function() {
+            var username = $("#username").val();  // Get value from the input field
+            alert("Hello, " + username + "!");
+        });
+    });
+</script>
+}

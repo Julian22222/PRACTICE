@@ -1,0 +1,56 @@
+@model Project_MVC_BookShop2.Models.SignInModel
+
+@{
+    ViewData["Title"] = "LogIn";
+}
+
+
+<div class="container">
+<h4>LogIn</h4>
+<hr/>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" >
+            @* this div shows ModelState Errors-->  *@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+            
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+             <div class="form-group form-check">
+                <label asp-for="RememberMe" class="form-check-label"></label>
+                <input  asp-for="RememberMe" class="form-check-input" />
+            </div>
+
+             <br/>
+
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+
+    <div class="col-md-8">
+        <img src="~/img/login.webp" alt="Sign-In logo" class="img-fluid"/>
+    </div>
+
+    <br/>
+
+    <div>
+        <p> Click <a asp-controller="Account" asp-action="Signup">
+        here</a> to SignUp
+        </p>
+    </div>
+
+</div>

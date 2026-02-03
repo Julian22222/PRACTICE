@@ -1,0 +1,4 @@
+{
+  "dotnet.defaultSolution": "C_Sharp/C_Sharp.sln",
+  "sqltools.useNodeRuntime": true
+}

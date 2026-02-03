@@ -1,0 +1,28 @@
+@model IEnumerable<Book>  //receive data (List of 3 books) from Components/TopBooksViewComponent.cs, that we passed in TopBooksViewComponent.cs,(here we assign a data type to imported Model).It can be any data type -IEnumerable (this is universal), List, Collection
+@* receiving <Book> model  from Components/TopBooksViewComponent.cs*@
+
+<h3 class="mt-5 mb-2 text-decoration-underline d-flex justify-content-center">Top 3 Books of our Bookshop</h3>
+
+@if(!Model.Any()) //if there is no books in the database
+{
+    <div class="alert alert-danger" role="alert">
+        No books found in our BookShop
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach(var book in Model){
+        <div class="col-md-4"> <!-- col-md-4 - 3 columns in a row, 4 columns in a row for each book -->
+
+            @* here we loop the IEnumerable(list of books that we received from TopBooksViewComponent.cs) and passing each book to Partial View *@
+            <partial name="_bookThumbnail" model="book" />  
+        </div>
+        }
+    </div>
+     
+}
+
+
+
+

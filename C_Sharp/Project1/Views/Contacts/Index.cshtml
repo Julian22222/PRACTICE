@@ -1,0 +1,57 @@
+@model Contact  //import Contact Class, (works only if Class exists in Models folder)
+
+@{
+    ViewData["Title"] = "Contacts";
+}
+<h1>Contacts us</h1>
+
+@* <form method="post" action="/contacts/check"> *@
+<form method="post" asp-controller="Contacts" asp-action="Check">
+
+@* we use controller ->Contacts and method -> Check (from Contcts controller) *@
+<label asp-for="Name"></label>
+@*label asp-for="Name" - > all data from Contact Class -> Name, will show in this label*@
+<input asp-for="Name"/>
+@*input asp-for="Name" - > all data inserted in this input will be asigned to-> Name in Contact Class *@
+<span asp-validation-for="Name"></span>
+@* all (Name) errors  from input and label ,that are apearing will show in span *@
+
+
+
+<label asp-for="Surname"></label>
+<input asp-for="Surname"/>
+<span asp-validation-for="Surname"></span>
+
+<label asp-for="PhoneNr"></label>
+<input asp-for="PhoneNr"/>
+<span asp-validation-for="PhoneNr"></span>
+
+<label asp-for="Date"></label>
+<input asp-for="Date"/>
+<span asp-validation-for="Date"></span>
+
+<label asp-for="Email"></label>
+<input asp-for="Email"/>
+<span asp-validation-for="Email"></span>
+
+<label asp-for="Message"></label>
+<input asp-for="Message"/>
+<span asp-validation-for="Message"></span>
+
+<input id="submitContactUs" type="submit" velue="send"/>
+
+</form>
+
+
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#submitContactUs").click(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            alert("We will contact you soon!");
+           
+        });
+    });
+
+</script> *@

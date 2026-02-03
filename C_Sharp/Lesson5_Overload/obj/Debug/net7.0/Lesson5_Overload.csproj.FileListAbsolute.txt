@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/bin/Debug/net7.0/Lesson5_Overload
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/bin/Debug/net7.0/Lesson5_Overload.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/bin/Debug/net7.0/Lesson5_Overload.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/bin/Debug/net7.0/Lesson5_Overload.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/bin/Debug/net7.0/Lesson5_Overload.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/refint/Lesson5_Overload.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/Lesson5_Overload.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson5_Overload/obj/Debug/net7.0/ref/Lesson5_Overload.dll

@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/bin/Debug/net7.0/Lesson7_struct
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/bin/Debug/net7.0/Lesson7_struct.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/bin/Debug/net7.0/Lesson7_struct.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/bin/Debug/net7.0/Lesson7_struct.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/bin/Debug/net7.0/Lesson7_struct.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/refint/Lesson7_struct.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/Lesson7_struct.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson7_struct/obj/Debug/net7.0/ref/Lesson7_struct.dll

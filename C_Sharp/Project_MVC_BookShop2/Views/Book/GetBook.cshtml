@@ -1,0 +1,167 @@
+@{
+    ViewData["Title"] = "Book detail - " + Model.Title;
+}
+
+
+@* Book model class import connection*@
+@using Project_MVC_BookShop2.Models
+
+@model Book  //<--receiving Model from BookController
+
+<div class="container">
+    <h3 class="display-4">Book details</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li type="button" data-bs-target="#carouselExampleIndicators" data-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
+                    <li type="button" data-bs-target="#carouselExampleIndicators" data-slide-to="1" aria-label="Slide 2"></li>
+                    <li type="button" data-bs-target="#carouselExampleIndicators" data-slide-to="2" aria-label="Slide 3"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        @* inserting images from wwwroot *@
+                        @* asp-append-version="true" - make a cache key in the browser memory, 
+                        when update the same picture with the same name it will change it in the View from server, 
+                        not from cache memory, Image tag helpers can use only from own server- static files folder, not images from URL *@
+                        <img src="~/img/book1.jpg" class="d-block w-100" alt="First slide" asp-append-version="true">
+                    </div>
+                    <div class="carousel-item">
+                        @* inserting images from wwwroot *@
+                    <img src="~/img/book2.jpg" class="d-block w-100" alt="Second slide" asp-append-version="true">
+                    </div>
+                    <div class="carousel-item">
+                        @* inserting images from wwwroot *@
+                    <img src="~/img/book3.jpeg" class="d-block w-100" alt="Third slide" asp-append-version="true">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+
+                    @* using Title property from the Book  *@
+                    <h1>@Model.Title</h1>  
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-primary">
+                    <span class="label label-primary">By: </span>
+
+                    @* using Author property from the Book   *@
+                    <span class="monospaced">@Model.Author</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    @* using Description property from the Book  *@
+                @* <p class="description" style="max-width: 300px; word-wrap: break-word; white-space: normal;"> Description: @Model.Description</p> *@
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    @* using Description property from the Book  *@
+                <p class="description">@Model.CreatedAt</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                   
+                    @* target="blank"  <--open pdf file in new web page *@
+                    <a type="button" class="btn btn-outline-primary" href="@Model.BookPdfUrl" target="blank">
+                        Read now
+                    </a>
+                    <a type="button" class="btn btn-outline-primary" href="/home/basket">
+                        Download
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm add-to-basket" data-id="@Model.Id">
+                        <strong>+</strong><i class="fa-solid fa-basket-shopping"></i>
+                    </button>
+                </div>
+            </div>
+
+        <hr/>
+
+        <ul class="list-group">
+            @* taking data from each book *@
+            <li class="list-group-item"><span class="font-weight-bold">Category - </span> @Model.Category</li>
+            <li class="list-group-item"><span class="font-weight-bold">Total pages - </span> @Model.TotalPages</li>
+            <li class="list-group-item"><span class="font-weight-bold">Book Type - </span> @Model.BookTypeModel</li>
+            <li class="list-group-item"><span class="font-weight-bold">Price - £</span> @Model.Price</li>
+        </ul>
+
+    </div>
+ </div>
+
+ <hr/>
+
+  <h3>Book Description: </h3><p class="description" style="width: 100%; word-wrap: break-word; white-space: normal;"> @Model.Description</p>
+
+ <div class="py-5 by-light">
+    <h3 class="h3">Similar books</h3>
+    <div class="row">
+
+@for(int i=0; i<3; i++){ //FOR LOOP with 5 CARDS
+
+     <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="/img/340719-200.png" alt="nologo">
+                <div class="card-body">
+                    <h3 class="card-title">book.Title</h3>
+                    <p class="card-text">book.Description</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View details</a>
+                        </div>
+                        <small class="text-muted">book.Author</small>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+}
+
+       
+    </div>
+ </div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+           $(document).ready(function () {
+        $(".add-to-basket").click(function () {
+            var bookId = $(this).data("id");  //$(this) refers to the button that was clicked., .data("id") accesses the data-id attribute of that button, which contains the book's ID
+
+            $.ajax({   //AJAX allows you to send data to the server and get a response without reloading the page.
+                type: "POST",
+                url: "/Home/Basket", // Adjust if your controller is named differently, /Home/Basket means you're calling the Basket method of the HomeController
+                data: { id: bookId },  // sending to the controller,-sends a POST parameter named id with the value of the selected book's ID
+                success: function (response) { //Defines what to do when the request succeeds,-response is the JSON object returned by your controller (Json(...) result).
+                    alert(response.message);  //Displays an alert box showing the message from the server's response,-- For example: "Book added to basket" or "Book already in basket".
+                },
+                error: function () {   //Defines what to do if the AJAX request fails (e.g., network error, 500 server error).
+                    alert("Error adding book to basket.");
+                }
+            });
+        });
+    });
+    </script>
+}

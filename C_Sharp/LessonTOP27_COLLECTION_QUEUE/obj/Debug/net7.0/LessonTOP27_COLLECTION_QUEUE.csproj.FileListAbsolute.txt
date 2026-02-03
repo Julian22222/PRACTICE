@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/bin/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/bin/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/bin/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/bin/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/bin/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/refint/LessonTOP27_COLLECTION_QUEUE.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/LessonTOP27_COLLECTION_QUEUE.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP27_COLLECTION_QUEUE/obj/Debug/net7.0/ref/LessonTOP27_COLLECTION_QUEUE.dll

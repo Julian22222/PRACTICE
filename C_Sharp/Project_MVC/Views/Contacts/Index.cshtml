@@ -1,0 +1,42 @@
+@model Contact  //import Contact Class, (works only if Class exists in Models folder)
+
+@{
+    ViewData["Title"] = "Contacts";
+}
+<h1>This is Contacts</h1>
+
+@* <form method="post" action="/contacts/check"> *@
+@* asp-controller="Contacts" <- Controller name ContactsController *@
+@* asp-action="Check"  <- method Check , in ContactsController *@
+
+<form method="post" asp-controller="Contacts" asp-action="Check">
+
+@* we use controller ->Contacts and method -> Check (from Contcts controller) *@
+<label asp-for="Name"></label>
+@*label asp-for="Name" - > all data from Contact Class -> Name, will show in this label*@
+<input asp-for="Name"/>
+@*input asp-for="Name" - > all data inserted in this input will be assigned to-> Name in Contact Class *@
+<span asp-validation-for="Name"></span>
+@* all (Name) errors  from input and label ,that are appearing will show in span *@
+
+
+
+<label asp-for="Surname"></label>
+<input asp-for="Surname"/>
+<span asp-validation-for="Surname"></span>
+
+<label asp-for="Age"></label>
+<input asp-for="Age"/>
+<span asp-validation-for="Age"></span>
+
+<label asp-for="Email"></label>
+<input asp-for="Email"/>
+<span asp-validation-for="Email"></span>
+
+<label asp-for="Message"></label>
+<input asp-for="Message"/>
+<span asp-validation-for="Message"></span>
+
+<input type="submit" velue="send"/>
+
+</form>

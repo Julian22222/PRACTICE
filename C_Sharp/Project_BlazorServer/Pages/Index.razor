@@ -1,0 +1,49 @@
+﻿@page "/"
+@inject Microsoft.Extensions.Configuration.IConfiguration _config  //<--this is dependancy injection, _config is a name for this configurations.
+@* @inject IConfiguration _config    //<-- we can write this way , if we inserted @using Microsoft.Extensions.Configuration in _Imports.razor file *@
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+ <p>
+    <span style="color: red;"> My Settings Value: </span> 
+    @_config["MySettings"];
+  </p>  
+
+<br/>
+
+<p>
+    <span style="color: red;">
+        My SubSettings Value:
+    </span>
+     @subSettings
+</p>
+
+<br/>
+
+<p>
+    <span style="color: red;">
+        My Connection string Value:
+    </span>
+     @connectionString
+</p>
+
+@code{
+  
+    string subSettings = "";
+    string connectionString = "";
+
+     protected override void OnInitialized(){
+        //works before page renders
+    
+        subSettings = _config.GetValue<string>("MainSettings:SubSettings");  //<-- it will override the subSettings from null to new value before page renders
+    
+        connectionString = _config.GetConnectionString("Default");
+    }
+
+}

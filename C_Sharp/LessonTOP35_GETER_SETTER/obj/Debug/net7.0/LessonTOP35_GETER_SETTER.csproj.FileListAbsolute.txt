@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/bin/Debug/net7.0/LessonTOP35_GETER_SETTER
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/bin/Debug/net7.0/LessonTOP35_GETER_SETTER.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/bin/Debug/net7.0/LessonTOP35_GETER_SETTER.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/bin/Debug/net7.0/LessonTOP35_GETER_SETTER.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/bin/Debug/net7.0/LessonTOP35_GETER_SETTER.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/refint/LessonTOP35_GETER_SETTER.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/LessonTOP35_GETER_SETTER.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP35_GETER_SETTER/obj/Debug/net7.0/ref/LessonTOP35_GETER_SETTER.dll

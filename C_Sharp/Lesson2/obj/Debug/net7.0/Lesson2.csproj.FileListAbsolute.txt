@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/bin/Debug/net7.0/Lesson2
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/bin/Debug/net7.0/Lesson2.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/bin/Debug/net7.0/Lesson2.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/bin/Debug/net7.0/Lesson2.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/bin/Debug/net7.0/Lesson2.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/refint/Lesson2.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/Lesson2.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/Lesson2/obj/Debug/net7.0/ref/Lesson2.dll

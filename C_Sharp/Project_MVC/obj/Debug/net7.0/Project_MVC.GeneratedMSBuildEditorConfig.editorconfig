@@ -1,0 +1,93 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Project_MVC
+build_property.RootNamespace = Project_MVC
+build_property.ProjectDir = /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = /home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC
+build_property._RazorSourceGeneratorDebug = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Book/AddNewBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9BZGROZXdCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Book/GetAllBooks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9HZXRBbGxCb29rcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Book/GetBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9vay9HZXRCb29rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Contacts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ29udGFjdHMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Game/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvR2FtZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Home/BookStoreTest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Cb29rU3RvcmVUZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Home/Calculator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9DYWxjdWxhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Home/Test.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9UZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Home/Vending.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9WZW5kaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Testing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVzdGluZy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Testing/Test1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVzdGluZy9UZXN0MS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Testing/Test2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVzdGluZy9UZXN0Mi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Testing/Test3.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVzdGluZy9UZXN0My5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/codenitro/VSCode/project/PRACTICE/C_Sharp/Project_MVC/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-sy6ki1ijrh

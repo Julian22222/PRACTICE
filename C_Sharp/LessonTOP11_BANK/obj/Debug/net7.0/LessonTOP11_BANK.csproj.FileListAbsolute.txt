@@ -1,0 +1,15 @@
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.csproj.AssemblyReference.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.GeneratedMSBuildEditorConfig.editorconfig
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.AssemblyInfoInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.AssemblyInfo.cs
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.csproj.CoreCompileInputs.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/bin/Debug/net7.0/LessonTOP11_BANK
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/bin/Debug/net7.0/LessonTOP11_BANK.deps.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/bin/Debug/net7.0/LessonTOP11_BANK.runtimeconfig.json
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/bin/Debug/net7.0/LessonTOP11_BANK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/bin/Debug/net7.0/LessonTOP11_BANK.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/refint/LessonTOP11_BANK.dll
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.pdb
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/LessonTOP11_BANK.genruntimeconfig.cache
+/home/codenitro/VSCode/northocoders/project/practice/C_Sharp/LessonTOP11_BANK/obj/Debug/net7.0/ref/LessonTOP11_BANK.dll
