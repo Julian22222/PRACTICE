@@ -59,8 +59,16 @@ rafce + Tab //standard React new component
 ```
 
 ```JS
-npx create-next-app my-app-name //<-- can use this by default or -->
+//When creating Next.js
+npx create-next-app my-app-name --no-git//<-- can use this by default, this option with NO hidden .git folder
 
+//When creating NestJS
+nest new my-app --skip-git
+//✔ This avoids the problem completely.
+
+
+//Next.JS and NEST.JS create .git hidden directory automatically and i have Next.js project inside parent directory it causes submodule errors
+npx create-next-app my-app-name  // will create hidden .git folder, can use this by default or ->
 npx create-next-app@13.4 .  //dot in the end means -create app in current folder, next version -13.4
 
 npx create-next-app@latest my-app-name
@@ -95,6 +103,8 @@ scripts:
 
 # ⚠️ Avoid error before pushing Nest.JS and/or Next.JS projects to GitHub
 
+- we need just ONE Git repo (the parent) and the Next.js/Nest.js project as a normal folder.
+
 - after you create Next.js project it creates hiden .git folder. It causes .git ,which can cause error when you push the code to GitHub. And if you want to push first time your project it can cause error when you push the code to GitHub. Therefore you need to delete hidden .git folder. After command - "npx create-next-app my-app-name" ,NEXT JS automatically creates its own .git folder inside your project folder. Now you have a .git folder inside .git folder
 - after creating new NEST.JS --> ninja-api folder using NEST CLI - it creates hiden .git folder, it causes .git which can cause error when you push the code to GitHub. Your main folder Next_AND_NEST folder has a .git folder. After command - "nest new ninja-api" ,NEST CLI automatically creates its own .git folder inside ninja-api folder. Now you have a .git folder inside .git folder, this is called nested Git repo, and Git doesn't like it. VS Code and GitHub are confused because ninja-api is not part of the main repository remote tracking, ninja-api has no remote link.To solve this error ->
   - open termimal and navigate to your NEST JS or/and Next JS project folder
@@ -118,6 +128,31 @@ git commit -m "Add bankapp as regular folder"
 git push origin main
 
 ```
+
+# Why Next.js and Nest.js create .git folder? (important clarification)
+
+👉 Next.js and NestJS themselves do NOT create a .git folder.
+What does create it is:
+
+git clone
+npx create-next-app when Git is already installed and you answer “Yes” to Git
+nest new when Git is enabled (default = yes)
+So when you scaffold a Next.js/NestJS app inside a parent repo, the generator initializes Git again → creates a nested .git → GitHub shows it as a submodule (arrow)
+
+# 🧠 Best-practice project structure for Next.js and Nest.js
+
+Single repo (recommended)
+
+```JS
+parent-repo/
+      ├── backend/   (NestJS)
+      ├── frontend/  (Next.js)
+      └── package.json
+```
+
+✔ One .git
+✔ No submodules
+✔ Easier CI/CD
 
 # 📤 Deployment
 

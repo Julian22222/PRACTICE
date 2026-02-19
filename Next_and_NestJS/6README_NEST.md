@@ -414,11 +414,19 @@ sudo npm install -g @nestjs/cli@latest
 //or
 npm i -g @nestjs/cli
 
-//OR
+//then ->
+nest new my-app --skip-git  //this option with NO hidden .git folder
+//✔ This avoids the problem completely.
 
-🔥 npx @nestjs/cli new project-name
+
+
+
+//OR simply
+
+🔥 npx @nestjs/cli new project-name --skip-git   //this option with NO hidden .git folder
 //npx lets you run CLI tools without installing them globally.
 //npx automatically downloads and runs the Nest CLI for this command only
+//Always uses the latest version automatically
 
 //nest.js CLI --> it is the way to help you to generate new projects and also has a couple other extra commands and create new files for you and it will make it easier
 ```
