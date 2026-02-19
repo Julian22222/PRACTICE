@@ -1,8 +1,0 @@
-{
-  "myposts": [
-    { "id": 1, "title": "Hello World" },
-    { "id": 2, "title": "Learning Next.js" },
-    { "id": 3, "title": "Deploying to Vercel" }
-  ],
-  "comments": [{ "id": 1, "body": "Great post!", "postId": 1 }]
-}
