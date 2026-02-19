@@ -75,6 +75,29 @@ class MyItem{
 
 var ok = new MyItem {name ="Tom", age = 22};
 
+
+////////////////////////////////////////
+//OR
+public class MyItem
+{
+    public string name { get; set; }
+    public int age { get; set; }
+
+    // Optional constructor
+    public MyItem(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+// Then you can use:
+var ok = new MyItem("Tom", 22);
+
+
+////////////////////////////////////
+
+
 int num = 7;
 
 string str = "Hello World";
@@ -118,8 +141,10 @@ public class Item {
 }
 
 
-
+//The parentheses () after new Item are optional if you don’t have a constructor that takes parameters
 var Tony = new Item(){Age=12, Name="Tony"};
+//OR
+var Tony = new Item {Age=12, Name="Tony"};
 
 var Ben = new Item(){Age=15, Name="Ben"};
 
