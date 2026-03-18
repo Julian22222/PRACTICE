@@ -41,11 +41,11 @@ VALUES
 
 
 -------------------- JOIN 2 tables
-SELECT cars.brand, cars.seats, cars.seats, cars.notes, phoneNumbers.phone
-FROM cars
-INNER JOIN phoneNumbers ON ph_id = car_id;
+-- SELECT cars.brand, cars.seats, cars.seats, cars.notes, phoneNumbers.phone
+-- FROM cars
+-- INNER JOIN phoneNumbers ON ph_id = car_id;
 
--- Corrected JOIN query to select all columns from both tables
-SELECT *
-FROM cars
-INNER JOIN phoneNumbers ON ph_id = car_id;
+---- Corrected JOIN query to select all columns from both tables
+-- SELECT *
+-- FROM cars
+-- INNER JOIN phoneNumbers ON ph_id = car_id;
