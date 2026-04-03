@@ -58,3 +58,31 @@ const currentUser = users.find((user) => user.email === credentials.email); //if
 const { password, ...userWithoutPassword } = currentUser; //destructuring to exclude password from the user object
 return userWithoutPassword as User; // ensure id is a string //returning a user object without password,
 ```
+
+- Modifying objects can be used for many purposes also for PUT method (full object update, PATCh - is partial update ):
+
+```JS
+//front-end
+
+//previous object that needs to be updated
+const data = {
+  name: "Ben",
+  lastname: "Sanderson",
+  age: 32
+}
+
+let updatedValue = "Fisher" //<-- this property was updated in the code
+
+fetch("https://someURL",{
+  method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          // JSON.stringify() <- use to send data to server,and database in string format, converting object to string
+          body: JSON.stringify({...data, lastname: updatedValue}),
+          //...data --> copies the existing object
+          //lastname: updatedValue --> overrides the old value
+          //If a updatedValue property appears twice, the last one wins
+});
+
+
+
+```
