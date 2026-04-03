@@ -217,9 +217,11 @@ Use an SQL extension
 If you want to run SQL directly from VS Code, install an extension such as:
 
 🐘 PostgreSQL (official by Microsoft)
+
 SQLTools + PostgreSQL driver
+
 These let you:
 
-Connect to your local DB
-Run queries inline
-View results in an output panel
+- Connect to your local DB
+- Run queries inline
+- View results in an output panel
