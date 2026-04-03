@@ -12,10 +12,13 @@ app.use(express.json()); //to be able to send json body in POST and PUT methods 
 ///////////////////////////////////////////////////////////////////////GET
 app.get("/", async (req, res) => {
   try {
+    //pool.query() is async → returns a Promise
+    //await makes the code wait until the Promise is resolved
+    //MUST use async await to get the result of the query
     const [rows] = await pool.query(
       `SELECT cars.*, phoneNumbers.phone
       FROM cars
-      LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id`
+      LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id`,
     );
 
     console.log(rows);
@@ -62,7 +65,7 @@ app.get("/:carId", async (req, res) => {
        FROM cars
        LEFT JOIN phoneNumbers ON phoneNumbers.ph_id = cars.car_id
        WHERE cars.car_id = ?`, //// Use ?, ? placeholders for parameterized queries, In PostgreSQL we use $1, $2 — but that's not valid for MySQL
-      [carId]
+      [carId],
     );
 
     //if carId doesn't exist in database -> the result.length === 0
@@ -112,7 +115,7 @@ app.post("/", async (req, res) => {
         serviceCheck,
         involved || null,
         notes || null,
-      ]
+      ],
       //If date, fuel, involved, or notes are empty or undefined, they will be saved as null in the database.
     );
 
@@ -123,7 +126,7 @@ app.post("/", async (req, res) => {
       // Insert phone
       await pool.query(
         `INSERT INTO phoneNumbers (ph_id, phone) VALUES (?, ?)`,
-        [carId, phone]
+        [carId, phone],
       );
     }
 
@@ -179,14 +182,14 @@ app.put("/:carId", async (req, res) => {
         involved || existing[0].involved,
         notes || existing[0].notes,
         carId,
-      ]
+      ],
     );
 
     if (phone) {
       // Update or insert phone number for this car
       const [phoneExists] = await pool.query(
         "SELECT * FROM phoneNumbers WHERE ph_id = ?",
-        [carId]
+        [carId],
       );
 
       if (phoneExists.length) {
@@ -197,7 +200,7 @@ app.put("/:carId", async (req, res) => {
       } else {
         await pool.query(
           "INSERT INTO phoneNumbers (ph_id, phone) VALUES (?, ?)",
-          [carId, phone]
+          [carId, phone],
         );
       }
     }
