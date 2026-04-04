@@ -299,6 +299,8 @@ providers: [UsersService]
 ```JS
 //users.controller.spec.ts  - will compare mock data from users.controller.mock.ts file with hard coded code. No data will be used from Database
 
+//await controller.findAll() - is bringing mock data from "users.controller.mock.ts". If you have -> added - providers: [{ provide: UsersService, useValue: mockUsersService }]
+//otherwise it will get data from your Database
 
  it('should return all users', async () => {
     expect(await controller.findAll()).toEqual([
