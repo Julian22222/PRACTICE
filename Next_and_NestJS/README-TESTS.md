@@ -279,7 +279,7 @@ export class UsersController {
 - I used this option in Bank app
 
 ```JS
-//users.controller.ts line 17, This line allows to connect to my DB and get the data from it
+//users.controller.ts line 17, This line allows to connect to my DB
 constructor(private readonly usersService: UsersService) {}
 ```
 
@@ -294,4 +294,42 @@ providers: [{ provide: UsersService, useValue: mockUsersService }]
 
 //change to this one to see all changes in DB what you do in Unit test
 providers: [UsersService]
+```
+
+```JS
+//users.controller.spec.ts  - will compare mock data from users.controller.mock.ts file with hard coded code. No data will be used from Database
+
+
+ it('should return all users', async () => {
+    expect(await controller.findAll()).toEqual([
+  {
+    first_name: 'Julian',
+    last_name: 'Golovens',
+    email: 'julian@test.com',
+    password: '123',
+    phone: '123-456-7890',
+    customer_address: '123 Main St, Springfield, IL',
+    dob: new Date('1995-06-15'),
+  },
+  {
+    first_name: 'Tom',
+    last_name: 'Simpsons',
+    email: 'tomSimpson@gmail.com',
+    password: '01234',
+    phone: '123-456-7890',
+    customer_address: '456 Main St, Springfield, IL',
+    dob: new Date('1985-06-15'),
+  },
+  {
+    first_name: 'Den',
+    last_name: 'Jason',
+    email: 'superben@gmail.com',
+    password: '56789',
+    phone: '123-999-7890',
+    customer_address: '456 Market St, Salford, IL',
+    dob: new Date('1982-08-15'),
+  },
+]);
+  });
+
 ```
