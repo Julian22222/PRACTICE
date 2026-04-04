@@ -273,3 +273,25 @@ export class UsersController {
 ////other code
 }
 ```
+
+# More often used fo Testing
+
+- I used this option in Bank app
+
+```JS
+//users.controller.ts line 17, This line allows to connect to my DB and get the data from it
+constructor(private readonly usersService: UsersService) {}
+```
+
+and
+
+```JS
+//users.controller.specs.ts
+
+//useValue: mockUsersService - this code allows to make UPDATE, PUT,PATCH,DELETE in unit test but it will not change my DB. The DB is not getting touched and any updates
+providers: [{ provide: UsersService, useValue: mockUsersService }]
+
+
+//change to this one to see all changes in DB what you do in Unit test
+providers: [UsersService]
+```
