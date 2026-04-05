@@ -142,10 +142,18 @@ test/
     users.service.mock.ts
 ```
 
-# Optional for Unit testing, without DB connection (usually don't need)
+# BAD Practices for Unit testing, without DB connection (usually don't need)
 
-- It is not mandatory to use real DB data for Unit test, but your API will not work. because there is no DB connection.
-- You can use mock data for Unit tests. For unit testing, you DO NOT need a real database.
+- It is BAD Practice to use real DB data for Unit tests.
+- Use mock data for Unit tests. For unit testing, you DO NOT need a real database.
+- If you use
+
+```JS
+//then in your controller - I take as example my Bank/bank-api
+constructor(@Inject('UsersService') private usersService: any) {}
+```
+
+API will not work. because there is no DB connection.
 
 In Unit test in controller:
 
@@ -159,10 +167,10 @@ In Unit test in controller:
 - You can just tell NestJS to use a mock without importing the real service at all.
 
 ```JS
-//we keep this line, but we change constructor
-import { UsersService } from './users.service'; // ❌ imports DB stuff
+//we keep this line, but we change constructor - I take as example my Bank/bank-api
+import { UsersService } from './users.service';
 
-//then in your controller :
+//then in your controller : I take as example my Bank/bank-api
 constructor(@Inject('UsersService') private usersService: any) {}
 //✅ You never touch the database. Jest doesn’t try to load any DB files.
 //with this option you will not connect ro your DB and your back-end API will not work !!!
@@ -171,7 +179,7 @@ constructor(@Inject('UsersService') private usersService: any) {}
 See example below
 
 ```JS
-//users.controller.spec.ts
+//users.controller.spec.ts  - I take as example my Bank/bank-api
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
@@ -227,6 +235,11 @@ describe('UsersController', () => {
     ]
     );
   });
+
+//if you use Data from Database - you need to close connection, if you use mock Data you don't need this afterAll block
+   afterAll(async () => {
+    await pool.end(); // or close(), depending on your DB
+  });
 });
 ```
 
@@ -274,7 +287,9 @@ export class UsersController {
 }
 ```
 
-# More often used fo Testing
+# 🧠 Best practice (important)
+
+You don't need to use Real Database data, use mock data
 
 - I used this option in Bank app
 
@@ -294,13 +309,15 @@ providers: [{ provide: UsersService, useValue: mockUsersService }]
 
 //change to this one to see all changes in DB what you do in Unit test
 providers: [UsersService]
+//but this is BAD practice
 ```
 
 ```JS
 //users.controller.spec.ts  - will compare mock data from users.controller.mock.ts file with hard coded code. No data will be used from Database
 
 //await controller.findAll() - is bringing mock data from "users.controller.mock.ts". If you have -> added - providers: [{ provide: UsersService, useValue: mockUsersService }]
-//otherwise it will get data from your Database
+
+//otherwise it will get data from your Database - if you use -> providers: [UsersService]
 
  it('should return all users', async () => {
     expect(await controller.findAll()).toEqual([
