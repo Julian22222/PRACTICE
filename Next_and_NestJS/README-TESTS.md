@@ -95,7 +95,30 @@ Common Issue: If you see an error like "Nest can't resolve dependencies of the U
 //users.controller.spec.ts
 
 it('should return all users', async () => {
-   expect(await controller.findAll()).toEqual(mockUsersService.findAll());
+   expect(await controller.findAll()).toEqual(
+    [
+      {
+        customer_id: 1,
+        first_name: 'Julian',
+        last_name: 'Golovens',
+        email: 'julian@test.com',
+        password: '123',
+        phone: '123-456-7890',
+        customer_address: '123 Main St, Springfield, IL',
+        dob: new Date('1995-06-15'),
+      },
+      {
+        customer_id: 2,
+        first_name: 'Tom',
+        last_name: 'Simpsons',
+        email: 'tomSimpson@gmail.com',
+        password: '01234',
+        phone: '123-456-7890',
+        customer_address: '456 Main St, Springfield, IL',
+        dob: new Date('1985-06-15'),
+      }
+    ]
+   );
 });
 ```
 
@@ -142,15 +165,21 @@ test/
     users.service.mock.ts
 ```
 
-# BAD Practices for Unit testing, without DB connection (usually don't need)
+# ❌ BAD Practices for Unit testing, without DB connection (usually don't need)
 
 - It is BAD Practice to use real DB data for Unit tests.
 - Use mock data for Unit tests. For unit testing, you DO NOT need a real database.
 - If you use
 
 ```JS
-//then in your controller - I take as example my Bank/bank-api
+//I take as example my Bank/bank-api
+
+//users.controller.ts
+//This line will disconnect your API from your DataBase- bad practice. won't be able to use your API for your app. APIs will not work.
 constructor(@Inject('UsersService') private usersService: any) {}
+//instead of this line below
+constructor(private readonly usersService: UsersService) {}
+//line 17, This line allows to connect to my DB
 ```
 
 API will not work. because there is no DB connection.
@@ -172,8 +201,8 @@ import { UsersService } from './users.service';
 
 //then in your controller : I take as example my Bank/bank-api
 constructor(@Inject('UsersService') private usersService: any) {}
-//✅ You never touch the database. Jest doesn’t try to load any DB files.
-//with this option you will not connect ro your DB and your back-end API will not work !!!
+//In this case - You never touch the database. Jest doesn’t try to load any DB files.
+//with this option you will not connect to your DB and your back-end API will not work !!! ❌ Bad Practice
 ```
 
 See example below
@@ -294,7 +323,7 @@ You don't need to use Real Database data, use mock data
 - I used this option in Bank app
 
 ```JS
-//users.controller.ts line 17, This line allows to connect to my DB
+//users.controller.ts line 17, This line allows to connect to my DB, you need to have this line
 constructor(private readonly usersService: UsersService) {}
 ```
 
@@ -303,13 +332,13 @@ and
 ```JS
 //users.controller.specs.ts
 
-//useValue: mockUsersService - this code allows to make UPDATE, PUT,PATCH,DELETE in unit test but it will not change my DB. The DB is not getting touched and any updates
+// 🔥 useValue: mockUsersService - this code allows to make UPDATE, PUT,PATCH,DELETE in unit test but it will not change my DB. The DB is not getting touched and any updates
 providers: [{ provide: UsersService, useValue: mockUsersService }]
 
 
 //change to this one to see all changes in DB what you do in Unit test
 providers: [UsersService]
-//but this is BAD practice
+//❌ but this is BAD practice
 ```
 
 ```JS
