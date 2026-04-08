@@ -1,6 +1,8 @@
 # GitHub Actions
 
-- It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
+It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
+
+CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
 
 [GitHub Actions Docs](https://github.com/features/actions)
 
@@ -10,26 +12,25 @@
 
 - Allow to create a pipeline
 - It is build-in CI/CD tool for GitHub
-- CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
 - Workflow it is a process of GitHub Actions. Workflow it is an instruction in yml format. workflow reacts on different types of events.
 - GitHub Actions have 2000 Free minutes per month, after that if you use more you need to pay to use GitHub virtual servers to run GitHub Actions, or you can run GitHub Actions using your computer.
-- GitHub Actions can have only one terminal, (if we need to check some tests -> we need start server in one terminal and run the tests from another terminal). In this case you need to install npm package to current repository --> pm2. This package allow to use containers for separate tasks.
+
+# Create you CI/CD file in the root folder of your project -> .github/workflows/fileName.yml
+
+# How to run your Back-end API and test it
+
+GitHub Actions can have only one terminal, (if we need to check some tests -> we need start server in one terminal and run the tests from another terminal). In this case you need to install npm package to current repository --> pm2. This package allow to use containers for separate tasks.
 
 ```JS
 //npx <-- download and run the pm2 package
 // npx pm2 <-- will create new container for separate task (command), to run our server -> start server.js
 npx pm2 start server.js
-
 npx pm2 stop 0 //to stop container with id = 0, from table
-
 npx pm2 monit 0 //show CPU usage, memory usage, loop delay or request/min for each container with id = 0
-
 npx pm2 list  //will show table with all container tasks
-
 npx pm2 logs
 
 //Example on the pic below
-
 ```
 
 ![pic10](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic10.jpg)
@@ -112,13 +113,21 @@ You can find alredy written actions in GitHub Actions ecosystem--> From GitHub.c
 
 here you can find what code to write in --> steps. It helps to performe certain actions, For example to copy our code to GitHub server -->
 package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
-uses: actions/setup-node@v3 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+
+```JS
+uses: actions/setup-node@v4 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+```
 
 [--> Most used Workflow Actions <--](https://about.codecov.io/blog/discovering-the-most-popular-and-most-used-github-actions/)
 
 basically you add additional packages from Actions if you use AWS, python, Azure,Docker, C# etc.
 
 # How to Create a Workflow (Directory structure)
+
+```JS
+//Create you CI/CD file in the root folder of your project
+.github/workflows/anyFileName.yml
+```
 
 - we need to create a new file in the root of the Project Folder otherwise GitHub can't find "yml" files. GitHub searches all workflows in --> .github/workflows/anyFileName.yml
 - we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
@@ -185,15 +194,15 @@ on:
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
   As example it is better to make jobs dependant, to do not run all the jobs on the virtual machines if Lint failed,( code syntax is wrong), in this case we can make other jobs dependant from Lint job
 
-### Checkout (actions/checkout@v4)
+### Setup node, use --> actions/setup-node@v4 (By default it is already build-in on the GitHub servers. But this way we can install different Node versions )
 
-### Setup node (actions/setup-node@v4)
+### Checkout, use --> actions/checkout@v4
 
-### Super-linter (github/super-linter@v4)
+### Super-linter, use --> github/super-linter@v4
 
-### actions/checkout@v4
+### Cache (It is an another Action from GitHub marketPlace), use --> actions/cache@v4
 
-### Cache (It is an another Action from GitHub marketPlace) (actions/cache@v4)
+# Cache is used
 
 if you make the same commands on each job you can put it in cache and then use it.
 
