@@ -1,11 +1,17 @@
 # NestJS automatically creates test files if you use its CLI !!!
 
-- Unit Tests: These are kept right next to the file they are testing. For example, users.service.ts will have its test in users.service.spec.ts
-- End-to-End (E2E) Tests: These usually live in a dedicated test/ folder at the root of your project, with files ending in .e2e-spec.ts
+1. For Unit Tests: These are kept right next to the file they are testing. For example, users.service.ts will have its test in users.service.spec.ts
+
+2. For End-to-End (E2E) Tests - Supertest(to check your real API): These usually live in a dedicated test/ folder at the root of your project, with files ending in .e2e-spec.ts
+
+```JS
+//loacted in
+test/app.e2e-spec.ts
+```
 
 Default Runner: NestJS comes pre-configured with Jest. In Express, you typically have to set up your own test runner (like Mocha or Jest) and configuration from scratch
 
-# There are 2 test files in each folder
+## There are 2 test files in each folder
 
 ```JS
 For example:
@@ -40,7 +46,7 @@ Which one should you start with?
 - Start with the Service test if you want to make sure your app actually works (the logic is sound).
 - Start with the Controller test if you want to make sure your API endpoints are reachable and return the correct status codes.
 
-# How to run tests
+## How to run Unit tests
 
 1. Run only that specific file
 
@@ -87,7 +93,7 @@ This generates a report (usually in a /coverage folder) showing exactly which pa
 
 Common Issue: If you see an error like "Nest can't resolve dependencies of the UsersController", it means you need to mock the UsersService inside your beforeEach block in the spec file.
 
-# ✅ Key points for testing
+## ✅ Key points for testing
 
 1. Controller returns a Promise → test must await.
 
@@ -155,7 +161,7 @@ export const mockUsersService = {
 
 4. Jest only recognizes .ts, .js, .json by default, Therefore you need to stick with those file extentions and don't use "example.tsx"
 
-# 🔥 Pro tip
+## 🔥 Pro tip
 
 As your project grows, you might create a structure like:
 
@@ -165,7 +171,7 @@ test/
     users.service.mock.ts
 ```
 
-# ❌ BAD Practices for Unit testing, without DB connection (usually don't need)
+## ❌ BAD Practices for Unit testing, to use DB connection and real DB data (usually don't need)
 
 - It is BAD Practice to use real DB data for Unit tests.
 - Use mock data for Unit tests. For unit testing, you DO NOT need a real database.
@@ -316,7 +322,7 @@ export class UsersController {
 }
 ```
 
-# 🧠 Best practice (important)
+## 🧠 Best practice (important)
 
 You don't need to use Real Database data, use mock data
 
@@ -340,6 +346,8 @@ providers: [{ provide: UsersService, useValue: mockUsersService }]
 providers: [UsersService]
 //❌ but this is BAD practice
 ```
+
+🔥 In Unit Tests without DB connection you compare mock data file with hard coded code in spec.ts file
 
 ```JS
 //users.controller.spec.ts  - will compare mock data from users.controller.mock.ts file with hard coded code. No data will be used from Database
@@ -381,3 +389,557 @@ providers: [UsersService]
   });
 
 ```
+
+# End-to-End (E2E) Tests - Supertest(to check your real API)
+
+1. code
+
+```JS
+//in test/app.e2e-spec.ts
+
+import * as request from 'supertest';
+import { Test } from '@nestjs/testing';
+import { INestApplication, ValidationPipe, NotFoundException } from '@nestjs/common';
+import { AppModule } from '../src/app.module';
+import { UsersService } from '../src/users/users.service';
+
+describe('UsersController (e2e)', () => {
+  let app: INestApplication;
+
+  const mockUsersService = {
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    create: jest.fn(),
+  };
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
+    })
+      .overrideProvider(UsersService)
+      .useValue(mockUsersService)
+      .compile();
+
+    app = moduleRef.createNestApplication();
+
+    // enable validation (IMPORTANT for 400 tests)
+    app.useGlobalPipes(new ValidationPipe());  //ValidationPipe must be enabled !!!! for class validations
+    //without this line - .expect(400) will FAIL - Because validation never runs
+
+    await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  // =========================
+  // ✅ GET ALL USERS → 200
+  // =========================
+  it('GET /users → 200', async () => {
+    mockUsersService.findAll.mockResolvedValue([
+      {
+        customer_id: 1,
+        first_name: 'Julian',
+      },
+    ]);
+
+    await request(app.getHttpServer())
+      .get('/users')
+      .expect(200)
+      .expect([
+        {
+          customer_id: 1,
+          first_name: 'Julian',
+        },
+      ]);
+  });
+
+  // =========================
+  // ✅ GET ONE USER → 200
+  // =========================
+  it('GET /users/1 → 200', async () => {
+    mockUsersService.findOne.mockResolvedValue({
+      customer_id: 1,
+      first_name: 'Julian',
+    });
+
+    await request(app.getHttpServer())
+      .get('/users/1')
+      .expect(200)
+      .expect({
+        customer_id: 1,
+        first_name: 'Julian',
+      });
+  });
+
+  // =========================
+  // ❌ GET ONE USER → 404
+  // =========================
+  it('GET /users/999 → 404', async () => {
+    mockUsersService.findOne.mockRejectedValue(
+      new NotFoundException('User not found'),
+    );
+
+    await request(app.getHttpServer())
+      .get('/users/999')
+      .expect(404);
+  });
+
+  // =========================
+  // ✅ CREATE USER → 201
+  // =========================
+  it('POST /users → 201', async () => {
+    const newUser = {
+      first_name: 'Bill',
+      last_name: 'Doe',
+      email: 'john.doe@example.com',
+      password: 'mypassword',
+      phone: '123456789',
+      customer_address: 'Manchester, UK',
+      dob: '1990-01-01',
+    };
+
+    mockUsersService.create.mockResolvedValue({
+      customer_id: 3,
+      ...newUser,
+    });
+
+    await request(app.getHttpServer())
+      .post('/users')
+      .send(newUser)
+      .expect(201)
+      .expect({
+        customer_id: 3,
+        ...newUser,
+      });
+  });
+
+  // =========================
+  // ❌ CREATE USER → 400
+  // =========================
+  it('POST /users → 400 (validation error)', async () => {
+    await request(app.getHttpServer())
+      .post('/users')
+      .send({
+        first_name: '', // invalid
+        email: 'not-an-email', // invalid
+      })
+      .expect(400);
+  });
+});
+```
+
+2. class validations
+
+- first install -> class-validator and class-transformer
+
+```JS
+npm install class-validator class-transformer
+```
+
+- then use it in your classes
+
+```JS
+//in your DTO classes put validations
+
+import {
+  IsDate,
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsPhoneNumber,
+  isPhoneNumber,
+  IsStrongPassword,
+} from 'class-validator';
+
+//give validations for DTO class
+export class CreateUserDto {
+  @IsNotEmpty()
+  first_name: string;
+
+  @IsNotEmpty()
+  last_name: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsStrongPassword()
+  password: string;
+
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  phone: string;
+
+  @IsNotEmpty()
+  customer_address: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  dob: Date;
+}
+```
+
+# How to run tests -supertests
+
+🧪 1. Run ALL tests (unit + e2e)
+
+```JS
+npm test
+
+//👉 This runs everything:
+// *.spec.ts (unit tests)
+// *.e2e-spec.ts (e2e tests)
+```
+
+🧪 2. Run ONLY e2e tests (recommended)
+
+```JS
+npm run test:e2e
+```
+
+🧪 4. Run a SINGLE e2e file
+
+```JS
+npx jest --config ./test/jest-e2e.json test/users.e2e-spec.ts
+//users.e2e-spec.ts <-- name of the file to test
+```
+
+🧪 5. Run a specific test inside file
+
+```JS
+npx jest users.e2e-spec.ts -t "GET /users → 200"
+```
+
+🔍 6. Debug failing tests
+
+```JS
+npx jest --detectOpenHandles
+```
+
+### Optional: watch mode
+
+```JS
+//While developing:
+npm run test:e2e -- --watch
+```
+
+💡 Recommended workflow
+
+```JS
+//While developing:
+npm run test:e2e
+```
+
+For unit tests only:
+
+```JS
+npx jest src/users
+```
+
+# 🔄 Two types of e2e tests
+
+🟡 Your current setup (mocked e2e):
+
+- No DB
+- Very fast ⚡
+- Safe (No risk of breaking real data)
+- Tests HTTP layer only
+- Easy to control responses
+
+🔵 Real e2e (advanced):
+
+- Requires setup (test DB)
+- Uses real DB, it is slower than mock e2e tests
+- Inserts real data
+- Slower
+- More complex
+- Tests full system (controller + service + DB)
+- Catches real bugs 🐛
+- Must clean data after tests
+- Test real queries, Test real data flow
+
+# Best practice to use BOTH - mock and real BD e2e test, for different purposes.
+
+## 🧪 Example of real DB test
+
+⚠️ Use test database !!! for real DB tests, NOT your real one !!!!
+
+```JS
+it('should create user in real DB', async () => {
+  const newUser = { ... };
+
+  const response = await request(app.getHttpServer())
+    .post('/users')
+    .send(newUser)
+    .expect(201);
+
+  expect(response.body.email).toBe(newUser.email);
+});
+
+//Clean DB after tests
+afterEach(async () => {
+  await pool.query('DELETE FROM users');
+});
+```
+
+## 🧪 Code explanation - Supertest (mock example)
+
+- In example below - No real Database data is used, We use mock data
+
+```JS
+//from Bank/bank-api/test/users.e2e-spec.ts file - test users API
+
+import request from 'supertest';
+import { Test, TestingModule } from '@nestjs/testing';
+import {
+  INestApplication,
+  ValidationPipe,
+  NotFoundException,
+} from '@nestjs/common';
+import { AppModule } from '../src/app.module';
+import { UsersService } from '../src/users/users.service';
+
+
+//describe what you are going to perform, All tests for the users API will go inside this block
+describe('UsersController (e2e)', () => {
+
+
+  //app will hold our NestJS application instance.
+  // INestApplication is the type provided by NestJS.
+  //We use app to simulate real HTTP requests (like hitting /users).
+  let app: INestApplication;
+
+
+  //We create a mock service to replace the real UsersService.
+  //jest.fn() creates a mock function.
+  //This ensures our e2e test does not hit the real database.
+  const mockUsersService = {
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    create: jest.fn(),
+  };
+
+
+  //This code runs once before all tests in this suite.
+  //Good place to set up the app and mock dependencies.
+  beforeAll(async () => {
+
+    //Creates a NestJS testing module (like a mini app for testing).
+    //AppModule is imported, so all routes/controllers/services are available.
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
+    })
+      .overrideProvider(UsersService)
+      .useValue(mockUsersService)
+      .compile();
+      //Override the real UsersService with our mock version.
+      //useValue(mockUsersService) tells NestJS to use our fake service instead of the real one.
+      //.compile() builds the testing module so it’s ready to use.
+
+
+    //Converts the testing module into a real NestJS app instance.
+    //We can now send HTTP requests to this instance in our tests.
+    app = moduleRef.createNestApplication();
+
+    // enable validation - that we used in DTO in users folder (IMPORTANT for 400 tests)
+    // app.useGlobalPipes(new ValidationPipe());
+    //the same as code above but it is better to use this one
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true, // removes unknown fields
+        forbidNonWhitelisted: true, // throws error for extra fields
+      }),
+    );
+
+
+    //Initializes the NestJS application.
+    //Must be done before sending any HTTP requests.
+    //Think of it like starting the server, but in memory for testing.
+    await app.init();
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+
+  //Runs once after all tests.
+  //Closes the app and frees resources.
+  //Prevents Jest from hanging or leaving open handles.
+  afterAll(async () => {
+    await app.close();
+  });
+
+  // =========================
+  // ✅ GET ALL USERS → 200
+  // =========================
+  //Defines a single test case.
+  it('GET /users → 200', async () => {
+    const mockData = [
+      {
+        customer_id: 1,
+        first_name: 'Julian',
+        last_name: 'Golovens',
+        email: 'julian@test.com',
+        password: '123',
+        phone: '123-456-7890',
+        customer_address: '123 Main St, Springfield, IL',
+        dob: '1995-06-15',
+      },
+      {
+        customer_id: 2,
+        first_name: 'Tom',
+        last_name: 'Simpsons',
+        email: 'tomSimpson@gmail.com',
+        password: '01234',
+        phone: '123-456-7890',
+        customer_address: '456 Main St, Springfield, IL',
+        dob: '1985-06-15',
+      },
+    ];
+
+
+    //Sets up the mock service to return a value when findAll() is called.
+    //mockResolvedValue is used because findAll() is async.
+    //This avoids hitting the real database.
+    mockUsersService.findAll.mockResolvedValue(mockData);
+
+
+    //request(app.getHttpServer()) comes from supertest.
+    //Simulates an HTTP GET request to /users.
+    //.expect(200) checks that the HTTP response status code is 200.
+    await request(app.getHttpServer())
+      .get('/users')
+      .expect(200)
+      .expect(mockData);
+  });
+
+  //All together it ensures that your controller + route + DTOs return the correct data format.
+  });
+```
+
+```JS
+//there is 2 the same block, from example above:
+//difference between them is:
+
+//OPTION 1
+app.useGlobalPipes(new ValidationPipe());
+
+👉 What it does:
+
+Validates DTO using class-validator
+If data is invalid → returns 400 Bad Request
+
+❗ What it DOES NOT do
+❌ Does NOT remove extra fields
+❌ Does NOT block unknown fields
+❌ Does NOT convert types
+
+//Example of this code block:
+{
+  "first_name": "Julian",
+  "email": "test@test.com",
+  "hacker_field": "I should not be here"
+}
+
+👉 This will PASS ❌
+👉 hacker_field stays in the request
+
+/////////////////////////////////////////
+//OPTION 2
+//Always use this option
+app.useGlobalPipes(
+  new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+    }),
+    );
+
+------
+
+✅ whitelist: true
+👉 Removes properties NOT in DTO
+
+//For example:
+//DTO:
+first_name: string;
+email: string;
+
+//Request:
+{
+  "first_name": "Julian",
+  "email": "test@test.com",
+  "hacker_field": "bad"
+}
+
+//👉 Result:
+{
+  "first_name": "Julian",
+  "email": "test@test.com"
+}
+//👉 hacker_field is removed automatically
+
+------
+
+//🚫 forbidNonWhitelisted: true
+//👉 Instead of removing, it throws error
+
+//Same request:
+{
+  "first_name": "Julian",
+  "email": "test@test.com",
+  "hacker_field": "bad"
+}
+
+//👉 Result:
+400 Bad Request
+"hacker_field should not exist"
+
+-----
+
+//🔄 transform: true
+//👉 Automatically converts types
+
+//Example WITHOUT transform:
+@Get(':id')
+findOne(@Param('id') id: number)
+
+//Request:
+GET /users/1
+
+👉 id is:
+"1" // string ❌
+
+----
+//WITH transform:
+id === 1 // number ✅
+```
+
+#### 🧠 Side-by-side comparison of these 2 options above
+
+```JS
+| Feature             | `ValidationPipe()` | Advanced config            |
+| ------------------- | ------------------ | -------------------------- |
+| Validate DTO        | ✅                  | ✅                          |
+| Remove extra fields | ❌                  | ✅ (`whitelist`)            |
+| Block extra fields  | ❌                  | ✅ (`forbidNonWhitelisted`) |
+| Convert types       | ❌                  | ✅ (`transform`)            |
+| Security            | ❌ weak             | ✅ strong                   |
+```
+
+🔥 Real-world impact.
+❌ Without options
+
+- Users can send extra data
+- Possible security risks
+- Manual type conversion needed
+
+✅ With options
+
+- Clean input ✔
+- Safe API ✔
+- Automatic type handling ✔
