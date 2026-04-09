@@ -1,34 +1,45 @@
-# GitHub Actions
+[GitHub Actions Docs](https://github.com/features/actions)
+
+[Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
+
+# 👉 GitHub Actions
 
 It is essential that we can automate testing and delivery of our code - Thats where GitHub Actions comes in
 
 CI/CD --> stands for continuos integration and continuos delivery ( it is allows us to automate the testing of our code to make sure it meets certain criteria, after all the test are passed you can enable actions to automate the delivery of our code this can significantly reduce the time it takes for you to deliver updates to your application which allows developers to focus more of their time on the code itself)
 
-[GitHub Actions Docs](https://github.com/features/actions)
-
-[Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
-
-# GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
+### 👉 GitHub Actions - automates your build, test and deployment workflow with simple and secure CI/CD
 
 - Allow to create a pipeline
 - It is build-in CI/CD tool for GitHub
 - Workflow it is a process of GitHub Actions. Workflow it is an instruction in yml format. workflow reacts on different types of events.
 - GitHub Actions have 2000 Free minutes per month, after that if you use more you need to pay to use GitHub virtual servers to run GitHub Actions, or you can run GitHub Actions using your computer.
 
-# Create you CI/CD file in the root folder of your project -> .github/workflows/fileName.yml
+- YML syntaxis ( file can be written --> nameOfTheWorkFlow.yml or nameOfTheWorkFlow.yaml)
+- yml is compatible with JSON, it means we can use JSON inside "yml" file
 
-# How to run your Back-end API and test it
+#### 👉 What is CI/CD --> Example:
+
+- CI --> For example we are developing some app, and there are few stages of development, (implimenting many features to your app) and you want to see how it will display in real time app.
+
+  CI - it intigrates (new features) your code to your project.
+
+- CD --> after you have tested some features in your app, you need to deploy it to production (it can be automated by --> CD). For example - we can build some docker container, expand it on particular server, make a LogIn and run the app. Or after you have tested your app you can publish your app to Production
+
+# 🔥 Create you CI/CD file in the root folder of your project -> .github/workflows/fileName.yml
+
+# ➡️ How to run your Back-end API and test it using PM2 package
 
 GitHub Actions can have only one terminal, (if we need to check some tests -> we need start server in one terminal and run the tests from another terminal). In this case you need to install npm package to current repository --> pm2. This package allow to use containers for separate tasks.
 
 ```JS
-//npx <-- download and run the pm2 package
+//npx <-- download and run the pm2 package without installing
 // npx pm2 <-- will create new container for separate task (command), to run our server -> start server.js
 npx pm2 start server.js
-npx pm2 stop 0 //to stop container with id = 0, from table
-npx pm2 monit 0 //show CPU usage, memory usage, loop delay or request/min for each container with id = 0
 npx pm2 list  //will show table with all container tasks
+npx pm2 monit 0 //show CPU usage, memory usage, loop delay or request/min for each container with id = 0
 npx pm2 logs
+npx pm2 stop 0 //to stop container with id = 0, from table
 
 //Example on the pic below
 ```
@@ -49,108 +60,23 @@ npx pm2 logs
           npm run test
 ```
 
-#### What is CI/CD --> Example:
-
-- CI --> For example we are developing some app, and there are few stages of development, (implimenting many features to your app) and you want to see how it will display in real time app.
-
-  CI - it intigrates (new features) your code to your project.
-
-- CD --> after you have tested some features in your app, you need to deploy it to production (it can be automated by --> CD). For example - we can build some docker container, expand it on particular server, make a LogIn and run the app. Or after you have tested your app you can publish your app to Production
-
-# Terminology of the GitHub Actions Workflow YAML File
+# ⚠️ Terminology of the GitHub Actions Workflow YAML File
 
 - One Repository can have few different workflows
 
 Workflow contains:
 
-1. Events - trigger for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file,
-   To see all the events options, after--> on: , we can press --> ctr + space
+### ✅ 1. Events
+
+Events - trigger for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file,
+
+```JS
+ctr + space  //<-- Use this to see all the events options, after--> on: , you can press --> ctr + space
+```
 
 [--> All events that trigger workflows <--](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
 
-2. Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions.You can have many jobs in 1 workflow
-
-If we have few jobs in our workflow, by default they are not dependant from other jobs then they will be running in parallel, at the same time. All the jobs will start running separately, not dependent from each other, they run parallel to each other.
-We can make jobs dependant from other jobs --> For example: second job will start running only first job is successfully completed. (Example: ckeck2.yml)
-
-```JS
-//some code..
-jobName:
-  needs: [name of the dependant job]
-  runs-on: ubuntu-latest
-  steps:
-    - name: nameOfTheStep
-```
-
-3. Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
-
-[--> GitHub Runners Docs <--](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
-
-4. Steps. you can have as many steps as you want
-5. Actions
-
-[--> GitHub Actions Marketplace <--](https://github.com/marketplace?type=actions)
-
-In Marketplace we can find --> Bot, extensions, apps, filter, etc. Actions in Marketplace are workflow code pieces that have already written by other developers. That we can use in our workflows
-
-- To use action from GitHub Actions Marketplace in workflow we put --> uses: ....
-
-You can find alredy written actions in GitHub Actions ecosystem--> From GitHub.com click:
-
-- Left menu button (step 1 on the picture)
-
-![pic1](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic1.jpg)
-
-- Click Marketplace (step 2 on the picture)
-
-![pic2](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic2.jpg)
-
-- In Marketplace we can find many additional extensions, bots, etc. that we can use in GitHub Actions
-
-- Click on Actions, and then --> all actions ( step 3 on the picture), these are already written pieces of code that we can use
-
-![pic3](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic3.jpg)
-
-here you can find what code to write in --> steps. It helps to performe certain actions, For example to copy our code to GitHub server -->
-package is called - Setup Node.js environment, where yu can click on that package and you will see that we need to use -->
-
-```JS
-uses: actions/setup-node@v4 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
-```
-
-[--> Most used Workflow Actions <--](https://about.codecov.io/blog/discovering-the-most-popular-and-most-used-github-actions/)
-
-basically you add additional packages from Actions if you use AWS, python, Azure,Docker, C# etc.
-
-# How to Create a Workflow (Directory structure)
-
-```JS
-//Create you CI/CD file in the root folder of your project
-.github/workflows/anyFileName.yml
-```
-
-- we need to create a new file in the root of the Project Folder otherwise GitHub can't find "yml" files. GitHub searches all workflows in --> .github/workflows/anyFileName.yml
-- we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
-- and then you can name your file whatever you want, following with 'yml' file format
-- workflows could not be triggered if the path is wrong. Correct path --> .github/workflows/nameOfTheFile.yml
-- we can make many workflows in Repository, each workflow can be responsible for different things
-
-# How to find GitHub actions for your created Repo in GitHub.com
-
-- Go to your Repository (step 1, our Repository in GitHub to check or run GitHub Actions)
-- Then click Actions (step 2 on the picture)
-
-![pic4](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic4.jpg)
-
-- then click --> All workflows (step 3 on the picture)
-
-![pic5](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic5.jpg)
-
-- then you can click on specific workflow that you need
-
-# All Workflow triggers (on:)
-
-This is called Events. It triggers for a workflow, (on: push) <-- when someone pushes new code to GitHub it will trigger GitHub Actions to work, --> will run the jobs within this workflow file, To see all the events options, after--> on: , we can press --> ctr + space
+All Workflow triggers (on:)
 
 [--> Workflow syntax <--](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 
@@ -183,7 +109,35 @@ on:
 
 [All GitHub actions events triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 
-# All Workflow Actions
+### ✅ 2. Jobs
+
+Jobs - when the event occurs it's going to run all the jobs within the workflow, that specify multiple steps and actions.You can have many jobs in 1 workflow
+
+If we have few jobs in our workflow, by default they are not dependant from other jobs then they will be running in parallel, at the same time. All the jobs will start running separately, not dependent from each other, they run parallel to each other.
+We can make jobs dependant from other jobs --> For example: second job will start running only first job is successfully completed. (Example: ckeck2.yml)
+
+```JS
+//some code..
+jobName:
+  needs: [name of the dependant job]
+  runs-on: ubuntu-latest
+  steps:
+    - name: nameOfTheStep
+```
+
+### ✅ 3. Runners
+
+Runners - we can specify our runner, this is container environment that will run our code, Default containers to choose from are: Ubuntu Linux, Microsoft Windows and Mac OS, (runs-on: ubuntu-latest) <-- which system the process will run the code. To see all the runners options, after--> runs-on: , we can press --> ctr + space
+
+[--> GitHub Runners Docs <--](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners)
+
+### ✅ 4. Steps
+
+You can have as many steps as you want
+
+### ✅ 5. Actions
+
+All Workflow Actions
 
 [Click Here](https://github.com/marketplace?type=actions)
 
@@ -194,30 +148,82 @@ on:
 - Jobs can run at the same time or can be performed in order that we allocate (one job can be dependant from previous job), depends how we adjust them. --> needs: []
   As example it is better to make jobs dependant, to do not run all the jobs on the virtual machines if Lint failed,( code syntax is wrong), in this case we can make other jobs dependant from Lint job
 
-### Setup node, use --> actions/setup-node@v4 (By default it is already build-in on the GitHub servers. But this way we can install different Node versions )
+[--> GitHub Actions Marketplace <--](https://github.com/marketplace?type=actions)
 
-### Checkout, use --> actions/checkout@v4
+In Marketplace we can find different actions that you can use in GitHub Actions such as: --> Bot, extensions, apps, filter, etc. Actions in Marketplace are workflow code pieces that have already written by other developers. That we can use in our workflows
 
-### Super-linter, use --> github/super-linter@v4
-
-### Cache (It is an another Action from GitHub marketPlace), use --> actions/cache@v4
-
-# Cache is used
-
-if you make the same commands on each job you can put it in cache and then use it.
-
-- often used action
-- make workflow run faster,
-- you don't need to run the same command on each job (such as --> npm ci, etc.). It keeps this in cache
-- we can cache some files and folders
-
-To use Cache
-
-- add Cache before a step which we want to put in Cache --> See cache\_&_context.yml file
+- To use action from GitHub Actions Marketplace in workflow we put -->
 
 ```JS
-....
-      - name: Cache deps
+uses: nameOfTheActions
+```
+
+You can find alredy written actions in GitHub Actions ecosystem--> From GitHub.com click:
+
+- Left menu button (step 1 on the picture)
+
+![pic1](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic1.jpg)
+
+- Click Marketplace (step 2 on the picture)
+
+![pic2](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic2.jpg)
+
+- In Marketplace we can find many additional extensions, bots, etc. that we can use in GitHub Actions
+
+- Click on Actions, and then --> all actions ( step 3 on the picture), these are already written pieces of code that we can use
+
+![pic3](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic3.jpg)
+
+Here you can find what code to write in --> steps. It helps to performe certain actions. For example: to copy our code to GitHub server we use --> actions/checkout@v4
+
+```JS
+//Often used Actions:
+
+uses: actions/setup-node@v4 ///<- this code download specific Node version on GitHub virtual machine. By default it is already build-in on the GitHub servers. But this way we can install different Node versions
+
+uses: actions/checkout@v4  //<--to copy our code to GitHub server we use this action
+
+uses: github/super-linter@v4  //<-- to use super linter to check code quality
+
+uses: actions/cache@v4  //<-- to add some packages in cache to don't install and these packages again if you use them many times in different jobs. If you make the same commands on each job you can put it in cache and then use it.
+
+```
+
+```JS
+//Explanation of setup Node
+
+actions/setup-node@v4    // By default this Action is already build-in on the GitHub server
+
+// ⚠️ Node.js preinstalled. However:
+// -You don’t control which version is active by default
+// -The default version can change over time
+
+// Why you should use it (even though Node is preinstalled)
+// ✅ Ensures consistent builds
+// ✅ Lets you test multiple versions (matrix builds)
+// ✅ Protects you from GitHub changing defaults
+// ✅ Supports version ranges like:
+
+
+//Code Example:
+- uses: actions/setup-node@v4
+  with:
+    node-version: 20
+```
+
+```JS
+//Explanation of setup Cache
+
+actions/cache@v4  //If you make the same commands on each job you can put it in cache and then use it.
+
+//Used for:
+// - often used action
+// - make workflow run faster,
+// - you don't need to run the same command on each job (such as --> npm ci, etc.). It keeps this in cache
+// - we can cache some files and folders
+
+//To use Cache --> add Cache before a step which we want to put in Cache --> See cache\_&_context.yml file
+ - name: Cache deps
         uses: actions/cache@v4
         with:                       //<-- adding some parametrs to Cache
           path: ~/.npm   //<--always the same path for ubuntu machines, on this path all cache will be stored (if we want to cache - npm ci )
@@ -231,49 +237,494 @@ To use Cache
           //Then we can copy this cache block and put it in each job before command that we want to put in the cache. it is going to be the same cache code for each job. If we install all dependencies on each job, then we can cache that and insert the cache code block before each dependency installation
 ```
 
-### Artifact (It is an another Action from GitHub marketPlace)
+[--> Most used Workflow Actions <--](https://about.codecov.io/blog/discovering-the-most-popular-and-most-used-github-actions/)
 
-it allows to get acces to build folder from our repository, or to any static files/test reports from our repository. We can download any static file
-We use 2 different GitHub actions to upload artifact (from your repository) and then to download artifact --> to us it
+basically you add additional packages from Actions if you use AWS, python, Azure,Docker, C# etc.
+
+# 📍 How to Create a Workflow (Directory structure)
+
+```JS
+//Create you CI/CD file in the root folder of your project
+.github/workflows/anyFileName.yml
+```
+
+- we need to create a new file in the root of the Project Folder otherwise GitHub can't find "yml" files. GitHub searches all workflows in --> .github/workflows/anyFileName.yml
+- we need to be very specific with our naming here, so the proper directory structure for our workflow files needs to be first --> .github/workflows/nameOfTheFile.yml
+- and then you can name your file whatever you want, following with 'yml' file format
+- workflows could not be triggered if the path is wrong. Correct path --> .github/workflows/nameOfTheFile.yml
+- we can make many workflows in Repository, each workflow can be responsible for different things
+
+# ❓ How to find GitHub actions for your created Repo in GitHub.com
+
+- Go to your Repository (step 1, our Repository in GitHub to check or run GitHub Actions)
+- Then click Actions (step 2 on the picture)
+
+![pic4](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic4.jpg)
+
+- then click --> All workflows (step 3 on the picture)
+
+![pic5](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic5.jpg)
+
+- then you can click on specific workflow that you need
+
+## 📖 Artifact (It is an another Action from GitHub marketPlace)
+
+```JS
+🧠 Core idea of artifacts
+
+Artifacts in GitHub Actions are:
+
+👉 Files you choose to save after a job finishes
+👉 So they can be:
+- used in another job (like your deploy)
+- downloaded later from the Actions UI
+```
+
+##### 📦 What developers usually store as artifacts
+
+In GitHub Actions, artifacts are typically outputs of a job that you want to keep or reuse.
+
+🏗️ 1. Build outputs (most common)
+
+```JS
+- build/, dist/, out/
+- Compiled apps (React, Angular, Node, etc.)
+
+👉 Used for:
+-Deployment
+-Passing to another job
+```
+
+```JS
+// 🏗️ What are “build outputs”?
+
+// When you run a build command like:
+// npm run build
+
+// you are usually:
+// 👉 Converting your source code into optimized, production-ready files
+// These files go into folders like:
+// -build/
+// -dist/
+// -out/
+
+
+// 🔄 What actually changes during a build?
+// Your original code:
+// -Many files
+// -Dev-only code
+// -Unoptimized
+
+// After build:
+// -Minified (smaller)
+// -Bundled (fewer files)
+// -Ready for browsers or servers
+
+
+// 🧩 Example: React app
+// If you use React:
+// npm run build
+// 👉 Creates a build/ folder like:
+// build/
+//   index.html
+//   static/
+//     js/main.abc123.js
+//     css/main.xyz456.css
+// 👉 This folder is your final website
+
+
+// 🧩 Example: Node / TypeScript
+// If you use TypeScript:
+// tsc
+// 👉 Creates:
+// dist/
+//   app.js
+// 👉 Converted from .ts → .js
+
+
+// 📦 Why save build outputs as artifacts?
+// Because of this critical rule:
+// 👉 Each job runs on a fresh machine
+// So if you build in one job:
+// Job A → creates build/
+// Job B → has NOTHING
+// 💥 The files are gone unless you save them
+
+
+// 🚀 Why this is important to create "build" files for deployment
+// Deployment means:
+// 👉 “Send ready files to a server”
+// You don’t deploy source code, you deploy:
+// HTML
+// CSS
+// JS
+// compiled backend code
+
+
+// 🌍 Real example flow
+// Step 1: Build
+// npm run build
+// Step 2: Upload artifact
+// path: build
+// Step 3: Deploy job downloads it
+// Step 4: Deploy to:
+//   -a server
+//   -cloud platform
+//   -CDN
+
+
+// ⚠️ Common beginner mistake regarding "build"
+// People do this:
+// deploy:
+//   steps:
+//     - run: npm run build
+// 👉 This rebuilds again (not ideal)
+// Better:
+// 👉 Build once → reuse via artifact
+
+
+// 🧾 Simple summary
+// Build output = final app files
+// Stored in build/, dist/, etc.
+// You upload them as artifacts
+// Then reuse them in another job (like deploy)
+```
+
+🧪 2. Test results & reports
+
+```JS
+- Test summaries
+- Coverage reports
+- HTML reports
+
+👉 Useful for:
+-Debugging failed runs
+-Reviewing test results later
+```
+
+📊 3. Logs
+
+```JS
+- Error logs
+- Debug output
+
+👉 Helps when something fails and you need details
+```
+
+📄 4. Generated files
+
+```JS
+- Documentation
+- Bundles
+- Exported data
+```
+
+🚀 5. Deployment packages
+
+```JS
+- ZIP files
+- Docker build context (sometimes)
+```
+
+Artifact allows to get acces to build folder from our repository, or to any static files/test reports from our repository. We can download any static file
+We use 2 different GitHub actions:
+
+- to upload artifact (from your repository) and then
+- to download artifact --> to us it
 
 [upload artifact docs](https://github.com/marketplace/actions/upload-a-build-artifact)
+
 [download artifact docs](https://github.com/marketplace/actions/download-a-build-artifact)
 
 ```JS
-name: Build & Deploy
-on: [push, work_dispatch]
+//Example of Artifacts
+
+name: Build & Deploy    //This is the name of your workflow (what you see in GitHub Actions UI).
+on: [push, workflow_dispatch]  //Events that will trigger our workflow
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+  build:   //job name
+    runs-on: ubuntu-latest  //identify the runner
+    steps:   //steps
       - name: Get code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  //Downloads your repository code into the GitHub virtual server (runner)
+
       - name: Install deps
-        run: npm ci
+        run: npm ci    //Installs your project dependencies, npm ci is faster and stricter than npm install (uses lock file)
+
+      - name: Run unit tests and e2e tests
+        working-directory: bank-api
+        run: |
+          npm start  //start server
+          sleep 5  //give time to start server before starting tests
+          npm run test   //run unit tests
+          npm run test:e2e  //run e2e tests
+
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3  //saves files from this job
         with:
-          path: build   //searching file or folder using this path to add to our artifact, in this case it is folder--> build, (other example- path/to/artifac/word.txt)
+          path: build   //searching file or folder using this path to add to our artifact, in this case it is folder--> build, (other example- path/to/artifact/word.txt)
           name: build-files  //we name the artifact that we upload
-  deploy:
+  deploy:  //job name
     needs: build   //depends from build job, to get downloaded artifact
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  //identify the runner
     steps:
       - name: Get build project
-        uses: actions/download-artifact@v4  //this will download artifact to GitHub actions, where we can see that file and download.
+        uses: actions/download-artifact@v4  //this will download your previously uploaded artifact to GitHub Actions, where we can see that file and download
         with:
           name: build-files //name artifacts that we uploaded previously
+
+
+// 🔁 Flow of this example in simple terms:
+// 1.Build job
+// -Get code
+// -Install dependencies
+// -Save build/ folder as an artifact
+// 2.Deploy job
+// -Waits for build
+// -Downloads build/ folder
+// -Can now use it (e.g., deploy to server)
+```
+
+```JS
+//From example above - upload artifact
+
+//❗ Important: You must specify path
+name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: build
+          name: build-files
+
+// What path means?
+// It tells the action:
+// 👉 “Go find these files/folders and upload them”
+// If you don’t include path, the action won’t know what to upload → ❌ nothing happens (or it errors).
+
+// ❌ Uploading before files exist
+// If you didn’t run a build step:
+// run: npm run build
+// 👉 Then build/ might not exist → upload fails
+
+// ❌ Wrong path
+// Paths are relative to your project root
+
+
+// ✅ Quick checklist
+// Before uploading artifacts:
+// -Did I create the files? (e.g., npm run build)
+// -Did I specify path?
+// -Is the path correct?
+
+
+
+// ⚠️ One important detail, if you do tests:
+// Even if tests fail, you might still want the artifact.
+// By default, failed steps stop the job.
+// You can allow upload anyway:
+// - name: Run tests
+//   run: npm test > test.txt
+//   continue-on-error: true
+```
+
+```JS
+//From example above - download artifact
+
+// 📁 Where do the files go?
+// 👉 By default, if you don’t specify anything else:
+// -Files are downloaded into the current working directory
+// -That is usually:
+// /home/runner/work/<repo>/<repo>/
+
+
+// 🧩 Example
+// If you uploaded:
+// path: build
+// name: build-files
+// Then after downloading, you’ll get:
+// ./build/
+// So your folder is restored exactly as it was.
+
+
+// 📌 Important: You can choose the folder
+// If you want to control where files are saved, use path:
+// - name: Download artifact
+//   uses: actions/download-artifact@v4
+//   with:
+//     name: build-files
+//     path: my-folder
+// 👉 Now the result will be:
+// ./my-folder/build/
+
+
+// 🧠 Key behavior (very important)
+// Case 1: No path
+// with:
+//   name: build-files
+// 👉 Result:
+// ./build/
+
+// Case 2: With path
+// with:
+//   name: build-files
+//   path: output
+// 👉 Result:
+// ./output/build/
+
+
+// ⚠️ Subtle detail (often missed)
+// The artifact keeps its internal structure.
+// So if you uploaded a folder:
+// path: build
+// 👉 You will always get the build/ folder back — not just its contents.
+
+
+// 🧪 How to verify in your workflow
+// Add this step after downloading:
+// - name: Show files/ Check files
+//   run: ls -R deploy-folder
+
+// 👉 This prints all files so you can see exactly where things landed
 ```
 
 After running this workflow the artifact will appear on GitHub Actions page. Go to current repo GitHub actions ,click on current workflow
 
 ![pic6](https://github.com/Julian22222/PRACTICE/blob/main/CICD/IMG/pic6.jpg)
 
-# YML syntaxis ( file can be written --> nameOfTheWorkFlow.yml or nameOfTheWorkFlow.yaml)
+##### 📦 What you can upload?
 
-- yml is compatible with JSON, it means we can use JSON inside "yml" file
+You can choose exactly what to save in Artifacts:
 
-- Example with node version 16
+1. A folder
+
+```JS
+//you can upload a folder with all files in it
+
+path: build  //path to the folder, in this case folder's name = build
+👉 Uploads the whole build/ directory
+```
+
+2. A single file
+
+```JS
+path: dist/app.js  //full path to the file to upload
+👉 Uploads just one file
+```
+
+3. Multiple files
+
+```JS
+path: |
+  build
+  package.json
+
+👉 Uploads both the folder and the file
+
+
+// 🔍 What if you upload multiple files?
+// Example:
+// path: |
+//   build
+//   package.json
+// Download result:
+// ./build/
+// ./package.json
+// (or inside your custom folder if you used path)
+
+
+//If you uploaded multiple files - you don’t have to download each file separately.
+//It depends on how you uploaded the artifact, not how many files are inside it.
+
+//📦 Case 1: Multiple files in ONE artifact (most common)
+// Upload
+// - uses: actions/upload-artifact@v3
+//   with:
+//     name: build-files
+//     path: |
+//       build
+//       package.json
+//       test.txt
+
+// 👉 This creates ONE artifact called build-files
+// 👉 Inside it: multiple files/folders
+
+// 👉Download
+// - uses: actions/download-artifact@v4
+//   with:
+//     name: build-files
+// ✅ This downloads everything at once
+// Result:
+// ./build/
+// ./package.json
+// ./test.txt
+// 👉 No need to download each file separately
+
+
+// 📦 Case 2: Multiple artifacts (different names)
+// Upload
+// - uses: actions/upload-artifact@v3
+//   with:
+//     name: build-files
+//     path: build
+
+// - uses: actions/upload-artifact@v3
+//   with:
+//     name: test-results
+//     path: test.txt
+// 👉 Now you have 2 separate artifacts
+
+// 👉Download (option 1: one by one)
+// - uses: actions/download-artifact@v4
+//   with:
+//     name: build-files
+
+// - uses: actions/download-artifact@v4
+//   with:
+//     name: test-results
+
+// Download (option 2: ALL artifacts at once)
+// - uses: actions/download-artifact@v4
+// 👉 This downloads all artifacts automatically
+// Result:
+// ./build-files/build/
+// ./test-results/test.tx
+
+
+
+✅ Best practice
+Usually:
+- Group related files into one artifact
+- Give it a clear name:
+    -build-files
+    -test-results
+    -logs
+```
+
+4. Using patterns (very common)
+
+```JS
+path: '**/*.log'
+👉 Uploads all .log files
+```
+
+##### 🧠 Key idea:
+
+- Each job runs on a separate virtual machine
+- Files are NOT shared automatically
+- Artifacts are used to pass files between jobs
+
+##### 🧩 Why Artifact is needed
+
+```JS
+//Remember:
+- Each job runs on a fresh virtual machine
+- When the job ends → all files are deleted
+Artifacts are how you say:
+👉 “Keep these specific files before the machine disappears”
+```
+
+# Code example:
+
+Example with node version 16
 
 ```JS
 name: Check                            //<--name of the Workflow, can be any name
@@ -403,7 +854,7 @@ jobs:
           echo Second line!
 ```
 
-# Context Object
+# 👀 Context Object
 
 - Displaying in the console --> special context object, which allow to add some data or use some data inside our workflow
 
@@ -473,7 +924,9 @@ jobs:
 
 - We use context to adjust and automate CI/CD
 
-# Work with variables in GitHub Actions (allow to work with environment variables) --> See env.yml file
+# 🔥 Environment Variables
+
+Work with variables in GitHub Actions (allow to work with environment variables) --> See env.yml file
 
 ```JS
 //env.yml file
