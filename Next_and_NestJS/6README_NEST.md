@@ -1019,10 +1019,13 @@ Pipes allow to transform data types automatically, see example below -->
 
 //URL parameter always comes as a string
 //we receive "id" as a string in @Param
-//ParseIntPipe - allow to transform --> "id" as a number
+//ParseIntPipe - allow to transform --> "id" as a number, converts id that is comming as a string into number
 //there is other build in pipes that you can use, you need to type -> Parse and you will see other options(such as: ParseArrayPipe, ParseBoolPipe, ParseEnumPipe, ParseFloatPipe, ParseUUIDPipe, etc.)
+//❌ If ParseIntPipe can’t convert incoming string, it rejects the request with a 400 error.
+// "42" → 42 ✅ success.
+//"abc" → ❌ throws a BadRequestException
 @Get(':id')
-  getOneNinja(@Param('id', ParseIntPipe) id: number) {
+  getOneNinja(@Param('id', ParseIntPipe) id: number) {  //ParseIntPipe is a built-in NestJS pipe that transforms and validates incoming route parameters, It converts the incoming string parameter into a number
 
     try {
       return this._ninjasServer.getNinjaById(id);
@@ -1113,6 +1116,21 @@ export class CreateNinjaDto {
   createNinja(@Body(new ValidationPipe()) createNinjaDto1: CreateNinjaDto) {
     return this._ninjasServer.createNinja(createNinjaDto1); //invoking createNinja
   }
+
+  🔥 //or you can make it cleaner - This better version!!!
+   @Post()
+  createNinja(@Body() createNinjaDto1: CreateNinjaDto) {
+    return this._ninjasServer.createNinja(createNinjaDto1); //invoking createNinja
+  }
+
+  //and in src/main.ts file add ->
+   app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 ```
 
 3. If avlidations are not met, Nest.js will respond with error object
