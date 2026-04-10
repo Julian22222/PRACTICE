@@ -1025,7 +1025,7 @@ Pipes allow to transform data types automatically, see example below -->
 // "42" → 42 ✅ success.
 //"abc" → ❌ throws a BadRequestException
 @Get(':id')
-  getOneNinja(@Param('id', ParseIntPipe) id: number) {  //ParseIntPipe is a built-in NestJS pipe that transforms and validates incoming route parameters, It converts the incoming string parameter into a number
+  getOneNinja(@Param('id', ParseIntPipe) id: number) {  //ParseIntPipe is a built-in NestJS pipe that transforms and validates incoming route parameters, It converts the incoming string parameter into a number. Also -> id: number. ❌ But NOT id: string
 
     try {
       return this._ninjasServer.getNinjaById(id);
