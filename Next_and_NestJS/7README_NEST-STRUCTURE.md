@@ -97,20 +97,23 @@ nest generate resource ninjas  //<-- the same command
 /////////////////////////
 // 👀 Separate module creation - using Nest CLI
 
-📍 nest g module ninjas //we create new module, with the name ninjas
+
+📍 //we create new module, with the name ninjas
+nest g module ninjas
 //or
 nest generate module ninjas  //<-- the same command
 //This comand will create new file in this direction (will create ninjas folder automatically)--> src/ninjas/ninjas.module.ts
 //Also, will update file automatically--> src/app.module.ts our new module will be added to --> imports. starting to build that dependency tree.
 //When you are creating new modules make sure it is being added to -> app.module.ts file - to imports array of another module. This is how things are registred in NEST.JS.
 
-
-📍 nest g service ninjas  //<--//we create new service, with name ninjas,
+📍//<--//we create new service, with name ninjas,
+nest g service ninjas
 // this command will create -> src/ninjas/ninjas.service.spec.ts,
 // //will create -> src/ninjas/ninjas.service.ts,
 // //will update -> src/ninjas/ninjas.module.ts (this will add [NinjasService] to providers), to register that service
 
-📍 nest g controller ninjas  //<-- we create new controller, with name ninjas,
+📍 //<-- we create new controller, with name ninjas,
+nest g controller ninjas
 // //this command will create -> src/ninjas/ninjas.controller.spec.ts,
 // //wil create -> src/ninjas/ninjas.controller.ts
 //will update -> src/ninjas/ninjas.module.ts --> (this will add [NinjasController] to controllers), to register that controller
