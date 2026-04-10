@@ -1,6 +1,6 @@
 # Generating Random numbers for id, account number, identity number, random numbers
 
-1. Math.random()
+# 1. Math.random()
 
 ```JS
 //Example:
@@ -19,7 +19,7 @@ let account;
 // - Not safe
 ```
 
-2. randomInt()
+# 2. randomInt()
 
 ```JS
 //Example:
@@ -101,7 +101,7 @@ Usially this method is used to generate:
 | Crypto-safe | ✅ Yes       | ❌ No            |
 ```
 
-3. UUID (stands for Universally Unique Identifier)
+# 3. UUID (stands for Universally Unique Identifier)
 
 ```JS
 //example:
