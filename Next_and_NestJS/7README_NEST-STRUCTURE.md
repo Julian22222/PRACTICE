@@ -73,21 +73,47 @@ This module will:
 - Have a CatsController that defines a GET route to return cats.
 
 ```JS
-//Step 0: Setup a new NestJS project (if you don’t have one)
+🔥 //Step 0: Setup a new NestJS project (if you don’t have one)
 
-//Run this command in your terminal to create a new NestJS project:
-npm i -g @nestjs/cli    //in terminal write, to install Nest JS CLI
+npm i -g @nestjs/cli    //in terminal write, to install Nest JS CLI globally or locally into your project
+//or -> sudo npm install -g @nestjs/cli@latest
 
-nest new my-nest-app   //<--with NEST CLI create your project, In terminal put this code
+🔥 //Run this command in your terminal to create a new NestJS project:
+nest new my-app --skip-git  //this option with NO hidden .git folder. <--with NEST CLI build in command helps to create your project,
+//This creates a new folder called "my-app" with all the basic files
 
-//This creates a new folder called my-nest-app with all the basic files
+//NestJS CLI --> it is the way to help you to generate new projects and also has a couple other extra commands and create new files for you and it will make it easier. Nest CLI contains many build in commands that helps building Back-end in Nest.js
 
-//NestJS CLI --> it is the way to help you to generate new projects and also has a couple other extra commands and create new files for you and it will make it easier
+----------------------------------------------
 
-There is also a CLI command that allows you to generate an entire resource along with controllers and providers all in one command
+// There is also a CLI command that allows you to generate an entire resource along with controllers and providers all in one command
 
-//from src folder in terminal -> if you run this command
-nest g resource users   //<-- will create all needed files and folders AUTOMATICALLY for users -> users folder, and users.module.ts, users.controller.ts and users.service.ts files in correct locations
+🔥 //from src folder in terminal -> if you run this command
+nest g resource ninjas   //<-- will create all needed files and folders AUTOMATICALLY for ninjas -> ninjas folder, and ninjas.module.ts, ninjas.controller.ts and ninjas.service.ts files in correct locations. Name of resource = ninjas,
+nest generate resource ninjas  //<-- the same command
+
+
+
+/////////////////////////
+// 👀 Separate module creation - using Nest CLI
+
+📍 nest g module ninjas //we create new module, with the name ninjas
+//or
+nest generate module ninjas  //<-- the same command
+//This comand will create new file in this direction (will create ninjas folder automatically)--> src/ninjas/ninjas.module.ts
+//Also, will update file automatically--> src/app.module.ts our new module will be added to --> imports. starting to build that dependency tree.
+//When you are creating new modules make sure it is being added to -> app.module.ts file - to imports array of another module. This is how things are registred in NEST.JS.
+
+
+📍 nest g service ninjas  //<--//we create new service, with name ninjas,
+// this command will create -> src/ninjas/ninjas.service.spec.ts,
+// //will create -> src/ninjas/ninjas.service.ts,
+// //will update -> src/ninjas/ninjas.module.ts (this will add [NinjasService] to providers), to register that service
+
+📍 nest g controller ninjas  //<-- we create new controller, with name ninjas,
+// //this command will create -> src/ninjas/ninjas.controller.spec.ts,
+// //wil create -> src/ninjas/ninjas.controller.ts
+//will update -> src/ninjas/ninjas.module.ts --> (this will add [NinjasController] to controllers), to register that controller
 ```
 
 ```JS
