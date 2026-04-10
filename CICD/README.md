@@ -722,6 +722,82 @@ Artifacts are how you say:
 👉 “Keep these specific files before the machine disappears”
 ```
 
+```JS
+❌ //Bad Practice to make commands separate
+npm run test &
+npm run test:e2e &
+npm run test > artifacts/unit_tests.txt
+npm test -- --coverage
+npm run test:e2e > artifacts/e2e_tests.txt
+
+
+✅ //you can upload many things in artifact with one command.
+// For example - If you want to run the tests then make test coverage and then put everithing in artifact you can do it with one command
+run: |
+  mkdir -p artifacts
+  npm start &
+  sleep 5
+  npm test -- --coverage --json > artifacts/unit_tests.json
+  npm run test:e2e -- --coverage > artifacts/e2e_tests.txt
+
+// npm test -- --coverage --json > artifacts/unit_tests.json
+//in example above we used-->  --json (is use to add file to json file -> unit_tests.json)
+```
+
+```JS
+✅ //artifacts/unit_tests.txt
+// This will contain:
+// ✔ Console output (test results summary)
+// ✔ Coverage summary (text version)
+
+PASS  src/app.test.js
+✓ should do something
+
+Test Suites: 1 passed
+Tests:       5 passed
+
+----------------|---------|----------|
+File            | % Stmts | % Branch |
+----------------|---------|----------|
+All files       |   85%   |   70%    |
+```
+
+```JS
+✅ //artifacts/unit_tests.json
+// This will contain:
+// ✔ Structured test results (full JSON)
+// ❌ NOT coverage data
+
+// 👉 Important:
+// --json only outputs test results
+```
+
+```JS
+// 📦 Where coverage actually goes
+// When you use:
+// --coverage
+
+// Jest generates:
+// coverage/
+//   ├── coverage-summary.json
+//   ├── lcov.info
+//   └── index.html
+
+// 👉 These are the real coverage files, not your .txt or .json
+
+--------------------------------------
+
+// ⚠️ Common misunderstanding
+
+// 👉 Your .txt file:
+// ✔ Has human-readable coverage summary
+// ❌ Not machine-usable
+
+// 👉 Your .json file:
+// ✔ Has machine-readable test results
+// ❌ No coverage info
+```
+
 # Code example:
 
 Example with node version 16
