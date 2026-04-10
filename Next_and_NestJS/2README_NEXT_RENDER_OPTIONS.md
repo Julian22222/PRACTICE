@@ -10,6 +10,10 @@
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
 
+# Next.JS Concept
+
+![pic04](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next4.jpg)
+
 - In Next.JS you can create server side and client side components
 - Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page, only HTML will be sent
 - Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code.
