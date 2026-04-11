@@ -8,7 +8,10 @@
 //Example:
 //Use bcrypt:
 
-import * as bcrypt from 'bcrypt';
+//npm install bcrypt
+//npm install -D @types/bcrypt
+
+const bcrypt = require('bcrypt');
 
 const password = "mySecret123"
 
