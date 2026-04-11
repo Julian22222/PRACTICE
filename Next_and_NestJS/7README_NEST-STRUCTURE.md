@@ -192,6 +192,57 @@ When you start the NestJS app, the CatsModule is loaded.
 If you make a GET request to /cats, the CatsController calls CatsService.findAll().
 You get a response: ["Tom", "Garfield", "Felix"].
 
+# 🔥 Important how to import and export services - if you want to use different services in other Modules
+
+For example if you want to use -> TransactionsService (from Transactions Module) and AccountsService (from Accounts Module) in UsersService (check Bank/bank-api/src/users/users.service.ts)
+
+```JS
+//Bank/bank-api/src/users/users.service.ts)
+
+constructor(
+  private readonly accountsService: AccountsService,
+  private readonly transactionsService: TransactionsService,
+) {}
+
+//line 121
+newAcount = this.accountsService.create(accObj); // we use accountsService in user.services.ts file. Invoking accountsService method to interact with the Database
+
+//line 144
+const newTrx = this.transactionsService.create(transObj);// we use transactionsService in user.services.ts file. Invoking transactionsService method to interact with the Database
+
+-----------------------------------------
+
+//Then in Bank/bank-api/src/users/users.module.ts file - you need to import these modules (AccountsModule and Transactions Module in our case) - modules that you are going to use in this users module
+
+@Module({
+  imports: [AccountsModule, TransactionsModule],  ///<-- here we import these modules
+  controllers: [UsersController],
+  providers: [UsersService],
+})
+export class UsersModule {}
+
+----------------------------------------
+
+//Then in Bank/bank-api/src/accounts/accounts.module.ts file - you need to export this accounts module to be able to import it in others modules (import in users Module in our case)
+//accounts.module.ts
+@Module({
+  controllers: [AccountsController],
+  providers: [AccountsService],
+  exports: [AccountsService],  //<-- here we exporting this module
+})
+export class AccountsModule {}
+
+
+//Then in Bank/bank-api/src/transactions/transactions.module.ts file - you need to export this transactions module to be able to import it in others modules (import in users Module in our case)
+//transactions.module.ts
+@Module({
+  controllers: [TransactionsController],
+  providers: [TransactionsService],
+  exports: [TransactionsService], //<-- here we exporting this module
+})
+export class TransactionsModule {}
+```
+
 # Summary:
 
 - Service (CatsService): contains logic (list of cats).
