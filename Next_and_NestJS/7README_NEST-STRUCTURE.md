@@ -243,6 +243,216 @@ export class AccountsModule {}
 export class TransactionsModule {}
 ```
 
+# Work with Database in Nest.JS
+
+❌ in Nest.js you don't need to use usual approach such as: (this approach is working but it is not good practice)
+
+```JS
+✅ Pros of this approach
+- Simple
+- Quick to set up
+- Fine for small scripts or prototypes
+
+❌ Cons (important)
+- ❌ Not testable (hard to mock)
+- ❌ Tight coupling to implementation
+- ❌ No lifecycle management (connect/disconnect)
+- ❌ Hard to scale (multiple DBs, configs, environments)
+- ❌ Breaks NestJS dependency injection system
+
+👉 This is basically “Node.js style”, not NestJS style.
+```
+
+```JS
+  //dbconnection.ts file
+
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+});
+
+module.exports = pool;
+
+---------------------------------
+//then in services you use ->
+
+const pool = require('../../data/dbconnection');
+
+const await pool.query('QUERY to YOUR DATABSE...');
+```
+
+#### 🔥 Good Practice how to interact with DB in Nest.JS
+
+Create DatabaseModule and Inject pool via dependency injection
+
+If you're using NestJS → always use Dependency Injection
+
+🔥 architecture:
+Controller → Service → DatabaseService → PostgreSQL
+
+❌ Instead of:
+Controller → Service → pool.query(...)
+
+```JS
+✅ Pros of this approach
+- ✅ Fully aligned with NestJS architecture
+- ✅ Easy to mock in unit tests
+- ✅ Centralized DB configuration
+- ✅ Reusable across modules
+- ✅ Supports transactions, multiple DBs, etc.
+- ✅ Clean separation of concerns
+- ✅ Centralized error handling (try/catch everywhere)
+- ✅ Easy to switch DB (future-proof) - for example from PostgreSQL (pg) to Prisma / TypeORM
+- ✅ Easy logging (this.logger.log(query);)
+- ✅ Easy transactions
+
+
+❌ Cons
+- Slightly more setup (but worth it)
+
+✅ Why creating DatabaseModule is better then previous approach without creating DatabaseModule
+- Central place for:
+   -logging
+   -transactions
+   -error handling
+- Easier to refactor later (e.g., switch to Prisma)
+- Cleaner services
+```
+
+```JS
+//you create your Database module
+
+//structure
+// src/
+//   database/
+//     database.module.ts
+//     database.service.ts   👈 important
+//     database.constants.ts (optional)
+
+
+//database.module.ts
+
+import { Module } from '@nestjs/common';
+import { Pool } from 'pg';
+
+export const PG_POOL = 'PG_POOL';
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
+});
+
+@Module({
+  providers: [
+    {
+      provide: PG_POOL,
+      useValue: pool,
+    },
+  ],
+  exports: [PG_POOL],
+})
+export class DatabaseModule {}
+
+---------------------------------------------------------------
+
+//database.service.ts
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Pool } from 'pg';
+import { PG_POOL } from './database.module';
+
+@Injectable()
+export class DatabaseService {
+  private readonly logger = new Logger(DatabaseService.name);
+
+  constructor(@Inject(PG_POOL) private readonly pool: Pool) {}
+
+  async query(query: string, params?: any[]) {
+    try {
+      this.logger.log(`Executing query: ${query}`);
+      return await this.pool.query(query, params);
+    } catch (error) {
+      this.logger.error('Database error', error.stack);
+      throw error;
+    }
+  }
+}
+
+---------------------------------------------------------------
+
+//then import DatabaseModule in AppModule and other modules where you are going to connect to Database
+
+//app.module.ts
+import { Module } from '@nestjs/common';
+import { DatabaseModule } from './database/database.module';
+import { UsersModule } from './users/users.module';
+
+@Module({
+  imports: [DatabaseModule, UsersModule], //<--DatabaseModule imported here
+})
+export class AppModule {}
+
+-------------------------------------
+
+//users.module.ts
+@Module({
+  imports: [AccountsModule, TransactionsModule, DatabaseModule],  //<--DatabaseModule imported here
+  controllers: [UsersController],
+  providers: [UsersService],
+})
+export class UsersModule {}
+
+-------------------------------------
+
+//accounts.module.ts
+@Module({
+  imports: [DatabaseModule],  //<--DatabaseModule imported here
+  controllers: [AccountsController],
+  providers: [AccountsService],
+  exports: [AccountsService],
+})
+export class AccountsModule {}
+
+-------------------------------------
+
+//transactions.module.ts
+@Module({
+  imports: [DatabaseModule],  //<--DatabaseModule imported here
+  controllers: [TransactionsController],
+  providers: [TransactionsService],
+  exports: [TransactionsService],
+})
+export class TransactionsModule {}
+
+------------------------------------------------------------------
+
+//Then in services
+//For example: users.service.ts
+import { Inject, Injectable } from '@nestjs/common';
+import { Pool } from 'pg';
+import { PG_POOL } from '../database/database.module';
+
+//use constructor to inject you DB connection to this class
+@Injectable()
+export class UsersService {
+  constructor(
+    @Inject(PG_POOL) private readonly pool: Pool,  //Injection
+  ) {}
+
+---------------------------------
+//Now replace all -  pool.query calls with:
+//then in your methods use:
+await this.pool.query(`QUERY to YOUR DATABSE...`)
+```
+
 # Summary:
 
 - Service (CatsService): contains logic (list of cats).
