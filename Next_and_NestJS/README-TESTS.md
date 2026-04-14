@@ -238,7 +238,7 @@ describe('UsersController', () => {
 
   it('should return all users', async () => {
 
-   //here you compare mock data with hard coded block and you don't need connection to Databse
+   //here you compare ...controller.spec.ts file with data from mock file data and you don't need connection to Databse
     expect(await controller.findAll()).toEqual([
       {
         first_name: 'Julian',
@@ -350,14 +350,14 @@ providers: [UsersService]
 🔥 In Unit Tests without DB connection you compare mock data file with hard coded code in spec.ts file
 
 ```JS
-//users.controller.spec.ts  - will compare mock data from users.controller.mock.ts file with hard coded code. No data will be used from Database
+//users.controller.spec.ts  - will compare users.controller.spec.ts data with mock data from users.controller.mock.ts file that is hard coded code. No data will be used from Database.
 
 //await controller.findAll() - is bringing mock data from "users.controller.mock.ts". If you have -> added - providers: [{ provide: UsersService, useValue: mockUsersService }]
 
 //otherwise it will get data from your Database - if you use -> providers: [UsersService]
 
  it('should return all users', async () => {
-    expect(await controller.findAll()).toEqual([
+    expect(await controller.findAll()).toEqual([   //<-- methods (such as findAll() in here and others ) in controller.spec.ts files must match methods from controller.ts file
   {
     first_name: 'Julian',
     last_name: 'Golovens',
@@ -387,6 +387,9 @@ providers: [UsersService]
   },
 ]);
   });
+
+
+  //methods in users.controller.mock.ts file must match user.service.ts file methods
 
 ```
 
