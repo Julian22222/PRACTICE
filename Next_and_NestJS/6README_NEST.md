@@ -1056,6 +1056,7 @@ Or pipes allows to validate a request body, we can validate does the ninja recei
 class-validator is a couple extra set of decorators that you can add to your classes, (adding validation - title Length should be between 10 and 20, etc.)
 
 ```JS
+//adding validation decoraors to your class
 export class Post {
   @Length(10, 20)  //title Length should be between 10 and 20
   title: string;
@@ -1124,6 +1125,7 @@ export class CreateNinjaDto {
   }
 
   //and in src/main.ts file add ->
+  //if you use this block of code - you MUST provide validation decorators to all your DTOs otherwise will throw an error
    app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -1131,6 +1133,14 @@ export class CreateNinjaDto {
       transform: true,
     }),
   );
+
+
+  //Explanation -->
+  // whitelist: true
+  // Removes any properties without validation decorators
+
+  // forbidNonWhitelisted: true
+  // Instead of silently removing them → throws an error
 ```
 
 3. If avlidations are not met, Nest.js will respond with error object
