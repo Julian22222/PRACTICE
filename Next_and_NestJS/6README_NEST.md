@@ -913,6 +913,7 @@ Most used exceptions:
 - NotFoundEception
 - ForbiddenException
 - and etc.
+- Don't use plain JavaScript Error - throw new Error("USer not found")
 - can create your own custome exceptions
 
 for example: when you throw an error page, or 404 - not found page
@@ -925,6 +926,7 @@ getNinjaById(id: number) {
     const ninja = this.ninjas.find((ninja) => ninja.id === id);
 
     if (!ninja) {
+    //👉 This is a plain JavaScript Error, not a NestJS HTTP exception. DON'T USE - throw new Error in NEST.JS. NestJS treats it as an unexpected error → returns:  {"statusCode": 500, "message": "Internal server error"}
       throw new Error(`Ninja with id ${id} not found`);  //throws an error
     }
 
