@@ -206,8 +206,8 @@ npm install pg
 
 2. Create a PostgreSQL database connection provider
 
--Create a dedicated database provider to handle the connection pool.
--Create a file src/database/database.providers.ts:
+- Create a dedicated database provider to handle the connection pool.
+- Create a file src/database/database.providers.ts:
 
 ```JS
 import { Pool } from 'pg';
@@ -271,8 +271,12 @@ export class UsersService {
 
     //if users not found, throw an error, handling error in controller
     if(!rows){
-      // return { message: `Users not found` };
-        throw new Error(`Users not found`); //will return to controller - this message, "error": "Not Found","statusCode": 404
+      // DON'T USE In NEST.JS- throw new Error('some message') return { message: `Users not found` };
+        // throw new Error(`Users not found`); //will return to controller - this message, "error": "Not Found","statusCode": 404
+
+        // throw new NotFoundException('Account not found');  //<-- use this one in NEST.JS or
+        throw new BadRequestException("item not found");  //<-- or other exceptions
+
     }
 
     //if found, return the
@@ -301,7 +305,7 @@ export class UsersService {
 
 5. UsersController remains mostly the same
 
--Create src/users/users.controller.ts
+- Create src/users/users.controller.ts
 
 ```JS
 import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
@@ -321,7 +325,7 @@ export class UsersController {
         //error is received from the users.services method when users are not found
       //findAll method in users.service.ts file throws an error if the users not found
 
-      // throw new Error(error.message);
+      // throw new Error(error.message);  //<-- don't use this in NEST.JS
       throw new NotFoundException(err.message);
     }
 
@@ -1127,11 +1131,11 @@ export class CreateNinjaDto {
   }
 
   //and in src/main.ts file add ->
-  //if you use this block of code - you MUST provide validation decorators to all your DTOs otherwise will throw an error
+  //if you use this block of code - you MUST provide validation decorators to all your DTOs classes - otherwise will throw an error (see classes with validation above)
    app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
+      whitelist: true,    // removes unknown fields
+      forbidNonWhitelisted: true,  // throws error for extra fields
       transform: true,
     }),
   );
