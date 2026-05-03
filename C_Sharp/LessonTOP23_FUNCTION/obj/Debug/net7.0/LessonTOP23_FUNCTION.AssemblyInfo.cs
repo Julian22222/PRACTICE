@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LessonTOP23_FUNCTION")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5ce4ae34e6675c61fc78d884b6cd9d093fe6f8f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+777c965b98630f4d77e945d825bb3ff0e1fdeea2")]
 [assembly: System.Reflection.AssemblyProductAttribute("LessonTOP23_FUNCTION")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LessonTOP23_FUNCTION")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
