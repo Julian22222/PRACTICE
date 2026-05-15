@@ -409,3 +409,167 @@ const Modal: FC<IModalProps> = ({ setModal, header, currentUser }) => {
   );
 };
 ```
+
+# Avoid repeated onChange logic, A cleaner approach
+
+```JS
+//instead of using in each input -->
+// onChange={(e) =>
+//   setNewUserData({ ...newUserData, first_name: e.target.value })
+// }
+
+<form onSubmit={handleSubmit}>
+            <label style={labelStyle} htmlFor="first_name">
+              First Name
+            </label>
+            <input
+              id="first_name"
+              type="text"
+              required
+              placeholder="Enter your first name"
+              value={newUserData.first_name}
+              name="first_name"
+              onChange={(e) =>                 //<--HERE
+                setNewUserData({ ...newUserData, first_name: e.target.value })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="last_name">
+              Last Name
+            </label>
+            <input
+              id="last_name"
+              type="text"
+              required
+              placeholder="Enter your last name"
+              value={newUserData.last_name}
+              name="last_name"
+              onChange={(e) =>                   //<--HERE
+                setNewUserData({ ...newUserData, last_name: e.target.value })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              style={inputStyle}
+              required
+              placeholder="Enter your email"
+              value={newUserData.email}
+              name="email"
+              onChange={(e) =>                    //<--HERE
+                setNewUserData({ ...newUserData, email: e.target.value })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              style={inputStyle}
+              required
+              placeholder="Enter your password"
+              value={newUserData.password}
+              name="password"
+              onChange={(e) =>                         //<--HERE
+                setNewUserData({ ...newUserData, password: e.target.value })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              style={inputStyle}
+              required
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              name="confirmPassword"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+
+            <label style={labelStyle} htmlFor="phone">
+              Phone Number
+            </label>
+            <input
+              id="phone"
+              type="text"
+              style={inputStyle}
+              required
+              placeholder="Enter your phone number"
+              value={newUserData.phone}
+              name="phone"
+              onChange={(e) =>                                 //<--HERE
+                setNewUserData({ ...newUserData, phone: e.target.value })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="customer_address">
+              Address
+            </label>
+            <input
+              id="customer_address"
+              type="text"
+              style={inputStyle}
+              required
+              placeholder="Enter your address"
+              value={newUserData.customer_address}
+              name="customer_address"
+              onChange={(e) =>                           //<--HERE
+                setNewUserData({
+                  ...newUserData,
+                  customer_address: e.target.value,
+                })
+              }
+            />
+
+            <label style={labelStyle} htmlFor="dob">
+              DOB
+            </label>
+            <input
+              id="dob"
+              type="text"
+              required
+              style={inputStyle}
+              placeholder="Enter your date of birth"
+              value={newUserData.dob}
+              name="dob"
+              onChange={(e) =>                                      //<--HERE
+                setNewUserData({ ...newUserData, dob: e.target.value })
+              }
+            />
+
+            <input
+              type="submit"
+              value="Register New User"
+              className="login-button"
+            />
+          </form>
+
+
+//////////////////////////////////////////////////////////////////
+
+//You can make function
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+
+  setNewUserData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+//Then every input becomes:
+<input
+  name="first_name"
+  value={newUserData.first_name}
+  onChange={handleChange}
+/>
+```
