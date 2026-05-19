@@ -1215,6 +1215,167 @@ export async function createPost(formData: FormData) {
 }
 ```
 
+```JS
+//how to use FormData - can be used in "use client" and "use server"
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("submitted");
+
+    const data = new FormData(e.currentTarget);
+
+    const formValues = {
+      firstName: data.get("first_name"),
+      lastName: data.get("last_name"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+      customerAddress: data.get("customer_address"),
+      dob: data.get("dob"),
+    };
+
+    console.log(formValues);
+
+}
+
+
+return (
+    <main>
+      <div>
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={() => setShowModule(false)} >
+          ×
+        </button>
+        {/* Title */}
+        <h2>
+          Edit User
+        </h2>
+
+        <form onSubmit={handleSubmit} >
+          {/* First + Last Name */}
+          <div>
+            <div>
+              <label htmlFor="first_name" >
+                First Name
+              </label>
+
+              <input
+                id="first_name"
+                name="first_name"
+                type="text"
+                required
+                placeholder="Enter first name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="last_name" >
+                Last Name
+              </label>
+
+              <input
+                id="last_name"
+                name="last_name"
+                type="text"
+                required
+                placeholder="Enter last name"
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email">
+              Email Address
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="Enter email address"
+            />
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" style={modernLabelStyle}>
+              Phone Number
+            </label>
+
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              placeholder="Enter phone number"
+            />
+          </div>
+
+          {/* Address */}
+          <div>
+            <label htmlFor="customer_address">
+              Customer Address
+            </label>
+
+            <input
+              id="customer_address"
+              name="customer_address"
+              type="text"
+              required
+              placeholder="Enter customer address"
+            />
+          </div>
+
+          {/* DOB */}
+          <div>
+            <label htmlFor="dob" style={modernLabelStyle}>
+              Date of Birth
+            </label>
+
+            <input
+              id="dob"
+              name="dob"
+              type="date"
+              required
+            />
+          </div>
+
+          {/* Submit */}
+          <button type="submit" >
+            Save User Information
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
+
+/////////////////////////////////////////
+
+async function createPost(data: FormData) {
+const { title, body } = Object.fromEntries(data);
+}
+
+
+return (
+
+    // form submission will be handled by the createPost function - which is a Server Action
+
+    <form
+      action={createPost} //handling form submission using the createPost - it is server action
+      className="form" >
+
+      <input type="text" placeholder="title" required name="title" />
+      <textarea placeholder="body" required name="body" />
+      <div>
+        <input type="submit" value="Add post" />
+      </div>
+    </form>
+  );
+```
+
 🧠 How It Works
 
 1. On first load, getPosts() runs and caches the response, tagged as 'posts'.
