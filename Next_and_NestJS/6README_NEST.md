@@ -1055,6 +1055,13 @@ Pipes allow to transform data types automatically, see example below -->
   }
 ```
 
+```JS
+//Most-used built-in NestJS pipes (no class-validator)
+ParseIntPipe
+ParseBoolPipe
+ParseUUIDPipe
+```
+
 Or pipes allows to validate a request body, we can validate does the ninja receives correct weapon, or maybe ninja name should be certain length etc.
 
 [ --> class-validator <--](https://github.com/typestack/class-validator/blob/develop/README.md)
@@ -1062,6 +1069,9 @@ Or pipes allows to validate a request body, we can validate does the ninja recei
 class-validator is a couple extra set of decorators that you can add to your classes, (adding validation - title Length should be between 10 and 20, etc.)
 
 ```JS
+✅ Validation decorators are mainly used in Create and Update DTOs -> (POST,PUT,PATCH)
+❌ They’re usually NOT used in response DTOs or entity models
+
 //adding validation decoraors to your class
 export class Post {
   @Length(10, 20)  //title Length should be between 10 and 20
@@ -1079,6 +1089,8 @@ export class Post {
   email: string;
 
   @IsFQDN()
+  // @IsOptional()
+  //@IsNotEmpty()
   site: string;
 
   @IsDate()  //patern for date, also another patern can be for phone nr.
@@ -1087,9 +1099,51 @@ export class Post {
 
 //there is a lot of decorators that can be applied to your class for validation
 //also can create your own custom decorators
+
+
+//Most-used validation decorators (class-validator)
+🔹 Required / Optional
+@IsNotEmpty()
+@IsOptional()
+
+🔹 Type validation
+@IsString()
+@IsNumber()
+@IsInt()
+@IsBoolean()
+@IsArray()
+@IsObject()
+
+🔹 Numeric constraints
+@Min(1)
+@Max(100)
+@IsPositive()
+@IsNegative()
+
+🔹 String constraints
+@MinLength(3)
+@MaxLength(50)
+@Matches(/^[a-zA-Z]+$/)
+
+🔹 Format validation (very common)
+@IsEmail()
+@IsUUID()
+@IsUrl()
+@IsDateString()
+
+🔹 Enum validation
+@IsEnum(Role)
+
+🔹 Arrays
+@IsArray()
+@ArrayMinSize(1)
+@ArrayMaxSize(10)
+@IsString({ each: true })
 ```
 
 #### Example of validation in Nest.js - specific pipe called -> "the validation pipe".
+
+- Validation decorators are not only for create/update bodies. They’re also very useful for:Query params
 
 1. Below We are providing additional metadata to this class in order for Nest.js to take advantage of these decorators
 
@@ -1147,13 +1201,35 @@ export class CreateNinjaDto {
 
   // forbidNonWhitelisted: true
   // Instead of silently removing them → throws an error
+
+using - app.useGlobalPipes(...)
+NestJS will:
+-Validate DTOs only
+-Strip unknown fields
+-Auto-transform types
+-Throw 400 Bad Request on failure
 ```
 
-3. If avlidations are not met, Nest.js will respond with error object
+3. If validations are not met, Nest.js will respond with error object
 
 🧨 You can use other types of validators apart from 'class-validator', you can use 'joy' and others. But 'class-validator' feels cohesive to the rest of the Nest.js framework.
 
 Also, We can create custome Pipes
+
+###### Summary
+
+✅ Use validation decorators for:
+
+- CreateDto
+- UpdateDto
+- Query DTOs
+- Param DTOs
+
+❌ Avoid validation decorators in:
+
+- Entities
+- Response DTOs
+- Services
 
 # ✅ Guards - it is a way how you protect your routs
 

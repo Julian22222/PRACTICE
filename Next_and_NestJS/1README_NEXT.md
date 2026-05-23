@@ -675,6 +675,40 @@ This hook is used for dynamic route segments — the part of a URL defined by sq
 Works only for dynamic route segments (from [folderName]).
 
 ```JS
+////////////
+//getting useParams in server component- "use server" -> in page.tsx
+
+// transactions/[account_type]/[last_name]   <--URL
+
+export default function StatementPage({
+  params,
+}: {
+  params: Promise<{ account_type: string; last_name: string }>;
+}) {
+  const { account_type, last_name } = await params;
+  //now can use - account_type and last_name values here
+/////some code
+}
+
+
+//////or ->
+export default function StatementPage({
+  params,
+}: {
+  params: Promise<{ account_type: string; last_name: string }>; //params is a Promise that resolves to an object with account_type and last_name, account_type and last_name should match the names from square brackets
+}) {
+const resolvedParams = use(params); // unwrap the Promise
+const { account_type, last_name } = resolvedParams; // now you can access last_name directly
+
+//now can use - account_type and last_name values here
+/////some code
+}
+
+
+
+//////////////////////////////////////
+//if page.tsx is a Client component - "use client"
+
 //Example folder:
 app/
  └── user/
@@ -696,8 +730,6 @@ export default function UserPage() {
 
 
 ///////////////////////////////////////////////
-
-
 //if you want to get dynamic variable from [] folder, that we made in app folder
 const params = useParams<{username: string}>()  //username is in squere brackets and it is dynamic value, which is a string data type, it is used to get value from []dynamic folder
 
@@ -1141,6 +1173,20 @@ export default async function ProductsPage() {
 - create loading.tsx file, has a scope. Can use on different levels/ in different folders. Effect on that current folder and children folders and files
 - must have name -> loading.tsx
 - check app/posts/loading.tsx file
+
+Best practice
+
+- Keep loading.tsx as a Server Component whenever possible
+- Only switch to client if there’s a real need for interactivity
+- loading.tsx is automatically treated as a Server Component
+- You do NOT need "use client" unless you specifically need client-side features
+
+When to make it a Client Component. Add "use client" only if you need:
+
+- State (useState)
+- Effects (useEffect)
+- Browser APIs
+- Interactive animations (e.g., complex spinner logic)
 
 # Error page
 
