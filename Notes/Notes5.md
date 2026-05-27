@@ -486,3 +486,200 @@ Authorization: Bearer token
 
 4. Controller runs only if valid
 ```
+
+# real authentication systems there are usually two tokens
+
+1. Access Token
+2. Refresh Token
+
+Access token is used to access protected APIs.
+
+- valid → allow request
+- expired → reject request
+
+```JS
+// Problem Without Refresh Token
+// If access token expires after 1 hour:
+expiresIn: '1h'
+// then user must:
+// -login again every hour
+// Bad user experience.
+```
+
+Solution → Refresh Token
+
+```JS
+Login
+ ├── Access Token (short life)
+ └── Refresh Token (long life)
+
+// Example:
+// -access token → 15 minutes
+// -refresh token → 7 days
+```
+
+Real Authentication Flow
+
+```JS
+📍// Step 1 — Login
+// User logs in:
+// POST /login
+
+// Server returns:
+// {
+//   "access_token": "...",
+//   "refresh_token": "..."
+// }
+```
+
+```JS
+📍//Step 2 — Use Access Token
+// Frontend sends access token:
+// Authorization: Bearer access_token
+```
+
+```JS
+📍// Step 3 — Access Token Expires
+// Server returns:
+// 401 Unauthorized
+// because token expired.
+```
+
+```JS
+📍//Step 4 — Use Refresh Token
+// Frontend automatically sends refresh token:
+// POST /refresh
+
+// Server checks refresh token.
+// If valid:
+// -creates NEW access token
+// -user stays logged in
+```
+
+```JS
+//Step 5 — New Access Token
+// Server returns:
+// {
+//   "access_token": "new_token"
+// }
+// User continues normally.
+```
+
+```JS
+| Token         | Purpose                  | Lifetime |
+| ------------- | ------------------------ | -------- |
+| Access Token  | Access APIs              | Short    |
+| Refresh Token | Create new access tokens | Long     |
+```
+
+# Where Refresh Token Is Created
+
+Usually inside login service too.
+
+```JS
+//Example
+const accessToken = this.jwtService.sign(payload, {
+  secret: process.env.JWT_SECRET,
+  expiresIn: '15m',
+});
+
+const refreshToken = this.jwtService.sign(payload, {
+  secret: process.env.JWT_REFRESH_SECRET,
+  expiresIn: '7d',
+});
+
+//Notice:
+// different secret
+// longer expiration
+```
+
+### Why Different Secret?
+
+Security.
+
+If access token secret leaks:
+
+- refresh tokens still protected.
+
+### Typical Login Response
+
+```JS
+return {
+  access_token: accessToken,
+  refresh_token: refreshToken,
+  user: {
+    customer_id: user.customer_id,
+    email: user.email,
+  },
+};
+```
+
+# Where Refresh Token Is Stored
+
+```JS
+Usually:
+-HttpOnly cookie (BEST)
+- NOT localStorage
+
+Why?
+-safer against XSS attacks
+```
+
+### Access Token Storage
+
+```JS
+Common options:
+-memory
+-cookie
+-sometimes localStorage
+```
+
+# Refresh Endpoint Example
+
+```JS
+//Example NestJS route
+
+@Post('refresh')
+refresh(@Body() body) {
+  return this.authService.refreshToken(body.refresh_token);
+}
+```
+
+Refresh Service Example
+
+```JS
+async refreshToken(refreshToken: string) {
+  try {
+    const payload = this.jwtService.verify(refreshToken, {
+      secret: process.env.JWT_REFRESH_SECRET,
+    });
+
+    const newAccessToken = this.jwtService.sign(
+      {
+        sub: payload.sub,
+        email: payload.email,
+      },
+      {
+        secret: process.env.JWT_SECRET,
+        expiresIn: '15m',
+      },
+    );
+
+    return {
+      access_token: newAccessToken,
+    };
+  } catch {
+    throw new UnauthorizedException();
+  }
+}
+```
+
+# Important Security Practice
+
+Many real apps also:
+
+- save refresh token in database
+- hash refresh token
+- revoke tokens on logout
+
+This prevents stolen refresh tokens from being reused.
