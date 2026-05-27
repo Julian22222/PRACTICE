@@ -683,3 +683,141 @@ Many real apps also:
 - revoke tokens on logout
 
 This prevents stolen refresh tokens from being reused.
+
+```JS
+// Access Token -> expiresIn: '15m'
+// Used for:
+// -protected APIs
+// -authorization
+// Short lifetime for security.
+
+// Refresh Token
+// expiresIn: '7d'
+// Used to:
+// -create new access tokens
+// -keep user logged in
+
+// usually for refresh tokken you create new endpoint. -> /refresh
+// POST /refresh
+//Frontend sends refresh token → backend returns new access token.
+```
+
+```JS
+| Token         | Recommended Storage |
+| ------------- | ------------------- |
+| Access Token  | memory or cookie    |
+| Refresh Token | HttpOnly cookie     |
+```
+
+```JS
+Why /refresh Route Is Needed
+Your access token expires quickly: expiresIn: '15m'
+
+After 15 minutes: -> 401 Unauthorized
+Without /refresh: user must login again
+With /refresh: frontend sends refresh token, backend creates new access token, user stays logged in
+```
+
+```JS
+LOGIN
+  ↓
+Receive:
+- access_token
+- refresh_token
+  ↓
+Use access token for API calls
+  ↓
+Access token expires
+  ↓
+POST /refresh
+  ↓
+Receive new access token
+  ↓
+Continue normally
+```
+
+```JS
+//Example Controller Route
+//Usually in your controller:
+
+@Post('refresh')
+refreshToken(@Body() body: any) {
+  return this.usersService.refreshToken(
+    body.refresh_token,
+  );
+}
+
+//Example Frontend Request (Next.js)
+await fetch('http://localhost:3000/refresh', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    refresh_token,
+  }),
+});
+
+//Example Service Method
+//Inside UsersService:
+async refreshToken(refreshToken: string) {
+  try {
+    // Verify refresh token
+    const payload = this.jwtService.verify(
+      refreshToken,
+      {
+        secret: process.env.JWT_REFRESH_SECRET,
+      },
+    );
+
+    // Create new access token
+    const newAccessToken = this.jwtService.sign(
+      {
+        sub: payload.sub,
+        email: payload.email,
+        role: payload.role,
+      },
+      {
+        secret: process.env.JWT_SECRET,
+        expiresIn: '15m',
+      },
+    );
+
+    return {
+      access_token: newAccessToken,
+    };
+  } catch (error) {
+    throw new UnauthorizedException(
+      'Invalid refresh token',
+    );
+  }
+}
+```
+
+# Important Difference
+
+```JS
+//Login Route
+POST /login
+// Purpose:
+// -check email/password
+// -create BOTH tokens
+
+// Refresh Route
+POST /refresh
+// Purpose:
+// -verify refresh token
+// -create NEW access token ONLY
+// No password needed.
+
+Very Important Security Note
+In production:
+
+-refresh token should usually be stored in HttpOnly cookie
+-not localStorage
+
+And often:
+-saved in database
+-hashed
+-revoked on logout
+```
