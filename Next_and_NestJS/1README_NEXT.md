@@ -41,8 +41,18 @@ Therefore it is flexible to adjust for any tasks.
 
 - global styles and google fonts we add in layout.tsx file. Google fonts can be found on their google website
 
-////If you pass some params (customer_id) -> to child component, child component can be either server or client side component, to get id from URL for example
+```JS
+If you pass some params (customer_id) -> to child component, child component can be either server or client side component, to get id from URL for example
+
+<Link href={`/transactions/${account_type}/${last_name}`}>Page</Link>
+
+// and you have nested folders to hadle this URL route ->
+app/transactions/[account_type]/[last_name]/page.tsx //<-- page.tsx can be eather server component or client component
+```
+
+```JS
 //Never use useGlobal() or context hooks inside the server component.
+```
 
 # 🔥 Start Next JS project
 
