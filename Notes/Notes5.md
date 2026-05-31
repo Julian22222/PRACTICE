@@ -309,6 +309,29 @@ await fetch("/api/some-protected-route", {
 });
 ```
 
+# 🧩 Can Next.js decode payload directly?
+
+```JS
+//YES.
+npm install jwt-decode
+
+
+// Client component ("use client")
+import { jwtDecode } from "jwt-decode";
+
+const token = localStorage.getItem("token");
+
+if (token) {
+  const decoded = jwtDecode(token);
+
+  console.log(decoded);
+}
+
+//⚠️ But decoding ≠ validating
+//Anyone can decode JWT.
+//Only backend can truly verify it using secret key.
+```
+
 🧩 Even if you think you don’t have protected routes, most apps eventually have them, like:
 
 - /users/profile
@@ -566,6 +589,46 @@ Real Authentication Flow
 ```
 
 ```JS
+//access the data
+
+//⚡ Final important distinction
+| Location       | Access payload how?               |
+| -------------- | --------------------------------- |
+| NestJS backend | `req.user`                        |
+| Next.js client | decode token OR use state/context |
+| Next.js server | cookies/session usually           |
+
+///////////////////////////////////
+
+🚨 Important for Next.js
+"use client"
+
+// Can access:
+// -localStorage
+// -browser APIs
+// -JWT from localStorage
+
+
+"use server"
+// Cannot access:
+// -localStorage
+// -browser state
+
+Because it runs on server.
+
+/////////////////////////////////////////////
+
+// 🧠 Quick comparison
+| Feature              | use client | use server     |
+| -------------------- | ---------- | -------------- |
+| localStorage         | ✅          | ❌              |
+| decode JWT           | ✅          | ✅              |
+| browser token access | ✅          | ❌              |
+| secure validation    | ❌          | ✅ backend only |
+
+```
+
+```JS
 | Token         | Purpose                  | Lifetime |
 | ------------- | ------------------------ | -------- |
 | Access Token  | Access APIs              | Short    |
@@ -820,4 +883,706 @@ And often:
 -saved in database
 -hashed
 -revoked on logout
+```
+
+# Where and when use REFRESH
+
+```JS
+// Example Frontend Request (Next.js)
+
+await fetch('http://localhost:3000/refresh', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    refresh_token,
+  }),
+});
+```
+
+- You use this request when the access token expires.
+- Usually automatically in Next.js frontend.
+
+### When /refresh Is Called
+
+```JS
+User logs in
+   ↓
+Frontend stores:
+- access_token
+- refresh_token
+
+   ↓
+User uses app normally
+
+   ↓
+Access token expires (15m)
+
+   ↓
+API request fails with 401
+
+   ↓
+Frontend calls /refresh
+
+   ↓
+Backend returns new access token
+
+   ↓
+Retry original request
+```
+
+### Most Common Place To Use It
+
+🔥 Usually inside:
+
+- API helper
+- fetch wrapper
+- axios interceptor
+
+❌ NOT directly inside every component.
+
+```JS
+//Example Scenario
+
+// You call protected API:
+GET /profile
+//with expired access token.
+
+// Backend returns:
+401 Unauthorized
+
+//Then frontend automatically does:
+await fetch('http://localhost:3000/refresh', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    refresh_token,
+  }),
+});
+
+//to get new access token.
+```
+
+### Typical Next.js Structure
+
+```JS
+//Example:
+
+src/
+├── app/
+├── components/
+├── lib/
+│   └── apiFetch.ts
+└── services/
+
+////////////////////////////////////////
+//Example api.ts
+//This is where refresh logic usually lives
+
+
+//This is where refresh logic usually lives.
+// For refresh tokken and access tokken generation and validation.
+
+//Then Use It Everywhere, For example for profile route -> apiFetch('/profile')
+//apiFetch('/profile') <-- this function - attach access token automatically, detect 401 Unauthorized, call /refresh, retry request.
+//thi s will automatically add the access token to the header and retry once if the access token is expired.
+
+export async function apiFetch(
+  url: string,
+  options: RequestInit = {},
+) {
+  let accessToken =
+    localStorage.getItem('access_token');
+
+  // First request
+  let response = await fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  // If token expired
+  // Access token expired
+  if (response.status === 401) {
+    const refreshToken =
+      localStorage.getItem('refresh_token');
+
+    // Request new access token
+    const refreshResponse = await fetch(
+      'http://localhost:3000/refresh',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refresh_token: refreshToken,
+        }),
+      },
+    );
+
+    // Get new token
+    const refreshData =
+      await refreshResponse.json();
+
+    accessToken =
+      refreshData.access_token;
+
+    // Save new access token
+    localStorage.setItem(
+      'access_token',
+      accessToken,
+    );
+
+    // Retry original request
+    response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
+
+  return response;
+}
+```
+
+Then Use It Everywhere (use this logic everywhere)
+
+```JS
+❌ // Instead of doing:
+fetch('/profile')
+
+//////////////////////////
+// you use:
+apiFetch('/profile')  //<-- for example with profile endpoint, the same with other endpoints
+```
+
+# 🔥 Where you USE apiFetch('/profile')
+
+🔥 You use it in React components or hooks.
+
+```JS
+//Example: React Page
+//Basically you make data fetch as normal but you use a function -> apiFetch('RouteToBackEndData')
+
+import { useEffect, useState } from 'react';
+import { apiFetch } from '@/lib/apiFetch';
+
+export default function ProfilePage() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function loadProfile() {
+      const res = await apiFetch('/users/1');
+
+      const data = await res.json();
+
+      setUser(data);
+    }
+
+    loadProfile();
+  }, []);
+
+  if (!user) return <p>Loading...</p>;
+
+  return (
+    <div>
+      <h1>{user.first_name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+
+//////////////////////////////////////
+// Without apiFetch
+// Every component would need to:
+// get token
+// add Authorization header
+// detect 401
+// call refresh
+// save new token
+// retry request
+
+// That becomes repetitive.
+
+////////////////////////////////////////////////////////////////////
+// What happens step by step
+
+Component loads
+   ↓
+apiFetch('/users/1')
+   ↓
+Sends request with access token
+   ↓
+Backend checks token
+   ↓
+If valid → returns data
+If expired → 401
+   ↓
+apiFetch calls /refresh
+   ↓
+Gets new access token
+   ↓
+Retries original request
+   ↓
+UI gets data
+
+//////////////////////////////////////////////
+// Another Example
+// Create/register a user:
+
+await apiFetch('/users', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(formData),
+});
+
+
+//Another Example
+//Update profile:
+await apiFetch('/users/1', {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+});
+
+///////////
+// Think of apiFetch as a Wrapper
+
+Component
+    ↓
+apiFetch()
+    ↓
+Adds JWT automatically
+    ↓
+Calls NestJS API
+    ↓
+Refreshes token if needed
+    ↓
+Returns response
+```
+
+# ❌ Where you should NOT use apiFetch
+
+- ❌ inside NestJS (backend)
+- ❌ inside services in backend
+- ❌ inside controllers
+
+It is ONLY for frontend (Next.js / React).
+
+#### Why This Is Powerful
+
+- User never notices token expiration.
+- Everything refreshes automatically.
+
+### Better Production Approach
+
+Instead of localStorage:
+
+- store refresh token in HttpOnly cookie
+
+Then browser sends it automatically.
+
+More secure.
+
+### Simple Beginner Mental Model
+
+```JS
+Access token expired?
+        ↓
+Frontend silently calls /refresh
+        ↓
+Gets new access token
+        ↓
+Retries failed request
+```
+
+# Better pattern (real apps)
+
+Instead of calling /profile directly, you usually do:
+
+```JS
+apiFetch('/users/me')
+
+//Why?
+//Because backend already knows user from JWT:
+req.user.sub
+//So no need to send user id.
+```
+
+# Clean architecture summary
+
+```JS
+// Backend (NestJS)
+- /users
+- /auth/login
+- /auth/refresh
+//can put user registration -> to auth folder or can be in users folder
+//change password doesn't apply to "auth" therefore change password methods can be in "users" folder/- using in users.controller.ts and users.service.ts files
+
+//Frontend (Next.js)
+- apiFetch()
+- components call API
+- refresh handled automatically
+
+/////////////////////////////////////////////////////
+
+// Simple Mental Model
+
+React component
+   ↓
+apiFetch('/users/me')
+   ↓
+handles token + refresh automatically
+   ↓
+returns data
+```
+
+# ✨✨✨✨✨✨ For authentication tokens, cookies are generally considered more secure than localStorage
+
+Keep userData in NEXT.JS is better in HttpOnly cookies but NOT in useState
+
+Storing non-sensitive user data in localStorage is usually fine:
+
+```JS
+{
+  "customer_id": 1,
+  "first_name": "John",
+  "email": "john@gmail.com"
+}
+
+//storing data in localStorage is not considered best practice for production applications
+// GOOD PRACTICE is to use HttpOnly cookies
+```
+
+```JS
+Better Approach
+Use HttpOnly cookies.
+Example login response:
+
+Set-Cookie: access_token=...
+Set-Cookie: refresh_token=...
+
+with flags like:
+HttpOnly
+Secure
+SameSite=Lax
+//or
+SameSite=Strict
+```
+
+# Why HttpOnly Cookies Are Better
+
+JavaScript cannot read them.
+
+```JS
+//This fails:
+document.cookie
+//for HttpOnly cookies.
+
+//This also fails:
+localStorage.getItem('access_token')
+//because the token isn't in localStorage.
+
+So if malicious JavaScript runs on your page, it cannot directly steal the token.
+```
+
+## Typical Modern Setup
+
+```JS
+//➡️ Backend (NestJS)
+
+//Login:
+POST /auth/login
+
+// it returns:
+Set-Cookie:
+- access_token
+- refresh_token
+
+//instead of:
+{
+  "access_token": "...",
+  "refresh_token": "..."
+}
+
+/////////////////////////
+
+//➡️ Frontend (Next.js)
+
+// You don't store tokens manually.
+// Requests simply include:
+
+fetch('/users/me', {
+  credentials: 'include',
+});
+//The browser automatically sends the cookies.
+```
+
+### What Should Be Stored Where?
+
+```JS
+// Good in Cookies
+access_token
+refresh_token
+
+//Okay in localStorage
+theme
+language
+sidebar state
+
+//It is better to don't use user's data in React State / Context, better to keep it in HttpOnly cookie
+user.first_name
+user.email
+user.role
+
+//Avoid:
+localStorage.setItem(
+  'access_token',
+  token
+);
+//especially for refresh tokens.
+```
+
+```JS
+// A common production architecture looks like:
+
+NestJS Login
+    ↓
+Sets HttpOnly Cookies
+    ↓
+Next.js calls API
+    ↓
+Browser automatically sends cookies
+    ↓
+NestJS validates JWT
+    ↓
+Returns user data
+```
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+```JS
+//auth.service.ts file
+
+import { JwtService } from '@nestjs/jwt';
+const bcrypt = require('bcrypt');
+
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { PG_POOL } from '../database/database.module';
+import { Pool } from 'pg';
+import { UserResponseDto } from './dto/response-user.dto';
+import { LoginDto } from './dto/login.dto';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    @Inject(PG_POOL) private readonly pool: Pool,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async login(loginData: LoginDto) {
+    const { email, password } = loginData;
+
+    const result = await this.pool.query(
+      `SELECT * FROM customers WHERE email = $1`,
+      [email],
+    );
+
+    const user = result.rows[0];
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    // 👇 JWT payload (keep it small!)
+    const payload = {
+      sub: user.customer_id,
+      email: user.email,
+      // user: user.role
+    };
+
+    // 🔐 Access Token
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '15m',
+    });
+
+    // 🔄 Refresh Token
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_REFRESH_SECRET,
+      expiresIn: '7d',
+    });
+
+    const userResponse: UserResponseDto = {
+      //returning user data with no password
+      customer_id: user.customer_id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      customer_address: user.customer_address,
+      dob: user.dob,
+      created_at: user.created_at,
+    };
+
+    // Return response with both tokens and user data
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      userResponse,
+    };
+  }
+}
+
+//here we return
+// {
+//   "access_token": "...",
+// refresh_token:"...",
+//   "userResponse": {
+//     "customer_id": 1,
+//     "first_name": "John",
+//     "email": "john@gmail.com"
+//   }
+// }
+
+// and save in NExt.js Login page:
+// localStorage.setItem(
+//   'user',
+//   JSON.stringify(user)
+// );
+
+//This works, but the data can become stale.
+// Example:
+// User logs in
+//  ↓
+// localStorage stores email
+//  ↓
+// Admin changes email in database
+//  ↓
+// localStorage still has old email
+```
+
+# Better Approach
+
+Store only authentication information (JWT cookie).
+
+Then ask the backend:
+
+```JS
+GET /users/me
+//when you need the current user.
+```
+
+```JS
+//Example Flow
+
+//Login
+POST /auth/login
+
+//Backend:
+Set-Cookie: access_token=...
+
+//Frontend:
+No need to save user object
+
+//Get Current User
+const response = await fetch(
+  'http://localhost:3000/users/me',
+  {
+    credentials: 'include',
+  }
+);
+
+const user = await response.json();
+
+
+//Backend:
+{
+  "customer_id": 1,
+  "first_name": "John",
+  "email": "john@gmail.com"
+}
+```
+
+### How Does NestJS Know Who I Am?
+
+Remember your JWT payload:
+
+```JS
+const payload = {
+  sub: user.customer_id,
+  email: user.email,
+  role: user.role,
+};
+
+//When the JWT is verified, NestJS gets:
+req.user
+
+// which might look like:
+// {
+//   "sub": 1,
+//   "email": "john@gmail.com",
+//   "role": "customer"
+// }
+
+////////////////////////////
+// Example Controller
+// Using a JWT guard:
+
+@Get('me')
+@UseGuards(JwtAuthGuard)
+getCurrentUser(@Req() req) {
+  return this.usersService.findOne(
+    req.user.sub,
+  );
+}
+
+
+///////////////////////
+// What Happens
+
+GET /users/me
+      ↓
+JWT Guard verifies token
+      ↓
+req.user.sub = 1
+      ↓
+SELECT * FROM customers
+WHERE customer_id = 1
+      ↓
+Return user data
+```
+
+#### Why /me Is Better Than /users/:id
+
+```JS
+// Instead of:
+GET /users/1
+
+//you do:
+GET /users/me
+
+//Benefits:
+-frontend doesn't need to know user ID
+-less chance of requesting another user's data
+-cleaner API
+-can fetch data in NEXT.js using server components for system performance
 ```
