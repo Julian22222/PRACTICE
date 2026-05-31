@@ -357,6 +357,8 @@ const cookieStore = await cookies();
 
 2. Works ONLY In a Client Component
 
+This option works in the browser, because Server Components don't have access to the browser's cookies automatically.
+
 This option effectively only useful for browser/client-side usage.
 
 // fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`, {
@@ -370,7 +372,7 @@ export const loadUserClient = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
     {
-      credentials: "include",
+      credentials: "include",  //credentials: "include" only works in the browser.
     },
   );
 
@@ -406,6 +408,7 @@ export const loadUserServer = async () => {
       headers: {
         Cookie: cookieStore.toString(),
       },
+      cache: "no-store",
     },
   );
 
