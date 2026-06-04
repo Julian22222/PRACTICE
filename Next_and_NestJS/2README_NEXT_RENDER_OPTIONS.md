@@ -10,6 +10,8 @@
 
 ![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next2.jpg)
 
+![pic01](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next1.JPG)
+
 # Next.JS Concept
 
 ![pic04](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next4.jpg)
@@ -18,9 +20,16 @@
 
 - In Next.JS you can create server side and client side components. Component can be eather server or client side. In your app you can use both components
 - page.tsx file can be - as a server side component (by default) or client side component. Any componets can be server or client side.
-- by default, components are server side components
+- all component by default are server side components
 - async/await can be used in server side components
 - If you want to use async/await on the Client Component - "use clinet" --> You must place it within an event handler or a hook (like useEffect or inside a state update function), not the component's main body.
+- We can insert Client component into Server component if you need
+- But you can't use server component in the Client component
+- Server component → wraps → Client component
+- Client component ❌ cannot import server components.
+- You can't use server functions on the client side. Server functions (marked with 'use server') are only executed on the server. You cannot directly call or run server functions on the client side because they may contain sensitive logic (like environment variables) that should never be exposed to the browser.
+- separate server side and client side components in different files
+- In the new Next.js, you can define server actions (functions marked with 'use server') which run only on the server.
 
 # 🔥🔥🔥🔥🔥 Always try to keep page.tsx as "use server" -> then if you fetch the data from Database you pass data as a props
 
@@ -71,12 +80,17 @@ export async function addPayment() {
 - Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page, only HTML will be sent
 
 - Next.JS has a Rule when to use each component :
-  - If you receive data from the server ( --> fetch('http://jsonplaceholder.type') ), or just showing something on the page - in this occasion use server components!!!
+  - you can fetch the data from an API ( --> fetch('http://jsonplaceholder.type'))
+  - Then it passes the fetched data as a prop to the Client Component. The Client Component receives that data as an initial value and can manage it with useState.
+  - can use async await
+  - File system access with ‘fs’ library
+  - can use metadata on the page
 
 📍 Benefits of Keeping "page.tsx" - as a server component:
 
 1. Security
-   - Database logic stays on server → no secret exposure to client
+   - Database logic stays on server → no secret exposure to client.
+   - great security on back end server, uses sensetive data (access token, api keys, etc.)
 
 2. Performance
    Server components:
@@ -95,6 +109,16 @@ export async function addPayment() {
 
 5. SEO-friendly
 6. cached automatically
+
+- when you fetch the data from Back-end you do data loading on the server (SSR, ISR, SSG)
+  - (SSR) - Server-Side Rendering -> one request === 1 responce (usual approach), will cause browser delays if you have 1000 users on your website, server always will ask to increase resources because server power of the cloud will not be enough
+  - (ISR) - Incremental Static Regeneration -> static (with data update)
+  - (SSG) - Static Site Generation -> static (without data update)
+
+- you have access to back-end utils and back-end
+- make light weight on client side and moving all heavy tasks on server
+- great when use heavy dependencies
+- On Server side don't use SSR but use ISR or SSG, use when security is needed-authorization
 
 ⚠️ Important clarification (common misconception)
 
@@ -149,10 +173,17 @@ export default async function Page() {
 
 # ✅ Client components - "use client"
 
-- Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code.
+- Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code and runs all in the browser
 - If you use client component add -> 'use client' on the top of that file.
 - Next.JS has a Rule when to use each component:
-  - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! Without client side component it will show an error. This component will be proccessed in browser
+  - if you work with user (if you use useState or other web hooks) - in this occasion use -> client side components!!! Without client side component it will show an error. This component will be proccessed in browser
+  - you can use states and effects (hooks, useState, useRef, useEffect, usePathname, custom brouser hooks, etc. )
+  - you can use client events (onClick, onSubmit, onChange, onMouseover, etc.)
+  - you can use browser API (local storage, etc.)
+  - error.tsx file must have "use client"
+  - if client side component inserted to another client side component (then we don't need to write "use client" on the top of the file that was inserted) --> see posts2 page.tsx file and PostSearch component, both are client side components, but you don't need to write "use client" in the PostSearch component
+  - you can use class components (doesn't work on server side)
+- If you use different libraries like - font editors, google maps, etc, -> then it is better to use Client component
 
 - ❌ You can make page.tsx → "use client" (not recommended option - it is working option but try to avoid it because you loose all benefits keeping page.tsx as a server component). But if page.tsx is a client component. In this case you:
   - fetch data in useEffect
@@ -431,26 +462,6 @@ export default function Post(){
 }
 ```
 
-### ✅ Advantages of server side components
-
-- data loading on the server (SSR, ISR, SSG)
-
-- (SSR) - Server-Side Rendering -> one request === 1 responce (usual approach), will cause browser delays if you have 1000 users on your website, server always will ask to increase resources because server power of the cloud will not be enough
-- (ISR) - Incremental Static Regeneration -> static (with data update)
-- (SSG) - Static Site Generation -> static (without data update)
-- access to back-end utils and back-end,
-- great security on back end server, uses sensetive data (access token, api keys, etc.)
-- make light weight on client side and moving all heavy tasks on server
-- great when use heavy dependencies
-
-### ✅ Advantages of Client side components
-
-- use states and effects (hooks, useState, useRef, useEffect, usePathname, etc. )
-- use client events (onClick, onSubmit, onChange, onmouseover, etc.)
-- use browser API (local storage, etc.)
-- use custom brouser hooks
-- class components (doesn't work on server side)
-
 ```JS
 //see --> /app/posts2/page.tsx
 //If you use "use client" you can make fetch data only in useEffect or event handler (see above Notes)
@@ -486,13 +497,6 @@ return(<div>....</div>)
 }
 ```
 
-- If you use different libraries like - font editors, google maps, etc, -> then it is better to use Client component
-- On Server side don't use SSR but use ISR or SSG, use when security is needed-authorization
-
-# NEXT JS
-
-all component by default are server side components
-
 ```JS
 'use client'  //if you want to use server Component - "use server" is not mandatory to write
 //'use client'  <--this derective, define functions that will perform on browser
@@ -509,40 +513,11 @@ export function Products() {
 }
 ```
 
-# Client and server-side components
-
-![pic01](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next1.JPG)
-
-You can use Client Component in a Server Component if you need
-
-- Server component → wraps → Client component
-- Client component ❌ cannot import server components.
-- Client component Runs code in the browser
-
-Server Component is by default
-
-- Can fetch data
-- can use async await
-- File system access with ‘fs’ library
-- can use metadata on the page
-
-Client
-
-- can use hooks(useState, useEffect,etc.), onClick, onChange, onSubmit, etc
-- error.tsx file must have "use client"
-- if client side component inserted to another client side component (then we don't need to write "use client" on the top of the file that was inserted) --> see posts2 page.tsx file and PostSearch component, both are client side components, but you don't need to write "use client" in the PostSearch component
-
 ###### You can use Client Component in a Server Component
-
-- We can insert Client component into Server component,
-- But you can't use server component in the Client component
-
-- Server Component fetches the data (e.g., from an API).
-- It passes the fetched data as a prop to the Client Component.
-- The Client Component receives that data as an initial value and can manage it with useState.
 
 ```JS
 //server side component
+//fetch the data and passing data to client component
 import Items from './components/Items';
 
 async function fetchData() {
@@ -582,10 +557,6 @@ export default function Items({ data }: { data: any }) {
   );
 }
 ```
-
-- You can't use server functions on the client side. Server functions (marked with 'use server') are only executed on the server. You cannot directly call or run server functions on the client side because they may contain sensitive logic (like environment variables) that should never be exposed to the browser.
-- separate server side and client side components in different files
-- In the new Next.js, you can define server actions (functions marked with 'use server') which run only on the server.
 
 ### Ability to call 'use server' function (server action) inside a 'use client'
 
