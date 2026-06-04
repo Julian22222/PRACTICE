@@ -602,11 +602,22 @@ In server components, page.tsx, layout.js, and server actions, you can access UR
 //Example: /app/products/page.tsx
 //Example in server component
 
-export default function ProductsPage({ searchParams }) {
+interface Props {
+  searchParams: Promise<{
+    category?: string,
+    page?:string
+  }>;
+}
+
+export default async function ProductsPage({
+  searchParams,
+}: Props) {
+
+ const params = await searchParams;
 
   // URL: /products?category=shoes&page=2
-  const category = searchParams.category; // "shoes"
-  const page = searchParams.page;         // "2"
+  const category = params.category; // "shoes"
+  const page = params.page;         // "2"
 
   return (
     <div>
@@ -620,6 +631,25 @@ export default function ProductsPage({ searchParams }) {
 //searchParams only works in the App Router, not the old /pages directory.
 //It is available automatically as a prop to page.js and layout.js.
 //It always returns strings (or undefined).
+
+/////////////////////////////////////////////////
+// in older versions of Next.js: (SERVER COMPONENT)
+
+interface PageProps {
+  searchParams: {
+    category?: string;
+    page?: string;
+  };
+}
+
+export default function ProductsPage({
+  searchParams,
+}: PageProps) {
+  const category = searchParams.category;
+
+  return <div>{category}</div>;
+}
+
 ```
 
 ```JS
