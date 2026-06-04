@@ -14,22 +14,17 @@
 
 ![pic04](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/next4.jpg)
 
-- In Next.JS you can create server side and client side components
-- Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page, only HTML will be sent
-- Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code.
-- In your app you can use both components
-- page.tsx file can be - as a server side component (by default) or client side component. Also, other componets can be server or client side.
-- Next.JS has a Rule when to use each component :
-  - If you receive data from the server ( --> fetch('http://jsonplaceholder.type') ), or just showing something on the page - in this occasion use server components!!!
-  - by default, components are server side components
-  - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! (check example in --> app/myhome/page.tsx). Without client side component it will show an error. This component will be proccessed in browser
-- If you use client component add -> 'use client'
-- async/await can be used only in server side components
+# ⭐ Next.JS theory
+
+- In Next.JS you can create server side and client side components. Component can be eather server or client side. In your app you can use both components
+- page.tsx file can be - as a server side component (by default) or client side component. Any componets can be server or client side.
+- by default, components are server side components
+- async/await can be used in server side components
 - If you want to use async/await on the Client Component - "use clinet" --> You must place it within an event handler or a hook (like useEffect or inside a state update function), not the component's main body.
 
 # 🔥🔥🔥🔥🔥 Always try to keep page.tsx as "use server" -> then if you fetch the data from Database you pass data as a props
 
-🔥 GOOD PRACTICE in Next.js App Router 🔥
+🔥🚀 GOOD PRACTICE in Next.js App Router - this creates a good architecture 🔥
 
 This way is - Scalable and Production-level
 
@@ -50,14 +45,8 @@ export default async function Page() {
 
 2. Server Actions + revalidatePath()
 
-- When you need to ADD, DELETE, EDIT some data in Database you have to use - Server Actions.
-- If you use -> page.tsx as a 'use server' component. The Server actions will allow you easily to update your page.tsx with new data by using -> revalidatePath('/nameofURL') in server actions
-
-When you do:
-
-- create
-- update
-- delete
+- When you need to ADD, DELETE, EDIT some data in Database you have to use - Server Actions. (FOR CREATE, UPDATE, DELETE methods)
+- If you use -> page.tsx as a 'use server' component. The Server actions will allow you easily update your page.tsx with new data by using -> revalidatePath('/nameofURL') in server actions.
 
 ```JS
 //inside a Server Action:
@@ -66,63 +55,46 @@ When you do:
 import { revalidatePath } from "next/cache";
 
 export async function addPayment() {
-  await db.insert(...);  //<-- adding new data to Database
+  await db.query(INSERT INTO ....);  //<-- adding new data to Database
 
   revalidatePath("/user-page");  //<--update the main server page, after you added new data
 }
 ```
 
-This forces:
+- revalidatePath forces:
+  - ✔ page.tsx to refetch
+  - ✔ Server Component to refresh data
+  - ✔ UI to stay consistent
 
-- ✔ page.tsx to refetch
-- ✔ Server Component to refresh data
-- ✔ UI to stay consistent
+# ✅ Server components - "use server"
 
-# 💡 Why this is good architecture - to keep page.tsx - server component
+- Server side components will be running on the server, all rendering taking place on server then sending to the browser already made Page, only HTML will be sent
 
-✅ Benefits
+- Next.JS has a Rule when to use each component :
+  - If you receive data from the server ( --> fetch('http://jsonplaceholder.type') ), or just showing something on the page - in this occasion use server components!!!
+
+📍 Benefits of Keeping "page.tsx" - as a server component:
 
 1. Security
-
-- Database logic stays on server → no exposure to client
+   - Database logic stays on server → no secret exposure to client
 
 2. Performance
-
-Server components:
-
-- reduce client JS
-- faster initial load
+   Server components:
+   - reduce client JS
+   - faster initial load (HTML already ready)
+   - no loading flicker
 
 3. Data consistency
-
-revalidatePath() ensures:
-
-- no stale UI
-- no manual state syncing hacks
+   works with revalidatePath():
+   - no stale UI
+   - no manual state syncing hacks
 
 4. Clean separation
+   - Server = data fetching + mutations
+   - Client = UI + interactivity
 
-- Server = data fetching + mutations
-- Client = UI + interactivity
-
-```JS
-//recommended option
-//page.tsx (Server Component)
-
-export default async function Page() {
-  const data = await fetch(...);
-
-  return <ClientComponent data={data} />;
-}
-```
-
-✅ Benefits
-
-- faster initial load (HTML already ready)
-- no loading flicker
-- secure (DB stays server-side)
-- works with revalidatePath
-- better performance
+5. SEO-friendly
+6. cached automatically
 
 ⚠️ Important clarification (common misconception)
 
@@ -165,14 +137,65 @@ revalidateTag("transactions");  //<--fine-grained, specific revalidating by usin
 //✔ avoids full page refresh logic
 ```
 
-# ❌ If you will make page.tsx → "use client" (not recommended option - it is working option but try to avoid it)
+```JS
+//recommended option
+//example of page.tsx (Server Component)
+export default async function Page() {
+  const data = await fetch(...);
 
-In page.tsx (which is client component)
+  return <ClientComponent data={data} />;
+}
+```
 
-- fetch data in useEffect
-- store in useState
+# ✅ Client components - "use client"
+
+- Client side components will be created in the browser, code is not rendered on the server, will receive HTML, CSS and code.
+- If you use client component add -> 'use client' on the top of that file.
+- Next.JS has a Rule when to use each component:
+  - if you work with user (if you use useState or other web hooks) - in this occasion use client side components!!! Without client side component it will show an error. This component will be proccessed in browser
+
+- ❌ You can make page.tsx → "use client" (not recommended option - it is working option but try to avoid it because you loose all benefits keeping page.tsx as a server component). But if page.tsx is a client component. In this case you:
+  - fetch data in useEffect
+  - assign fetched data in useState hook
+
+📍 Downsides of Keeping "page.tsx" - as a client component:
+
+1. Slower first render
+   User sees:
+
+- empty UI
+- loading state
+- then data appears
+  Instead of server-rendered content.
+
+2. More client JavaScript
+   Everything runs in the browser:
+
+- fetching
+- parsing
+- state management
+
+3. Worse UX for dashboards
+   if you have application
+
+- data-heavy
+- consistency-critical
+  So this matters.
+
+4. You lose Next.js App Router power
+   You give up:
+
+- Server Components
+- caching (fetch cache, revalidateTag)
+- streaming
+- faster TTFB
+
+- use client fetching when:
+  - data depends on user interactions
+  - or cannot be known on the server
 
 ```JS
+//example
 "use client";
 
 useEffect(() => {
@@ -182,57 +205,7 @@ useEffect(() => {
 }, []);
 ```
 
-```JS
-✅ When this is OK to use - page.tsx as a client component
-
-This approach is fine if:
-- data is highly interactive / frequently changing
-- depends on client-only state (local filters, UI controls)
-- you don’t care about SSR / SEO
-- it's a small dashboard or SPA-like behavior
-
-❌ Downsides
-1. Slower first render
-
-User sees:
-- empty UI
-- loading state
-- then data appears
-Instead of server-rendered content.
-
-2. More client JavaScript
-
-Everything runs in the browser:
-- fetching
-- parsing
-- state management
-
-3. Worse UX for dashboards
-
-if you have application
-- data-heavy
-- consistency-critical
-So this matters.
-
-4. You lose Next.js App Router power
-
-You give up:
-- Server Components
-- caching (fetch cache, revalidateTag)
-- streaming
-- faster TTFB
-```
-
-### 🚀 Important insight (this is key)
-
-In Next.js App Router:
-
-- You should default to Server Components for data fetching
-
-and only use client fetching when:
-
-- data depends on user interactions
-- or cannot be known on the server
+---
 
 ### How to use 'use client' and 'use server' components
 
@@ -339,8 +312,8 @@ return(<div>//some code</div>);
 
 ```JS
 ////✅ CORRECT Example use async/await and fetch inside a state update function
-//Example:
 
+//Example:
 // app/actions.ts
 //This is Server Action file - data fetching happens on the server
 'use server';
@@ -425,6 +398,20 @@ and a form action handler (to trigger a server call).
 
 - To avoid errors with async/await and -> use client and useState, fetching data, etc. ,separare your app on small components and then you can add client side or server side server where you need. Also, you can insert client side components into server side components.
 - Metadata block can't be used in 'use client' file, Metadata block is server-only. Metadata block must run on the server!!! - to solve this problem we need to split out file into 2 different components - with 'use client' -client component file and server page file. See app/posts/[id]/page.tsx
+
+```JS
+//explanation of useActionState hook
+
+const [state, formAction] = useActionState(async () => {
+  const data = await getData();
+  return data;
+}, null);
+
+//useActionState(...)  <--A hook that connects your form to a server action and keeps track of what it returns.
+//async () => { const data = await getData(); return data; }  <--This is the function that runs on the server when the form is submitted. It calls getData() (a 'use server' function) and returns the result.
+//null  <-- This is the initial state — what state should be before any form submission.
+//[state, formAction]  <--  This hook returns two things: - state: the latest data returned by your action (e.g., the server’s response). - formAction: a special function that you attach to your <form>’s action attribute. When the form is submitted, that server action is triggered.
+```
 
 ```JS
 //❌ Can't use Metadata in Client Component
@@ -685,114 +672,11 @@ Using useActionState (form-based trigger)
 If you want to call your 'use server' function as a Server Action, it must be bound to a <form>
 
 ```JS
-//Example:
-
-// app/actions.ts
-//This is Server Action file - data fetching happens on the server
-'use server';
-
-export async function getData() {
-  const getData = fetch("https://.....");
-
-  return getData.json();
-}
-
-
-//Then in your client component:
-
-'use client';
-
-import { useActionState } from 'react';
-import { getData } from '../actions';
-
-export default function MyComponent() {
-  const [state, formAction] = useActionState(async () => { //use useActionState hook
-    const data = await getData();   // calls server
-    return data;
-  }, null);
-
-  return (
-    <form action={formAction}>
-      <button type="submit">Get Data</button>
-      {state && <p>Data: {state}</p>}
-      {/* or the same code
-       {state && <p>Data from server: {JSON.stringify(state)}</p>} */}
-    </form>
-  );
-}
-
-//When the form is submitted (by clicking the button), the formAction runs, which executes the Server Action (getData) on the server.
-//The result is then returned and updates the state in the client component.
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-✅ This correctly triggers the server action on form submission.
-```
-
-🧩 What happens when the user clicks the button:
-
-- The form is submitted → triggers the formAction function.
-- formAction runs the async code (on the server).
-- The server calls getData() and returns some data.
-- The returned data is stored in state.
-- The component re-renders with the new state, so the data appears on screen.
-
-🔍 Quick analogy
-
-Think of useActionState like a combo of:
-
-```JS
-const [result, setResult] = useState(null);
-
-async function handleSubmit() {
-  const res = await fetchDataFromServer();
-  setResult(res);
-}
-```
-
-…but it’s built specifically for Next.js Server Actions, and it automatically handles the server ↔️ client communication for you.
-
-✅ In short
-
-useActionState helps you:
-
-Trigger a server action (via a form).
-Automatically store the returned value.
-Re-render your component with the new state.
-
-🧠 What useActionState is
-
-useActionState is a React hook provided by Next.js / React Server Actions that helps you:
-
-Call a server action (a 'use server' function) from the client (usually through a form submission).
-Keep track of the latest result (called the “state”) from that action.
-It’s like combining:
-
-useState (to store data),
-and a form action handler (to trigger a server call).
-
-```JS
-//explanation of useActionState hook
-
-const [state, formAction] = useActionState(async () => {
-  const data = await getData();
-  return data;
-}, null);
-
-//useActionState(...)  <--A hook that connects your form to a server action and keeps track of what it returns.
-//async () => { const data = await getData(); return data; }  <--This is the function that runs on the server when the form is submitted. It calls getData() (a 'use server' function) and returns the result.
-//null  <-- This is the initial state — what state should be before any form submission.
-//[state, formAction]  <--  This hook returns two things: - state: the latest data returned by your action (e.g., the server’s response). - formAction: a special function that you attach to your <form>’s action attribute. When the form is submitted, that server action is triggered.
-
-
-```
-
-```JS
 //how to define is it server or client component?
 
 //use this in any component -->
 console.log("SERVER check:", typeof window === "undefined");
   //"SERVER check: true" — this means your page is correctly a Server Component
-
 ```
 
 - Check examples on api/products/page.tsx file

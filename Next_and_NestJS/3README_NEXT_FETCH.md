@@ -2,34 +2,25 @@
 
 ⭐ If we use Context - to have global scope to some useStates -> to use Context in some certain component - we need make sure that component where we use Context is "use client"
 
-✨ In most cases in Next.js you should:
+✨ Always try to keep page.tsx as "use server". In most cases in Next.js you should:
 
 - fetch data on the server, then ➜ pass the result to a client component
 - page.tsx (server side component) <-- fetch the data and then pass it to another component(client component) -> to use Hooks or client interactions - onClick, onChange, onSubmit, etc.
-
-🔥 Because server fetching is:
-
-- faster (runs on the server, no waterfall)
-- secure (no exposing secrets)
-- SEO-friendly
-- cached automatically
-
-If you do fetching on the client side component, it loses all these benefits.
 
 # ✔️ Recommended Project Structure
 
 ```JS
 -app/
   └── layout.tsx
-  └── page.tsx  //<--useally server component
+  └── page.tsx  //<-- try to keep it as a server component
   └── other.tsx  //<--if needed it can be "use client" component that is inserted to page.tsx
 
 -components/
-    └── Item.tsx            ← Server Component (fetching data)
-    └── ItemClient.tsx      ← Client Component (useEffect, client interactions - onClick, onChange, onSubmit, etc.)
+    └── Item.tsx            //← Server Component (fetching data)
+    └── ItemClient.tsx     // ← Client Component (useEffect, client interactions - onClick, onChange, onSubmit, etc.)
 
 -services/
-    └── fetchItem.ts        ← Helper function for server fetch
+    └── fetchItem.ts       // ← Helper function for server fetch
 ```
 
 ✔️ Pattern to Follow
