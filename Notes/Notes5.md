@@ -109,6 +109,12 @@ import { PassportModule } from '@nestjs/passport';  //<-- Imports Passport integ
 })
 export class AuthModule {}  //<--Creates and exports the module class.Other modules can now import AuthModule
 
+//////////////////////////////////////////////////////////////////////////////////
+📍// This module:
+//     -enables JWT authentication
+//     -enables Passport authentication
+//     -configures JWT secret and expiration
+//     -shares JWT functionality with other modules
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ✅ //Example .env file
@@ -157,15 +163,6 @@ JWT_SECRET=my_super_secret_key
 // JWT_SECRET=123456
 // JWT_SECRET=password
 // JWT_SECRET=secret
-
-//////////////////////////////////////////////////////////////////////////////////
-📍// This module:
-//     -enables JWT authentication
-//     -enables Passport authentication
-//     -registers controllers
-//     -registers services
-//     -configures JWT secret and expiration
-//     -shares JWT functionality with other modules
 ```
 
 ✅ 3. Update your login service (Nest.JS)
