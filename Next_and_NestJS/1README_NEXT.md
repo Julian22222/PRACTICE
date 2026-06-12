@@ -291,9 +291,14 @@ These replace hooks on the server.
 - cookies() <- Read/write cookies
 
 Used in:
-Server Components
-Server Actions
-Route Handlers
+
+- Server Components
+- Server Actions
+- Route Handlers
+
+---
+
+#### Hooks
 
 1. useRouter(); <--return an object. Is used to redirect user to some page after some action(for example LogIn), Or you can use redirect navigation - to navigate the user to another page.
 
@@ -302,13 +307,7 @@ useRouter() in NEXT.JS it is -> alternative to useNavigate hook in React.js (the
 Difference between useRouter() hook and redirect() navigation:
 
 - useRouter() is for client-side navigation
-- redirect() is for server-side control flow
-
-Decision rule (easy) what to use - useRouter() hook or redirect() navigation (Ask yourself one question):
-Does the user need to click something?
-
-- Yes → useRouter()
-- No (logic decides) → redirect()
+- redirect() is for server-side control flow. CAN'T use hooks in server side components
 
 🔹 useRouter() → user-driven, client-side navigation
 🔹 redirect() → logic-driven, server-side control
@@ -331,15 +330,16 @@ When to use useRouter
 
 Use it when:
 
-Navigation is triggered by user interaction
-You’re in a Client Component
-You want SPA-like transitions
-Typical examples
+- Navigation is triggered by user interaction
+- You’re in a Client Component
+- You want SPA-like transitions
 
-Button click
-Form submit handled on client
-Wizard / multi-step UI
-Modal close → navigate
+Typical examples:
+
+- Button click
+- Form submit handled on client
+- Wizard / multi-step UI
+- Modal close → navigate
 
 ```JS
 <button onClick={() => router.push("/login")}>
@@ -452,8 +452,8 @@ import { useRouter } from "next/navigation";
 
 const router = useRouter();
 
-router.push("/dashboard");
-router.replace("/login");
+router.push("/dashboard"); //push - allowing to return back to previous page
+router.replace("/login");  //replace - not allowing to return back to previous page
 router.back();
 ```
 
@@ -591,16 +591,20 @@ const pathname = usePathname();  //show URL address of your current page, used t
 
 3. useSearchParams(); <-- it is working only for query requests, help to get some values from URL
 
-- searchParams does let you read variables from the URL query string
-- This hook is used only for query strings — the part of a URL after the ?
+- searchParams does let you read variables from the URL query string in Server component
+- useSearchParams does let you read variables from the URL query string in Client component
+- This hook is used only for query strings — the part of a URL after the -> ?
 
-✅ How searchParams works (App Router: /app directory)
+---
+
+✅ How useSearchParams and searchParams works (App Router: /app directory)
 
 In server components, page.tsx, layout.js, and server actions, you can access URL query parameters using searchParams.
 
 ```JS
+////Example:  to read those values from SERVER SIDE COMPONENT
 //Example: /app/products/page.tsx
-//Example in server component
+//✅  Example in server component
 
 interface Props {
   searchParams: Promise<{
@@ -653,11 +657,11 @@ export default function ProductsPage({
 ```
 
 ```JS
-//Example:  to read those values
+//Example:  to read those values from CLIENT SIDE COMPONENT
 //profile?name=John&age=25
 //Works only for query parameters (after the ?).
 
-//example in a client component - Client components cannot receive searchParams directly.
+//✅ example in a client component - Client components cannot receive searchParams directly.
 //Therefore --> import { useSearchParams } from "next/navigation";
 
 'use client'
@@ -708,14 +712,14 @@ export function GoogleButton({}: Props) {
 }
 ```
 
-4. useParams() <-- to get values from dynamic variables, from [] folder.
+4. useParams() <-- to get values from dynamic variables, from [ ] folder.
 
 This hook is used for dynamic route segments — the part of a URL defined by square brackets in your folder structure.
 
 Works only for dynamic route segments (from [folderName]).
 
 ```JS
-////////////
+////Example:  to read those dynamic variables from SERVER SIDE COMPONENT
 //getting useParams in server component- "use server" -> in page.tsx
 
 // transactions/[account_type]/[last_name]   <--URL
@@ -743,10 +747,11 @@ const { account_type, last_name } = resolvedParams; // now you can access last_n
 //now can use - account_type and last_name values here
 /////some code
 }
+```
 
-
-
+```JS
 //////////////////////////////////////
+//Example:  to read those dynamic variables from CLIENT SIDE COMPONENT
 //if page.tsx is a Client component - "use client"
 
 //Example folder:
@@ -755,9 +760,9 @@ app/
        └── [username]/
                 └── page.tsx
 
-Example URL:
-/user/alice
-To get the dynamic segment:
+// Example URL:
+// /user/alice
+// To get the dynamic segment:
 
 'use client'
 
