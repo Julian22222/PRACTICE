@@ -52,7 +52,7 @@ export default async function Page() {
 }
 ```
 
-2. Server Actions + revalidatePath()
+2. Server Actions + revalidateTag() / or revalidatePath()
 
 - When you need to ADD, DELETE, EDIT some data in Database you have to use - Server Actions. (FOR CREATE, UPDATE, DELETE methods)
 - If you use -> page.tsx as a 'use server' component. The Server actions will allow you easily update your page.tsx with new data by using -> revalidatePath('/nameofURL') in server actions.
@@ -61,11 +61,12 @@ export default async function Page() {
 //inside a Server Action:
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 
 export async function addPayment() {
   await db.query(INSERT INTO ....);  //<-- adding new data to Database
 
+revalidateTag("userMessages"); //<-- Better optimisation to use revalidateTag, update only certain part
   revalidatePath("/user-page");  //<--update the main server page, after you added new data
 }
 ```
@@ -74,6 +75,29 @@ export async function addPayment() {
   - ✔ page.tsx to refetch
   - ✔ Server Component to refresh data
   - ✔ UI to stay consistent
+
+3. Try to fetch the data in page.tsx and pass it as props to client components to interact with the data.
+
+Fetching and then -> Putting into global state (Context/useState) is not recomended for optimisation. global state” is NOT faster then fetching and passing data as a props. It is better in each page.tsx fetch needed data and then pass it as a props
+
+```JS
+page.tsx → fetch → pass to component
+```
+
+Global state is good for:
+
+✔ UI state
+
+- modals
+- filters
+- dropdowns
+- theme
+- sidebar
+
+✔ client-only state
+
+- temporary selections
+- form steps
 
 # ✅ Server components - "use server"
 
