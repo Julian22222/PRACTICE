@@ -1,4 +1,6 @@
-# JWT stays in HTTP-only cookie
+# How to keep active user without using global useStete -> that allow to reload the page and still have the active user
+
+### JWT stays in HTTP-only cookie
 
 when user is loged in we don't need to assign the user to global State - useState. Then:
 
@@ -600,5 +602,291 @@ Client components
 const user = useAuthStore((state) => state.user);
 
 This is a very common production architecture for Next.js App Router applications and scales well as the project grows.
-
 ```
+
+# How to get the active user in Next.js without global useState?
+
+1. ✅ This option works only in Server side components, to get the "active user" - using JWT and HTTP-only cookie. It is GOOD PRACTICE to use this option + Context.
+
+```JS
+//this work only in server side components
+import { cookies } from "next/headers";
+
+export const loadUser = async () => {
+  const cookieStore = await cookies();
+
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    return null; // better for redirects
+  }
+
+  return meRes.json();
+};
+```
+
+2. ❌ This option works only in client side componets to get the "active user" - using JWT and HTTP-only cookie. This option is NOT GOOD to use. Not Good Practice.
+
+```JS
+//this code can be used only in client side components
+
+//Should i keep both loadUser for client isde and server side components
+
+export const loadUser = async () => {
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      credentials: "include",
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    throw new Error("Failed to fetch user");
+  }
+
+  const userData = await meRes.json();
+
+  console.log("auth file - meRes status:", meRes.status);
+  console.log("auth file - userData", userData);
+
+  console.log("User data in loadUser RETURN:", userData);
+  return userData;
+};
+```
+
+- If you use this option, for client side component. Then every client component where you need to get "active user" must have:
+
+```JS
+useEffect(() => {
+  loadUser().then(setUser);
+}, []);
+
+// Problems of this option:
+// -Multiple /users/me requests
+// -Repeated code everywhere
+// -Loading states everywhere
+// -Not ideal
+
+// This is generally not the preferred approach.
+```
+
+### 🔥 Good Practice to use this Server side option together with Context
+
+- Server loads user once + Context shares it
+
+Create separate file to Fetch active user from server component
+
+```JS
+//auth-server.ts file
+//this work only in server side components
+import { cookies } from "next/headers";
+
+export const loadUser = async () => {
+  const cookieStore = await cookies();
+
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    return null; // better for redirects
+  }
+
+  return meRes.json();
+};
+```
+
+### Then you need to choose one of the Option below. The most common option is Option 2
+
+1. Option 1 to get "active user"
+
+In Server Component: in page.tsx
+
+- Getting the user in a Server Component and passing it down as props.
+- Use this option Good when only a few components need "active user".
+
+```JS
+//you fetch the data in server component - page.tsx and then pass this user as a prop to children components
+const activeUser = await loadUser();  //fetch user from server component
+
+ return (
+    <AccountsDashboard
+      userAllAccounts_withBalance={userAllAccounts_withBalance}
+      activeUser={activeUser}
+    />
+  );
+
+
+// Advantages of passing activeUser as a prop:
+
+// ✅ No extra client fetch
+// ✅ User comes directly from HTTP-only cookie
+// ✅ Better performance
+// ✅ Better security
+// ✅ Works great with Next.js App Router
+
+// This is usually the first choice when only a few components need the user.
+```
+
+```JS
+In this approach:
+
+❌ No AuthProvider
+❌ No useAuth()
+✅ Just pass user as props
+```
+
+2. 🔥 Option 2. This is Commonly used approach.
+
+Create AuthProvider and Pass it into Context:
+
+- use this option -> Good when many client components need the user.
+
+```JS
+//AuthProvider.tsx
+"use client";
+
+import { useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { IUserWithAccount } from "@/src/shared/types/userWithAccount.interface";
+
+export function AuthProvider({
+  initialUser,
+  children,
+}: {
+  initialUser: IUserWithAccount | null;
+  children: React.ReactNode;
+}) {
+  //after reloading the page initialUser will be set in useState from cookie
+  const [user, setUser] = useState(initialUser);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+////////
+//AuthContext.tsx
+
+"use client";
+
+import { IUserWithAccount } from "@/src/shared/types/userWithAccount.interface";
+import { createContext, useContext } from "react";
+
+type AuthContextType = {
+  user: IUserWithAccount | null;
+  setUser: React.Dispatch<React.SetStateAction<IUserWithAccount | null>>;
+};
+
+// export const AuthContext = createContext<any>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+
+  return context;
+};
+```
+
+```JS
+//app/(user)/layout.tsx
+
+import { loadUser } from "../actions/auth-server";
+import { AuthProvider } from "./AuthProvider";
+
+export default async function UserLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  let user = null;
+
+  try {
+    user = await loadUser(); //server approach tp get user
+  } catch {
+    redirect("/login");
+  }
+
+  return <AuthProvider initialUser={user}>{children}</AuthProvider>;
+}
+
+// 👉 This runs ONCE on the server
+// 👉 Gets user from HTTP-only cookie
+// 👉 Passes it into React tree
+```
+
+Then -> Then anywhere in client component: every page inside: app/(user)/ <-- i have access to "user"
+
+```JS
+//✅ useAuth() can ONLY be used in Client Components.
+//"use client";
+
+//👉 Reads from Context
+const { user } = useAuth();
+
+
+// ⚠️ Important limitation
+// If user changes (logout/login), you must update:
+//setUser(newUser)
+//Because Context does NOT automatically sync with cookie.
+
+
+// ❌ You CANNOT use useAuth() in:
+// - layout.tsx (Server Component)
+// - page.tsx (Server Component by default)
+// - server actions
+// - server components in general
+
+// Because React Context (useContext) does not exist on the server.
+
+
+------------------------------
+
+//No additional API request.
+
+// Advantages
+
+// ✅ No prop drilling
+// ✅ User available everywhere
+// ✅ User fetched only once
+// ✅ Common in large applications
+```
+
+3. ❌ Option 3. Try to avoid to use this option
+
+```JS
+//client server
+useEffect(() => {
+  loadUser();
+}, []);
+
+// Disadvantages
+// ❌ Extra network request
+// ❌ Loading state needed
+// ❌ Slower
+// ❌ Can flash unauthenticated UI
+// This is usually the least preferred option in App Router.
+```
+
+#### auth-server.ts is used in page.tsx and layout.tsx
