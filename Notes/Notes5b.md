@@ -480,30 +480,28 @@ useEffect(() => {
 
 #### auth-server.ts is used in page.tsx and layout.tsx
 
+# Very common and good architecture in Next.js App Router to separate layouts.tsx and Context for user and admin pages
+
 ```JS
 
-Instead of:
-
-app/
-├── (user)/layout.tsx
-├── (admin)/layout.tsx
-
-
-both containing:
+// Put useState for LogedIn user/admin in root layout.tsx file
+// both containing:
 <AuthProvider initialUser={...}>
-
 I would usually have one AuthProvider at the highest level where authentication is needed.
 
-For example:
+//Is generally better than having one giant global context for everything.
+//Keep in Root layout.tsx -> app/layout.tsx -> only things that are truly global:
 
 app/
-├── layout.tsx
+├── layout.tsx           ← root layout
 ├── (user)/
-├── (admin)/
-
-Root layout
-
-const currentUser = await getCurrentUserServer();
+│   ├── layout.tsx       ← user-only layout
+│   ├── AuthProvider.tsx
+│   └── ...
+└── (admin)/
+    ├── layout.tsx       ← admin-only layout
+    ├── AdminProvider.tsx
+    └── ...
 
 
 
@@ -515,8 +513,9 @@ Now both (user) and (admin) can access:
 const { user } = useAuth();
 and check:
 user?.role === "admin"
+```
 
---------------------------------------------------------------------
+```JS
 
 Even better with Zustand
 
@@ -551,40 +550,37 @@ For route protection
 
 Your layouts are actually a great place to enforce authorization.
 
-app/(admin)/layout.tsx
+
+// app/(admin)/layout.tsx
 const user = await getCurrentUserServer();
 
 if (!user) {
   redirect("/login");
 }
-
 
 if (user.role !== "admin") {
   redirect("/unauthorized");
 }
 
-
-
 return children;
+```
 
-app/(user)/layout.tsx
+```JS
+// app/(user)/layout.tsx
 
 const user = await getCurrentUserServer();
 
 
-
 if (!user) {
-
   redirect("/login");
-
 }
 
 return children;
 
 This is one of the strongest reasons to have separate layouts.
+```
 
-------------------------------------------------------
-
+```JS
 What I would do in your banking app
 
 app/
@@ -597,6 +593,11 @@ app/
 Root layout
 -Load current authenticated user once.
 -Initialize AuthProvider/Zustand.
+-Bootstrap imports
+-Global styles
+-ThemeProvider
+-Toast notifications
+-Font configuration
 
 User layout
 -Verify user is logged in.
