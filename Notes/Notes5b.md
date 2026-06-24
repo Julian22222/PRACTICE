@@ -1,18 +1,13 @@
-Beforehand - you need to create JWT + Http-Only cookies
+Beforehand - you need to create JWT + Http-Only cookie
 
-# This allows to reload the page and still have the active user
+# This allows to reload the page and still have the "Loged In" / "Active" user
 
-### JWT stays in HTTP-only cookie
+The most used and popular method here is to use JWT + Http-Only cookie with Context (useState) where you keep "Loged In" user in state. When you refresh the page -> it automatically assigns "Loged In" user from cookies to useState->
 
-when user is loged in we don't need to assign the user to global State - useState. Then:
-
-- When user Refresh page ❌ loses state
-- When user Open new tab ❌ loses state
-- When user make Browser restart ❌ loses state
-
-because React state only lives in memory.
-
-Therefore we need to use HTTP-only cookie and JWT
+```JS
+const [user, setUser] = useState(LogedIn user);
+//if cookie has a userData it will assign it when you refresh the page
+```
 
 #### If you store authentication in an HTTP-only cookie: JWT Cookie
 
@@ -37,7 +32,16 @@ returns user profile (Current user)
 store in Zustand/Context
 ```
 
-If your JWT is stored in an HTTP-only cookie, the cookie survives page refreshes, browser restarts (depending on expiration), and navigation. A React global state (Context, Zustand, Redux, useState, etc.) exists only in memory, so it disappears on a full page refresh.
+If your JWT is stored in an HTTP-only cookie, the cookie survives page refreshes, browser restarts (depending on expiration), and navigation.
+
+If you keep "Loged In" user in React global state (Context, Zustand, Redux, useState, etc.) without -> initial user assigning from cookie ->
+
+```JS
+const [user, setUser] = useState(LogedIn user);
+//if cookie has a userData it will assign it when you refresh the page
+```
+
+than the "Loged in" user exists only in memory, so it disappears on a full page refresh.
 
 ```JS
 //A typical HTTP-only JWT cookie setup
@@ -51,23 +55,27 @@ Determines current user/admin
 Returns user data
 ```
 
-# How to get the active user in Next.js?
+# How to get the "LogedIn" / "Active" user from JWT and Http-Only cookies in Next.js?
 
-1. ✅ This option works only in Server side components, to get the "active user" - using JWT and HTTP-only cookie. It is GOOD PRACTICE to use this option + Context.
+- Usually Developers use - Server side components to get "LogedIn" user from cookies. It is GOOD PRACTICE to get "LogedIn" user from cookies using server side option. (server side option + Context.) See example below.
+- And rarely developers use code to get "LogedIn" user from client components from cookies. (Check an example below)
 
-Do I need create separate files to get "activeUser" from server and client components? Yes, that's usually the cleanest approach.
+Do I need create separate files to get "Active User" from cookies, from server and client components? Yes, that's usually the cleanest approach.
 
 ```JS
 src/
 ├─ lib/
 │   ├─ auth/
-│   │   ├─ server.ts  //use this file if you want to get userData from server component
+│   │   ├─ server.ts  //use this file if you want to get userData from server component. It is GOOD PRACTICE to use this option + Context
 │   │   ├─ client.ts
 ```
+
+1. ✅ This option works only in Server side components, to get the "Active user" - using JWT and HTTP-only cookie.
 
 ```JS
 //server.ts
 
+//getting "LogedIn" user from cookies in server side component
 //this code work only in server side components
 import { cookies } from "next/headers";
 
@@ -92,13 +100,13 @@ export const loadUser = async () => {
 };
 ```
 
-2. ❌ This option works only in client side componets to get the "active user" - using JWT and HTTP-only cookie. This option is NOT GOOD to use. Not Good Practice.
+2. ❌ This option works only in client side componets to get the "Active user" - using JWT and HTTP-only cookie. This option is NOT GOOD to use. Not Good Practice.
 
 ```JS
 ///client.ts
 
 //this code works only in client side components
-
+//getting "LogedIn" user from cookies in client side component
 //Should i keep both loadUser for client isde and server side components
 
 export const loadUser = async () => {
@@ -140,86 +148,23 @@ useEffect(() => {
 // This is generally not the preferred approach.
 ```
 
-### 🔥 Good Practice to use this Server side option together with Context
+### 🔥 Good Practice to get "LogedIn" user from cookies using server side option together with Context
+
+- You can get "LogedIn" user data from server component or client component
+- But Good Practice is to get "LogedIn" user data from server
+
+### Choose one of the Option below. The most common option is Option 1
 
 - Server loads user once + Context shares it
 
-Create separate file to Fetch active user from server component
+1. 🔥 Option 1. This is Commonly used approach.
 
-```JS
-//auth-server.ts file
-//this work only in server side components
-import { cookies } from "next/headers";
+Advantages of this approach:
 
-export const loadUser = async () => {
-  const cookieStore = await cookies();
-
-  const meRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
-    {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-      cache: "no-store",
-    },
-  );
-
-  if (!meRes.ok) {
-    return null; // better for redirects
-  }
-
-  return meRes.json();
-};
-```
-
-### Then you need to choose one of the Option below. The most common option is Option 2
-
-- You can get user data from server component or client component
-
-1. ✅ Option 1 to get "active user".
-
-In Server Component: in page.tsx
-
-- fetching the user in a Server Component and passing it down as props.
-- Use this option Good when only a few components need "active user".
-
-```JS
-//you fetch the data in server component - page.tsx and then pass this user as a prop to children components
-const activeUser = await loadUser();  //fetch user from server component
-
- if (!activeUser) {
-    redirect("/login");
-  }
-
-
- return (
-    <AccountsDashboard
-      activeUser={activeUser}
-    />
-  );
-
-
-// Advantages of passing activeUser as a prop:
-
-// ✅ No extra client fetch (no client-side loading)
-// ✅ User comes directly from HTTP-only cookie
-// ✅ Better performance (data is available immediately)
-// ✅ Better security
-// ✅ Works great with Next.js App Router
-// ✅ No hydration issues
-
-// This is usually the first choice when only a few components need the user.
-```
-
-```JS
-In this approach:
-
-❌ No AuthProvider
-❌ No useAuth()
-✅ Just pass user as props
-```
-
-2. 🔥 Option 2. This is Commonly used approach.
+- ✅ No prop drilling (when you fetch LogedIn / Active user in server component (page.tsx for example) and then pass it as a prop)
+- ✅ LogedIn / Active User available everywhere
+- ✅ LogedIn / Active User fetched only once, No additional API request.
+- ✅ Common in large applications
 
 ```JS
 //Recommended architecture:
@@ -282,6 +227,36 @@ Use store everywhere
 Create AuthProvider and Pass it into Context:
 
 - use this option -> Good when many client components need the user.
+
+#### 🛣️ First -> Create separate file to Fetch "Active user" using server component
+
+```JS
+//auth-server.ts file
+//this work only in server side components
+import { cookies } from "next/headers";
+
+export const loadUser = async () => {
+  const cookieStore = await cookies();
+
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    return null; // better for redirects
+  }
+
+  return meRes.json();
+};
+```
+
+#### Then create these files below
 
 ```JS
 //AuthProvider.tsx
@@ -349,7 +324,7 @@ export default async function UserLayout({
   let user = null;
 
   try {
-    user = await loadUser(); //server approach tp get user
+    user = await loadUser(); //server side approach to get "LogedIn" / "Active" user
   } catch {
     redirect("/login");
   }
@@ -391,17 +366,100 @@ return <div>{user?.email}</div>;
 
 // Because React Context (useContext) does not exist on the server.
 
-
 ------------------------------
 
-//No additional API request.
-
-// Advantages
+// Advantages of this option:
 
 // ✅ No prop drilling
 // ✅ User available everywhere
 // ✅ User fetched only once
+// ✅ No additional API request.
 // ✅ Common in large applications
+```
+
+2. ✅ Option 2 to get "Active user".
+
+Advantages of this approach, of passing Active User as a prop:
+
+- ✅ No extra client fetch (no client-side loading)
+- ✅ User comes directly from HTTP-only cookie
+- ✅ Better performance (data is available immediately)
+- ✅ Better security
+- ✅ Works great with Next.js App Router
+- ✅ No hydration issues
+
+This is usually the first choice when only a few components need the user.
+
+##### In Server Component: in page.tsx you get the "LogedIn" / "Active" user
+
+- fetching the user in a Server Component and passing it down as props.
+- You will run many times -> the command (const activeUser = await loadUser();) to get the Active user when "LogedIn" user data needed
+- Use this option Good when only a few components need "Active user".
+
+#### 🛣️ First -> Create separate file to Fetch "Active user" using server component
+
+```JS
+//auth-server.ts file
+//this work only in server side components
+import { cookies } from "next/headers";
+
+export const loadUser = async () => {
+  const cookieStore = await cookies();
+
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    return null; // better for redirects
+  }
+
+  return meRes.json();
+};
+```
+
+#### Then create these files below
+
+```JS
+//you fetch the data in server component - page.tsx and then pass this user as a prop to children components
+const activeUser = await loadUser();  //fetch user from server component
+
+ if (!activeUser) {
+    redirect("/login");
+  }
+
+
+ return (
+    <AccountsDashboard
+      activeUser={activeUser}
+    />
+  );
+
+
+// Advantages of passing Active User as a prop:
+
+// ✅ No extra client fetch (no client-side loading)
+// ✅ User comes directly from HTTP-only cookie
+// ✅ Better performance (data is available immediately)
+// ✅ Better security
+// ✅ Works great with Next.js App Router
+// ✅ No hydration issues
+
+// This is usually the first choice when only a few components need the user.
+```
+
+```JS
+In this approach:
+
+❌ No AuthProvider
+❌ No useAuth()
+✅ Just pass user as props
 ```
 
 3. ❌ Option 3. Try to avoid to use this option
