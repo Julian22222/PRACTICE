@@ -275,7 +275,7 @@ export class UsersService {
         // throw new Error(`Users not found`); //will return to controller - this message, "error": "Not Found","statusCode": 404
 
         // throw new NotFoundException('Account not found');  //<-- use this one in NEST.JS or
-        throw new BadRequestException("item not found");  //<-- or other exceptions
+        throw new BadRequestException("items not found");  //<-- or other exceptions
 
     }
 
@@ -285,7 +285,12 @@ export class UsersService {
 
   async findOne(id: number): Promise<User | null> {
     const { rows } = await this.pool.query('SELECT * FROM users WHERE id = $1', [id]);
-    return rows[0] || null;
+
+     if (!rows.length) {
+      throw new NotFoundException('User not found');   //<- use in Nest.js
+    }
+
+    return rows[0];
   }
 
   async create(user: Partial<User>): Promise<User> {
@@ -294,6 +299,14 @@ export class UsersService {
       'INSERT INTO users(name, email) VALUES ($1, $2) RETURNING *',
       [name, email],
     );
+
+  if (!rows) {
+          throw new BadRequestException(  //<- use in Nest.js
+            'Failed to create new user',
+          );
+        }
+
+
     return rows[0];
   }
 
@@ -301,6 +314,12 @@ export class UsersService {
     await this.pool.query('DELETE FROM users WHERE id = $1', [id]);
   }
 }
+
+
+//Also you can use this Exception if email is unique and someone try to register with the same email
+// if (error.code === '23505') {
+//         throw new ConflictException('Email already exists');
+//       }
 ```
 
 5. UsersController remains mostly the same
@@ -317,23 +336,18 @@ export class UsersController {
 
   @Get()
   findAll(): Promise<User[]> {
-
-// try-catch block to handle potential errors when getting all users from Database
-    try{
       return this.usersService.findAll();
-    }catch(error){
-        //error is received from the users.services method when users are not found
-      //findAll method in users.service.ts file throws an error if the users not found
-
-      // throw new Error(error.message);  //<-- don't use this in NEST.JS
-      throw new NotFoundException(err.message);
-    }
-
   }
 
+  // @Get(':id')
+  // findOne(@Param('id') id: string): Promise<User | null> {
+  //   return this.usersService.findOne(+id); //+id <-- converts string to number
+  // }
+
+//it is better to use class-transformer (npm i class-transformer) than -> findOne(+id)
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<User | null> {
-    return this.usersService.findOne(+id); //+id <-- converts string to number
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<UserResponseDto> {
+    return this.usersService.findOne(id);
   }
 
   @Post()
@@ -342,8 +356,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.usersService.remove(id);
   }
 }
 ```
@@ -416,12 +430,11 @@ npm install -g @nestjs/cli@latest
 //or
 sudo npm install -g @nestjs/cli@latest
 //or
-npm i -g @nestjs/cli
+🔥 npm i -g @nestjs/cli
 
 //then ->
-nest new my-app --skip-git  //this option with NO hidden .git folder
+🔥 nest new my-app --skip-git  //this option with NO hidden .git folder
 //✔ This avoids the problem completely.
-
 
 
 
@@ -737,6 +750,35 @@ nest g service ninjas
 - all API logic live in Providers or Services.
 - Providers is just a class just like anything else in NEST but they specifically have an @Injectable decorator, this provider is something that can be injected into any class that depends on it.
 
+### It is not mandatory to use DTO classes when you return some data from service BUT many DEVELOPERS return DTO classes from service
+
+It's not mandatory to use DTO classes as return types in NestJS.
+
+In TypeScript, a function can return:
+
+- A class (UserResponseDto)
+- An interface
+- A type alias
+- An inline object type
+
+```JS
+//For example
+async findAll(): Promise<UserResponseDto[]> {...}  //we return DTO class data from this method
+
+async findOne(id: number): Promise<UserResponseDto> {..}  //we return DTO class data from this method
+
+async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {..}  //we return DTO class data from this method
+
+async update(id: number, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {..}  //we return DTO class data from this method
+
+async remove(id: number): Promise<{ message: string }> {..}  //we return DTO class data from this method
+```
+
+🔥 Many teams use DTO classes for responses
+
+- Use DTO classes for request bodies (CreateUserDto, UpdateUserDto).
+- For responses, use DTO classes if you're using Swagger or class-transformer (But we always use class-transformer <- it is GOOD PRACTICE)
+
 # What is Dependency Injection and how it works?
 
 🔥 To understand this concept better lets make an example:
@@ -1033,11 +1075,7 @@ Pipes allow to transform data types automatically, see example below -->
 @Get(':id')
   getOneNinja(@Param('id', ParseIntPipe) id: number) {  //ParseIntPipe is a built-in NestJS pipe that transforms and validates incoming route parameters, It converts the incoming string parameter into a number. Also -> id: number. ❌ But NOT id: string
 
-    try {
-      return this._ninjasServer.getNinjaById(id);
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
+    return this._ninjasServer.getNinjaById(id);
   }
 
 
@@ -1046,12 +1084,7 @@ Pipes allow to transform data types automatically, see example below -->
 
   @Get(':id')
   getOneNinja(@Param('id') id: string) {
-
-    try {
       return this._ninjasServer.getNinjaById(Number(id));
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
   }
 ```
 
@@ -1235,12 +1268,40 @@ Also, We can create custome Pipes
 
 [ --> GUARDS <-- ](https://docs.nestjs.com/guards)
 
-Guards have a single responsibility to protect the underlying Routes based on some kind of logic.
+Guards have a single responsibility to protect the underlying Routes in controller based on some kind of logic.
+
+❓ What is a Guard?
+
+- A Guard is a class that decides whether a request is allowed to reach a route handler.
+- A Guard does not log a user in. A Guard only checks whether the user is already authenticated, etc.
+
+```JS
+//Think of the request flow like this:
+
+Client Request
+      │
+      ▼
+  Middleware
+      │
+      ▼
+Guard  ← Checks: "Can this request continue?"
+      │
+      ├── Yes → Continue
+      │
+      └── No → Return 403/401
+      ▼
+   Interceptor
+      ▼
+   Controller
+      ▼
+  Service
+
+//The guard runs before your controller method.
+```
 
 For example:
 
 - Authentication and Authorization. Perhaps you want to protect an endpoint to make sure that a user is already Logged-In before they can use specific Route.
-
 - Or maybe you are trying to protect an endpoint to make sure that only a specific type of user can use that Route. For example, an Admin can only change a specific setting that is Guards are for.
 
 ```JS
@@ -1253,7 +1314,24 @@ createNinja(@Body() createNinjaDto1: CreateNinjaDto) {
 }
 ```
 
+```JS
+//Typical real-world flow
+A request comes in: GET /admin/messages
+
+1.User sends a JWT token.
+2.An authentication strategy (commonly using Passport) validates the token.
+3.If valid, it attaches the user to request.user.
+4.AuthGuard checks that a user exists.
+5.RolesGuard checks that request.user.role === 'admin'.
+6.If both checks pass, the controller runs.
+```
+
 ### How to start using Guards?
+
+Often used Guards:
+
+- AuthGuard → verifies the user is authenticated.(LogedIn)
+- RolesGuard → verifies the authenticated user has the required role. Check Authorization (user role)
 
 In your main project folder - src folder, in terminal we put -->
 
@@ -1261,31 +1339,42 @@ In your main project folder - src folder, in terminal we put -->
 nest g guard nameOfTheGuard   //can have any name
 
 
-
-//for example, you need to have a black belt to use specific Route to create a new ninja in the database:
-nest g guard belt
+//for example, user needs to be LogedIn to use specific Route to create a new ninja in the database:
+nest g guard auth
 
 //it will create these files below:
-src/belt/belt.guard.spec.ts
-src/belt/belt.guard.ts
+src/auth/auth.guard.spec.ts
+src/auth/auth.guard.ts
+
+//then you can use it in controller
+@UseGuards(AuthGuard)
 ```
 
 ```JS
-//belt.guard.ts
+//after -> nest g guard auth -> it will creates this file
+//auth.guard.ts
 
 //This is another class with @Injectable, kind of like a provider but it very specifically implements the "CanActivate" Interface. And if you mouse over on "CanActivate" you can see it must return boolean --> true or false
 
 @Injectable()
-export class BeltGuard implements CanActivate {  //Guard name - BeltGuard
-  canActivate(
-    context: ExecutionContext,
+export class AuthGuard implements CanActivate {  //Guard name - AuthGuard
+  canActivate(context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    return true;
+
+  //some logic here, checking is the user LogedIn or the user.role === "admin"
+
+    return true;  //when canActivate method return true, This means: it will pass the incoming request further down to controller where Guard was applied -> @UseGuards(AuthGuard)
+    // If it return false. This means: Nest returns an error (typically 403 Forbidden) and the controller method is never called.
   }
 }
+
+//The important method is->  canActivate()
+//Nest calls this every time someone accesses a protected route.
 ```
 
-So the core idea behind Guards is that you can attach a Guard either to an entire controller or individual methods in that controller (similar to ASP.NET Core MVC --> see template below)
+- Guards work at a super high level. For example if AuthGuard returns true, then it has an access to those Routes that are protected with Guards. If AuthGuard will return false, then those Routes won't be accessable.
+- Guard has a single purpose of allowing something to move forward or not based on the logic that happens in our case in auth.guard.ts file.
+- So the core idea behind Guards is that you can attach a Guard either to an entire controller or individual methods in that controller (it is similar to ASP.NET Core MVC --> see template below)
 
 ```JS
 //similar logic in .NET MVC controller file
@@ -1298,13 +1387,13 @@ public async Task<IActionResult> AddNewBook(bool isSuccess = false, int bookId =
 }
 ```
 
-For example: you can add - @UseGuards and provide your guard in there --> @UseGuards(BeltGuard), because we have thisname in belt.guard.ts file - line 5. So you can have a Guard in front of an entire controller which means that it is going to sit in front of all underlying routes. So if you trying to protect all of the Ninja Routes - all routes in current controller. You do this way. See example below.
+So you can have a Guard in front of an entire controller which means that it is going to sit in front of all underlying routes. So if you trying to protect all of the Ninja Routes - all routes in current controller. You do this way. See example below.
 
 ```JS
 //ninjas.controler.ts
 
 @Controller('ninjas') // This decorator defines a controller that will handle requests to the 'ninjas' path.
-@UseGuards(BeltGuard) //<----Guard
+@UseGuards(AuthGuard) //<----Guard/Protecting an entire controller, for all of this controller methods
 export class NinjasController {
 
   constructor(public readonly _ninjasServer: NinjasService) {}
@@ -1323,16 +1412,65 @@ export class NinjasController {
 }
 ```
 
+```JS
+// you can use -> Multiple Guards
+//If any guard returns false (or throws an exception), the request stops.
+@UseGuards(AuthGuard, RolesGuard)
+```
+
 If you want to protect individual Route, you move this Guard to individual Routes, for example we want to protect this Route, to create new ninja -->
 
 ```JS
   @Post()
-  @UseGuards(BeltGuard) //<----use Guard in this method only
+  @UseGuards(AuthGuard) //<----use Guard in this method only
   createNinja(@Body() createNinjaDto1: CreateNinjaDto) {
     return this._ninjasServer.createNinja(createNinjaDto1);
   }
 ```
 
-Guards work at a super high level. For example if BeltGuard returns true, then it has an access to those Routes that are protected with Guards. If BeltGuard will return false, then those Routes won't be accessable. See belt.guard.ts file.
+```JS
+//Example 1: Authentication using JWT in a header
 
-Guard has a single purpose of allowing something to move forward or not based on the logic that happens in our case in belt.guard.ts file.
+Getting the request
+Usually you'll need information about the incoming request.
+
+canActivate(context: ExecutionContext): boolean {
+  //Your guard checks the header
+  const request = context.switchToHttp().getRequest();  //getting LogedIn user, using JWT in a header
+
+  const token = request.headers.authorization;  //JWT in Authorization header
+
+  console.log(request.headers);
+
+  if (!token) {
+      return false;
+    }
+
+
+  return true;
+  //If token exists: return true- The request continues and goes to controller. If return false: The request is blocked.
+
+  //or
+  return request.user.role === 'admin'; //check if the role === admin
+}
+
+Now you can inspect things like:
+-headers
+-cookies
+-body
+-params
+-authenticated user (if one has been attached to the request)
+```
+
+```JS
+//Example 2: Authentication using cookies
+
+access_token=abc123
+const token = request.cookies.access_token;
+
+//If the cookie exists and is valid
+```
+
+An AuthGuard doesn't know whether someone is logged in by itself. It checks whatever your authentication system provides. If you're using JWTs, it may check the Authorization header. If you're using cookies, it may check a cookie. If you've already configured a JWT strategy that attaches the authenticated user to request.user, then the guard can simply check request.user.
+
+So the guard is the decision-maker ("allow or deny"), while the authentication mechanism is responsible for proving the user's identity.
