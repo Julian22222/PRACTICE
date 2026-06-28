@@ -459,3 +459,159 @@ await this.pool.query(`QUERY to YOUR DATABSE...`)
 - Controller (CatsController): defines routes and handles requests.
 - Module (CatsModule): groups service + controller.
 - Root module (AppModule): imports the CatsModule to load it.
+
+# IMPORTANT Theory
+
+- routes with GET methods in Nest.js controllers that require userId ->
+
+```JS
+//Example
+
+//users.controller.ts
+@Controller('users')
+
+@Get(':id')  //<-- we need UserId
+findOne(@Param('id', ParseIntPipe) id: number): Promise<UserResponseDto> {
+  return this.usersService.findOne(id); //<-- We want to find certain user
+}
+
+--------------------------------------------------
+
+//transactions.controller.ts
+@Controller('transactions')
+
+@Get('/:userId')   //<-- we need UserId
+findAllCurrentUSerTransactions(
+  @Param('userId', ParseIntPipe) userId: number,
+) {
+  return this.transactionsService.findCurrentUserAllTrx(userId); //<-- find all transactions tor certain user
+}
+
+----------------------------------------------------
+//messages.controller.ts
+@Controller('messages')
+
+@Get('user/:userId')  //<-- we need UserId
+findUserMessages(
+  @Param('userId', ParseIntPipe) userId: number,
+): Promise<MessageDto[] | null> {
+  return this.messagesService.findAllUserMessages(userId); //<-- get all messages for certain user
+}
+
+//and others similar methods
+```
+
+# 🔥 We can make GET methods that userId will be taken from JWT cookies. This is a GOOD PRACTICE ->
+
+✅ BEST PRACTICE
+
+- Use backend endpoints that derive userId from JWT in cookies. Once user is LogedIn the cookies will keep userId -> read JWT from cookie. userId is assigned from Back-End -> in Nest.js
+
+- This approach helps to Fetch the data without userId from the Next.js (Front-end) -> it is very helpful to use this endpoints in page.tsx (server component)
+
+```JS
+//users.controller.ts
+@Controller('users')
+
+@Get('me')
+@UseGuards(JwtAuthGuard) // This route is protected, only accessible with a valid JWT
+//JwtAuthGuard verifies the token. If valid, it calls the validate() method in JwtStrategy, which returns the payload (user info) and attaches it to req.user.
+//Then you can access req.user in your controller method to get the current user's info.
+getCurrentUser(@Req() req) {
+  console.log(
+    'FROM UsersController - Current user from JWT payload:',
+    req.user,
+  );
+
+  return this.usersService.findOne(req.user.sub); //req.user.sub === userId from JWT payload
+}
+
+-------------------------------------------
+
+//transactions.controller.ts
+@Controller('transactions')
+
+@Get('all-user-transactions')
+//Get userId from JWT cookies
+@UseGuards(JwtAuthGuard)
+getUserAllTransactions(@Req() req): Promise<TransactionDto[] | null> {
+  console.log(
+    'FROM TransactionsController - Current user from JWT payload:',
+    req.user,
+  );
+  return this.transactionsService.findCurrentUserAllTrx(req.user.sub); //req.user.sub === userId from JWT payload
+}
+
+-----------------------------------------------------
+
+//messages.controller.ts
+@Controller('messages')
+
+@Get('all-user-messages')
+//Get userId from JWT cookies
+@UseGuards(JwtAuthGuard)
+getUserAllMessages(@Req() req): Promise<MessageDto[] | null> {
+  console.log(
+    'FROM MessagesController - Current user from JWT payload:',
+    req.user,
+  );
+  return this.messagesService.findAllUserMessages(req.user.sub);  //req.user.sub === userId from JWT payload
+}
+```
+
+## DON'T USE -> loadUser to get userId
+
+```JS
+//authentication can be used in server component only
+
+import { cookies } from "next/headers";
+//this work only in server side components
+
+export const loadUser = async () => {
+  const cookieStore = await cookies();
+
+  const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!meRes.ok) {
+    return null; // better for redirects
+  }
+
+  return meRes.json();
+};
+```
+
+✅ This can be used only for:
+
+- user profile (name, email, role)
+- UI personalization
+- auth state hydration
+- permission checks
+- context initialization
+
+❌ Don’t use loadUser for every data fetch
+
+```JS
+//❌ CAN'T USE THIS WAY
+const user = await loadUser();
+const transactions = await fetch(`/transactions?userId=${user.id}`);
+```
+
+This causes:
+
+- extra request
+- slower page load
+- unnecessary dependency chain
+
+Used for:
+
+- “Who am I?”
+- UI state
+- role checks
