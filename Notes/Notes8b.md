@@ -1,5 +1,7 @@
 # ERROR HADLING in NEXT.JS
 
+For server components - try/catch DON'T NEED !!!! just use -> !res.ok
+
 ```JS
 //this ERROR HADLING is ENOUGH in MOST CASES in NEXT.JS
 //and you dotn't need to use try/catch block
