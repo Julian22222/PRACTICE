@@ -514,6 +514,22 @@ findUserMessages(
 - Also try to make all calculations when possible in the back-end
 
 ```JS
+//if you use userId from JWT in NEST.js
+// Then in Next.js don't forget to use -> headers and cookies in fetch other wise response === underfined
+
+ const meRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/accounts/my`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      cache: "no-store",
+    },
+  );
+
+```
+
+```JS
 //users.controller.ts
 @Controller('users')
 
