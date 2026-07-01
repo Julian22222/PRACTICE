@@ -509,6 +509,10 @@ findUserMessages(
 
 - This approach helps to Fetch the data without userId from the Next.js (Front-end) -> it is very helpful to use this endpoints in page.tsx (server component)
 
+- always try to get "userId" from JWT in Nest.js(Back-end), do not getting userId from Front-End. This is is THE BEST PRACTICE and SECURE, less RISKS
+- JWT to get userId in NEST.JS can be used for any methods - GET,POST, PATCH, DELETE
+- Also try to make all calculations when possible in the back-end
+
 ```JS
 //users.controller.ts
 @Controller('users')
