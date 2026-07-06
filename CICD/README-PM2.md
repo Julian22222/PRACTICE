@@ -58,9 +58,11 @@ pm2 start index.js //<-- put in terminal to run file
 ```JS
 //Install pm2
 npm install pm2 or npx pm2
+sudo npm install -g pm2
 
 //Start an app
 pm2 start app.js
+pm2 start main.js --name bank-api  //<--give a name "bank-api" for this process, will see when -> pm2 list
 
 //List running processes
 pm2 list
@@ -78,18 +80,21 @@ pm2 stop app.js
 ```JS
 //PM2 commands
 
-- npx pm2 start server.js // <-- It downloads PM2 temporarily and starts your Node.js server (server.js) as a managed process
+- npx pm2 start server.js --name server // <-- It downloads PM2 temporarily and starts your Node.js server (server.js) as a managed process, with name - server
 - npx pm2 stop 0 //<-- Stops the PM2-managed process with the ID 0. The ID corresponds to the process number shown in pm2 list
 - npx pm2 monit 0 //<-- Opens a real-time monitoring dashboard for the process with ID 0. Shows CPU, memory, event loop delay, and other performance metrics
 - npx pm2 list //<-- Displays a table of all running PM2 processes with their IDs, names, status, CPU and memory usage
 - npx pm2 logs //<-- Shows live logs for all managed processes, helping you debug or monitor output
+- npx pm2 logs <id or name>   //OR pm2 logs <id or name>
+- npx pm2 show <id or name>   //OR pm2 show <id or name>  //displays detailed information about a specific PM2-managed process
+- npx pm2 kill //Stops all apps and shuts down the PM2 daemon.
 - npx pm2 restart <id or name>
 - npx pm2 delete <id or name>
 - npx pm2 reload <id or name>
 - npx pm2 stop all  //<-- Stop all running PM2 processes
--npx pm2 restart all //<-- Restart all running processes
--npx pm2 delete all //<-- Stop and remove all processes
--npx pm2 flush //<-- Clear all logs
--npx pm2 logs <id or name>
--npx pm2 save //<-- Save current process list to be resurrected on reboot
+- npx pm2 restart all //<-- Restart all running processes
+- npx pm2 delete all //<-- Stop and remove all processes
+- npx pm2 delete <id or name>
+- npx pm2 flush //<-- Clear all logs
+- npx pm2 save //<-- Save current process list to be resurrected on reboot
 ```
