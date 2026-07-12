@@ -73,12 +73,26 @@ const hashedPassword = await bcrypt.hash(password, 10);
 
 # 🔥 JWT
 
-JWT is Useful and helps you:
+- JWT in HttpOnly Cookies (Access token + Refresh token pattern) ✅ the most common and recommended approach for web apps. Common for:
+
+      - Next.js + NestJS
+      - SaaS web apps
+
+- JWT in Authorization Header. very common for:
+
+      - Mobile apps
+      - Public APIs
+      - Microservices
+      - SPA apps where you control token storage
+
+📍 JWT is Useful and helps you:
 
 - keep users logged in
 - protect routes
 - identify users securely
 - build authentication systems for APIs
+
+#### ⭐ JWT + HttpOnly Cookies
 
 ✅ 1. Install needed dependencies for your Back-end (Nest.JS) - in Nest.js folder
 
@@ -90,7 +104,10 @@ npm install -D @types/passport-jwt
 ✅ 2. Add JWT module in NestJS
 
 ```JS
-//create separate folder src/auth and create file ->
+cd to bank-api/src folder -> nest g resource auth //This create auth folder with module, controllers and services + dto + test files.
+```
+
+```JS
 //auth.module.ts
 
 import { Module } from '@nestjs/common'; //<--Imports the Module decorator from NestJS. Then we can use Module in this file
@@ -100,11 +117,14 @@ import { PassportModule } from '@nestjs/passport';  //<-- Imports Passport integ
 @Module({   //module configuration <--is used to create a NestJS module. A module helps organize related code together. @Module() it is an object with settings
   imports: [   //<--imports means: “Which modules does this module need?” -  PassportModule,
     PassportModule,
+    DatabaseModule,
     JwtModule.register({   //<-- JwtModule.register - Configures the JWT module. /// .register() means: “Set up JWT settings.”
-      secret: process.env.JWT_SECRET || 'dev_secret',  //<- Defines the secret key used to sign JWT tokens.JWT tokens are encrypted/signed using this secret. If no environment variable exists -use 'dev_secret' as fallback./ //// 'dev_secret' <-- Never use this in production, Use a strong secret in .env
+      secret: process.env.JWT_SECRET,  //<- Defines the secret key used to sign JWT tokens.JWT tokens are encrypted/signed using this secret. If no environment variable exists -use 'dev_secret' as fallback./ //// 'dev_secret' <-- Never use this in production, Use a strong secret in .env
       signOptions: { expiresIn: '1h' },  //access tokken will expire after 1h. The JWT token becomes invalid after 1 hour. Examples: '1h' → 1 hour, '7d' → 7 days, '15m' → 15 minutes
     }),
   ],
+  controllers: [AuthController],
+  providers: [JwtStrategy, AuthService],
   exports: [JwtModule],   //<-- Makes JwtModule available to other modules. Without this line: other modules cannot use JWT features from this module.
 })
 export class AuthModule {}  //<--Creates and exports the module class.Other modules can now import AuthModule
@@ -165,30 +185,93 @@ JWT_SECRET=my_super_secret_key
 // JWT_SECRET=secret
 ```
 
-✅ 3. Update your login service (Nest.JS)
+✅ 4. auth/login controller (Nest.JS)
 
 ```JS
+//auth.controller.ts
+
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
+import { Response, Request } from 'express';  //Express response object.
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+//other methods...
+
+ @Post('login')
+  async login(
+    @Body() loginData: LoginDto,
+    @Res({ passthrough: true }) res: Response,  //<--@Res play importan role here
+  ) {
+    return this.authService.login(loginData, res);
+  }
+}
+
+//@Res({ passthrough: true }) res: Response - is a NestJS feature that gives you access to the underlying Express Response object without taking over the entire response handling.
+//@Res() is a parameter decorator that injects the Express Response object into your controller method.
+// Response from (@Res() res: Response) -> gives you methods like:
+res.status(200);
+res.json(data);
+res.send(data);
+res.cookie(...);  //allow set the cookie
+res.clearCookie(...);  //tells the browser to delete the cookie from Next.js
+res.redirect(...);
+
+//If you use->  login(@Res() res: Response) //without { passthrough: true } -> you have to return response using
+res.json(...)
+//or
+res.send("...")
+//or any others res. methods from Response
+
+//@Res({ passthrough: true }) -> Nest lets you modify the response (cookies, headers, status code, etc.) while still allowing you to return a value normally ->
+return this.authService.login(loginData, res)
+
+----------------------------------------
+//Example:
+@Post('login')
+login(@Res() res: Response) {  //Without { passthrough: true }, Nest is waiting to return the data by using -> res. /YOU MUST use -> res.
+  // res.cookie('access_token', token);
+
+  return {  //In this case the client request will typically hang because no response is ever completed.
+    message: 'Logged in',
+  };
+}
+
+//This will work ok
+//  res.json({
+  //   message: 'Logged in',
+  // });
+```
+
+✅ 4. auth/login service (Nest.JS)
+
+```JS
+//auth.service.ts
+
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 
 @Injectable()
-export class UsersService {
-  constructor(
-    private readonly jwtService: JwtService,
-    private readonly pool: any,
+export class AuthService {
+   constructor(
+    @Inject(PG_POOL) private readonly pool: Pool,
+    private readonly jwtService: JwtService,     //<-- import JwtService
+    private configService: ConfigService,     //<-- import ConfigService, that helps to read secrets from .env file
   ) {}
 
 
- //// 🔐 Modify login to return token
+ //// 🔐 Login + return token using -< res.cookie
+ async login(loginData: LoginDto, res: Response) {  //
+    const { email, password } = loginData;
 
-async login(loginData: LoginDto) {
-  const { email, password } = loginData;
-
-  const result = await this.pool.query(
-    `SELECT * FROM customers WHERE email = $1`,
-    [email],
-  );
+   const result = await this.pool.query(
+      `SELECT * FROM customers WHERE email = $1`,
+      [email],
+    );
 
   const user = result.rows[0];
 
@@ -196,7 +279,7 @@ async login(loginData: LoginDto) {
     throw new UnauthorizedException('Invalid email or password');
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);  //compare passwords
 
   if (!isMatch) {
     throw new UnauthorizedException('Invalid email or password');
@@ -204,11 +287,11 @@ async login(loginData: LoginDto) {
 
 
 //Once Password is matching you can create JWT payload
-  // 👇 JWT payload (keep it small!) <-- you can get access to this data from anywhere -> sub and email
+  // 👇 JWT payload (keep it small!) <-- you can get access to this data from anywhere in Nest.js (usually is used in Nest.js controller to get logedIn user Id)-> sub and email
   //The payload is the data stored inside the JWT token. Also JWT contains extra JWT metadata like: expiration time, issued time.
-  //after login, this information becomes accessible: in Next.js, in browser cookies, in localStorage/sessionStorage (if you store token there), after decoding the token
+  //after login, this information becomes accessible: in Next.js, in browser cookies (if you store token there), after decoding the token
   //JWT Payload Is NOT Secret, Anyone who has the token can decode and read the payload.
-  ❌//NEVER store: password, credit card, sensitive private data
+  ❌//NEVER store: password, credit card, sensitive private data in payload
   const payload = {
     sub: user.customer_id,  //sub means: subject. It is a standard JWT field representing: “Who owns this token?” - Usually:user id, customer id, account id
     email: user.email,
@@ -216,11 +299,41 @@ async login(loginData: LoginDto) {
   };
   //Then NEXT.JS can know: is admin?, which user logged in?, what UI to show?
 
-  const token = this.jwtService.sign(payload);
 
-  return {
-    access_token: token,   //<-- return tokken and user's data
-    user: {
+    // 🔐 Create Access Token
+    const accessToken = this.jwtService.sign(payload, {
+      // secret: process.env.JWT_SECRET,
+      secret: this.configService.get<string>('JWT_SECRET'),
+      expiresIn: '15m', //expires in 15min
+    });
+
+
+  // 🔄 Create Refresh Token
+    const refreshToken = this.jwtService.sign(payload, {
+      // secret: process.env.JWT_REFRESH_SECRET,
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+      expiresIn: '7d',
+    });
+
+
+ // 🍪 STORE BOTH IN HTTPONLY COOKIES
+    res.cookie('access_token', accessToken, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
+      sameSite: 'lax',
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.cookie('refresh_token', refreshToken, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+
+   const userResponse: UserResponseDto = {
+      //returning user data with no password
       customer_id: user.customer_id,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -229,8 +342,9 @@ async login(loginData: LoginDto) {
       customer_address: user.customer_address,
       dob: user.dob,
       created_at: user.created_at,
-    },
-  };
+    };
+
+  return userResponse;
 }
 
 ///////////////////
@@ -240,25 +354,17 @@ async login(loginData: LoginDto) {
 //         -email
 //         -role
 //         -permissions
-// without making another database request.
+// without making additional database request.
 
 ```
 
-✅ 4. Update Next.js LoginForm
+✅ 5. Now Next.js LoginForm return userResponse + res.cookie(accessToken) + res.cookie(refreshToken)
 
 ```JS
-//Now your backend returns:
-{
-  access_token,
-  user
-}
-```
-
-```JS
-//Update your frontend:
+//LoginForm - Next.js:
 try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/login`,
+      const loginRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BACK_END_URL}/auth/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -266,112 +372,80 @@ try {
         },
       );
 
-      if (!res.ok) {
-        throw new Error();
+      const response = await loginRes.json();  //this returns - userResponse
+
+      if (!loginRes.ok) {
+        console.error("Login failed:", await loginRes.text());
+        setLoginError(response.message || "Failed to login");
+        return;
       }
 
-      setLoginError(false);
-
-      const user = await res.json();
-
-      const { access_token } = user;
-      // store token (simple version)
-      localStorage.setItem("token", access_token);
-
-      setActiveUser(user);
-
-
-
-const data = await res.json();
-const { access_token, user } = data;  //destructurisation of the response from Back-end
-
-// store token (simple version)
-localStorage.setItem("token", access_token);  //<-- assign to localStorage to be able to use it
-
-setActiveUser(user);
+      //other code ..
 }
 ```
 
-✅ 5. Send JWT in future requests
+✅ 6. Send JWT in future requests
+
+- if you want to use payload data in Nest.js methods
 
 ```JS
-//Whenever you call protected routes: (routes thta only loged in users can access)
+//Whenever you call protected routes: (routes that only logedIn users can access)
 
-const token = localStorage.getItem("token");
+//Example to get transactions of LogedIn user in server component
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
+      {
+        headers: {
+          //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+        next: { tags: ["transactions"] },
+      },
+    );
 
-await fetch("/api/some-protected-route", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to fetch transactions");
+    }
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unexpected error occured");
+  }
+};
 ```
 
 # 🧩 Can Next.js decode payload directly?
 
 ```JS
-//YES.
-npm install jwt-decode
-
-
-// Client component ("use client")
-import { jwtDecode } from "jwt-decode";
-
-const token = localStorage.getItem("token");
-
-if (token) {
-  const decoded = jwtDecode(token);
-
-  console.log(decoded);
-}
-
 //⚠️ But decoding ≠ validating
 //Anyone can decode JWT.
 //Only backend can truly verify it using secret key.
 ```
 
-🧩 Even if you think you don’t have protected routes, most apps eventually have them, like:
+🧩 Even if you think you don’t have protected routes, most apps eventually have them
+
+```JS
+//When you Setup JWT + HttpOnly Cookies
+
+//In Controller you can protect some routes
+@Patch('password')
+@UseGuards(JwtAuthGuard)   //<-- means only loged in user can access this route.
+userPasswordUpdate(...){
+  return ...
+}
+
 
 - /users/profile
 - /accounts
 - /transactions
-- /admin/\*
-
-Those almost always require authentication.
-
-```JS
-1. Login (once)
-// You send:
-// {
-//   "email": "test@email.com",
-//   "password": "123"
-// }
-
-//Backend responds:
-//{
-//   "access_token": "eyJhbGciOiJIUzI1NiIs..."
-// }
-
-2. Store the token (frontend)
-
-// In your Next.js app:
-//localStorage.setItem("token", access_token);
-
-3. Future request
-//When you call ANY protected API, you must include the token:
-//❌ Without JWT (server will reject you)
-//fetch("/users/profile");
-
-//✅ With JWT (server recognizes you)
-// const token = localStorage.getItem("token");
-
-// fetch("/users/profile", {
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-// });
+- /admin/
 ```
 
-✅ 6. Add JWT validation (Guard)
+✅ Add JWT validation (Guard)
 
 if no guard -> anyone can --> GET /users/profile (without login)
 
@@ -381,7 +455,7 @@ if no guard -> anyone can --> GET /users/profile (without login)
 
 ```JS
 //Create:
-jwt.strategy.ts
+jwt.strategy.ts  //strategy.ts file needs to validate each request goes with access token, and Nest.js can validate that user access token
 
 
 import { Injectable } from '@nestjs/common';
@@ -426,6 +500,15 @@ import { AuthGuard } from '@nestjs/passport';
 getProfile(@Request() req) {
   return req.user;
 }
+
+
+//////🚨 If token is missing or wrong. NestJS automatically returns:
+//{
+//   "statusCode": 401,
+//   "message": "Unauthorized"
+// }
+
+// And Controller NEVER runs.
 ```
 
 ❌ DO NOT protect:
@@ -443,42 +526,7 @@ getProfile(@Request() req) {
 - admin routes
 - user-specific data
 
-```JS
-///When someone calls:
-// GET /users/profile
-// Authorization: Bearer valid_token
-
-Step-by-step:
-✔ Step 1: Guard runs
-
-AuthGuard('jwt') triggers JwtStrategy
-
-✔ Step 2: Token is checked
-valid → continue
-invalid → ❌ 401 Unauthorized
-✔ Step 3: Request continues
-
-If valid:
-req.user = decodedJWT;
-
-✔ Step 4: Controller runs
-return req.user;
-
-//////🚨 If token is missing or wrong. NestJS automatically returns:
-//{
-//   "statusCode": 401,
-//   "message": "Unauthorized"
-// }
-
-// Controller NEVER runs.
-```
-
-🔥 Important improvements (recommended)
-❌ Don’t store JWT in localStorage (better option)
-
-Use:
-
-- httpOnly cookies (best practice)
+#### httpOnly cookies (best practice)
 
 ```JS
 Example JWT Flow:
@@ -507,7 +555,7 @@ Authorization: Bearer token
 4. Controller runs only if valid
 ```
 
-# real authentication systems there are usually two tokens
+# Real authentication systems there are usually two tokens
 
 1. Access Token
 2. Refresh Token
@@ -585,75 +633,9 @@ Real Authentication Flow
 // User continues normally.
 ```
 
-```JS
-//access the data
+🚨
 
-//⚡ Final important distinction
-| Location       | Access payload how?               |
-| -------------- | --------------------------------- |
-| NestJS backend | `req.user`                        |
-| Next.js client | decode token OR use state/context |
-| Next.js server | cookies/session usually           |
-
-///////////////////////////////////
-
-🚨 Important for Next.js
-"use client"
-
-// Can access:
-// -localStorage
-// -browser APIs
-// -JWT from localStorage
-
-
-"use server"
-// Cannot access:
-// -localStorage
-// -browser state
-
-Because it runs on server.
-
-/////////////////////////////////////////////
-
-// 🧠 Quick comparison
-| Feature              | use client | use server     |
-| -------------------- | ---------- | -------------- |
-| localStorage         | ✅          | ❌              |
-| decode JWT           | ✅          | ✅              |
-| browser token access | ✅          | ❌              |
-| secure validation    | ❌          | ✅ backend only |
-
-```
-
-```JS
-| Token         | Purpose                  | Lifetime |
-| ------------- | ------------------------ | -------- |
-| Access Token  | Access APIs              | Short    |
-| Refresh Token | Create new access tokens | Long     |
-```
-
-# Where Refresh Token Is Created
-
-Usually inside login service too.
-
-```JS
-//Example
-const accessToken = this.jwtService.sign(payload, {
-  secret: process.env.JWT_SECRET,
-  expiresIn: '15m',
-});
-
-const refreshToken = this.jwtService.sign(payload, {
-  secret: process.env.JWT_REFRESH_SECRET,
-  expiresIn: '7d',
-});
-
-//Notice:
-// different secret
-// longer expiration
-```
-
-### Why Different Secret?
+### Why needed JWT secret and JWT refresh secret ?
 
 Security.
 
@@ -661,153 +643,193 @@ If access token secret leaks:
 
 - refresh tokens still protected.
 
-### Typical Login Response
+# 🔄 How Refresh token works
+
+1. Create Refresh Endpoint - in controller
 
 ```JS
-return {
-  access_token: accessToken,
-  refresh_token: refreshToken,
-  user: {
-    customer_id: user.customer_id,
-    email: user.email,
-  },
-};
+//Example Nest.JS route - auth.controller.ts
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+//some code..
+
+//create new endpoint. -> /refresh
+//// POST /refresh
+//Frontend sends refresh token → backend returns new access token.
+//when access token expire we will POST credentials (access token to /refresh route)
+  @Post('refresh')
+  refreshToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    return this.authService.refreshToken(req, res);
+  }
 ```
 
-# Where Refresh Token Is Stored
+2. Create Refresh Service
 
 ```JS
-Usually:
--HttpOnly cookie (BEST)
-- NOT localStorage
+//NEST.JS -> auth.service.ts
 
-Why?
--safer against XSS attacks
+@Injectable()
+export class AuthService {
+  constructor(
+    @Inject(PG_POOL) private readonly pool: Pool,
+    private readonly jwtService: JwtService,
+    private configService: ConfigService,
+  ) {}
+
+//some other code ...
+
+
+//refresh token should come from COOKIE, not from body or header for better security
+  async refreshToken(req: Request, res: Response) {
+    try {
+      const refreshToken = req.cookies.refresh_token;
+
+      if (!refreshToken) {
+        throw new UnauthorizedException('No refresh token');
+      }
+
+      // Verify refresh token
+      const payload = this.jwtService.verify(refreshToken, {
+        // secret: process.env.JWT_REFRESH_SECRET,
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),  //getting secrets from .env or AWS Parameter Store
+      });
+
+
+      // Create new access token
+      const accessToken = this.jwtService.sign(
+        {
+          sub: payload.sub,
+          // email: payload.email,
+        },
+        {
+          // secret: process.env.JWT_SECRET,
+          secret: this.configService.get<string>('JWT_SECRET'),  //getting secrets from .env or AWS Parameter Store
+          expiresIn: '15m',  // Access Token -> expiresIn: '15m'
+        },
+      );
+
+       //Create new access token
+      res.cookie('access_token', accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        maxAge: 15 * 60 * 1000,   // Access Token -> expiresIn: '15m'
+      });
+
+
+      return { message: 'token refreshed' };
+    } catch {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
 ```
 
-### Access Token Storage
+3. Check main.ts file - make sure you have cookie-parser.
 
 ```JS
-Common options:
--memory
--cookie
--sometimes localStorage
-```
+//main.ts
 
-# Refresh Endpoint Example
+import cookieParser from 'cookie-parser';
 
-```JS
-//Example NestJS route
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-@Post('refresh')
-refresh(@Body() body) {
-  return this.authService.refreshToken(body.refresh_token);
+  app.use(cookieParser());  //Without that, req.cookies will be undefined. (req.cookies.access_token, req.cookies.refresh_token)
+
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  });
+
+  await app.listen(3005);
 }
+
+bootstrap();
 ```
 
-Refresh Service Example
+```JS
+//Next.js fetch must include credentials
+//when you do fetch always - When calling NestJS from Next.js:
+//add credentials
+
+fetch(`${API_URL}/customers`, {
+  //Every request that needs authentication needs:
+  credentials: "include",  //<--//add credentials
+});
+
+//This logic is already inside src/lib/apiFetch.ts file (see step 4)
+```
+
+4. Create src/lib/apiFetch.ts (logic to create new acccess token using refresh token)
 
 ```JS
-async refreshToken(refreshToken: string) {
-  try {
-    const payload = this.jwtService.verify(refreshToken, {
-      secret: process.env.JWT_REFRESH_SECRET,
-    });
 
-    const newAccessToken = this.jwtService.sign(
+
+//❌ NOT directly inside every component.
+//🔥 The best practice is to create a central API wrapper/ fetch wrapper.
+//create -> src/lib/api.ts
+
+src/
+├── app/
+├── components/
+├── lib/
+│   └── apiFetch.ts
+└── services/
+
+//src/lib/api.ts - This is where refresh logic usually lives
+//For refresh tokken and access tokken generation and validation.
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+export async function apiFetch(
+  endpoint: string,
+  options: RequestInit = {}
+) {
+  let response = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    credentials: "include",
+  });
+
+  // Access token expired
+  if (response.status === 401) {
+    const refreshResponse = await fetch(
+      `${API_URL}/auth/refresh`,
       {
-        sub: payload.sub,
-        email: payload.email,
-      },
-      {
-        secret: process.env.JWT_SECRET,
-        expiresIn: '15m',
-      },
+        method: "POST",
+        credentials: "include",
+      }
     );
 
-    return {
-      access_token: newAccessToken,
-    };
-  } catch {
-    throw new UnauthorizedException();
+    if (refreshResponse.ok) {
+      // retry original request
+      response = await fetch(
+        `${API_URL}${endpoint}`,
+        {
+          ...options,
+          credentials: "include",
+        }
+      );
+
+    }
   }
-}
-```
 
-# Important Security Practice
-
-Many real apps also:
-
-- save refresh token in database
-- hash refresh token
-- revoke tokens on logout
-
-This prevents stolen refresh tokens from being reused.
-
-```JS
-// Access Token -> expiresIn: '15m'
-// Used for:
-// -protected APIs
-// -authorization
-// Short lifetime for security.
-
-// Refresh Token
-// expiresIn: '7d'
-// Used to:
-// -create new access tokens
-// -keep user logged in
-
-// usually for refresh tokken you create new endpoint. -> /refresh
-// POST /refresh
-//Frontend sends refresh token → backend returns new access token.
-```
-
-```JS
-| Token         | Recommended Storage |
-| ------------- | ------------------- |
-| Access Token  | memory or cookie    |
-| Refresh Token | HttpOnly cookie     |
-```
-
-```JS
-Why /refresh Route Is Needed
-Your access token expires quickly: expiresIn: '15m'
-
-After 15 minutes: -> 401 Unauthorized
-Without /refresh: user must login again
-With /refresh: frontend sends refresh token, backend creates new access token, user stays logged in
-```
-
-```JS
-LOGIN
-  ↓
-Receive:
-- access_token
-- refresh_token
-  ↓
-Use access token for API calls
-  ↓
-Access token expires
-  ↓
-POST /refresh
-  ↓
-Receive new access token
-  ↓
-Continue normally
-```
-
-```JS
-//Example Controller Route
-//Usually in your controller:
-
-@Post('refresh')
-refreshToken(@Body() body: any) {
-  return this.usersService.refreshToken(
-    body.refresh_token,
-  );
+  return response;
 }
 
-//Example Frontend Request (Next.js)
+----------------------------------------
+
+//Example Scenario
+
+// You call protected API:
+GET /profile
+//with expired access token.
+
+// Backend returns:
+401 Unauthorized
+
+//Then frontend automatically does:
 await fetch('http://localhost:3000/refresh', {
   method: 'POST',
   headers: {
@@ -818,39 +840,60 @@ await fetch('http://localhost:3000/refresh', {
   }),
 });
 
-//Example Service Method
-//Inside UsersService:
-async refreshToken(refreshToken: string) {
-  try {
-    // Verify refresh token
-    const payload = this.jwtService.verify(
-      refreshToken,
-      {
-        secret: process.env.JWT_REFRESH_SECRET,
-      },
-    );
+//to get new access token.
 
-    // Create new access token
-    const newAccessToken = this.jwtService.sign(
-      {
-        sub: payload.sub,
-        email: payload.email,
-        role: payload.role,
-      },
-      {
-        secret: process.env.JWT_SECRET,
-        expiresIn: '15m',
-      },
-    );
+```
 
-    return {
-      access_token: newAccessToken,
-    };
-  } catch (error) {
-    throw new UnauthorizedException(
-      'Invalid refresh token',
-    );
-  }
+5. Change you Next.js -> fetch methods to apiFetch("/someRoute")
+
+```JS
+
+//Then insted of common way of doing everywhere ->
+// ❌ Instead of doing: fetch(`${URL}/someRoute`)
+//use: ->
+//the same with any endpoint
+apiFetch("/someRoute") //this function - attach access token automatically, detect 401 Unauthorized, call /refresh, retry request.
+//this will automatically add the access token to the header and retry once if the access token is expired.
+
+
+//only login request from Next.js should use the same common logic->
+await fetch(
+ `${BACKEND_URL}/auth/login`, //<-- when user logIn
+ {
+   method:"POST",
+   headers:{
+     "Content-Type":"application/json"
+   },
+   credentials:"include",
+   body:JSON.stringify({
+     email,
+     password
+   })
+ }
+);
+```
+
+6. Check auth/jwt.strategy.ts file
+
+```JS
+//auth/jwt.strategy.ts
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+
+ constructor(
+   private configService: ConfigService
+ ) {
+
+ super({
+   jwtFromRequest: ExtractJwt.fromExtractors([
+     (req)=> req.cookies.access_token
+   ]),
+   secretOrKey:
+     configService.get<string>("JWT_SECRET"),
+ });
+
+ }
 }
 ```
 
@@ -882,20 +925,54 @@ And often:
 -revoked on logout
 ```
 
+# Important Security Practice
+
+Many real apps also:
+
+- save refresh token in database
+- hash refresh token
+- revoke tokens on logout
+
+This prevents stolen refresh tokens from being reused.
+
+```JS
+// Access Token -> expiresIn: '15m'
+// Used for:
+// -protected APIs
+// -authorization
+// Short lifetime for security.
+
+// Refresh Token
+// expiresIn: '7d'
+// Used to:
+// -create new access tokens
+// -keep user logged in
+```
+
+```JS
+//FLOW of ACCESS and REFRESH tokens
+
+LOGIN
+  ↓
+Receive:
+- access_token
+- refresh_token
+  ↓
+Use access token for API calls
+  ↓
+Access token expires
+  ↓
+POST /refresh
+  ↓
+Receive new access token
+  ↓
+Continue normally
+```
+
 # Where and when use REFRESH
 
 ```JS
-// Example Frontend Request (Next.js)
 
-await fetch('http://localhost:3000/refresh', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    refresh_token,
-  }),
-});
 ```
 
 - You use this request when the access token expires.
@@ -929,174 +1006,7 @@ Backend returns new access token
 Retry original request
 ```
 
-### Most Common Place To Use It
-
-🔥 Usually inside:
-
-- API helper
-- fetch wrapper
-- axios interceptor
-
-❌ NOT directly inside every component.
-
 ```JS
-//Example Scenario
-
-// You call protected API:
-GET /profile
-//with expired access token.
-
-// Backend returns:
-401 Unauthorized
-
-//Then frontend automatically does:
-await fetch('http://localhost:3000/refresh', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    refresh_token,
-  }),
-});
-
-//to get new access token.
-```
-
-### Typical Next.js Structure
-
-```JS
-//Example:
-
-src/
-├── app/
-├── components/
-├── lib/
-│   └── apiFetch.ts
-└── services/
-
-////////////////////////////////////////
-//Example api.ts
-//This is where refresh logic usually lives
-
-
-//This is where refresh logic usually lives.
-// For refresh tokken and access tokken generation and validation.
-
-//Then Use It Everywhere, For example for profile route -> apiFetch('/profile')
-//apiFetch('/profile') <-- this function - attach access token automatically, detect 401 Unauthorized, call /refresh, retry request.
-//thi s will automatically add the access token to the header and retry once if the access token is expired.
-
-export async function apiFetch(
-  url: string,
-  options: RequestInit = {},
-) {
-  let accessToken =
-    localStorage.getItem('access_token');
-
-  // First request
-  let response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  // If token expired
-  // Access token expired
-  if (response.status === 401) {
-    const refreshToken =
-      localStorage.getItem('refresh_token');
-
-    // Request new access token
-    const refreshResponse = await fetch(
-      'http://localhost:3000/refresh',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          refresh_token: refreshToken,
-        }),
-      },
-    );
-
-    // Get new token
-    const refreshData =
-      await refreshResponse.json();
-
-    accessToken =
-      refreshData.access_token;
-
-    // Save new access token
-    localStorage.setItem(
-      'access_token',
-      accessToken,
-    );
-
-    // Retry original request
-    response = await fetch(url, {
-      ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  }
-
-  return response;
-}
-```
-
-Then Use It Everywhere (use this logic everywhere)
-
-```JS
-❌ // Instead of doing:
-fetch('/profile')
-
-//////////////////////////
-// you use:
-apiFetch('/profile')  //<-- for example with profile endpoint, the same with other endpoints
-```
-
-# 🔥 Where you USE apiFetch('/profile')
-
-🔥 You use it in React components or hooks.
-
-```JS
-//Example: React Page
-//Basically you make data fetch as normal but you use a function -> apiFetch('RouteToBackEndData')
-
-import { useEffect, useState } from 'react';
-import { apiFetch } from '@/lib/apiFetch';
-
-export default function ProfilePage() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function loadProfile() {
-      const res = await apiFetch('/users/1');
-
-      const data = await res.json();
-
-      setUser(data);
-    }
-
-    loadProfile();
-  }, []);
-
-  if (!user) return <p>Loading...</p>;
-
-  return (
-    <div>
-      <h1>{user.first_name}</h1>
-      <p>{user.email}</p>
-    </div>
-  );
-}
-
 //////////////////////////////////////
 // Without apiFetch
 // Every component would need to:
@@ -1132,29 +1042,6 @@ Retries original request
 UI gets data
 
 //////////////////////////////////////////////
-// Another Example
-// Create/register a user:
-
-await apiFetch('/users', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(formData),
-});
-
-
-//Another Example
-//Update profile:
-await apiFetch('/users/1', {
-  method: 'PATCH',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-});
-
-///////////
 // Think of apiFetch as a Wrapper
 
 Component
@@ -1182,16 +1069,6 @@ It is ONLY for frontend (Next.js / React).
 
 - User never notices token expiration.
 - Everything refreshes automatically.
-
-### Better Production Approach
-
-Instead of localStorage:
-
-- store refresh token in HttpOnly cookie
-
-Then browser sends it automatically.
-
-More secure.
 
 ### Simple Beginner Mental Model
 
@@ -1246,55 +1123,6 @@ handles token + refresh automatically
 returns data
 ```
 
-# ✨✨✨✨✨✨ For authentication tokens, cookies are generally considered more secure than localStorage
-
-Keep userData in NEXT.JS is better in HttpOnly cookies but NOT in useState
-
-Storing non-sensitive user data in localStorage is usually fine:
-
-```JS
-{
-  "customer_id": 1,
-  "first_name": "John",
-  "email": "john@gmail.com"
-}
-
-//storing data in localStorage is not considered best practice for production applications
-// GOOD PRACTICE is to use HttpOnly cookies
-```
-
-```JS
-Better Approach
-Use HttpOnly cookies.
-Example login response:
-
-Set-Cookie: access_token=...
-Set-Cookie: refresh_token=...
-
-with flags like:
-HttpOnly
-Secure
-SameSite=Lax
-//or
-SameSite=Strict
-```
-
-# Why HttpOnly Cookies Are Better
-
-JavaScript cannot read them.
-
-```JS
-//This fails:
-document.cookie
-//for HttpOnly cookies.
-
-//This also fails:
-localStorage.getItem('access_token')
-//because the token isn't in localStorage.
-
-So if malicious JavaScript runs on your page, it cannot directly steal the token.
-```
-
 ## Typical Modern Setup
 
 ```JS
@@ -1327,31 +1155,6 @@ fetch('/users/me', {
 //The browser automatically sends the cookies.
 ```
 
-### What Should Be Stored Where?
-
-```JS
-// Good in Cookies
-access_token
-refresh_token
-
-//Okay in localStorage
-theme
-language
-sidebar state
-
-//It is better to don't use user's data in React State / Context, better to keep it in HttpOnly cookie
-user.first_name
-user.email
-user.role
-
-//Avoid:
-localStorage.setItem(
-  'access_token',
-  token
-);
-//especially for refresh tokens.
-```
-
 ```JS
 // A common production architecture looks like:
 
@@ -1359,123 +1162,16 @@ NestJS Login
     ↓
 Sets HttpOnly Cookies
     ↓
-Next.js calls API
+Next.js calls API  //fetch request + cookie
     ↓
-Browser automatically sends cookies
+Browser automatically sends cookies //Each request From Next.js sends to Nest.js with cookie
     ↓
-NestJS validates JWT
+NestJS validates JWT //in auth/jwt.strategy.ts
     ↓
 Returns user data
 ```
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-```JS
-//auth.service.ts file
-
-import { JwtService } from '@nestjs/jwt';
-const bcrypt = require('bcrypt');
-
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { PG_POOL } from '../database/database.module';
-import { Pool } from 'pg';
-import { UserResponseDto } from './dto/response-user.dto';
-import { LoginDto } from './dto/login.dto';
-
-@Injectable()
-export class AuthService {
-  constructor(
-    @Inject(PG_POOL) private readonly pool: Pool,
-    private readonly jwtService: JwtService,
-  ) {}
-
-  async login(loginData: LoginDto) {
-    const { email, password } = loginData;
-
-    const result = await this.pool.query(
-      `SELECT * FROM customers WHERE email = $1`,
-      [email],
-    );
-
-    const user = result.rows[0];
-
-    if (!user) {
-      throw new UnauthorizedException('Invalid email or password');
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      throw new UnauthorizedException('Invalid email or password');
-    }
-
-    // 👇 JWT payload (keep it small!)
-    const payload = {
-      sub: user.customer_id,
-      email: user.email,
-      // user: user.role
-    };
-
-    // 🔐 Access Token
-    const accessToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
-      expiresIn: '15m',
-    });
-
-    // 🔄 Refresh Token
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '7d',
-    });
-
-    const userResponse: UserResponseDto = {
-      //returning user data with no password
-      customer_id: user.customer_id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      phone: user.phone,
-      customer_address: user.customer_address,
-      dob: user.dob,
-      created_at: user.created_at,
-    };
-
-    // Return response with both tokens and user data
-    return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      userResponse,
-    };
-  }
-}
-
-//here we return
-// {
-//   "access_token": "...",
-// refresh_token:"...",
-//   "userResponse": {
-//     "customer_id": 1,
-//     "first_name": "John",
-//     "email": "john@gmail.com"
-//   }
-// }
-
-// and save in NExt.js Login page:
-// localStorage.setItem(
-//   'user',
-//   JSON.stringify(user)
-// );
-
-//This works, but the data can become stale.
-// Example:
-// User logs in
-//  ↓
-// localStorage stores email
-//  ↓
-// Admin changes email in database
-//  ↓
-// localStorage still has old email
-```
 
 # Better Approach
 
@@ -1500,7 +1196,7 @@ Set-Cookie: access_token=...
 //Frontend:
 No need to save user object
 
-//Get Current User
+//Get Current User in client component
 const response = await fetch(
   'http://localhost:3000/users/me',
   {
