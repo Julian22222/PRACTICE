@@ -1,13 +1,19 @@
-# ORM
+# ⭐ ORM
 
+- Prisma allow to describe database structure in convenient way.
 - technology that allows allows to work with database by using OOP approach.
 - make it easy to work bwtween application and database, automatically transforming objects into database style data and other way round.
 - ORM is needed to improve development productivity and improving code reading and reducing number of errors during working with data.
-- Prisma is used in Back-End (with Nest.js or Node.js) with TypeScript
+- Prisma is used in Back-End (with Nsest.js or Node.js) with TypeScript
 
 ORM it is alternative way how you can work with database, without using SQL queries to work with database. Using simple objects and method chain you can make query to database without SQL.
 
-PRISMA supports a lot of Databases:
+# ➕ Advantages of Prisma, why Prisma is a top ORM?
+
+1. Prisma provide data types, Prisma automatically generate all TypeScript types based on your Database -> in Prisma/schema.prisma file
+2. Understandable and simple
+3. Automated Migration
+4. PRISMA supports a lot of Databases:
 
 - PostgreSQL
 - MySQL
@@ -18,9 +24,52 @@ PRISMA supports a lot of Databases:
 - Prisma allows to make complicated queries to database, but like any ORM it is limited.
 - Very rarely if query is very complicated you need to use SQL query to datbase.
 
+# Why you need to try to stick with the plain ORM instead of using row SQL qeries in Prisma?
+
+```JS
+//example
+//app.service.ts
+
+sqlRequest(){
+    return this.prisma.findUnique({
+        where:{
+            email:"test@test.com"
+        }
+    })
+
+    //the same query but using row SQL query in Prisma
+     return this.prisma.$queryRaw`SELECT * FROM user WHERE email = ${'test@test.com'}`
+
+}
+```
+
+❌ Disadvantages of using - row SQL queries:
+
+- it has no data types
+- it is not optimised
+- this approach is not scalable
+
+✅ But sometimes you have to use it because it has more query options that ORM doesn't have
+
+# 🌾 See how to use Prisma to seed your DB
+
+- intall tsx
+
+```bash
+npm install -D tsx
+```
+
+- in prisma folder create - seed.ts file
+- add this line -> seed: 'tsx prisma/seed.ts', in -> prisma.config.ts file
+- run command
+
+```JS
+npx prisma db seed
+```
+
 # 👉 Prisma START
 
-1. Install Prisma
+1. Install Nest (we will use -> Nest.js + Prisma)
 
 ```JS
 //in terminal install NEST.JS
@@ -41,14 +90,18 @@ sudo npm install -g @nestjs/cli@latest
 //Always uses the latest version automatically
 
 //nest.js CLI --> it is the way to help you to generate new projects and also has a couple other extra commands and create new files for you and it will make it easier
+```
 
-npm install pg
+```JS
+npm install pg //install postgreSQL DB
 npm install -D @types/pg  //Install pg types if needed
+```
 
-
+```JS
 npm install @nestjs/config //Instal to use process.env instead of using require('dotenv').config()
+//therefore don't need to instal -> npm i dotenv
 
-//and add in app.module.ts
+//add in app.module.ts
 import { ConfigModule } from '@nestjs/config'; //npm install @nestjs/config
 
 @Module({
@@ -64,7 +117,7 @@ import { ConfigModule } from '@nestjs/config'; //npm install @nestjs/config
 export class AppModule {}
 ```
 
-2. Initialize Prisma
+2. Install Prisma & Initialize Prisma
 
 ```JS
 //go to my-app folder
@@ -85,9 +138,9 @@ npm install @prisma/adapter-pg //Install the Prisma PostgreSQL adapter
 //npm install @prisma/adapter-better-sqlite3
 //and other databases adapters - etc.
 
+
 npx prisma init //initialize Prisma
 //This creates:
-
 // prisma/
 //   schema.prisma
 // .env
@@ -111,8 +164,11 @@ npx prisma init //initialize Prisma
 3. Configure the database
 
 ```JS
-In .env:
+//In .env:
 DATABASE_URL="postgresql://postgres:password@localhost:5432/mydb?schema=public" //for PSQL
+//postgresql - which db you are using
+//postgres - psql username
+//mydb - your DB name
 
 //DATABASE_URL="mysql://root:password@localhost:3306/mydb"   //for MySQL
 //DATABASE_URL="file:./dev.db"  //for SQLite
@@ -131,10 +187,29 @@ datasource db {
 //   url      = env("DATABASE_URL")
 }
 
+//add your models here, (tables with its fields)
+//Prisma models
+//Prisma has a special language that allows to describe your models
+//Model it is a table in your database
 model User {
   id    Int    @id @default(autoincrement())
   email String @unique
   name  String?
+  posts    Post[] //<--one user can have many posts
+
+  @@map("users") //<--@map allow to rename this table in Database from User to users
+}
+
+model Post {
+  id       String     @id  @default(cuid())
+  title    String
+  content  String?
+  isPublished   Boolean   @default(false) @map("is_published")  //<--@map allow to rename this filed in Database to -> is_published
+  author      User    @relation (fields: [authorId],  references: [id])  //link to another table with connection by authorId and refernce - id, each post has one User
+  authorId   String   @map("author_id")  //<--@map allow to rename this filed in Database to -> author_id
+  createdAt   DateTime  @default(now())  @map("created_at")
+
+  @@map("posts")
 }
 ```
 
@@ -185,32 +260,21 @@ export class PrismaService extends PrismaClient {
 }
 ```
 
-```JS
-//prisma.module.ts
-
-import { Global, Module } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-
-@Global()
-@Module({
-  providers: [PrismaService],
-  exports: [PrismaService],
-})
-export class PrismaModule {}
-
-//Using @Global() means you only import the module once.
-```
-
-7. Import the module
+7. Import Prisma into the module - app.module.ts
 
 ```JS
 //app.module.ts
 
-import { Module } from '@nestjs/common';
-import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule],
+  //use ConfigModule.forRoot() to load environment variables from .env file, instead of using require('dotenv').config()
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
 ```
@@ -218,7 +282,7 @@ export class AppModule {}
 8. Inject Prisma anywhere
 
 ```JS
-//Example service
+//Example service - app.service.ts
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
@@ -242,19 +306,148 @@ export class UsersService {
 }
 ```
 
-# ✅ Useful Prisma commands
+# ⛓️‍💥 Transactions - ACID
+
+- provide all data validation if you make many database operations. For example: you create user + you create posts for this user at the same method. if there is an erro of creating a user it will not create posts in databse. It will roll back
+
+see app.service.ts file
+
+# 👀 Complicated queries in Prisma
+
+Use SQL queries in Prisma
+
+- if you need to use Join, LeftJoin, etc. or some calculation operations as SQL request, you can't do it with plain ORM
 
 ```JS
+//app.service.ts
+
+  sqlRequest() {
+    //this is an example of how to use raw SQL queries in Prisma, you can use raw SQL queries to execute any SQL query, for example if you want to select all users from the database, you can use this.prisma.$queryRaw`SELECT * FROM users`
+    return this.prisma.$queryRaw`SELECT * FROM users WHERE email = ${'test@test.com'} `; //in quotes you can use any SQL query, for example if you want to select all users from the database, you can use this.prisma.$queryRaw`SELECT * FROM users`
+  }
+```
+
+# ⚟ Prisma allows to separate your schema into many small schemas
+
+you always start with one schema -> prisma/schema.prisma
+
+If you have a large project that has many lines of code- many models, it is convenient to separate your schema into smaller schema files, for better reading and orentation in your code.
+
+- name your new schemas using -> short names(For example: user.prisma).
+- create new foleder -> schema, and put all your schemas there (schema.prisma, user.prisma,post.prisma , etc.)
+- if you separate schemas -> in schema.prisma add previewFeatures field
+
+```JS
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+```
+
+```JS
+//Prisma structure
+//Recommended project structure
+
+myapp/
+│
+├── generated/   //Generated Prisma Client / TypeScript code
+│
+├── prisma/
+│   ├── migrations/  //Database migration history
+│   ├── 202608..._init/
+│   │   └── ...
+│   │
+│   ├── schema/
+│   │     ├── schema.prisma //Main Prisma schema(file) / configuration
+│   │     ├── user.prisma  //User model(s), separattion into smaller schemas (splitting your Prisma schema into multiple files)
+│   │     └── post.prisma  //separattion into smaller schemas (splitting your Prisma schema into multiple files)
+│   │
+│   └──  seed.ts  //Database seeding script
+│
+├── src/
+│   ├── main.ts  //NestJS application entry point
+│   ├── app.module.ts
+│   ├── prisma/
+│   │   ├── prisma.service.ts
+│   │   └── prisma.module.ts
+│   └── ...                    // Other NestJS modules/services/controllers
+│
+├── test/
+│
+├── package-lock.json
+├── package.json
+├── prisma.config.ts  // Prisma CLI/configuration
+├── tsconfig.json  //TypeScript configuration
+```
+
+```JS
+//prisma/schema/user.prisma
+
+    model User {  //you can use -> User in your project with TypeScript as a data type
+    id       String     @id @default(cuid())
+    email    String     @unique
+    name     String?
+    posts    Post[] //<--one user can have many posts
+
+    @@map("users") //<--@map allow to rename this table in Database from User to users
+    }
+
+
+//prisma/schema/post.prisma
+    model Post {
+    id       String     @id  @default(cuid())
+    title    String
+    content  String?
+    isPublished   Boolean   @default(false) @map("is_published")  //<--@map allow to rename this filed in Database to -> is_published
+    author      User    @relation (fields: [authorId],  references: [id])  //link to another table with connection by authorId and refernce - id, each post has one User
+    authorId   String   @map("author_id")  //<--@map allow to rename this filed in Database to -> author_id
+    createdAt   DateTime  @default(now())  @map("created_at")
+
+    @@map("posts")
+    }
+```
+
+```JS
+//Flow
+
+NestJS
+│
+├── Controller
+│
+├── Service
+│       │
+│       ↓
+│   PrismaService
+│       │
+│       ↓
+│   Prisma Client
+│       │
+│       ↓
+└──── Database
+```
+
+# ✅ Useful Prisma commands
+
+make migrations -> then generate (after changes)
+
+```JS
+//do this command first
+//npx prisma generate → reads the Prisma schema and generates the Prisma Client and related TypeScript types into the configured generated/ directory.
+//npx prisma generate → converts the Prisma schema into generated TypeScript code (Prisma Client and types).
+
 //# Generate Prisma Client
 npx prisma generate
 //Generates the Prisma Client after changing `schema.prisma`.
+//this command add new data to your DB
 
 //# Create and apply a migration
 npx prisma migrate dev --name add_users
 
 //🔥 MIGRATIONS
+//this command only in Development env.
 npx prisma migrate dev --name init //<-- first migration
-npx prisma migrate dev --name add_createdAt_to_post //add migration when we added createdAt field to Post table
+npx prisma migrate dev --name add_createdAt_to_post //add migration when we added createdAt field to Post table, name migration depending from changes that you did
 // - Creates a new migration.
 // - Applies it to your development database.
 // - Updates the Prisma Client.
@@ -270,7 +463,8 @@ npx prisma migrate status
 
 //# Open Prisma Studio (GUI)
 //Opens a web GUI for viewing and editing your database.
-npx prisma studio
+npx prisma studio  //Prisma Studio is a visual web interface for viewing and editing the data in your database.
+//after this command -> Prisma starts a local web application where you can see your database tables and records.
 
 //# Reset the database
 npx prisma migrate reset
@@ -280,58 +474,37 @@ npx prisma migrate reset
 // - Regenerates the Prisma Client.
 
 
-//is used only in Development environment.
-//In Production environment use Migrations ONLY !!!
+//✅ is used only in Development environment. //used only in local development, when learning PRISMA
+//✅ In Production environment use Migrations ONLY !!!
 npx prisma db push //to add data from code into your Database
-//used only in local development, when learning PRISMA
-//with "db push" command you can't return back to previous data, you overwrite hardly all data in Database, it is not safe, because all data in database is overwriten, Prisma will warn you before applying destructive changes.
-//The main reason it's not recommended for production is that it doesn't create migration files, so there's no versioned history of schema changes.
+//❌ with "db push" command you can't return back to previous data, you overwrite hardly all data in Database, it is not safe, because all data in database is overwriten, Prisma will warn you before applying destructive changes.
+//The main reason it's not recommended this command for production is that it doesn't create migration files, so there's no versioned history of schema changes.
 
-npx prisma db pull //to turn your DB schema into a Prisma schema
+npx prisma db pull //to turn your DB schema into a Prisma schema, (if you have already data in your DB and you want to convert data into -> Prisma schema)
 // Useful when:
 // - connecting Prisma to an existing database
 // - another tool changed the database schema
 ```
 
-## Migrations
+## 📊 Migrations
 
-- Migrations allow to track code changes, fileds changes
-- If you add,edit, delete any filed in Prisma schema/model it will record all changes
+- Migrations allow to track code changes and fields changes
+- If you add, edit, delete any filed in Prisma schema/model it will record all changes, -> Migrations has DB changes history
+- Migrations allow to return back to previous migration version
 
 ```JS
 //Don't use this command in Production env
 npx prisma migrate dev --name init
 //migration command create a "migrations" folder with new file -> prisma/migrations/migrationFile -> this file has all changes in SQL that you made
+
 //If you need to delete any migration file - delete it from prisma/migration folder and delete that migration from the Database table -> Table "Migrations" in your DB, all migrations are recorder there as well
 
 //In Development environment - this command automatically will change data and will work!!!
 
-// 🚀 In Production environmnet: -
+// 🚀 In Production environmnet: - if you want to apply new migration (apply new changes for your DB)
 //- push your new code to GitHub (using CI/CD for example)
 // - to apply new migration you need to run command->
 npx prisma migrate deploy
-```
-
-# Recommended project structure
-
-```JS
-src/
-│
-├── prisma/
-│   ├── prisma.module.ts
-│   └── prisma.service.ts
-│
-├── users/
-│   ├── users.controller.ts
-│   ├── users.service.ts
-│   └── users.module.ts
-│
-├── app.module.ts
-└── main.ts
-
-prisma/
-│
-└── schema.prisma
 ```
 
 ## Prisma connection to DB:
