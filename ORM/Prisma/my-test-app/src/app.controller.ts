@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service.js';
 import { User } from 'generated/prisma/client.js';
+import { get } from 'http';
 
 @Controller()
 export class AppController {
@@ -22,6 +23,11 @@ export class AppController {
   @Get('users')
   getUsers(): Promise<User[]> {
     return this.appService.getUsers();
+  }
+
+  @Get('test')
+  async getUser(): Promise<User[]> {
+    return this.appService.getUser();
   }
 
   @Post('users')

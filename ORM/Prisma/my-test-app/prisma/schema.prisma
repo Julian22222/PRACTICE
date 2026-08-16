@@ -1,9 +1,15 @@
 // This is your Prisma schema file,
+
+//these are  settings for Prisma Client generation command, it will generate Prisma Client in the specified output folder
+//we write in Prisma format but it return in TypeScript format
 generator client {
+  //provider is the name of the generator, in this case it is Prisma Client, which is a TypeScript/JavaScript client for your database
   provider = "prisma-client"
+  //output is the folder where the generated Prisma Client will be saved, in this case it will be saved in the generated/prisma folder
   output   = "../generated/prisma"
 }
 
+//indicate what DB are you using 
 datasource db {
   provider = "postgresql"
 }
@@ -12,24 +18,39 @@ datasource db {
 //Prisma has a special language that allows to describe your models
 //Model it is a table in your database
 
+//User we will use this model for data types
 model User {
-  id       String     @id @default(cuid())
-  email    String     @unique
-  name     String?
+  id       String     @id @default(cuid()) //cuid is strong format for id than uuid format, it will generate a random string for each new user
+  email    String     @unique //unique is a constraint that will ensure that no two users can have the same email
+  name     String?  //? means that this field is optional, it can be null
   posts    Post[] //<--one user can have many posts
 
-  @@map("users") //<--@map allow to rename this table in Database to users
-}
+  createdAt   DateTime  @default(now())  @map("created_at") //now() is a function that will return the current date and time, @map allow to rename this filed in Database to -> created_at
+  updatedAt   DateTime  @updatedAt  @map("updated_at") //updatedAt is a special field that will be updated automatically when the user is updated, @map allow to rename this filed in Database to -> updated_at
+  //all databases Must use - snake case (created_at for example), it is a way to write names of tables and columns in a way that is easy to read, for example, created_at instead of createdAt, updated_at instead of updatedAt
 
+  @@map("users") //<--@map allow to rename this table in Database from User to users
+  //'users' is the name of the table in the database, it is a convention to use plural names for tables, for example, users instead of user, posts instead of post
+}
+//also can be written as, with uuid format as default value for id
+//  id       String     @id @default(uuid()) //<--@id is the primary key, @default(uuid()) is the default value for the primary key, it will generate a random uuid for each new user
 
 model Post {
   id       String     @id  @default(cuid())
   title    String
   content  String?
   isPublished   Boolean   @default(false) @map("is_published")  //<--@map allow to rename this filed in Database to -> is_published
+  
+  //author field has - User data type
+  //relation - connection link authorId from Post table to id from User table
   author      User    @relation (fields: [authorId],  references: [id])  //link to another table with connection by authorId and refernce - id, each post has one User
   authorId   String   @map("author_id")  //<--@map allow to rename this filed in Database to -> author_id
   createdAt   DateTime  @default(now())  @map("created_at")
 
+//EXAMPLE if you have video and user and user can make only 1 like for each video, you can use composite unique constraint to ensure that no two likes can have the same userId and videoId, for example, if user1 has liked video1, user1 cannot like video1 again, but user2 can like video1, and user1 can like video2
+//@@unique[authorId, title]  //<--@unique is a constraint that will ensure that no two posts can have the same title for the same author, it is a composite unique constraint, it will ensure that no two posts can have the same title for the same author, for example, if user1 has a post with title 'Hello World', user2 can also have a post with title 'Hello World', but user1 cannot have another post with title 'Hello World'
   @@map("posts")
 }
+
+//all models must have: createdAt, updatedAt and id fields, and all models must use snake case for field names in the database, for example, created_at instead of createdAt, updated_at instead of updatedAt
+//also all models must use plural names for tables, for example, users instead of user, posts instead of post
