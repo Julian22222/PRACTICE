@@ -934,6 +934,10 @@ Why use NEXT_PUBLIC_?
 
 By default, environment variables in Next.js are only available server-side.
 If you want to expose an environment variable to your browser (client-side) code, you need to prefix it with NEXT_PUBLIC_.
+
+Also, if you use -> NEXT_PUBLIC_
+to read its values you can use in Next.js components-> {process.env.NEXT_PUBLIC_BACK_END_URL} without -> require("dotenv").config()
+//Next.js reads NEXT_PUBLIC_ values without dotenv
 ```
 
 ```JS
