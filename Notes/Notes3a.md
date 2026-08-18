@@ -2,6 +2,7 @@
 
 # React Input
 
+```JS
 <input type="hidden" />
 
 type="radio"
@@ -25,6 +26,7 @@ type="datetime-local"
 type="file"
 type="image"
 type="color"
+```
 
 # 🔥 REACT BASIC INFO
 
