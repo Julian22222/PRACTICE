@@ -19,7 +19,7 @@ process.env.DB //for example
 
 ```JS
 //Now you don't need to use ->  require('dotenv').config(); on the top of the each file to use process.env.
-
+// It is Bad Practice to use require("dotenv").config() -> in Nest.js
 //Bank/bank-api/src/app.module.ts
 
 import { ConfigModule } from '@nestjs/config';
