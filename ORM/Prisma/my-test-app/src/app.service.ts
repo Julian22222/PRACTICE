@@ -9,13 +9,13 @@ export class AppService {
   //use PrismaService in contsructor
   constructor(private readonly prisma: PrismaService) {}
 
-  async getUsers(): Promise<User[]> {
+  getUsers(): Promise<User[]> {
     //work with imported prisma from constructor in this class-> this.prisma,
     // get data from table -> user and use method findMany()
     return this.prisma.user.findMany();
   }
 
-  async getUser() {
+  getUser() {
     //for example we want to find all user which have Alice name in database, search is case insensitive, so it will find Alice, alice, ALICE, etc
     const name = 'Alice';
     return this.prisma.user.findMany({
@@ -32,7 +32,7 @@ export class AppService {
     });
   }
 
-  async getUserTest() {
+  getUserTest() {
     const name = 'Alice';
     return this.prisma.user.findMany({
       include: {
@@ -54,7 +54,12 @@ export class AppService {
     });
   }
 
-  async createUser(name: string, email: string) {
+  //this is correct Prisma code, assuming your User ↔ Post relation is set up correctly in your Prisma schema.
+  //Here is used Prisma feature called a nested write
+  //You're creating two records in one operation
+  //You don't need to manually provide the authorId for the post -> Prisma understands the relation according to Prisma schema
+  //You create the new user and new post at once. You do not need: this.prisma.post.create(...) - if you use nested operations
+  createUser(name: string, email: string) {
     return this.prisma.user.create({
       data: {
         name,
@@ -71,7 +76,7 @@ export class AppService {
     });
   }
 
-  async updateUser(id: string, name: string, email: string) {
+  updateUser(id: string, name: string, email: string) {
     return this.prisma.user.update({
       where: { id }, //update user whith this id
       data: { name, email }, //update name and email

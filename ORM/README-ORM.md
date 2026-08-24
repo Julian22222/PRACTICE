@@ -2,11 +2,11 @@
 
 - Prisma allow to describe database structure in convenient way.
 - technology that allows allows to work with database by using OOP approach.
-- make it easy to work bwtween application and database, automatically transforming objects into database style data and other way round.
-- ORM is needed to improve development productivity and improving code reading and reducing number of errors during working with data.
-- Prisma is used in Back-End (with Nsest.js or Node.js) with TypeScript
+- make it easy to work with database, where PRISMA located between application and database. Prisma can automatically transform objects into database style data and other way round.
+- ORM improving development and code reading and reducing number of errors during working with data.
+- Prisma is used in Back-End (with Nest.js or Node.js) with TypeScript
 
-ORM it is alternative way how you can work with database, without using SQL queries to work with database. Using simple objects and method chain you can make query to database without SQL.
+ORM it is alternative way how you can work with database, without using SQL queries to work with database. Using simple objects and method chain, you can make queries to database without SQL.
 
 # ➕ Advantages of Prisma, why Prisma is a top ORM?
 
@@ -21,17 +21,17 @@ ORM it is alternative way how you can work with database, without using SQL quer
 - mongoDB
 - and others
 
-- Prisma allows to make complicated queries to database, but like any ORM it is limited.
+- Prisma allows to make complicated queries to database, but like any other ORM it is limited.
 - Very rarely if query is very complicated you need to use SQL query to datbase.
 
-# Why you need to try to stick with the plain ORM instead of using row SQL qeries in Prisma?
+# ❗Why you need to try to stick with the plain ORM instead of using row SQL qeries in Prisma?
 
 ```JS
 //example
 //app.service.ts
 
 sqlRequest(){
-    return this.prisma.findUnique({
+    return this.prisma.user.findUnique({
         where:{
             email:"test@test.com"
         }
@@ -46,7 +46,7 @@ sqlRequest(){
 ❌ Disadvantages of using - row SQL queries:
 
 - it has no data types
-- it is not optimised
+- Doesn't support optimisation
 - this approach is not scalable
 
 ✅ But sometimes you have to use it because it has more query options that ORM doesn't have
@@ -60,10 +60,29 @@ npm install -D tsx
 ```
 
 - in prisma folder create - seed.ts file
-- add this line -> seed: 'tsx prisma/seed.ts', in -> prisma.config.ts file
-- run command
 
 ```JS
+//prisma.config.ts
+
+import 'dotenv/config';
+import { defineConfig } from 'prisma/config';
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  migrations: {
+    path: 'prisma/migrations',
+    seed: 'tsx prisma/seed.ts',  //<-- add this line
+    //it is prisma config, thr same as you write in package.json scripts.
+    // It means use tsx and run file seed.ts  in this path, then you can run this script by - npx prisma db seed
+  },
+  datasource: {
+    url: process.env['DATABASE_URL'],
+  },
+});
+```
+
+```JS
+//then run command
 npx prisma db seed
 ```
 
@@ -179,25 +198,38 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/mydb?schema=public" 
 ```JS
 //Example
 generator client {
-  provider = "prisma-client-js"
+  //provider is the name of the generator, in this case it is Prisma Client, which is a TypeScript/JavaScript client for your database
+  provider = "prisma-client"
+  //output is the folder where the generated Prisma Client will be saved, in this case it will be saved in the generated/prisma folder
+  output   = "../generated/prisma"
 }
 
+//indicate what DB are you using
 datasource db {
   provider = "postgresql"
-//   url      = env("DATABASE_URL")
 }
+
+//Prisma models
+//Prisma has a special language that allows to describe your models
+//Model it is a table in your database
 
 //add your models here, (tables with its fields)
 //Prisma models
 //Prisma has a special language that allows to describe your models
 //Model it is a table in your database
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String?
+  id    Int    @id @default(autoincrement())  //@default(cuid()) //cuid is strong format for id than uuid format, it will generate a random string for each new user
+  email String @unique //unique is a constraint that will ensure that no two users can have the same email
+  name  String?   //? means that this field is optional, it can be null
   posts    Post[] //<--one user can have many posts
 
+  createdAt   DateTime  @default(now())  @map("created_at") //now() is a function that will return the current date and time, @map allow to rename this filed in Database to -> created_at
+  updatedAt   DateTime  @updatedAt  @map("updated_at") //updatedAt is a special field that will be updated automatically when the user is updated, @map allow to rename this filed in Database to -> updated_at
+  //all databases Must use - snake case (created_at for example), it is a way to write names of tables and columns in a way that is easy to read, for example, created_at instead of createdAt, updated_at instead of updatedAt
+
+
   @@map("users") //<--@map allow to rename this table in Database from User to users
+   //'users' is the name of the table in the database, it is a convention to use plural names for tables, for example, users instead of user, posts instead of post
 }
 
 model Post {
@@ -205,12 +237,20 @@ model Post {
   title    String
   content  String?
   isPublished   Boolean   @default(false) @map("is_published")  //<--@map allow to rename this filed in Database to -> is_published
+
+  //author field has - User data type
+  //relation - connection link authorId from Post table to id from User table
   author      User    @relation (fields: [authorId],  references: [id])  //link to another table with connection by authorId and refernce - id, each post has one User
   authorId   String   @map("author_id")  //<--@map allow to rename this filed in Database to -> author_id
   createdAt   DateTime  @default(now())  @map("created_at")
 
+  //EXAMPLE if you have video and user and user can make only 1 like for each video, you can use composite unique constraint to ensure that no two likes can have the same userId and videoId, for example, if user1 has liked video1, user1 cannot like video1 again, but user2 can like video1, and user1 can like video2
+  //@@unique[authorId, title]  //<--@unique is a constraint that will ensure that no two posts can have the same title for the same author, it is a composite unique constraint, it will ensure that no two posts can have the same title for the same author, for example, if user1 has a post with title 'Hello World', user2 can also have a post with title 'Hello World', but user1 cannot have another post with title 'Hello World'
   @@map("posts")
 }
+
+//all models must have: createdAt, updatedAt and id fields, and all models must use snake case for field names in the database, for example, created_at instead of createdAt, updated_at instead of updatedAt
+//also all models must use plural names for tables, for example, users instead of user, posts instead of post
 ```
 
 5. Create the database
@@ -306,11 +346,84 @@ export class UsersService {
 }
 ```
 
+# ❓ When use async/await with PRISMA
+
+```JS
+//if you just return the Promise - don't need async/await. Also, You could write: with async/await
+const user = await this.prisma.user.findUnique({
+  where: { id: userId },
+});
+
+
+
+//You do NEED async/await when you actually want to do something with the result:
+async findUser() {
+  const user = await this.prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  console.log(user);
+
+  return user;
+}
+```
+
 # ⛓️‍💥 Transactions - ACID
 
 - provide all data validation if you make many database operations. For example: you create user + you create posts for this user at the same method. if there is an erro of creating a user it will not create posts in databse. It will roll back
 
-see app.service.ts file
+```JS
+//app.service.ts
+
+//transactions always use async/await
+
+  async transactions() {
+    //this is an example of how to use transactions in Prisma, you can use transactions to execute multiple queries in a single transaction, if one of the queries fails, all queries will be rolled back
+    const [newUser, newPost] = await this.prisma.$transaction([
+      //create a new user
+      this.prisma.user.create({
+        data: {
+          name: 'Bob',
+          email: 'bob@example.com',
+        },
+      }),
+      //create a new post for the new user
+      this.prisma.post.create({
+        data: {
+          title: 'My First Post',
+          content: 'This is the content of my first post',
+          authorId: 'user-id', // Replace with the actual user ID
+        },
+      }),
+    ]);
+  }
+```
+
+```JS
+//OR interactive transaction syntax
+
+async transactions() {
+  return this.prisma.$transaction(async (tx) => {
+    const newUser = await tx.user.create({
+      data: {
+        name: 'Bob',
+        email: 'bob@example.com',
+      },
+    });
+
+    const newPost = await tx.post.create({
+      data: {
+        title: 'My First Post',
+        content: 'This is the content of my first post',
+        authorId: newUser.id,
+      },
+    });
+
+    return { newUser, newPost };
+  });
+}
+
+```
 
 # 👀 Complicated queries in Prisma
 
