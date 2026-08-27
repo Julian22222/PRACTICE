@@ -71,7 +71,120 @@ const hashedPassword = await bcrypt.hash(password, 10);
 //Lower number: ❌ Less secure, ✅ Faster hashing
 ```
 
-# 🔥 JWT
+#### There is different Auth methods
+
+- Sessions Auth (hashed password & session id). Headers pass session id to back-End with the request, compare session id with DB session id
+
+Disadvantages - if tokken will be leaked than that user has all rights in your app
+
+- JWT (don't need to compare any data to DB )
+
+More secured - has access and refresh tokens, each token has expiry time
+
+- OAuth, OAuth2, OpenID (Authorization using other websites)
+
+Each method has pros and cons
+
+# 🔥 JWT - Json Web Token (JSON -JavaScript object notation)
+
+It is Authentication and Authorization method
+
+//Without JWT
+
+Each click in browser - it is separate request to B-End server. (For example: put like, add movie to favorites, click on some content, etc.)During each user request, server must check user details, whom is making that request and do Authentication and Authorization (what is allow to this user). Therefore on each request user will need Login, everyt time.
+
+JWT - it is an access that contains all user details (Name, subscription, etc.) for B-end servers, Jwt allows to don't Login on each request to B-End server. Don't need to connect to Databse to get JWT. Developer create details that will be in JWT.
+
+![pic03](https://github.com/Julian22222/PRACTICE/blob/main/Notes/IMG/jwt2.jpg)
+
+```JS
+//JWT Flow
+
+Example JWT Flow:
+1.User logs in
+2.Server checks email/password in Database
+- IF email/password matrches
+3.Server creates JWT token (set access token & refresh token)
+4.Token returned to frontend (keeps token in browser -> cookies)
+- Browser link the JWT token to your F-end
+5.Frontend sends token together with request
+6.Backend verifies token (by decoding the JWT token). DONT need to make request to Database to validate token!!! All user details is in token
+- Here it compares all 3 parts of JWT token. Compare JWT secret with signature part
+
+//////////////////////////////////
+🔁 Full flow
+
+1. Login
+
+✔ get JWT
+
+2. Request protected route
+Authorization: Bearer token
+
+3. Guard checks token
+
+✔ valid → allow
+❌ invalid → block
+
+4. Controller runs only if valid
+
+5. in Case of access token valid but expired - server return status code 403 or 401.
+
+- Then Front-End send the request to B-End server with refresh tokken (with refresh token)
+
+- then B-end send a responce back with new pair of access and refresh token
+
+If access token is expired and refresh token is expired -> user Must LogIn again
+
+
+///////////////////////////////////////
+
+// A common production architecture looks like:
+
+NestJS Login
+    ↓
+Sets HttpOnly Cookies
+    ↓
+Next.js calls API  //fetch request + cookie
+    ↓
+Browser automatically sends cookies //Each request From Next.js sends to Nest.js with cookie
+    ↓
+NestJS validates JWT //in auth/jwt.strategy.ts
+    ↓
+Returns user data
+
+///////////////////////////
+
+Access token expired?
+        ↓
+Frontend silently calls /refresh
+        ↓
+Gets new access token
+        ↓
+Retries failed request
+
+```
+
+#### Why This Is Powerful
+
+- User never notices token expiration.
+- Everything refreshes automatically.
+
+### What JWT access token? (that is created in server)
+
+![pic02](https://github.com/Julian22222/PRACTICE/blob/main/Notes/IMG/jwt1.jpg)
+
+```JS
+//Example Token Structure: JWT looks like ->
+// xxxxx.yyyyy.zzzzz                <--///// Token parts: Header, Payload, Signature.
+
+//JWT token a long string including letters and numbers, which consist from 3 parts:
+//- Header (it is encrypted object that contains JWT token settings )
+//- Payload (encrypted object that contains User details, thta is loged in). ❗ DON'T ADD PASSWORD OR SECRETS HERE
+//- Signature (Header + Payload + secret) -> encrypt(header,payload, secret)
+
+//The signature is generated using: payload data and your secret
+```
 
 - JWT in HttpOnly Cookies (Access token + Refresh token pattern) ✅ the most common and recommended approach for web apps. Common for:
 
@@ -141,9 +254,7 @@ export class AuthModule {}  //<--Creates and exports the module class.Other modu
 //This is the secret key used to create and verify JWT tokens.Think of it like a private password that only your server knows.
 👉//Why JWT Needs a Secret-> When the server creates a JWT token, it signs the token using the secret.
 // using JWT secret -> server can detect fake tokens, modified tokens, hackers editing payload data
-//When creating token: jwtService.sign(payload) <--NestJS internally uses: payload + secret (to generate a cryptographic signature.)
-//Example Token Structure: JWT looks like -> xxxxx.yyyyy.zzzzz  ///// Token parts: Header, Payload, Signature.
-//The signature is generated using: payload data and your secret
+
 JWT_SECRET=my_super_secret_key
 
 
@@ -525,35 +636,6 @@ getProfile(@Request() req) {
 - transactions
 - admin routes
 - user-specific data
-
-#### httpOnly cookies (best practice)
-
-```JS
-Example JWT Flow:
-1.User logs in
-2.Server checks email/password
-3.Server creates JWT token
-4.Token returned to frontend
-5.Frontend sends token in requests
-6.Backend verifies token
-
-//////////////////////////////////
-🔁 Full flow
-
-1. Login
-
-✔ get JWT
-
-2. Request protected route
-Authorization: Bearer token
-
-3. Guard checks token
-
-✔ valid → allow
-❌ invalid → block
-
-4. Controller runs only if valid
-```
 
 # Real authentication systems there are usually two tokens
 
@@ -1065,23 +1147,6 @@ Returns response
 
 It is ONLY for frontend (Next.js / React).
 
-#### Why This Is Powerful
-
-- User never notices token expiration.
-- Everything refreshes automatically.
-
-### Simple Beginner Mental Model
-
-```JS
-Access token expired?
-        ↓
-Frontend silently calls /refresh
-        ↓
-Gets new access token
-        ↓
-Retries failed request
-```
-
 # Better pattern (real apps)
 
 Instead of calling /profile directly, you usually do:
@@ -1122,56 +1187,6 @@ handles token + refresh automatically
    ↓
 returns data
 ```
-
-## Typical Modern Setup
-
-```JS
-//➡️ Backend (NestJS)
-
-//Login:
-POST /auth/login
-
-// it returns:
-Set-Cookie:
-- access_token
-- refresh_token
-
-//instead of:
-{
-  "access_token": "...",
-  "refresh_token": "..."
-}
-
-/////////////////////////
-
-//➡️ Frontend (Next.js)
-
-// You don't store tokens manually.
-// Requests simply include:
-
-fetch('/users/me', {
-  credentials: 'include',
-});
-//The browser automatically sends the cookies.
-```
-
-```JS
-// A common production architecture looks like:
-
-NestJS Login
-    ↓
-Sets HttpOnly Cookies
-    ↓
-Next.js calls API  //fetch request + cookie
-    ↓
-Browser automatically sends cookies //Each request From Next.js sends to Nest.js with cookie
-    ↓
-NestJS validates JWT //in auth/jwt.strategy.ts
-    ↓
-Returns user data
-```
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 # Better Approach
 
