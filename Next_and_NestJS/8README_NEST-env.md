@@ -22,6 +22,8 @@ process.env.DB //for example
 // It is Bad Practice to use require("dotenv").config() -> in Nest.js
 //Bank/bank-api/src/app.module.ts
 
+//npm i @nestjs/config
+
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
