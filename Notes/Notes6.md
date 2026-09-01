@@ -2,6 +2,8 @@
 
 use Nest.js as a Back-end
 
+in case of chat -> should be open connection, therefore need to install Socket.IO, if it is just usual microservice, use usual Nest.js + separate DB
+
 ```JS
 nest new chat --skip-git  //isnatll Nest.js
 
