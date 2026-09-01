@@ -1,5 +1,144 @@
 # Microservices
 
+use Nest.js as a Back-end
+
+```JS
+nest new chat --skip-git  //isnatll Nest.js
+
+cd chat
+
+//for Production is better to use Socket.IO on top of Nest WebSockets, rather than raw WebSocket initially
+//Socket.IO or ws is the underlying transport/library
+//Nest supports Socket.IO through its WebSocket gateway system, and Socket.IO also gives you useful features around rooms, reconnection, acknowledgements, etc.
+npm install @nestjs/websockets @nestjs/platform-socket.io socket.io   //Install Socket.IO
+
+//Install Prisma:
+npm install @prisma/client
+npm install -D prisma
+
+//Initialize Prisma
+npx prisma init
+```
+
+```JS
+//why choose Socket.IO in Production over WebSocket
+//Socket.IO normally establishes a WebSocket connection, but provides additional reliability features such as fallback to HTTP long-polling and automatic reconnection.
+
+//Advantages of Socket.IO:
+//The biggest advantage: reconnection (if you loose theconnection or signal, with raw WebSocket you have to write it manually)
+//Rooms are extremely useful for chat -> Conversation A room ,Conversation B room ...
+//Scaling becomes much easier
+//Socket.IO gives you an event-oriented API
+//Acknowledgements are useful for messaging
+//Socket.IO provides more functionality, but that comes with overhead.
+
+
+Next.js → Socket.IO client → Socket.IO → NestJS Gateway → Chat service → DB/Redis
+
+//rather than:
+Next.js → native WebSocket → NestJS WsAdapter → Chat service
+
+
+
+//Why I'd choose Socket.IO for your chat
+
+| Concern                      | Raw WebSocket   | Socket.IO          |
+| ---------------------------- | --------------  | ------------------ |
+| Basic realtime messages      | ✅              | ✅                 |
+| Automatic reconnect          | ❌ build it     | ✅                 |
+| Connection state handling    | ❌ build it     | ✅                 |
+| Rooms                        | ❌ build it     | ✅                 |
+| Namespaces                   | ❌              | ✅                 |
+| Broadcast to groups          | ❌ build it     | ✅                 |
+| Acknowledgements             | ❌ build it     | ✅                 |
+| Fallback when WS unavailable | ❌              | ✅                 |
+| Multi-server adapter         | Build yourself  | Redis adapter etc. |
+| Protocol overhead            | 🟢 Lower        | 🟡 Higher          |
+| Maximum control              | 🟢              | 🟡                 |
+| Development complexity       | 🔴 Higher       | 🟢 Lower           |
+
+
+```
+
+# Architecture
+
+```JS
+                    ┌─────────────────────┐
+                    │     Next.js F-End   │
+                    │                     │
+                    │ REST + Socket.IO    │
+                    └──────────┬──────────┘
+                               │
+                  ┌────────────┴────────────┐
+                  │                         │
+              HTTP/REST                 WebSocket
+                  │                         │
+                  ▼                         ▼
+        ┌──────────────────┐      ┌──────────────────┐
+        │ Existing Nest.js │      │   Chat Service   │
+        │    B-End         │      │    Nest.js       │
+        │                  │      │                  │
+        │ Users/Auth/etc.  │◄────►│ WebSocket Gateway│
+        └────────┬─────────┘      │ Chat business    │
+                 │                │ logic            │
+                 ▼                └────────┬─────────┘
+          Existing DB                     │
+                                          ▼
+                                  ┌─────────────────┐
+                                  │ PostgreSQL      │
+                                  │ Chat DB         │
+                                  └─────────────────┘
+```
+
+```JS
+//bank-api - main Nest.js API
+Responsible for:
+
+Authentication
+Users
+Profiles
+Business logic
+Permissions
+Payments
+Orders/etc.
+```
+
+```JS
+//Chat Nest.js service
+Responsible for:
+
+WebSocket connections
+Conversations
+Participants
+Messages
+Read status
+Typing status
+Online/offline status
+Message delivery
+Chat-specific authorization
+```
+
+```JS
+//IF you use JWT in main Nest.js gives you JWT access token
+
+// Then when connecting to chat:
+Next.js
+   │
+   │ WebSocket connection
+   │ Authorization: JWT
+   ▼
+Chat Service
+   │
+   │ verify JWT
+   ▼
+userId
+
+//The chat service should be able to verify the same JWT.
+//The chat service doesn't need the user's password or full user record.
+```
+
+/////////////////////////////////////////////
+
 We will take as example my - BANK application
 
 # 🧠 There are actually 3 common ways to connect services
