@@ -313,7 +313,7 @@ export class AuthController {
 //other methods...
 
  @Post('login')
-  async login(
+  login(
     @Body() loginData: LoginDto,
     @Res({ passthrough: true }) res: Response,  //<--@Res play importan role here
   ) {
@@ -427,7 +427,7 @@ export class AuthService {
     });
 
 
- // 🍪 STORE BOTH IN HTTPONLY COOKIES
+ // 🍪 STORE BOTH IN HTTPONLY COOKIES //OR can return access and refresh tokens back to Next.js and set Cookies in Front-end browser
     res.cookie('access_token', accessToken, {
       httpOnly: true,
       secure: false, // true in production (HTTPS)
@@ -502,14 +502,17 @@ try {
 ```JS
 //Whenever you call protected routes: (routes that only logedIn users can access)
 
+//Example how to pass Cookies from Browser, from Next.js SERVER COMPONENT
 //Example to get transactions of LogedIn user in server component
+const cookieStore = await cookies();
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
       {
         headers: {
           //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
-          Cookie: cookieStore.toString(),
+          Cookie: cookieStore.toString(), //<-- use this line to pass Cookies from Server component
         },
         cache: "no-store",
         next: { tags: ["transactions"] },
@@ -527,6 +530,22 @@ try {
     throw new Error("Unexpected error occured");
   }
 };
+
+//////////////////////////////////////
+
+//Example how to pass Cookies from Browser, from Next.js Client side COMPONENT
+
+
+const meRes = await fetch(`api/users/me`,
+{
+  credentials: "include" //<-- use this line to pass cookies from client component
+});
+
+    const userData = await meRes.json();
+
+  if (!meRes.ok) {
+    throw new Error(userData.message);
+  }
 ```
 
 # 🧩 Can Next.js decode payload directly?
@@ -793,7 +812,7 @@ export class AuthService {
         },
       );
 
-       //Create new access token
+       //Set up new access token into browser cookies
       res.cookie('access_token', accessToken, {
         httpOnly: true,
         secure: false,
@@ -835,14 +854,27 @@ bootstrap();
 ```JS
 //Next.js fetch must include credentials
 //when you do fetch always - When calling NestJS from Next.js:
-//add credentials
+//add credentials to pass Cookies from Client Component , From Next.js
 
 fetch(`${API_URL}/customers`, {
   //Every request that needs authentication needs:
   credentials: "include",  //<--//add credentials
 });
 
-//This logic is already inside src/lib/apiFetch.ts file (see step 4)
+////////////////////////////
+
+//pass cookies from Server component, from Next.js
+await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
+      {
+        headers: {
+          //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
+          Cookie: cookieStore.toString(), //<-- use this line to pass Cookies from Server component
+        },
+         cache: "no-store",
+        next: { tags: ["transactions"] },
+      },
+    );
 ```
 
 4. Create src/lib/apiFetch.ts (logic to create new acccess token using refresh token)
@@ -1215,7 +1247,7 @@ No need to save user object
 const response = await fetch(
   'http://localhost:3000/users/me',
   {
-    credentials: 'include',
+    credentials: 'include',  //pass cookies from client Side component
   }
 );
 
@@ -1228,6 +1260,23 @@ const user = await response.json();
   "first_name": "John",
   "email": "john@gmail.com"
 }
+
+
+/////////////////////////////////
+
+//pass cookies from Server side component, from Next.js
+await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
+      {
+        headers: {
+          //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
+          Cookie: cookieStore.toString(), //<-- use this line to pass Cookies from Server component
+        },
+        cache: "no-store",
+        next: { tags: ["transactions"] },
+      },
+    );
+
 ```
 
 ### How Does NestJS Know Who I Am?
