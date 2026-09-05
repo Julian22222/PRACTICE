@@ -1,3 +1,127 @@
+# Better Approach
+
+Store only authentication information (JWT cookie).
+
+Then ask the backend:
+
+```JS
+GET /users/me
+//when you need the current user.
+```
+
+```JS
+//Example Flow
+
+//Login
+POST /auth/login
+
+//Backend:
+Set-Cookie: access_token=...
+
+//Frontend:
+No need to save user object
+
+//Get Current User in client component
+const response = await fetch(
+  'http://localhost:3000/users/me',
+  {
+    credentials: 'include',  //pass cookies from client Side component
+  }
+);
+
+const user = await response.json();
+
+
+//Backend:
+{
+  "customer_id": 1,
+  "first_name": "John",
+  "email": "john@gmail.com"
+}
+
+
+/////////////////////////////////
+
+//pass cookies from Server side component, from Next.js
+await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
+      {
+        headers: {
+          //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
+          Cookie: cookieStore.toString(), //<-- use this line to pass Cookies from Server component
+        },
+        cache: "no-store",
+        next: { tags: ["transactions"] },
+      },
+    );
+
+```
+
+### How Does NestJS Know Who I Am?
+
+Remember your JWT payload:
+
+```JS
+const payload = {
+  sub: user.customer_id,
+  email: user.email,
+  role: user.role,
+};
+
+//When the JWT is verified, NestJS gets:
+req.user
+
+// which might look like:
+// {
+//   "sub": 1,
+//   "email": "john@gmail.com",
+//   "role": "customer"
+// }
+
+////////////////////////////
+// Example Controller
+// Using a JWT guard:
+
+@Get('me')
+@UseGuards(JwtAuthGuard)
+getCurrentUser(@Req() req) {
+  return this.usersService.findOne(
+    req.user.sub,
+  );
+}
+
+
+///////////////////////
+// What Happens
+
+GET /users/me
+      ↓
+JWT Guard verifies token
+      ↓
+req.user.sub = 1
+      ↓
+SELECT * FROM customers
+WHERE customer_id = 1
+      ↓
+Return user data
+```
+
+#### Why /me Is Better Than /users/:id
+
+```JS
+// Instead of:
+GET /users/1
+
+//you do:
+GET /users/me
+
+//Benefits:
+-frontend doesn't need to know user ID
+-less chance of requesting another user's data
+-cleaner API
+-can fetch data in NEXT.js using server components for system performance
+```
+
 # USE JWT , HttpOnly cookies and @Get('me') to GET user data from back-end without -> user_id
 
 - JWT is ALWAYS required for /me
@@ -81,11 +205,11 @@ Cookie → JWT Guard → req.user → DB → response
 ```
 
 ```JS
-//Backend sets:
+//Front-end sets:
 res.cookie('access_token', token, {
   httpOnly: true,
   secure: true,
-  sameSite: 'lax',
+  sameSite: 'none',
 });
 //Browser handles everything automatically.
 
@@ -185,8 +309,9 @@ async refreshToken(req: any, res: Response) {
       throw new UnauthorizedException('No refresh token');
     }
 
-    const payload = this.jwtService.verify(token, {
-      secret: process.env.JWT_REFRESH_SECRET,
+    const payload = this.jwtService.verify(refreshToken, {
+      // secret: process.env.JWT_REFRESH_SECRET,
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
     });
 
     const newAccessToken = this.jwtService.sign(
@@ -195,19 +320,13 @@ async refreshToken(req: any, res: Response) {
         email: payload.email,
       },
       {
-        secret: process.env.JWT_SECRET,
+        // secret: process.env.JWT_SECRET,
+        secret: this.configService.get<string>('JWT_SECRET'),
         expiresIn: '15m',
       },
     );
 
-    res.cookie('access_token', newAccessToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      maxAge: 15 * 60 * 1000,
-    });
-
-    return { message: 'token refreshed' };
+    return {newAccessToken, message: 'token refreshed' };
   } catch {
     throw new UnauthorizedException('Invalid refresh token');
   }
@@ -221,15 +340,39 @@ main.ts file
 // npm install cookie-parser  <- in NEST.JS folder
 
 
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
 
-  app.use(cookieParser());
+  const PORT = process.env.PORT ?? 3005;
+  const app = await NestFactory.create(AppModule);  //start Nest.js app
 
-  await app.listen(3000);
+  app.use(cookieParser());  //Without that, req.cookies will be undefined. (req.cookies.access_token, req.cookies.refresh_token)
+
+  // Enable CORS for Next.js frontend
+  //This must be before app.listen(PORT).
+  app.enableCors({
+    origin: [
+      'http://localhost:3000', // Next.js frontend URL
+      'http://localhost:3001'  // Next.js frontend URL
+    ],
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true, //Without this → cookies will NEVER be sent
+  });
+
+  app.useGlobalPipes(  //used for class-validation library
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  await app.listen(PORT, (err)=>{
+    err ? console.log('Error starting server:', err) : console.log(`Server is running on port ${PORT}`)
+  });
 }
+
 bootstrap();
 ```
 
