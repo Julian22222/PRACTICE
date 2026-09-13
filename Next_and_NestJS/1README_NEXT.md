@@ -903,7 +903,7 @@ export const config = {  //our condition is here to run middleware function, if 
 
 # 🪹 Environment Variables
 
-1. Server-only variables
+1. Server-only variables / the value will be accessible in Next.js Server components
 
 - Stored in .env, .env.local, .env.development, etc.
 - Accessible only in server code: API routes, getServerSideProps, middleware, or any code that runs on the Node.js side.
@@ -921,6 +921,14 @@ GOOGLE_CLIENT_SECRET=your-secret-secret
 const id = process.env.GOOGLE_CLIENT_ID;
 
 //❗ These are never exposed to the browser unless you manually pass them down.
+
+This is intended for server-only code:
+
+✅ Server Components
+✅ Route Handlers
+✅ Server Actions
+✅ Other server-side code
+❌ Client Components/browser
 ```
 
 2. Client side variables (and server side. Available on both)
@@ -931,6 +939,15 @@ process.env.NEXT_PUBLIC_BASE_URL
 NEXT_PUBLIC_ is a special prefix for environment variables in Next.js that makes those variables available in both the server and client-side code.
 
 Why use NEXT_PUBLIC_?
+
+This can be used in:
+
+✅ Server Components
+✅ Client Components
+✅ Server-side code
+✅ Browser/client bundle
+
+Next.js replaces NEXT_PUBLIC_* variables with their values during the build, so do not put secrets in them.
 
 By default, environment variables in Next.js are only available server-side.
 If you want to expose an environment variable to your browser (client-side) code, you need to prefix it with NEXT_PUBLIC_.
