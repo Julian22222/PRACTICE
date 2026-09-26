@@ -503,6 +503,8 @@ findUserMessages(
 
 # 🔥 We can make GET methods that userId will be taken from JWT cookies. This is a GOOD PRACTICE ->
 
+To know more about cookies -> check PRACTICE/Notes
+
 ✅ BEST PRACTICE
 
 - Use backend endpoints that derive userId from JWT in cookies. Once user is LogedIn the cookies will keep userId -> read JWT from cookie. userId is assigned from Back-End -> in Nest.js
