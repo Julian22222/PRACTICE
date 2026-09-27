@@ -1,3 +1,221 @@
+# To work with Cookies and pass them between F-End And B-End
+
+There is 2 possible architectures:
+
+1. Browser directly talks to Nest.js (you can set/store Cookies in B-END if you use subdomains (app.example.com and api.example.com) for F-End and B-End, then cookie cookies can be accessible in F-End and B-End. see line 430 in Notes5)
+
+```JS
+////your browser directly communicate with Nest.js
+//Browser ────────────────► Nest.js
+
+//architecture is:
+                 ┌─────────────┐
+                 │   Browser   │
+                 └──────┬──────┘
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+         Next.js UI            Nest.js API
+
+```
+
+2. Next.js is a BFF (after successfull Login -> Nest.js create Access and Refresh tokens and return them back to Next.js in Next.js you set Access and Refresh tokens into Next.js browser as a cookies )
+
+```JS
+//Architecture for BFF
+
+ ┌─────────────┐
+ │   Browser   │
+ └──────┬──────┘
+        │
+        │ same-origin
+        ▼
+┌─────────────┐
+│   Next.js   │
+│     BFF     │
+└──────┬──────┘
+       │
+       │ server-to-server
+       ▼
+┌─────────────┐
+│   Nest.js   │
+│     API     │
+└─────────────┘
+```
+
+# Server and Client components use different methods to get browser cookies
+
+- Server Component can read HttpOnly cookies directly. This works because page.tsx is executing on the Next.js server.
+- A Client Component cannot read HttpOnly cookies directly. Therefore Client component use -> /api/[yourPath]/route.ts (Route Handler -> api, is a server component)
+
+```JS
+// If you make a fetch request from Client component:
+Browser → Nest.js
+
+---------------------------------------------------------------------
+
+//If you make a fetch request using api/route.ts : (api -> using Next.js server component, therefore can get cookies from Next.js browser, if it is stored in Next.js browser)
+Browser → Next.js → Nest.js
+
+//Example of Next.js component
+const res = await fetch(
+  `/api/accounts/user/${user.customer_id}/accounts-balance`,
+  {
+    credentials: "include",
+    cache: "no-store",
+  },
+);
+
+//Then example of Api/route.ts
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ customerId: string }> },
+) {
+  const { customerId } = await params;
+  const cookieStore = await cookies();
+
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  if (!accessToken) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: 401 },
+    );
+  }
+
+  const backendRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/accounts/user/${customerId}/accounts-balance`,
+    {
+      method: "GET",
+      headers: {
+        Cookie: `access_token=${accessToken}`,
+      },
+      cache: "no-store",
+    },
+  );
+
+  const data = await backendRes.json();
+
+  return NextResponse.json(data, {
+    status: backendRes.status,
+  });
+}
+```
+
+```JS
+////example of architecture to use Route Handlers- api:
+app/
+├── api/
+│   ├── auth/
+│   │   └── login/
+│   │       └── route.ts
+│   │
+│   └── accounts/
+│       └── user/
+│           └── [customerId]/
+│               └── accounts-balance/
+│                   └── route.ts
+```
+
+# How to get Cookie from Server and Client component and then pass the cookie to B-End ?
+
+```JS
+//in Next.js
+//❗This Works only in Server component
+//page.tsx
+
+import { cookies } from "next/headers";
+
+const fetchAllUsrTransactions = async () => {
+
+  const cookieStore = await cookies();    //❗ can be used ONLY in a Server Component!
+  //await cookies() in a Next.js Server Component/server-side function gives you access to the cookies sent with the current HTTP request
+  //Next.js is essentially giving your server-side code access to the cookies that came in on the current request.
+  //Important: cookies() does NOT directly talk to the browser. Instead, the browser send its applicable cookies as part of the HTTP request to Next.js.
+
+  const accessToken = cookieStore.get("access_token")?.value;
+  //OR
+  const accessToken = cookieStore.get("access_token");
+  const refreshToken = cookieStore.get("refresh_token");
+
+//then you can pass the cookies to B-ENd
+const response = await fetch(
+  `${process.env.BACK_END_URL}/somePath`,
+  {
+    headers: {
+      Cookie: cookieStore.toString(),  //<--needs to include this, forward the cookie from Browser to Next.js Server Component
+      //OR
+      //Cookie: `access_Token: ${accessToken}`;
+    },
+    cache: "no-store",
+  },
+);
+
+//other code
+```
+
+```JS
+//in Next.js
+//Client component
+
+//Whereas client-side JavaScript would normally interact with cookies through browser mechanisms (and HttpOnly cookies intentionally cannot be read by JavaScript).
+//Because they're httpOnly, browser JavaScript cannot access them with: document.cookie. That's intentional and generally desirable for JWT authentication.
+
+
+//❗This Works ONLY In a Client Component
+//This option works in the browser, because Server Components don't have access to the browser's cookies automatically.
+
+const res = await fetch(
+  `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+  {
+    credentials: "include",  //tells the browser:"Send my cookies with this request.
+  },
+);
+
+//other code
+```
+
+So if your JWT cookie is: httpOnly: true
+
+that's actually a good security practice: browser JavaScript cannot read the JWT, but the browser can still automatically send the cookie with appropriate requests.
+
+```JS
+//BFF = Backend for Frontend architecture
+                    ┌────────────────────┐
+                    │      Browser       │
+                    │                    │
+                    │ HttpOnly cookies:  │
+                    │ access_token       │
+                    │ refresh_token      │
+                    └─────────┬──────────┘
+                              │
+                              │
+                       HTTPS / Next.js
+                              │
+                              ▼
+                    ┌────────────────────┐  //our browser should not call the Nest.js refresh endpoint directly.
+                    │      Next.js       │  //Browser talks to Next.js. Next.js talks to Nest.js.
+                    │                    │  //Therefore you need to use Route Handling when you make a request to B-End from Next.js.
+                    │ /api/auth/login    │  ///using BFF and Route Handling in Next.js allow /api/[yourPath]/route.ts communicate with ->
+                    │ /api/auth/refresh  │  //-> Next.js browser and get the cookies from browser and then send a request together with the cookies to B-End
+                    │ /api/...           │  //When i use /api/[yourPath]/route.ts file -> cookies come from Next.js browser URL
+                    └─────────┬──────────┘  //When i DON'T use /api[yourPath]/route.ts -> Cookies come from Nest.js browser URL
+                              │              //Next.js Route Handler gives you a very convenient bridge between the browser's cookies and Nest.js
+                              │ server → server
+                              ▼
+                    ┌────────────────────┐
+                    │       Nest.js      │
+                    │                    │
+                    │ JWT validation     │
+                    │ AuthService        │
+                    │ PostgreSQL         │
+                    └────────────────────┘
+```
+
 # Better Approach
 
 Store only authentication information (JWT cookie).

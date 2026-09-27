@@ -207,6 +207,33 @@ Retries failed request
 
 #### ⭐ JWT + HttpOnly Cookies
 
+If the cookie was set to the Browser, you can get the cookie from Server and client componets with different approaches
+
+```JS
+//make a request from Server component + send a cookie
+fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(), //cookie
+      },
+      cache: "no-store",
+    },
+  );
+
+
+// make a request from Client component + send a cookie
+fetch(`/api/users/me`, {  //use + Route Handling (there you use Server component approach)
+    credentials: "include", //cookie
+    cache: "no-store",
+  });
+
+//Server Component can read HttpOnly cookies directly. This works because page.tsx is executing on the Next.js server. A Client Component cannot read HttpOnly cookies directly.
+// Therefore Client component use -> api/…
+
+//but to Setup new cookie you can do it only from client component and use Route Handling (/api/ypurPath/route.ts)!!! To setup new cookie from server components you need to use middleware.ts logic
+```
+
 ✅ 1. Install needed dependencies for your Back-end (Nest.JS) - in Nest.js folder
 
 ```JS
@@ -427,18 +454,22 @@ export class AuthService {
     });
 
 
- // 🍪 STORE BOTH IN HTTPONLY COOKIES //OR can return access and refresh tokens back to Next.js and set Cookies in Front-end browser
+    // 🍪 STORE BOTH IN HTTPONLY COOKIES - you can set/store Cookies in B-END if you use subdomains (app.example.com and api.example.com) for F-End and B-End, then cookie cookies can be accessible in F-End and B-End. Subdomains  (used if you have many front-ends such as: mobile app, web app, third party clients, multiple frontends and have one B-End)
+
+    // //Or if F-End and B-End uses different domans/origins -> you can return COOKIES: access and refresh tokens back to Next.js and then set the browser Cookies in Front-end. This called - >Backend-for-Frontend (BFF) pattern.
+    //BFF = Backend for Frontend - It simply means: Your Next.js server sits between the browser and your NestJS API. (Browser ──> Next.js ──> NestJS). Browser = only talks to Next.js. Your browser should not call the Nest.js refresh endpoint directly. Therefore you need to use Route Handling when you make a request to B-End from Next.js.
+    //using BFF and Route Handling in Next.js allow /api/[yourPath]/route.ts communicate with Next.js browser and get the cookies from browser and then send a request together with the cookies to B-End
     res.cookie('access_token', accessToken, {
       httpOnly: true,
       secure: false, // true in production (HTTPS)
-      sameSite: 'lax',
+      sameSite: 'lax',  //<--use sameSite: "none" if F-End and B-End uses different domains
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
       secure: false, // true in production (HTTPS)
-      sameSite: 'lax',
+      sameSite: 'lax', //<--use sameSite: "none" if F-End and B-End uses different domains
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -458,6 +489,18 @@ export class AuthService {
   return userResponse;
 }
 
+
+
+///////////////////////////
+//📍 REMEMBER -> when you return new ACCESS and/or REFRESH tokens from Nest.js to Next.js you need to assign these new tokens to the browser! You can assing new ACCESS and REFRESH tokens ONLY from Server Actions, Route Handlers or middlewqre.ts
+//Note: cookies().set() only works inside Server Actions, Route Handlers or Middleware — not in arbitrary Server Components
+//set cookies in Next.js can be implemented only in Server Actions, Route Handler or Middleware
+//The cookie has to be set by a server response header, which means it must go through a Next.js Route Handler.
+//NextResponse.cookies.set(...) only works inside a Route Handler (a route.ts file) or Middleware — server-side execution contexts.
+//If it you dont set the new cookies in the middleware or route handler, it will take old access token from the browser cookie and will keep failing with 401 Unauthorized error.
+///////////////////////////
+--------------------------
+
 ///////////////////
 👉 // Why Payload Is Useful:
 //   Frontend often needs:
@@ -467,6 +510,108 @@ export class AuthService {
 //         -permissions
 // without making additional database request.
 
+```
+
+### What Is Different Origin, Site, Domain?
+
+```JS
+//URL example:
+https://api.example.com:443/users/me
+
+https://   api.example.com   :443   /users/me
+  │             │              │          │
+protocol      host name       port      path
+
+------------------------
+
+hostnames = Origin = Domain
+
+//These are different origins:
+https://example.com
+https://www.example.com
+https://api.example.com
+http://example.com
+https://example.com:8443
+
+//These are the same origin: but path is different
+https://example.com/page1
+https://example.com/page2
+
+------
+
+//these have different sites and different origins - because they have different registrable domains.
+//Next.js:
+https://myshop.com
+
+//Nest.js:
+https://myapi.com
+
+-----
+
+// A site is not the same thing as an origin
+// Their origins are the same:
+https://www.example.com
+https://api.example.com
+
+https://www.example.com
+             ^^^
+
+https://api.example.com
+             ^^^
+
+// But their registrable domain is the same: example.com
+// So they are generally considered the same site.
+
+--------------
+
+// different origins
+// BUT
+// same site
+https://www.example.com
+https://api.example.com
+
+--------------
+
+//If your F-End and Back-End uses the same site:
+https://www.example.com
+https://api.example.com
+
+//Your Client Component can directly call:
+fetch(https://api.example.com/users/me, {
+  credentials: "include",
+});
+
+
+//Server Component:
+const cookieStore = await cookies();
+
+fetch(https://api.example.com/users/me, {
+  headers: {
+    Cookie: cookieStore.toString(),
+  },
+});
+
+////your browser directly communicate with Nest.js
+//Browser ────────────────► Nest.js
+
+//architecture is:
+                 ┌─────────────┐
+                 │   Browser   │
+                 └──────┬──────┘
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+         Next.js UI            Nest.js API
+
+-------------------
+
+//If the F-End and B-End have the same site:
+  nextResponse.cookies.set("refresh_token", data.refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax", //<- use lax
+  });
 ```
 
 ✅ 5. Now Next.js LoginForm return userResponse + res.cookie(accessToken) + res.cookie(refreshToken)
@@ -547,6 +692,18 @@ const meRes = await fetch(`api/users/me`,
     throw new Error(userData.message);
   }
 ```
+
+## Cookies diagram flow from F-End (Next.js) side when user LogIn
+
+how cookies set/ assgin when user LogIn
+
+![pic03](https://github.com/Julian22222/PRACTICE/blob/main/Notes/IMG/cookiesLogin.jpg)
+
+## How to get cookies from F-End (Next.js) side -> from Server and Client side components
+
+![pic04](https://github.com/Julian22222/PRACTICE/blob/main/Notes/IMG/jwt-flow.jpg)
+
+- In Client component you can't use - process.env.BACK_END_URL (in Client components can be used only process.env.NEXT_PUBLIC_BACK_END_URL , BUT it is BAD Practicem not secure everyone can see your B_END URL) -> therefore use Route Handler
 
 # 🧩 Can Next.js decode payload directly?
 
