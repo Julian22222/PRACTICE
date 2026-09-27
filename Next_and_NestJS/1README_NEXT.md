@@ -112,6 +112,8 @@ scripts:
   - type command: ls -a (list all files, including hidden files)
   - rm -rf .git (delete .git folder inside Nest.JS)
 
+// rm -rf .next //<--this command allows to delete file .next
+
 If you don't delete .git inside your Nest.Js project and push the code to GitHub it will create Git folder with arrow on GitHub --> "Git submodule", it is not a regular folder, you can't open this folder
 
 Next.js also has its own .git hidden file
@@ -874,7 +876,24 @@ Expanded configuration and optimization
 - create middleware.ts in src folder
 - middleware it is common function that will run on certain condition, condition or conditions are indicated in middleware.ts file --> in config block.
 - Most of the time this is used in Authorization(adjust Roles, close page for certain Roles)
-- middleware allow to give access for some pages and forbid access for some pages
+- middleware allow to give access for some pages and forbid access for some pages (if user logedIn and/or for some roles)
+- Can use Middleware or API Route to get new access token using refresh token
+- Middleware.ts can be used to fetch refresh route, get access token and assign new access token to the browser , because you can’t setup/assign new cookies from server or client components
+
+Middleware features:
+
+- Runs before Server Components render
+- Can read/write cookies
+- Runs on every matched request (even static assets, prefetches)
+- If middleware doesn't use a matcher -> this middleware function will run on wvery request
+
+```JS
+//You can add a matcher that applies to all Middleware by adding the following code to the bottom of the middleware.ts file:
+
+export const config = {
+  matcher: '/', // only log for the homepage   //<- Now the Middleware will only run for the root URL.
+};
+```
 
 ```JS
 //middleware.ts file
@@ -901,6 +920,85 @@ export const config = {  //our condition is here to run middleware function, if 
 //middleware file most often is used for authorization, Page is accessible only for Admin, etc
 ```
 
+### How does Next.js Middleware work?
+
+![pic07](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/middleware.JPG)
+
+When a user makes a request to your Next.js app, Middleware is the first layer of logic that runs in the request lifecycle before any of the routing decisions are made. By default, it is applied globally across all routes, but you can target it at specific route paths with matchers.
+
+Middleware code can inspect the request (headers, cookies, path, IP) and then modify, redirect, rewrite headers, or just allow it to proceed.
+
+After Next.js Middleware runs, the request is forwarded to the Next.js routing layer, which attempts to match the request to one of the following, depending on how you have Next.js configured to handle routing
+
+### Next.js Middleware matcher and conditionals
+
+The Middleware code will run for every route in your project by default. You can optionally use matchers to target certain routes where you want the Middleware to run.
+
+- While it might seem simpler to apply Middleware globally, running Middleware for every request could lead to performance issues. On top of that, by using matchers, you make your code more maintainable, since the code is easier to understand (clear to see which routes Middleware runs for, and therefore, its purpose).
+
+```JS
+export const config = {
+  matcher: ['/profile/:path*', '/dashboard/:path*'],  //<- The :path* wildcard covers all nested routes
+}
+```
+
+- A conditional statement inside of the Middleware function, which allows the Middleware to run globally, but you decide at runtime whether to act on the request (depending on the route):
+
+```JS
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith('/dashboard')) {
+    // You can check auth and proceed or redirect here
+  }
+
+  return NextResponse.next();
+}
+```
+
+### Next.js auth Middleware
+
+- You can use Next.js Middleware for authentication (confirm user's identity) and authorization (control what a user can access).
+- Middleware allows you to check cookies or auth tokens before a request reaches a protected route (such as a dashboard or profile), redirect unauthenticated users based on the authentication status, and enforce role-based access control (only admin users can access /admin).
+
+```JS
+//middleware logic example
+//If user not authorized redirect him to main page
+
+
+// auth.ts
+export function isAuthenticated(request) {
+  const token = request.cookies.get('auth-token');
+  return Boolean(token);
+}
+
+
+//middleware.ts
+import { NextResponse } from "next/server";
+import { isAuthenticated } from "./middleware/auth";
+
+export function middleware(request) {
+
+  // Protecting the dashboard here
+  const unauthenticatedUser = !isAuthenticated(request);
+  if (unauthenticatedUser) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  return NextResponse.next();
+}
+
+// Apply Middleware to relevant paths
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};
+```
+
+---
+
 # 🪹 Environment Variables
 
 1. Server-only variables / the value will be accessible in Next.js Server components
@@ -915,6 +1013,8 @@ export const config = {  //our condition is here to run middleware function, if 
 GOOGLE_CLIENT_ID=your-secret-id
 GOOGLE_CLIENT_SECRET=your-secret-secret
 
+//⚠️ use BACK-END-URL link without NEXT_PUBLIC_ - FOR SECURITY!!!! AND then use process.env.BACK_END_URL from server side components - Server Actions, Rote handlers -> ( /api/[yourPath.route.ts) or middleware.ts
+BACK_END_URL=https://api.example.com
 
 //ts file
 // Safe: runs only on server
