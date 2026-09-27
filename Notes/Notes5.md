@@ -703,7 +703,8 @@ how cookies set/ assgin when user LogIn
 
 ![pic04](https://github.com/Julian22222/PRACTICE/blob/main/Notes/IMG/jwt-flow.jpg)
 
-- In Client component you can't use - process.env.BACK_END_URL (in Client components can be used only process.env.NEXT_PUBLIC_BACK_END_URL , BUT it is BAD Practicem not secure everyone can see your B_END URL) -> therefore use Route Handler
+- process.env.BACK_END_URL <- can be used only on Server side/server component
+- In Client component you can't use - process.env.BACK_END_URL (in Client components can be used only process.env.NEXT_PUBLIC_BACK_END_URL , BUT it is BAD Practicem not secure everyone can see your B_END URL, backend host/port) -> therefore use Route Handler. Route Handlers acting as a proxy between your client components and NestJS is exactly the standard pattern here. a client component's fetch() can only ever call same-origin (/api/...)
 
 # 🧩 Can Next.js decode payload directly?
 
