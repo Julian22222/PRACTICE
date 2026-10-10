@@ -2,7 +2,11 @@
 
 There is 2 possible architectures:
 
-1. Browser directly talks to Nest.js (you can set/store Cookies in B-END if you use subdomains (app.example.com and api.example.com) for F-End and B-End, then cookie cookies can be accessible in F-End and B-End. see line 430 in Notes5)
+1. Browser directly talks to Nest.js (you can set/store Cookies in B-END if you use subdomains (app.example.com and api.example.com) for F-End and B-End, then cookie cookies can be accessible in F-End and B-End. see line 430 in Notes5).
+
+- If you use the subdomains/ same domains for F-End and B-End -> Client component DON'T need to use Route Handling to get cookies from web browser
+
+(If you did go the shared-parent-domain route eventually, you'd also need NestJS's CORS config to explicitly allow your Next.js origin with credentials — Access-Control-Allow-Origin: https://your-frontend-domain.com and Access-Control-Allow-Credentials: true, never a wildcard \* — but that's a secondary requirement on top of the domain issue, not a substitute for it.)
 
 ```JS
 ////your browser directly communicate with Nest.js
@@ -44,13 +48,21 @@ There is 2 possible architectures:
 └─────────────┘
 ```
 
-# Server and Client components use different methods to get browser cookies
+# Server and Client components use different methods to get browser cookies. IMPORTANT!!!!
 
-- Server Component can read HttpOnly cookies directly. This works because page.tsx is executing on the Next.js server.
+- Server Component can read HttpOnly cookies directly. This works because page.tsx is executing on the Next.js server. But Server component CAN'T set up new cookies to the browser! ❌ Server component -> Route Handler -> Set cookies in the browser. Server component can't set the cookies to the browser.Server component can ONLY read the cookies from the browser.
+- For Server Component -> No Route Handler needed. You just read the cookie "const cookieStore = await cookies();" and attach it manually when make a request.
+
 - A Client Component cannot read HttpOnly cookies directly. Therefore Client component use -> /api/[yourPath]/route.ts (Route Handler -> api, is a server component)
+  ✅ Client component -> Route Handler -> Set cookies in the browser (httpOnly cookies) -> Client component can read and set the cookies to/from the browser
+- For a Client component -> If you use BFF (Back and Front end use different domains/origins)-> Client component "without Route Handler" - will not read the browser cookie from Front-End. It will read cookie from B-End (but cookies in B-End = undefined, because we setup cookies to F-End browser, cookies doesn't exist on that domain/B-End domain)
+- CLient component MUST use Route Handling-> to get the cookies from the F-end browser.
+- If I use BFF – all request from Client component must go through /api/[yourpath]/route.ts (by using Route handling)!!
+- Client component → Route Handler (get cookies) → request to backend" as the only correct path
+- Route Handlers run entirely server-side, so process.env.BACK*END_URL (no NEXT_PUBLIC* prefix) works fine there and is the right choice — it keeps your EC2 backend's address out of the browser bundle.
 
 ```JS
-// If you make a fetch request from Client component:
+// If you make a fetch request from Client component: cookies are taken from B-End, but cookies in B-End = undefined, we setup cookies to F-End browser
 Browser → Nest.js
 
 ---------------------------------------------------------------------
@@ -58,16 +70,16 @@ Browser → Nest.js
 //If you make a fetch request using api/route.ts : (api -> using Next.js server component, therefore can get cookies from Next.js browser, if it is stored in Next.js browser)
 Browser → Next.js → Nest.js
 
-//Example of Next.js component
+//Example of Next.js Client component
 const res = await fetch(
-  `/api/accounts/user/${user.customer_id}/accounts-balance`,
+  `/api/accounts/user/${user.customer_id}/accounts-balance`,  //<--it is better to don't use user.customer_id as userId but use JWT payload - user.sub.id from the Nest.js
   {
     credentials: "include",
     cache: "no-store",
   },
 );
 
-//Then example of Api/route.ts
+//Then example of Api/route.ts - It is a server side component
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -88,7 +100,7 @@ export async function GET(
   }
 
   const backendRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/accounts/user/${customerId}/accounts-balance`,
+    `${process.env.BACK_END_URL}/accounts/user/${customerId}/accounts-balance`,
     {
       method: "GET",
       headers: {

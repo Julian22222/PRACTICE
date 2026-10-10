@@ -210,9 +210,9 @@ Retries failed request
 If the cookie was set to the Browser, you can get the cookie from Server and client componets with different approaches
 
 ```JS
-//make a request from Server component + send a cookie
+//make a request from Server component + send a cookie to B-END
 fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/users/me`,
+    `${process.env.BACK_END_URL}/users/me`,
     {
       headers: {
         Cookie: cookieStore.toString(), //cookie
@@ -495,9 +495,13 @@ export class AuthService {
 //📍 REMEMBER -> when you return new ACCESS and/or REFRESH tokens from Nest.js to Next.js you need to assign these new tokens to the browser! You can assing new ACCESS and REFRESH tokens ONLY from Server Actions, Route Handlers or middlewqre.ts
 //Note: cookies().set() only works inside Server Actions, Route Handlers or Middleware — not in arbitrary Server Components
 //set cookies in Next.js can be implemented only in Server Actions, Route Handler or Middleware
+//✅ Client component -> Route Handler -> Set cookies in the browser (httpOnly cookies) -> Client component can read and set the cookies to/from the browser
+//❌ Server component -> Route Handler -> Set cookies in the browser. Server component can't set the cookies to the browser.Server component can ONLY read the cookies from the browser
+// Therefore we use middleware to set the cookies in the browser, and then the server component can read the cookies from the browser
 //The cookie has to be set by a server response header, which means it must go through a Next.js Route Handler.
 //NextResponse.cookies.set(...) only works inside a Route Handler (a route.ts file) or Middleware — server-side execution contexts.
 //If it you dont set the new cookies in the middleware or route handler, it will take old access token from the browser cookie and will keep failing with 401 Unauthorized error.
+
 ///////////////////////////
 --------------------------
 
@@ -620,7 +624,7 @@ fetch(https://api.example.com/users/me, {
 //LoginForm - Next.js:
 try {
       const loginRes = await fetch(
-        `${process.env.NEXT_PUBLIC_BACK_END_URL}/auth/login`,
+        `/api/auth/login`,  //use Route Handler (to get access to cookies and use process.env.BACK_END_URL but not process.env.NEXT_PUBLIC_BACK_END_URL)
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -653,7 +657,7 @@ const cookieStore = await cookies();
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
+      `${process.env.BACK_END_URL}/transactions/my`,  //Nest will use UserId from payload
       {
         headers: {
           //JwtAuthGuard requires a JWT, If your JWT is stored in a cookie, then req.user. Needs this code
@@ -845,6 +849,21 @@ Login
 // -refresh token → 7 days
 ```
 
+Correct Flow of different tokens:
+
+- On each request, When user make a request from F-END to B-END, user MUST to pass access_token=${accessToken} only.
+- When the access token is expired user needs to pass refresh_token=${refreshToken} only to get new access token.
+- If "ACCESS" and "REFRESH" tokens are expired user needs to be redirected to -> "/login" page, to make user login again and get new access and refresh tokens.
+
+```JS
+//three-tier flow: (access token for data requests → refresh token only for /auth/refresh → redirect to /login when both are dead) is the standard access/refresh token pattern
+
+
+1. Normal data requests → Cookie: access_token=${accessToken} only. This is what apiServerFetch/apiClientFetch do
+2. Access token expired (401, or proactively near-expiry) → call /auth/refresh with Cookie: refresh_token=${refreshToken} only — never send the access token here, it's irrelevant to this endpoint and already known to be bad.
+3. Refresh also fails (refresh token expired, revoked, or missing) → no more automatic recovery is possible; redirect to /login.
+```
+
 Real Authentication Flow
 
 ```JS
@@ -879,7 +898,7 @@ Real Authentication Flow
 
 // Server checks refresh token.
 // If valid:
-// -creates NEW access token
+// -creates NEW access token and then setup new access token to the browser
 // -user stays logged in
 ```
 
