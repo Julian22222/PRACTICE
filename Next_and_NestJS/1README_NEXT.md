@@ -885,7 +885,7 @@ Middleware features:
 - Runs before Server Components render
 - Can read/write cookies
 - Runs on every matched request (even static assets, prefetches)
-- If middleware doesn't use a matcher -> this middleware function will run on wvery request
+- If middleware doesn't use a matcher -> this middleware function will run on every request
 
 ```JS
 //You can add a matcher that applies to all Middleware by adding the following code to the bottom of the middleware.ts file:
@@ -909,7 +909,7 @@ export function middleware(request: NextRequest){
 const pathname = request.url  //get current URL, where the user is located at the moment
 
 
-    return NextResponse.redirect(now URL('/home', request.url))
+    return NextResponse.redirect(new URL('/home', request.url))
 }
 
 export const config = {  //our condition is here to run middleware function, if you use this URL path then function will be invoked
@@ -996,6 +996,82 @@ export const config = {
   matcher: ["/dashboard/:path*"],
 };
 ```
+
+Next.js allows only one middleware function per project (one middleware.ts file, one exported middleware). The matcher just decides which paths invoke it.
+
+To run different logic for different paths, you branch inside the single function based on the pathname. There are two common patterns.
+
+```JS
+//this is the Best option for different logic, This keeps middleware.ts readable as it grows:
+//1.Split into separate handlers and delegate
+
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+
+function aboutMiddleware(request: NextRequest) {
+  return NextResponse.redirect(new URL('/home', request.url))
+}
+
+function dashboardMiddleware(request: NextRequest) {
+
+  const token = request.cookies.get('token')
+
+  if (!token) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+  return NextResponse.next()
+}
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  if (pathname.startsWith('/about')) return aboutMiddleware(request)
+  if (pathname.startsWith('/dashboard')) return dashboardMiddleware(request)
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/about/:path*', '/dashboard/:path*'],
+}
+
+-----------------------------
+
+//2.Branch on request.nextUrl.pathname
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  if (pathname.startsWith('/about')) {
+    return NextResponse.redirect(new URL('/home', request.url))
+  }
+
+  if (pathname.startsWith('/dashboard')) {
+
+    const token = request.cookies.get('token')
+
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+    return NextResponse.next()
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/about/:path*', '/dashboard/:path*'],
+}
+```
+
+Middleware Notes:
+
+- request.url vs request.nextUrl: request.url is the full URL string. For the path, use request.nextUrl.pathname, which is already parsed.
+- Matcher key: the config property is matcher, not match. Your commented-out line also needs leading slashes: '/dashboard/:path\*'. Without the /, the matcher is invalid.
+- Matcher is optional: if you omit it, middleware runs on every request, and you can do all filtering in code. Using matcher is better for performance, since it skips invoking middleware at all for non-matching routes (static assets, etc.).
+- Matcher is static: it must be a constant literal (no variables or computed values), because Next.js analyses it at build time.
 
 ---
 
