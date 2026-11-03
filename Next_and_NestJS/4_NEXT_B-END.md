@@ -37,7 +37,6 @@ return <PostsList posts={posts} />;
 ⚠ Use Server Components or fetch() for GET data:
 
 - Use a Server Component when:
-
   - rendering a page
   - loading initial data
   - using Next.js caching/layering
@@ -528,6 +527,23 @@ But when you are doing:
 
 # Practical List what to use in each scenario in Next.js App Router — Server Actions vs. Server Components vs. API Routes.
 
+![pic07](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/pic7.jpg)
+
+![pic08](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/pic8.jpg)
+
+#### ⭐ IMPORTANT NOTES, NEED to remember
+
+In Next.js
+
+✅ Use Server Actions:
+
+- When Make a POST, PUT, PATCH, DELETE request
+
+✅ Use Route Handler (For “use client”) :
+
+- To get “Access token” from cookie from F-End domain and then pass it with the request to B-End. This allow to make more secure requests, where userId will come from cookie and you assign userId in B-End -> /movies/favorite/userId
+- To Hide B-End URL
+
 ✅ 1. Fetching Data (READ)
 
 **A. Static or server-rendered page loading data**
@@ -695,6 +711,50 @@ Examples requiring **API Routes**:
 ### ✓ **API Routes must be authenticated + validated**
 
 ### ✓ **Server Actions never run in client → safe**
+
+If you need just a fetched data from Database (fetch the Data that Doesn’t depend on user interaction after load: search-as-you-type, filters, pagination, “load more”, etc.), the Best Practice is just to fetch the data from Server component – page.tsx and then pass it as a props.
+
+It is better to fetch data from page.tsx(server component) than fetch data from Client component (using Route Handlers/Server Actiosn to fetch the data) Because:
+
+1. No loading flash or request waterfall.
+
+- The data is in the initial HTML, so there’s no loading state or layout shift.
+
+With a client fetch, the browser has to download the HTML, download and run the JS, mount the component, and only then fire the request in useEffect. With a server fetch, the data is already in the HTML that arrives.
+
+2. One fewer network hop, and a shorter one
+
+- It’s one hop (Next.js to NestJS) instead of two (browser to Route Handler to NestJS).
+
+A server component calls NestJS directly, server to server (often on the same machine or network). A client fetch goes browser → Next.js proxy → NestJS, which is two hops, with the first over the user’s connection. That’s slower and also means you have to build and maintain the proxy route just for this data.
+
+3. Auth is simpler and safer
+
+- Auth is simpler, because apiServerFetch reads the httpOnly cookie directly.
+
+On the server, apiServerFetch reads the httpOnly cookie directly. On the client you need apiClientFetch, the 401/refresh logic, the SESSION_EXPIRED handling and the proxy. The backend URL also never reaches the browser, which was your original goal.
+
+4. Less client code
+
+- There’s less code: no useEffect, no loading and error state, no cancellation flag, no proxy route to maintain.
+
+You drop the useState, the useEffect, the cancellation flag, the loading and error state, and the try/catch. Less code means fewer bugs,
+
+5. Smaller JS bundle and caching
+
+- The server can cache it and share it across users (revalidate and tags).
+
+#### When client-side fetching is the better choice
+
+- Data that depends on user interaction after load: search-as-you-type, filters, pagination, “load more”.
+- Data that must stay live: polling, balances that update without navigation, real-time feeds.
+- Mutations followed by a refresh of a specific piece of UI (though router.refresh() often covers this). Mutations from client code, such as submitting a form and then updating local UI. (Server Actions often cover this too, without a Route Handler.)
+- Data that is only needed after a user action, like opening a modal, expanding a panel, where fetching it up front would be wasted.
+- Non-React consumers of the same endpoint, like a mobile app or a webhook receiver, since a Route Handler is a real HTTP endpoint.
+
+The rule of thumb: fetch on the server by default, and use the client only for data that depends on interaction or must stay live. Here the types are static reference data needed on first render, so the server is the right place.
+
+Default to fetching on the server and passing props. Use a Route Handler from the client only when the data depends on something that happens after the page loads.
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

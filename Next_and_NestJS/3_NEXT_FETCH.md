@@ -79,6 +79,10 @@ export default async function page() {
 
 2. Client Component (if needs useEffect)
 
+If you need to use fetch in Client component -> the Best Practice is to do :
+
+Client component -> Route Handler/Server Actions -> fetch from server (this gives security and performance, allow to get and pass the token from F-end domain if you use BBF approach)
+
 ```JS
 // app/components/ItemClient.tsx
 "use client";
@@ -253,6 +257,10 @@ Only when:
 - The fetch must happen after user interaction
 - You need real-time polling inside useEffect
 - Otherwise, server fetching is always better.
+
+If you need to use fetch in Client component -> the Best Practice is to do :
+
+Client component -> Route Handler/Server Actions -> fetch from server (this gives security and performance, allow to get and pass the token from F-end domain if you use BBF approach)
 
 ✔️ When this version (fetch inside useEffect) is correct
 

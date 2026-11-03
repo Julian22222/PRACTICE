@@ -1079,8 +1079,10 @@ Middleware Notes:
 
 1. Server-only variables / the value will be accessible in Next.js Server components
 
+Best Practice is to use process.env.VALUE only from Server components rather than process.env.NEXT_PUBLIC_VALUE available from both - from Client components and Server components.
+
 - Stored in .env, .env.local, .env.development, etc.
-- Accessible only in server code: API routes, getServerSideProps, middleware, or any code that runs on the Node.js side.
+- Accessible only in server code: API routes(Route Handlers) , Server Actions, getServerSideProps, middleware, or any code that runs on the Node.js side.
 
 ```JS
 //Example

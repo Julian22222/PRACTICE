@@ -678,6 +678,23 @@ console.log("SERVER check:", typeof window === "undefined");
 
 If you use REST API use fetch("http://.....")
 
+![pic07](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/pic7.jpg)
+
+![pic08](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/pic8.jpg)
+
+#### ⭐ IMPORTANT NOTES, NEED to remember
+
+In Next.js
+
+✅ Use Server Actions:
+
+- When Make a POST, PUT, PATCH, DELETE request
+
+✅ Use Route Handler (For “use client”) :
+
+- To get “Access token” from cookie from F-End domain and then pass it with the request to B-End. This allow to make more secure requests, where userId will come from cookie and you assign userId in B-End -> /movies/favorite/userId
+- To Hide B-End URL
+
 # 👍 Rendering Strategies (different options)
 
 To check and understand what Rendering option has each our Route in your application, we need to type in terminal-->
