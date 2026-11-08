@@ -1416,6 +1416,47 @@ export class NinjasController {
 // you can use -> Multiple Guards
 //If any guard returns false (or throws an exception), the request stops.
 @UseGuards(AuthGuard, RolesGuard)
+
+------------------------------------------------
+
+//Example from my Bank app (NEST.js)- see Admin controller and Auth-Admin folder (Bank/bank-api/auth-admin)
+//  @Post()
+//   @UseGuards(JwtAuthGuard, RolesGuard)  //<--allow to use multiple roles
+//   @Roles('superAdmin')  //<-- identify role that you use (role =  superAdmin)
+//   createNewAdmin(
+//     @Body() createAdminDto: CreateAdminDto,
+//   ): Promise<AdminResponseDto> {
+//     return this.adminService.create(createAdminDto);
+//   }
+
+
+//////////////////////////////////////////
+
+//roles.decorator.ts and roles.guard.ts allow to use :
+// Make the guard reusable for multiple roles
+
+//Example of contorller
+// @Get('dashboard')
+// @UseGuards(JwtAuthGuard, RolesGuard)
+// @Roles('superAdmin')
+// getDashboard() {
+//   return 'Welcome Super Admin!';
+// }
+
+//Or allow multiple roles:
+// @Get('users')
+// @UseGuards(JwtAuthGuard, RolesGuard)
+// @Roles('superAdmin', 'admin')
+// getUsers() {
+//   return 'Users list';
+// }
+
+//(Roles decorator + RolesGuard). It is more scalable because you can protect routes with superAdmin, admin, user, or any other role without creating a new guard each time.
+
+//jwt-aut-role.guard file chingg only superAdmin role, it is not for multiple roles
+//Example in controller:
+//   @UseGuards(JwtAuthGuard, JwtAuthRole)
+
 ```
 
 If you want to protect individual Route, you move this Guard to individual Routes, for example we want to protect this Route, to create new ninja -->
