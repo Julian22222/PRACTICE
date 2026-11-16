@@ -682,7 +682,41 @@ If you use REST API use fetch("http://.....")
 
 ![pic08](https://github.com/Julian22222/PRACTICE/blob/main/Next_and_NestJS/IMG/pic8.jpg)
 
-#### ⭐ IMPORTANT NOTES, NEED to remember
+# ⭐🔥🔥🔥 IMPORTANT NOTES, NEED to remember 🔥🔥🔥🔥🔥🔥
+
+The CORE RULE- HOW to use fetch requests in Next.js?
+
+1. From Server Components: reads (default choice) – page.tsx
+
+- If you need just to get some data from B-End, you can fetch in page.ts and then pass data as a prop to the other components.
+- Also, Can easily read the cookie from the Server Component from the domain
+- Read the JWT with cookies() from next/headers and forward it to NestJS. No extra network hop, no token exposed to the browser.
+
+2. From Server Actions: mutations triggered from your own UI
+
+- If you fetch using - POST/PUT/PATCH/DELETE
+- Form submissions, button clicks that create/update/delete.
+- They run on the server, so they can read the cookie, call NestJS with the JWT, then call revalidatePath/revalidateTag to refresh Server Component data. That revalidation integration is the main reason to prefer them.
+- Don’t use Server Actions – just to get the data from the Database. They’re queued and executed sequentially per client, POST-only, and not cacheable. Don’t use them as a read mechanism.
+
+3. From Route Handlers (app/api/...): when you need a real HTTP endpoint
+
+- If you need to get some data from Client component – use Route handler (it is Server side)
+- Client-side reads that can’t be done in a Server Component: polling, infinite scroll, search-as-you-type, data refetched on interaction, or libraries like TanStack Query/SWR.
+- Setting/clearing auth cookies (e.g. login/logout/refresh), though Server Actions can do this too.
+
+### 🔥🔥 Also, Need to know!!! 🔥🔥
+
+- To change/mutations the data in the Database can be done from Server Actions /or Route Handlers
+- To get the data from Database from Client component you need to use Route Handler (for BFF pattern) if the the nest.js and next.js use the same site you can call nest.js directly from the browser
+- Cookies can only be set in Server Actions and Route Handlers, not in Server Components (rendering can’t mutate headers). So token refresh needs to happen in middleware/proxy, a Route Handler, or an action, not during render.
+- In Server Components/Actions/Route Handlers, read cookie - via await cookies() and forward as Authorization: Bearer ... (or forward the cookie) to NestJS.
+- Use HttpOnly, Secure, SameSite=Lax (or Strict) cookies so client JS never touches the token.
+- Create shared server-side apiServerFetch and apiClientFetch wrapper that attaches the token and handles 401s keeps this consistent. For apiServerFetch to handle status= 401 you should use middleware.ts file
+
+**Server Components for reads by default, Server Actions for UI-driven mutations, Route Handlers when you need a genuine HTTP endpoint or client-side fetching.**
+
+## 🔥🔥🔥 Important 🔥🔥🔥
 
 In Next.js
 

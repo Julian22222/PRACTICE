@@ -1257,6 +1257,129 @@ export async function DELETE(
 }
 ```
 
+# You can make one Universal Route handler that will handle all requests
+
+The flow (component → apiClientFetch → /api/... → Route Handler → NestJS via BACK_END_URL)
+
+1.
+
+```JS
+// apiClientFetch file
+// /api/[...path]/route.ts is a file name, not a URL
+fetch(`/api/${path}`, { ...options, credentials: "include" });
+// For path = "accounts/user/123/accounts-balance", that hits /api/accounts/user/123/accounts-balance, and Next.js matches it to the catch-all route.
+```
+
+2.
+
+```JS
+// The Route Handler. It doesn't receive a URL. It receives the request and params.  params is a Promise.
+
+// src/app/api/[...path]/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ path: string[] }> },
+) {
+  const { path } = await params;
+  const accessToken = (await cookies()).get("access_token")?.value;
+
+  const backendRes = await fetch(
+    `${process.env.BACK_END_URL}/${path.join("/")}${req.nextUrl.search}`,
+    {
+      headers: { Cookie: `access_token=${accessToken}` },
+      cache: "no-store",
+    },
+  );
+
+  const data = await backendRes.json();
+  return NextResponse.json(data, { status: backendRes.status });
+}
+
+// Note req.nextUrl.search, which preserves query strings like ?page=2
+```
+
+3. Don't hardcode user.customer_id in the handler. The handler is generic, so it should forward whatever path it receives. Better still, stop sending the user ID at all. Your JWT already carries it as sub, so have NestJS read the user from the token (accounts/me/accounts-balance). This also closes a real hole. If the client supplies the ID in the URL, a user could try someone else's ID, so NestJS must verify the token's sub matches, or ignore the URL ID entirely.
+
+One risk to design for
+
+A catch-all proxy forwards any path to your backend. Since NestJS enforces JWT auth on its routes, that's acceptable. If you'd rather be strict, add a small allowlist of path prefixes (accounts/, users/) and return 404 for anything else. You'll also need to export POST, PUT, PATCH and DELETE handlers for mutations, forwarding the body (await req.text()) as in the fuller version from earlier.
+
+A catch-all proxy is one Route Handler file,
+
+```bash
+src/app/api/[...path]/route.ts
+```
+
+, that handles every backend request from your Client Components. The
+
+```bash
+[...path]
+```
+
+folder name is Next.js syntax meaning "match any URL under /api/, with any number of segments."
+
+#### How it works
+
+Instead of one Route Handler per endpoint:
+
+```JS
+api/accounts/balance/route.ts
+api/users/me/route.ts
+api/transactions/route.ts
+...
+
+//You have a single file:
+api/[...path]/route.ts
+//A request to ->
+// /api/accounts/user/123/accounts-balance
+// reaches that one handler with params.path = ["accounts", "user", "123", "accounts-balance"]. The handler joins the segments, forwards the request to ${BACK_END_URL}/accounts/user/123/accounts-balance with the access token attached, and returns the response.
+```
+
+### Pros and cons
+
+#### Pros
+
+- dd a new NestJS endpoint and nothing changes on the Next.js side.
+- Cookie forwarding and error handling live in one place, so there's less duplication.
+- The same code serves every Client Component.
+
+#### Cons
+
+- It forwards whatever path it receives. NestJS auth is the real gate, so this is acceptable, but you can add an allowlist of path prefixes if you want a stricter boundary.
+- You can't customize one endpoint (caching, response shaping, extra validation) without special-casing it inside the shared handler.
+
+The alternative: specific Route Handlers
+
+You can instead write a dedicated Route Handler per endpoint, and it's the better fit when an endpoint needs its own logic, such as combining two backend calls, transforming the response, or applying different caching. Many apps mix both. Dedicated routes such as api/auth/login and api/auth/refresh (which you already have) take priority over the catch-all, because Next.js always matches the most specific route first.
+
+For your app, where most endpoints are plain "forward the request with the token", the catch-all is the simpler starting point. Add dedicated routes later only where an endpoint needs special handling.
+
+# When to use separate Route handlers and universal Route Handlers?
+
+Both are legitimate. The usual answer is a hybrid: a catch-all for the plain forwarding, plus dedicated routes where an endpoint needs its own behaviour. Neither is universally the best practice.
+
+**When one catch-all is the better choice**
+
+use Universal Route handlers for usual routes/generic routes (NOT auth/login and auth/refresh Routes)
+
+- Most endpoints are pure pass-through: same method, same body, same response.
+- You want new NestJS endpoints to work with no Next.js changes.
+- You want the refresh and token-forwarding logic in exactly one place, so a bug fix applies everywhere.
+- When separate routes are the better choice
+
+**Different logic per endpoint. Combining two backend calls, reshaping the response, or stripping fields before they reach the browser.**
+
+use separate Route Handlers for auth/login and auth/refresh as dedicated routes, since they set cookies and have unique behaviour, more specific routes.
+
+- Different caching. For example, one endpoint cacheable and another strictly no-store.
+- A tight boundary. Each route file is an explicit list of what the browser can call, so nothing is reachable by accident. A catch-all is open unless you add an allowlist.
+- Validation at the edge. Checking input shape before it reaches NestJS.
+- Non-JSON responses. File downloads, streaming, or redirects need special handling that a generic handler can't do cleanly.
+- Readability at scale. A catch-all with a growing pile of if (path[0] === ...) special cases is worse than separate files.
+
 # API secret keys
 
 - check app/api/movies/route.ts file

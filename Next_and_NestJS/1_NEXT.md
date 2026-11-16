@@ -1109,6 +1109,13 @@ This is intended for server-only code:
 ❌ Client Components/browser
 ```
 
+process.env.BACK_END_URL – can be accessible only from server side. Therefore, you need to use Route handler
+
+Use process.env.BACK_END_URL in server side using Route handler:
+
+- Is Not about security ( Hiding B-END URL is a small benefit)
+- Most of all it is about -Cookies attach correctly from server side. Your “access_token” cookie belongs to the Next.js origin, so only requests to that origin carry it. Then you can use it as userId for fetch, or for @UseGuards(JwtAuthGuard) or/and @UseGuards(JwtAuthRole)
+
 2. Client side variables (and server side. Available on both)
 
 ```JS
