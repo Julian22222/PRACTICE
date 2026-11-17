@@ -1,3 +1,13 @@
+TIMESTAMPTZ works only in PSQL - TIMESTAMPTZ is PostgreSQL’s shorthand for the SQL-standard TIMESTAMP WITH TIME ZONE. Each database handles this differently.
+
+```JS
+//Example
+CREATE TABLE customers (
+...
+created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+);
+```
+
 # PSQL column_names Notes
 
 You can use camelCase column names, but snake_case is the convention for PostgreSQL, and there's a real reason behind it.
