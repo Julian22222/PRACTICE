@@ -105,8 +105,8 @@ Example JWT Flow:
 2.Server checks email/password in Database
 - IF email/password matrches
 3.Server creates JWT token (set access token & refresh token)
-4.Token returned to frontend (keeps token in browser -> cookies)
-- Browser link the JWT token to your F-end
+4.Token returned to frontend (keeps token in F-end domain -> cookies)
+- domain link the JWT token to your F-end
 5.Frontend sends token together with request
 6.Backend verifies token (by decoding the JWT token). DONT need to make request to Database to validate token!!! All user details is in token
 - Here it compares all 3 parts of JWT token. Compare JWT secret with signature part
@@ -207,7 +207,7 @@ Retries failed request
 
 #### ⭐ JWT + HttpOnly Cookies
 
-If the cookie was set to the Browser, you can get the cookie from Server and client componets with different approaches
+If the cookie was set to the Domain, you can get the cookie from Server and client componets with different approaches
 
 ```JS
 //make a request from Server component + send a cookie to B-END
@@ -229,9 +229,9 @@ fetch(`/api/users/me`, {  //use + Route Handling (there you use Server component
   });
 
 //Server Component can read HttpOnly cookies directly. This works because page.tsx is executing on the Next.js server. A Client Component cannot read HttpOnly cookies directly.
-// Therefore Client component use -> api/…
+// Therefore Client component use Route Handlers -> api/…
 
-//but to Setup new cookie you can do it only from client component and use Route Handling (/api/ypurPath/route.ts)!!! To setup new cookie from server components you need to use middleware.ts logic
+//but to Setup new cookie you can do it only from client component and use Route Handling (/api/yourPath/route.ts)!!! To setup new cookie from server components you need to use middleware.ts logic
 ```
 
 ✅ 1. Install needed dependencies for your Back-end (Nest.JS) - in Nest.js folder
@@ -384,7 +384,7 @@ login(@Res() res: Response) {  //Without { passthrough: true }, Nest is waiting 
   // });
 ```
 
-✅ 4. auth/login service (Nest.JS)
+✅ 5. auth/login service (Nest.JS)
 
 ```JS
 //auth.service.ts
@@ -618,7 +618,7 @@ fetch(https://api.example.com/users/me, {
   });
 ```
 
-✅ 5. Now Next.js LoginForm return userResponse + res.cookie(accessToken) + res.cookie(refreshToken)
+✅ 6. Now Next.js LoginForm return userResponse + res.cookie(accessToken) + res.cookie(refreshToken)
 
 ```JS
 //LoginForm - Next.js:
@@ -644,7 +644,7 @@ try {
 }
 ```
 
-✅ 6. Send JWT in future requests
+✅ 7. Send JWT in future requests
 
 - if you want to use payload data in Nest.js methods
 
