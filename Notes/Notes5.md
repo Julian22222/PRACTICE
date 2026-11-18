@@ -516,6 +516,10 @@ export class AuthService {
 
 ```
 
+# For Logout
+
+If you assigned access token and refresh tokens to F-END Domain then you need to make - reset cookies from the F-End when user press Logout
+
 ### What Is Different Origin, Site, Domain?
 
 ```JS
